@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useFBX, useTexture, PerspectiveCamera, ContactShadows, Center } from '@react-three/drei';
 import * as THREE from 'three';
+import { useAppearance } from '@/hooks/use-appearance';
 
 function Mercedes() {
   const fbx = useFBX('/models/mercedes.fbx');
@@ -52,65 +53,89 @@ function Floor() {
   );
 }
 
-function Lighting() {
+function Lighting({ isDark }: { isDark: boolean }) {
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <spotLight
-        color="red"
-        position={[0, 10, -15]}
-        angle={Math.PI / 3}
-        penumbra={0.5}
-        decay={2.0}
-        distance={500}
-        intensity={500}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-        shadow-bias={-0.0005}
-      />
-      <spotLight
-        color="white"
-        position={[0, 10, 15]}
-        angle={Math.PI / 3}
-        penumbra={0.5}
-        decay={2.0}
-        distance={500}
-        intensity={500}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-        shadow-bias={-0.0005}
-      />
+      <ambientLight intensity={isDark ? 0.8 : 1.2} />
+      {isDark && (
+        <>
+          <spotLight
+            color="#ff0000"
+            position={[10, 20, 10]}
+            angle={0.5}
+            penumbra={1}
+            decay={2}
+            distance={100}
+            intensity={1500}
+            castShadow
+          />
+          <spotLight
+            color="#ffffff"
+            position={[-10, 20, -10]}
+            angle={0.5}
+            penumbra={1}
+            decay={2}
+            distance={100}
+            intensity={1000}
+            castShadow
+          />
+          <pointLight position={[0, 5, 0]} intensity={500} color="red" />
+        </>
+      )}
+      {!isDark && (
+        <directionalLight
+          position={[10, 10, 5]}
+          intensity={1.5}
+          castShadow
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
+        />
+      )}
     </>
   );
 }
 
 export default function ThreeScene() {
+  const { resolvedAppearance } = useAppearance();
+  const isDark = resolvedAppearance === 'dark';
+  const bgColor = isDark ? '#080808' : '#ffffff';
+  
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#000' }}>
+    <div style={{ width: '100%', height: '100%', background: bgColor }}>
       <Canvas
         shadows
         dpr={[1, 2]}
         gl={{
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.2
+          toneMappingExposure: isDark ? 1.5 : 1.0
         }}
-        camera={{ position: [15, 8, 15], fov: 45 }}
+        camera={{ 
+          position: [15, 8, 15], 
+          fov: isMobile ? 65 : 45 
+        }}
       >
-        <color attach="background" args={['#000']} />
-        {/* <fogExp2 attach="fog" args={['#000', 0.02]} /> */}
+        <color attach="background" args={[bgColor]} />
+        {isDark && <fogExp2 attach="fog" args={['#080808', 0.01]} />}
 
         <Suspense fallback={null}>
-          <Lighting />
+          <Lighting isDark={isDark} />
           <Mercedes />
-          <Floor />
+          {isDark && <Floor />}
           <ContactShadows
-            opacity={1}
+            opacity={isDark ? 0.8 : 0.4}
             scale={20}
-            blur={1}
+            blur={2}
             far={10}
-            resolution={256}
+            resolution={512}
             color="#000000"
           />
         </Suspense>
@@ -118,30 +143,13 @@ export default function ThreeScene() {
         <OrbitControls
           makeDefault
           enableDamping
-          dampingFactor={0.04}
+          dampingFactor={0.05}
           autoRotate
-          autoRotateSpeed={4.5}
+          autoRotateSpeed={isDark ? 1.5 : 1.0}
           maxPolarAngle={Math.PI / 2 - 0.05}
+          enableZoom={false}
         />
       </Canvas>
-
-      {/* Title Overlay */}
-      <div style={{
-        position: 'absolute',
-        top: '40px',
-        left: '40px',
-        color: '#fff',
-        fontFamily: 'Inter, sans-serif',
-        pointerEvents: 'none',
-        textShadow: '0 0 20px rgba(0,0,0,0.5)'
-      }}>
-        <h1 style={{ margin: 0, fontSize: '2.5rem', fontWeight: 800, letterSpacing: '-0.05em' }}>
-          MERCEDES-BENZ (Maybe)
-        </h1>
-        <p style={{ margin: 0, opacity: 0.5, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.2em' }}>
-          GLS 580 Showcase
-        </p>
-      </div>
     </div>
   );
 }
