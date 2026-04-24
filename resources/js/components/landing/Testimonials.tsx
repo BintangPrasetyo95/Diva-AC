@@ -10,18 +10,21 @@ export default function Testimonials() {
             name: t('testimonial_1_name'),
             role: t('testimonial_1_role'),
             content: t('testimonial_1_content'),
+            image: "https://lh3.googleusercontent.com/a-/ALV-UjUZlspvtt2IieRBMRkuyvk4Uj87TrNnB-xNf87YXZmJG9qysznduQ=w90-h90-p-rp-mo-ba4-br100",
             rating: 5,
         },
         {
             name: t('testimonial_2_name'),
             role: t('testimonial_2_role'),
             content: t('testimonial_2_content'),
+            image: "https://lh3.googleusercontent.com/a-/ALV-UjUySof9dNwxtfouN_U_mGoblOrOttNVEEw3B1h0pcOYJ5FFZFzF=w90-h90-p-rp-mo-ba5-br100",
             rating: 5,
         },
         {
             name: t('testimonial_3_name'),
             role: t('testimonial_3_role'),
             content: t('testimonial_3_content'),
+            image: "https://lh3.googleusercontent.com/a-/ALV-UjU-o8VcPwSviSqmay_zYwJ-vGwVwNopBOkfwvlDQJj04G4VlvW_=w90-h90-p-rp-mo-ba4-br100",
             rating: 5,
         },
     ];
@@ -56,9 +59,14 @@ export default function Testimonials() {
                             <p className="mb-8 flex-1 text-lg italic text-[#1b1b18]/80 dark:text-white/80">
                                 "{testimonial.content}"
                             </p>
-                            <div>
-                                <h4 className="font-bold text-[#1b1b18] dark:text-white">{testimonial.name}</h4>
-                                <p className="text-sm text-[#1b1b18]/40 dark:text-white/40">{testimonial.role}</p>
+                            <div className="flex items-center gap-5">
+                                <div className='size-10'>
+                                    <img src={testimonial.image} alt="" className='rounded-full' />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-[#1b1b18] dark:text-white">{testimonial.name}</h4>
+                                    <p className="text-sm text-[#1b1b18]/40 dark:text-white/40">{testimonial.role}</p>
+                                </div>
                             </div>
                         </motion.div>
                     ))}
