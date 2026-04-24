@@ -1,46 +1,62 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/hooks/use-language';
+import { useState } from 'react';
 
 const images = [
-    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800',
-    'https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80&w=800',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn0kGzh4UiWF2_O6mLLnfxkWvqM5A9NQfNF980Y47epm2uZBMRCATeu9yPHeuBa1uDl_I9dFB_fbANWHc7XSklR2MBzvqQvEEb-b38q9WpgQ0b494QBUPm940jzvM_IYOEv1NMc=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn3xf_Af2naI18N3ZAwaKG6-XIRMSQ-q3vyPD1XRf9Q_NWnekv0A9L6DchZfm8CnQrBwQajjVXJpL4LWoO1iFZYfA5sWj1GtKt3DWW_yG0kCXoOD6U-WRyw-a_gPGQW1HA7FaCbJTA=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn1OeUrJWIjd2aAPXIYdWYrDFY90pKDe1Py_13o8fKqkmBsW9Q-suM0RXFhQz2HY9XNE6-FDeYVoZjZs07dDhm1aJdJFKwqB7XQgnhl6WobBI-WHL-AdDfFIt9jrDDOcHtmo2C4=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn05pntNGml5_eeRYD3hAzfJPx7GBtcpSvz6uX8T8RV5Vnk1wAGo-kKyQE0pzIq7c1u_gANBvj-kzVlDilookUY_d6hFFLFPZNx9UKejj-mL0XR-oI7GRcnMiZHig31DMgCIuEOAsijKgR8=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/p/AF1QipMdGUAaAEQi3DSR7NVhDE0sHP2yldokQ0D5Kn_v=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/p/AF1QipMgFmU7ofklnA8mmGJantKJb1ig8TL5_nSERnwt=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn2svDmi6xI3jb06YZhEN855SgUDyygVbW4qZT-VmfVhzJxJBwIQzNp4Ypr3cMLgWG-GfXOMUttTLGnG_jKMZQT2hIWnUA1Uw0AafeA4J-RHn6wzQ08y-T_ohaiMP_A-HYYopKJq=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn2WUrV45GrOxFuRQTQjlbYoFZCaGPgPmGmbKOe9ggTHQ-YC8z3FaQVFQ90zHsXzd9rk_r73G0MdNh_SPX56i4CQJdIOPkNEa67-IXxwttj85wUO4-kUNCNgWtQSaNH4x7V8eOgqmQ=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/grass-cs/ANxoTn1rb7kfb5qrc0FJw3o236x0UQmO7dH2D-faNB_Y02M_WyM5_qtwCCc2ofW3I8gQP-pi-GbpWWOIv7BrmvxSh_uWAI_7RvRDk7tvrYuMIfNFsOsDLI5OWyOtwApFX1CzDljii_oE=s1360-w1360-h1020-rw',
+    'https://lh3.googleusercontent.com/p/AF1QipODKOgzgOv3_bE4pd9AtPd2YCreKoU8NAU-AH_p=s1360-w1360-h1020-rw',
 ];
 
 export default function Gallery() {
+    const { t } = useLanguage();
+    const [showAll, setShowAll] = useState(false);
+
+    const displayedImages = showAll ? images : images.slice(0, 6);
+
     return (
-        <section className="bg-[#fdfdfc]/40 py-24 px-6 backdrop-blur-md dark:bg-black/40">
+        <section className="py-24 px-6">
             <div className="mx-auto max-w-6xl">
-                <div className="mb-16 text-center">
-                    <h2 className="text-3xl font-bold tracking-tight text-[#1b1b18] sm:text-4xl dark:text-white">
-                        Gallery
-                    </h2>
-                    <p className="mt-4 text-[#1b1b18]/60 dark:text-white/60">
-                        A glimpse of our work and the premium vehicles we care for.
-                    </p>
-                </div>
 
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                    {images.map((src, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            whileHover={{ scale: 1.02 }}
-                            className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
-                        >
-                            <img 
-                                src={src} 
-                                alt={`Gallery image ${index + 1}`} 
-                                className="h-full w-full object-cover"
-                            />
-                        </motion.div>
-                    ))}
+                    <AnimatePresence mode="popLayout">
+                        {displayedImages.map((src, index) => (
+                            <motion.div
+                                key={src} // Use src as key for better AnimatePresence tracking
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.3 }}
+                                whileHover={{ scale: 1.02 }}
+                                className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
+                            >
+                                <img 
+                                    src={src} 
+                                    alt={`Gallery image ${index + 1}`} 
+                                    className="h-full w-full object-cover"
+                                />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 </div>
+
+                {images.length > 6 && (
+                    <div className="mt-12 text-center">
+                        <button
+                            onClick={() => setShowAll(!showAll)}
+                            className="inline-flex items-center justify-center rounded-full bg-[#1b1b18] px-8 py-3 text-sm font-medium text-white transition-all hover:bg-[#1b1b18]/90 dark:bg-white dark:text-[#1b1b18] dark:hover:bg-white/90"
+                        >
+                            {showAll ? t('see_less') : t('see_more')}
+                        </button>
+                    </div>
+                )}
             </div>
         </section>
     );

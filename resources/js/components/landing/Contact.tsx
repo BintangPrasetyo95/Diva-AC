@@ -5,7 +5,7 @@ import { useLanguage } from '@/hooks/use-language';
 export default function Contact() {
     const { t } = useLanguage();
     return (
-        <section id="contact" className="bg-[#fdfdfc]/40 py-24 px-6 backdrop-blur-md dark:bg-black/40">
+        <section id="contact" className="py-24 px-6">
             <div className="mx-auto max-w-6xl">
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
                     <div>

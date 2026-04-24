@@ -1,37 +1,40 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-
-const testimonials = [
-    {
-        name: 'James Wilson',
-        role: 'BMW Owner',
-        content: 'The best AC service in town. My car cooling system feels like new again. Highly professional team!',
-        rating: 5,
-    },
-    {
-        name: 'Sarah Chen',
-        role: 'Tesla Model 3 Owner',
-        content: 'Quick diagnostics and transparent pricing. They fixed a complex compressor issue that others couldnt.',
-        rating: 5,
-    },
-    {
-        name: 'Michael Ross',
-        role: 'Vintage Collector',
-        content: 'They restored the AC in my 1969 Mustang perfectly. Their attention to detail is unmatched.',
-        rating: 5,
-    },
-];
+import { useLanguage } from '@/hooks/use-language';
 
 export default function Testimonials() {
+    const { t } = useLanguage();
+
+    const testimonials = [
+        {
+            name: t('testimonial_1_name'),
+            role: t('testimonial_1_role'),
+            content: t('testimonial_1_content'),
+            rating: 5,
+        },
+        {
+            name: t('testimonial_2_name'),
+            role: t('testimonial_2_role'),
+            content: t('testimonial_2_content'),
+            rating: 5,
+        },
+        {
+            name: t('testimonial_3_name'),
+            role: t('testimonial_3_role'),
+            content: t('testimonial_3_content'),
+            rating: 5,
+        },
+    ];
+
     return (
-        <section className="bg-white/40 py-24 px-6 backdrop-blur-md dark:bg-black/40">
+        <section className="py-24 px-6">
             <div className="mx-auto max-w-6xl">
                 <div className="mb-16 text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-[#1b1b18] sm:text-4xl dark:text-white">
-                        Trusted by Car Enthusiasts
+                        {t('testimonials_trusted')}
                     </h2>
                     <p className="mt-4 text-[#1b1b18]/60 dark:text-white/60">
-                        Read what our customers have to say about their experience.
+                        {t('testimonials_subtitle')}
                     </p>
                 </div>
 

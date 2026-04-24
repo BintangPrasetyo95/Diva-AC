@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Hero from '@/components/landing/Hero';
 import Description from '@/components/landing/Description';
 import Services from '@/components/landing/Services';
+import Brands from '@/components/landing/Brands';
 import Booking from '@/components/landing/Booking';
 import Gallery from '@/components/landing/Gallery';
 import Testimonials from '@/components/landing/Testimonials';
@@ -57,16 +58,16 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                 className="flex items-center gap-4"
                             >
                                 {/* Language Switcher */}
-                                <div className="flex items-center gap-1 rounded-full bg-white/10 p-1 backdrop-blur-md border border-white/20 dark:bg-black/20">
+                                <div className="flex items-center gap-1 rounded-full bg-[#1b1b18]/5 p-1 backdrop-blur-md border border-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20">
                                     <button 
                                         onClick={() => setLanguage('id')}
-                                        className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'id' ? 'bg-red-600 text-white' : 'text-white/40 hover:text-white'}`}
+                                        className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
                                     >
                                         ID
                                     </button>
                                     <button 
                                         onClick={() => setLanguage('en')}
-                                        className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'en' ? 'bg-red-600 text-white' : 'text-white/40 hover:text-white'}`}
+                                        className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
                                     >
                                         EN
                                     </button>
@@ -77,22 +78,22 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                 {auth.user ? (
                                     <Link
                                         href={dashboard()}
-                                        className="inline-block rounded-full bg-white/10 px-6 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white/20 border border-white/20 dark:bg-black/20"
+                                        className="inline-block rounded-full bg-[#1b1b18]/5 px-6 py-2 text-sm font-medium text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/10 border border-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
                                     >
                                         {t('dashboard')}
                                     </Link>
                                 ) : (
-                                    <div className="flex items-center gap-4 rounded-full bg-white/10 px-4 py-1 backdrop-blur-md border border-white/20 dark:bg-black/20">
+                                    <div className="flex items-center gap-4 rounded-full bg-[#1b1b18]/5 px-4 py-1 backdrop-blur-md border border-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20">
                                         <Link
                                             href={login()}
-                                            className="inline-block px-2 py-1 text-sm font-medium text-white transition-all hover:text-gray-300 dark:text-white"
+                                            className="inline-block px-2 py-1 text-sm font-medium text-[#1b1b18]/60 transition-all hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white"
                                         >
                                             {t('login')}
                                         </Link>
                                         {canRegister && (
                                             <Link
                                                 href={register()}
-                                                className="inline-block rounded-full bg-red-600 px-4 py-1.5 text-sm font-bold text-white transition-all hover:bg-red-700"
+                                                className="inline-block rounded-full bg-red-600 px-4 py-1.5 text-sm font-bold text-white transition-all hover:bg-red-700 shadow-lg"
                                             >
                                                 {t('register')}
                                             </Link>
@@ -105,7 +106,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
 
                     <button 
                         onClick={() => setIsDesktopMenuOpen(!isDesktopMenuOpen)}
-                        className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl transition-all active:scale-95 hover:bg-white/20"
+                        className={`flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md border shadow-xl transition-all active:scale-95 ${isDesktopMenuOpen ? 'bg-red-600 text-white border-red-600' : 'bg-[#1b1b18]/5 border-[#1b1b18]/10 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20'}`}
                     >
                         <Menu className={`size-6 transition-transform ${isDesktopMenuOpen ? 'rotate-90' : ''}`} />
                     </button>
@@ -115,9 +116,9 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 <div className="sm:hidden flex flex-col items-end gap-2">
                     <button 
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl transition-all active:scale-95"
+                        className={`flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md border shadow-xl transition-all active:scale-95 ${isMenuOpen ? 'bg-red-600 text-white border-red-600' : 'bg-[#1b1b18]/5 border-[#1b1b18]/10 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20'}`}
                     >
-                        <Menu className="size-6" />
+                        <Menu className={`size-6 transition-transform ${isMenuOpen ? 'rotate-90' : ''}`} />
                     </button>
                     
                     <AnimatePresence>
@@ -129,17 +130,17 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                 className="flex flex-col gap-4 rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl dark:bg-black/40 min-w-[220px] shadow-2xl"
                             >
                                 <div className="flex flex-col gap-2">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">{t('language')}</span>
-                                    <div className="flex items-center gap-1 rounded-full bg-white/5 p-1 border border-white/10">
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-2">{t('language')}</span>
+                                    <div className="flex items-center gap-1 rounded-full bg-[#1b1b18]/5 p-1 border border-[#1b1b18]/10 dark:bg-white/5 dark:border-white/10">
                                         <button 
                                             onClick={() => setLanguage('id')}
-                                            className={`flex-1 px-3 py-2 text-xs font-bold rounded-xl transition-all ${language === 'id' ? 'bg-red-600 text-white' : 'text-white/40'}`}
+                                            className={`flex-1 px-3 py-2 text-xs font-bold rounded-xl transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-md' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
                                         >
                                             Indonesia
                                         </button>
                                         <button 
                                             onClick={() => setLanguage('en')}
-                                            className={`flex-1 px-3 py-2 text-xs font-bold rounded-xl transition-all ${language === 'en' ? 'bg-red-600 text-white' : 'text-white/40'}`}
+                                            className={`flex-1 px-3 py-2 text-xs font-bold rounded-xl transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-md' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
                                         >
                                             English
                                         </button>
@@ -147,18 +148,18 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">{t('appearance')}</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-2">{t('appearance')}</span>
                                     <AppearanceToggleTab />
                                 </div>
                                 
-                                <div className="h-[1px] w-full bg-white/10" />
+                                <div className="h-[1px] w-full bg-[#1b1b18]/10 dark:bg-white/10" />
                                 
                                 <div className="flex flex-col gap-3">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">{t('account')}</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-1">{t('account')}</span>
                                     {auth.user ? (
                                         <Link
                                             href={dashboard()}
-                                            className="block rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white/20"
+                                            className="block rounded-xl bg-[#1b1b18]/5 px-4 py-2 text-sm font-medium text-[#1b1b18] transition-all hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                                         >
                                             {t('dashboard')}
                                         </Link>
@@ -166,14 +167,14 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                         <>
                                             <Link
                                                 href={login()}
-                                                className="block px-4 py-2 text-sm font-medium text-white transition-all hover:text-red-500"
+                                                className="block rounded-xl px-4 py-2 text-sm font-medium transition-all text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10"
                                             >
                                                 {t('login')}
                                             </Link>
                                             {canRegister && (
                                                 <Link
                                                     href={register()}
-                                                    className="block rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white text-center shadow-lg"
+                                                    className="block rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white text-center shadow-lg hover:bg-red-700 transition-all"
                                                 >
                                                     {t('register')}
                                                 </Link>
@@ -189,13 +190,18 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
 
             <div className="relative z-10">
                 <Hero />
-                <Description />
-                <Services />
-                <Booking />
-                <Gallery />
-                <Testimonials />
-                <Contact />
-                <Footer />
+                <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
+                    <Description />
+                    <Services />
+                </div>
+                <Brands />
+                <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
+                    <Booking />
+                    <Gallery />
+                    <Testimonials />
+                    <Contact />
+                    <Footer />
+                </div>
             </div>
         </div>
     );

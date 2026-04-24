@@ -76,10 +76,6 @@ export const translations: Translations = {
         id: "Hubungi Kami",
         en: "Contact Us"
     },
-    gallery_title: {
-        id: "Galeri",
-        en: "Gallery"
-    },
     testimonials_title: {
         id: "Apa Kata Mereka",
         en: "Testimonials"
@@ -94,7 +90,7 @@ export const translations: Translations = {
         en: "Complete diagnostics, cleaning, and repair for all types of car air conditioning systems."
     },
     service_parts_title: {
-        id: "Jual Suku Cadang",
+        id: "Jual Spare Parts",
         en: "Sell Spare Parts"
     },
     service_parts_desc: {
@@ -145,10 +141,6 @@ export const translations: Translations = {
     desc_p2: {
         id: "Mulai dari perawatan rutin hingga perbaikan kompleks dan distribusi suku cadang berkualitas tinggi, teknisi bersertifikat kami menggunakan alat diagnosa canggih untuk memberikan hasil yang dapat Anda rasakan seketika.",
         en: "From routine maintenance to complex repairs and high-quality spare parts distribution, our certified technicians use state-of-the-art diagnostic tools to deliver results you can feel instantly."
-    },
-    desc_workshop: {
-        id: "Bengkel Diva AC",
-        en: "Diva AC Workshop"
     },
     // Contact
     location_label: {
@@ -207,6 +199,71 @@ export const translations: Translations = {
     dashboard: {
         id: "Dashboard",
         en: "Dashboard"
+    },
+    // New Translations
+    what_we_do: {
+        id: "Apa Yang Kami Lakukan",
+        en: "What We Do"
+    },
+    services_subtitle: {
+        id: "Solusi komprehensif untuk kebutuhan kontrol iklim otomotif Anda.",
+        en: "Comprehensive solutions for your automotive climate control needs."
+    },
+    learn_more: {
+        id: "Pelajari lebih lanjut",
+        en: "Learn more"
+    },
+    testimonials_trusted: {
+        id: "Dipercaya oleh Penggemar Mobil",
+        en: "Trusted by Car Enthusiasts"
+    },
+    testimonials_subtitle: {
+        id: "Baca apa yang dikatakan pelanggan kami tentang pengalaman mereka.",
+        en: "Read what our customers have to say about their experience."
+    },
+    testimonial_1_name: {
+        id: "James Wilson",
+        en: "James Wilson"
+    },
+    testimonial_1_role: {
+        id: "Pemilik BMW",
+        en: "BMW Owner"
+    },
+    testimonial_1_content: {
+        id: "Servis AC terbaik di kota. Sistem pendingin mobil saya terasa seperti baru lagi. Tim yang sangat profesional!",
+        en: "The best AC service in town. My car cooling system feels like new again. Highly professional team!"
+    },
+    testimonial_2_name: {
+        id: "Sarah Chen",
+        en: "Sarah Chen"
+    },
+    testimonial_2_role: {
+        id: "Pemilik Tesla Model 3",
+        en: "Tesla Model 3 Owner"
+    },
+    testimonial_2_content: {
+        id: "Diagnosa cepat dan harga transparan. Mereka memperbaiki masalah kompresor rumit yang tidak bisa dilakukan orang lain.",
+        en: "Quick diagnostics and transparent pricing. They fixed a complex compressor issue that others couldnt."
+    },
+    testimonial_3_name: {
+        id: "Michael Ross",
+        en: "Michael Ross"
+    },
+    testimonial_3_role: {
+        id: "Kolektor Mobil Klasik",
+        en: "Vintage Collector"
+    },
+    testimonial_3_content: {
+        id: "Mereka merestorasi AC di Mustang 1969 saya dengan sempurna. Perhatian mereka terhadap detail tidak tertandingi.",
+        en: "They restored the AC in my 1969 Mustang perfectly. Their attention to detail is unmatched."
+    },
+    see_more: {
+        id: "Lihat Selengkapnya",
+        en: "See More"
+    },
+    see_less: {
+        id: "Lihat Lebih Sedikit",
+        en: "See Less"
     }
 };
 

@@ -24,7 +24,7 @@ export default function Footer() {
                             href="https://www.instagram.com/diva_ac50/" 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-red-600 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-red-600 transition-all"
+                            className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-pink-600 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-pink-600 transition-all"
                         >
                             <Instagram className="size-5" />
                         </a>
@@ -32,7 +32,7 @@ export default function Footer() {
                             href="https://www.facebook.com/DivaAc/" 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-red-600 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-red-600 transition-all"
+                            className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-blue-600 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-blue-600 transition-all"
                         >
                             <Facebook className="size-5" />
                         </a>

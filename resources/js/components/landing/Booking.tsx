@@ -6,7 +6,7 @@ export default function Booking() {
     const { t } = useLanguage();
 
     return (
-        <section id="booking" className="bg-white/40 py-24 px-6 backdrop-blur-md dark:bg-black/40">
+        <section id="booking" className="py-24 px-6">
             <div className="mx-auto max-w-4xl">
                 <div className="rounded-3xl border border-[#1b1b18]/5 bg-white/20 p-8 md:p-16 backdrop-blur-sm dark:border-white/5 dark:bg-white/5">
                     <div className="mb-12 text-center">

@@ -44,7 +44,7 @@ export default function Services() {
         },
     ];
     return (
-        <section id="services" className="bg-[#fdfdfc]/40 py-24 px-6 backdrop-blur-md dark:bg-black/40">
+        <section id="services" className="py-24 px-6">
             <div className="mx-auto max-w-6xl">
                 <div className="mb-16 text-center">
                     <motion.h2 
@@ -53,7 +53,7 @@ export default function Services() {
                         viewport={{ once: true }}
                         className="text-3xl font-bold tracking-tight text-[#1b1b18] sm:text-4xl dark:text-white"
                     >
-                        What We Do
+                        {t('what_we_do')}
                     </motion.h2>
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
@@ -62,7 +62,7 @@ export default function Services() {
                         transition={{ delay: 0.1 }}
                         className="mt-4 text-lg text-[#1b1b18]/60 dark:text-white/60"
                     >
-                        Comprehensive solutions for your automotive climate control needs.
+                        {t('services_subtitle')}
                     </motion.p>
                 </div>
 
@@ -107,7 +107,7 @@ export default function Services() {
                                 </p>
                                 
                                 <div className="mt-8 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#1b1b18]/40 transition-colors group-hover:text-red-600 dark:text-white/40 dark:group-hover:text-red-500">
-                                    <span>Learn more</span>
+                                    <span>{t('learn_more')}</span>
                                     <div className="h-[2px] w-0 bg-red-600 transition-all group-hover:w-8" />
                                 </div>
                             </div>
