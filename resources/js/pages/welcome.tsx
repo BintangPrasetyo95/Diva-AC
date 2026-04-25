@@ -16,7 +16,7 @@ import AppearanceToggleTab from '@/components/appearance-tabs';
 import ThreeScene from '@/components/ThreeScene';
 import Preloader from '@/components/landing/Preloader';
 import AppLogo from '@/components/app-logo';
-import { LanguageProvider, useLanguage } from '@/hooks/use-language';
+import { useLanguage } from '@/hooks/use-language';
 
 function LandingPage({ canRegister }: { canRegister: boolean }) {
     const { auth } = usePage().props;
@@ -83,17 +83,17 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                         {t('dashboard')}
                                     </Link>
                                 ) : (
-                                    <div className="flex items-center gap-4 rounded-full bg-[#1b1b18]/5 px-4 py-1 backdrop-blur-md border border-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20">
+                                    <div className="flex items-center gap-2">
                                         <Link
                                             href={login()}
-                                            className="inline-block px-2 py-1 text-sm font-medium text-[#1b1b18]/60 transition-all hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white"
+                                            className="inline-block rounded-full border border-[#1b1b18]/20 bg-transparent px-4 py-1.5 text-sm font-bold text-[#1b1b18] transition-all hover:bg-[#1b1b18]/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10"
                                         >
                                             {t('login')}
                                         </Link>
                                         {canRegister && (
                                             <Link
                                                 href={register()}
-                                                className="inline-block rounded-full bg-red-600 px-4 py-1.5 text-sm font-bold text-white transition-all hover:bg-red-700 shadow-lg"
+                                                className="inline-block rounded-full bg-red-600 px-4 py-1.5 text-sm font-bold text-white shadow-lg transition-all hover:bg-red-700"
                                             >
                                                 {t('register')}
                                             </Link>
@@ -152,7 +152,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                     <AppearanceToggleTab />
                                 </div>
                                 
-                                <div className="h-[1px] w-full bg-[#1b1b18]/10 dark:bg-white/10" />
+                                <div className="h-px w-full bg-[#1b1b18]/10 dark:bg-white/10" />
                                 
                                 <div className="flex flex-col gap-3">
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-1">{t('account')}</span>
@@ -167,14 +167,14 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                         <>
                                             <Link
                                                 href={login()}
-                                                className="block rounded-xl px-4 py-2 text-sm font-medium transition-all text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10"
+                                                className="block rounded-xl border border-[#1b1b18]/20 px-4 py-2 text-center text-sm font-bold text-[#1b1b18] transition-all hover:bg-[#1b1b18]/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10"
                                             >
                                                 {t('login')}
                                             </Link>
                                             {canRegister && (
                                                 <Link
                                                     href={register()}
-                                                    className="block rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white text-center shadow-lg hover:bg-red-700 transition-all"
+                                                    className="block rounded-xl bg-red-600 px-4 py-2 text-center text-sm font-bold text-white shadow-lg transition-all hover:bg-red-700"
                                                 >
                                                     {t('register')}
                                                 </Link>
@@ -213,10 +213,10 @@ export default function Welcome({
     canRegister?: boolean;
 }) {
     return (
-        <LanguageProvider>
+        <>
             <Head title="" />
             <Preloader />
             <LandingPage canRegister={canRegister} />
-        </LanguageProvider>
+        </>
     );
 }

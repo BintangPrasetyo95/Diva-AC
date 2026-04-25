@@ -264,7 +264,86 @@ export const translations: Translations = {
     see_less: {
         id: "Lihat Lebih Sedikit",
         en: "See Less"
-    }
+    },
+    // Auth - Login
+    auth_login_title: {
+        id: "Masuk ke akun Anda",
+        en: "Log in to your account"
+    },
+    auth_login_description: {
+        id: "Masukkan email dan kata sandi Anda untuk masuk",
+        en: "Enter your email and password below to log in"
+    },
+    auth_login_button: {
+        id: "Masuk",
+        en: "Log in"
+    },
+    auth_no_account: {
+        id: "Belum punya akun?",
+        en: "Don't have an account?"
+    },
+    auth_sign_up: {
+        id: "Daftar",
+        en: "Sign up"
+    },
+    auth_forgot_password: {
+        id: "Lupa kata sandi?",
+        en: "Forgot password?"
+    },
+    auth_remember_me: {
+        id: "Ingat saya",
+        en: "Remember me"
+    },
+    // Auth - Register
+    auth_register_title: {
+        id: "Buat akun baru",
+        en: "Create an account"
+    },
+    auth_register_description: {
+        id: "Masukkan detail Anda untuk membuat akun",
+        en: "Enter your details below to create your account"
+    },
+    auth_create_account: {
+        id: "Buat Akun",
+        en: "Create account"
+    },
+    auth_already_account: {
+        id: "Sudah punya akun?",
+        en: "Already have an account?"
+    },
+    auth_log_in: {
+        id: "Masuk",
+        en: "Log in"
+    },
+    // Auth - Shared fields
+    auth_email: {
+        id: "Alamat Email",
+        en: "Email address"
+    },
+    auth_password: {
+        id: "Kata Sandi",
+        en: "Password"
+    },
+    auth_confirm_password: {
+        id: "Konfirmasi Kata Sandi",
+        en: "Confirm password"
+    },
+    auth_name: {
+        id: "Nama",
+        en: "Name"
+    },
+    auth_name_placeholder: {
+        id: "Nama lengkap",
+        en: "Full name"
+    },
+    auth_password_placeholder: {
+        id: "Kata sandi",
+        en: "Password"
+    },
+    auth_confirm_password_placeholder: {
+        id: "Konfirmasi kata sandi",
+        en: "Confirm password"
+    },
 };
 
 interface LanguageContextType {

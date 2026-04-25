@@ -32,7 +32,7 @@ const MarqueeRow = ({ images, direction = 'left' }: { images: string[], directio
                 {[...Array(4)].map((_, i) => (
                     <div key={i} className="flex flex-nowrap">
                         {images.map((src, idx) => (
-                            <div key={idx} className="px-2 flex-shrink-0">
+                            <div key={idx} className="px-2 shrink-0">
                                 <motion.div
                                     whileHover={{ scale: 1.02, transition: { duration: 0.15, ease: "easeOut" } }}
                                     className="relative aspect-square w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
