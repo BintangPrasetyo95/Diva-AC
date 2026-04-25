@@ -29,9 +29,8 @@ export default function Brands() {
                         <motion.a
                             key={brand.name}
                             initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            whileInView={{ opacity: 1, scale: 1, transition: { delay: index * 0.05 } }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.05 }}
                             className="group flex flex-col items-center justify-center relative min-w-[80px]"
                             href={brand.link}
                             target='_blank'
@@ -39,9 +38,9 @@ export default function Brands() {
                             <motion.img
                                 src={brand.logo}
                                 alt={brand.name}
-                                whileHover={{ y: -8 }}
-                                whileTap={{ y: -8 }}
-                                className="h-12 w-auto grayscale brightness-[1] opacity-60 transition-all duration-10 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100 group-hover:drop-shadow-[0_0_16px_rgba(255,255,255,0.8)] group-active:grayscale-0 group-active:brightness-100 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(255,255,255,0.8)] dark:invert-[0.2] dark:group-hover:invert-0 dark:group-active:invert-0 cursor-pointer"
+                                whileHover={{ y: -8, transition: { duration: 0.15, ease: "easeOut" } }}
+                                whileTap={{ y: -8, transition: { duration: 0.15, ease: "easeOut" } }}
+                                className="h-12 w-auto grayscale brightness-[1] opacity-60 transition-all duration-150 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100 group-hover:drop-shadow-[0_0_16px_rgba(255,255,255,0.8)] group-active:grayscale-0 group-active:brightness-100 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(255,255,255,0.8)] dark:invert-[0.2] dark:group-hover:invert-0 dark:group-active:invert-0 cursor-pointer"
                             />
                             <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-[#1b1b18]/60 dark:text-white/60 opacity-0 group-hover:opacity-100 group-hover:translate-y-[-4px] group-active:opacity-100 group-active:translate-y-[-4px] transition-all duration-300 pointer-events-none">
                                 {brand.name}

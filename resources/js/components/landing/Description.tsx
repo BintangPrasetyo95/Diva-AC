@@ -31,7 +31,7 @@ export default function Description() {
                         <img 
                             src="https://lh3.googleusercontent.com/grass-cs/ANxoTn1rb7kfb5qrc0FJw3o236x0UQmO7dH2D-faNB_Y02M_WyM5_qtwCCc2ofW3I8gQP-pi-GbpWWOIv7BrmvxSh_uWAI_7RvRDk7tvrYuMIfNFsOsDLI5OWyOtwApFX1CzDljii_oE=s1360-w1360-h1020-rw" 
                             alt="Luxury Car Interior" 
-                            className="h-full w-full object-cover opacity-50 dark:opacity-30"
+                            className="h-full w-full object-cover opacity-80 dark:opacity-60"
                         />
                     </div>
                 </motion.div>

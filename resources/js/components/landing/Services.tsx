@@ -71,15 +71,22 @@ export default function Services() {
                         <motion.div
                             key={service.title}
                             initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ 
-                                type: "spring",
-                                stiffness: 100,
-                                damping: 15,
-                                delay: index * 0.1 
+                            whileInView={{ 
+                                opacity: 1, 
+                                y: 0,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 100,
+                                    damping: 15,
+                                    delay: index * 0.1 
+                                }
                             }}
-                            whileHover={{ y: -8, rotate: index % 2 === 0 ? 1 : -1 }}
+                            viewport={{ once: true }}
+                            whileHover={{ 
+                                y: -8, 
+                                rotate: index % 2 === 0 ? 1 : -1,
+                                transition: { type: "spring", stiffness: 400, damping: 25 }
+                            }}
                             className="group relative flex flex-col rounded-[2.5rem] rounded-tr-none border border-white/20 bg-white/10 p-4 backdrop-blur-xl transition-all hover:bg-white/20 dark:border-white/10 dark:bg-black/20 dark:hover:bg-white/5 shadow-2xl"
                         >
                             {/* Image Container */}

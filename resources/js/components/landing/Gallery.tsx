@@ -34,7 +34,7 @@ const MarqueeRow = ({ images, direction = 'left' }: { images: string[], directio
                         {images.map((src, idx) => (
                             <div key={idx} className="px-2 flex-shrink-0">
                                 <motion.div
-                                    whileHover={{ scale: 1.02 }}
+                                    whileHover={{ scale: 1.02, transition: { duration: 0.15, ease: "easeOut" } }}
                                     className="relative aspect-square w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
                                 >
                                     <img 
@@ -61,7 +61,13 @@ export default function Gallery() {
     const remainingImages = images.slice(10);
 
     return (
-        <section className="py-24 overflow-hidden">
+        <motion.section 
+            initial={{ opacity: 0.3 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ amount: 0.3, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="py-24 overflow-hidden"
+        >
             <div className="w-full flex flex-col gap-2">
                 {row1Images.length > 0 && (
                     <MarqueeRow images={row1Images} direction="right" />
@@ -95,10 +101,9 @@ export default function Gallery() {
                                 <motion.div
                                     key={src}
                                     initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ duration: 0.3 }}
-                                    whileHover={{ scale: 1.02 }}
+                                    animate={{ opacity: 1, scale: 1, transition: { duration: 0.3 } }}
+                                    exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.3 } }}
+                                    whileHover={{ scale: 1.02, transition: { duration: 0.15, ease: "easeOut" } }}
                                     className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
                                 >
                                     <img 
@@ -112,6 +117,6 @@ export default function Gallery() {
                     )}
                 </AnimatePresence>
             </div>
-        </section>
+        </motion.section>
     );
 }
