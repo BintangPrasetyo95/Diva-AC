@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useLanguage } from '@/hooks/use-language';
 
 export default function Description() {
@@ -7,7 +7,7 @@ export default function Description() {
     return (
         <section className="py-24 px-6">
             <div className="mx-auto max-w-5xl">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -34,7 +34,7 @@ export default function Description() {
                             className="h-full w-full object-cover opacity-80 dark:opacity-60"
                         />
                     </div>
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );

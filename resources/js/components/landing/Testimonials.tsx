@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
 
@@ -43,7 +43,7 @@ export default function Testimonials() {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                     {testimonials.map((testimonial, index) => (
-                        <motion.div
+                        <m.div
                             key={testimonial.name}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -68,7 +68,7 @@ export default function Testimonials() {
                                     <p className="text-sm text-[#1b1b18]/40 dark:text-white/40">{testimonial.role}</p>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     ))}
                 </div>
             </div>

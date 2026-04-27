@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { dashboard, login, register } from '@/routes';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Hero from '@/components/landing/Hero';
 import Description from '@/components/landing/Description';
 import Services from '@/components/landing/Services';
@@ -13,10 +13,13 @@ import Testimonials from '@/components/landing/Testimonials';
 import Contact from '@/components/landing/Contact';
 import Footer from '@/components/landing/Footer';
 import AppearanceToggleTab from '@/components/appearance-tabs';
-import ThreeScene from '@/components/ThreeScene';
 import Preloader from '@/components/landing/Preloader';
 import AppLogo from '@/components/app-logo';
 import { useLanguage } from '@/hooks/use-language';
+
+// Lazy-load the heavy Three.js scene — deferred to a separate chunk,
+// preventing Three.js/fiber/drei from blocking the main thread on initial load.
+const ThreeScene = React.lazy(() => import('@/components/ThreeScene'));
 
 function LandingPage({ canRegister }: { canRegister: boolean }) {
     const { auth } = usePage().props;
@@ -25,19 +28,20 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = React.useState(false);
     const { language, setLanguage, t } = useLanguage();
     
-    // Blur from 0 to 20px over the first 500px of scroll
-    const blurValue = useTransform(scrollY, [0, 500], [0, 10]);
     const opacityValue = useTransform(scrollY, [0, 500], [1, 0.3]);
 
     return (
+        <LazyMotion features={domAnimation}>
         <div className="relative w-full">
-            {/* Fixed Background Scene */}
-            <motion.div 
-                style={{ filter: useTransform(blurValue, (v) => `blur(${v}px)`), opacity: opacityValue }}
+            {/* Fixed Background Scene — lazy loaded to avoid blocking the main thread */}
+            <m.div
+                style={{ opacity: opacityValue }}
                 className="fixed inset-0 z-0 pointer-events-none"
             >
-                <ThreeScene />
-            </motion.div>
+                <Suspense fallback={<div className="w-full h-full bg-white dark:bg-[#080808]" />}>
+                    <ThreeScene />
+                </Suspense>
+            </m.div>
 
             {/* Sticky Branding Title */}
             <div className="fixed top-6 left-6 z-50">
@@ -51,7 +55,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 <div className="hidden sm:flex items-center gap-4">
                     <AnimatePresence mode="wait">
                         {isDesktopMenuOpen && (
-                            <motion.div
+                            <m.div
                                 initial={{ opacity: 0, x: 50, scale: 0.9 }}
                                 animate={{ opacity: 1, x: 0, scale: 1 }}
                                 exit={{ opacity: 0, x: 50, scale: 0.9 }}
@@ -100,7 +104,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                         )}
                                     </div>
                                 )}
-                            </motion.div>
+                            </m.div>
                         )}
                     </AnimatePresence>
 
@@ -123,7 +127,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                     
                     <AnimatePresence>
                         {isMenuOpen && (
-                            <motion.div
+                            <m.div
                                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -182,7 +186,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                                         </>
                                     )}
                                 </div>
-                            </motion.div>
+                            </m.div>
                         )}
                     </AnimatePresence>
                 </div>
@@ -204,6 +208,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 </div>
             </div>
         </div>
+        </LazyMotion>
     );
 }
 

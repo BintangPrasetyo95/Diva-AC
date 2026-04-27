@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Wind, ShieldCheck, PenTool, ShoppingCart, Gauge, History } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
 
@@ -10,52 +10,52 @@ export default function Services() {
             title: t('service_ac_title'),
             description: t('service_ac_desc'),
             icon: Wind,
-            image: 'https://lh3.googleusercontent.com/p/AF1QipODKOgzgOv3_bE4pd9AtPd2YCreKoU8NAU-AH_p=s1360-w1360-h1020-rw',
+            image: '/img/services/s1.jpg',
         },
         {
             title: t('service_parts_title'),
             description: t('service_parts_desc'),
             icon: ShoppingCart,
-            image: 'https://lh3.googleusercontent.com/p/AF1QipMdGUAaAEQi3DSR7NVhDE0sHP2yldokQ0D5Kn_v=s1360-w1360-h1020-rw',
+            image: '/img/services/s2.jpg',
         },
         {
             title: t('service_maintenance_title'),
             description: t('service_maintenance_desc'), 
             icon: PenTool,
-            image: 'https://lh3.googleusercontent.com/p/AF1QipOhEwZTOrgXtKfrERucQ7m_uaTBBDQTV3RI0hpm=s1360-w1360-h1020-rw',
+            image: '/img/services/s3.jpg',
         },
         {
             title: t('service_freon_title'),
             description: t('service_freon_desc'),
             icon: Gauge,
-            image: 'https://lh3.googleusercontent.com/p/AF1QipNbkD2fj011abQ31G_xPA9X4zDV0xHPmv8oZDko=s1360-w1360-h1020-rw',
+            image: '/img/services/s4.jpg',
         },
         {
             title: t('service_odor_title'),
             description: t('service_odor_desc'),
             icon: ShieldCheck,
-            image: 'https://scontent-cgk2-2.xx.fbcdn.net/v/t39.30808-6/485774383_9475747269199729_3006368858396903816_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=06a7ca&_nc_ohc=hqV9q41LuAUQ7kNvwGeduf7&_nc_oc=AdqKtWafqiAHOLdX4US1nuItM3yjp69z7PpA5NStercM9VYUwBKTlZCqTkuftUJB46I&_nc_zt=23&_nc_ht=scontent-cgk2-2.xx&_nc_gid=Ln675klEOViBjCKRb79wjQ&oh=00_Af3lrqOWX9uEVoInu_HeeY1nqcmYyW7x3y7lr-9e6w3I0g&oe=69F0FC51',
+            image: '/img/services/s5.jpg',
         },
         {
             title: t('service_vintage_title'),
             description: t('service_vintage_desc'),
             icon: History,
-            image: 'https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80&w=800',
+            image: '/img/services/s6.jpg',
         },
     ];
     return (
         <section id="services" className="py-24 px-6">
             <div className="mx-auto max-w-6xl">
                 <div className="mb-16 text-center">
-                    <motion.h2 
+                    <m.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         className="text-3xl font-bold tracking-tight text-[#1b1b18] sm:text-4xl dark:text-white"
                     >
                         {t('what_we_do')}
-                    </motion.h2>
-                    <motion.p 
+                    </m.h2>
+                    <m.p 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -63,12 +63,12 @@ export default function Services() {
                         className="mt-4 text-lg text-[#1b1b18]/60 dark:text-white/60"
                     >
                         {t('services_subtitle')}
-                    </motion.p>
+                    </m.p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
                     {services.map((service, index) => (
-                        <motion.div
+                        <m.div
                             key={service.title}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ 
@@ -90,13 +90,17 @@ export default function Services() {
                             className="group relative flex flex-col rounded-[2.5rem] rounded-tr-none border border-white/20 bg-white/10 p-4 backdrop-blur-xl transition-all hover:bg-white/20 dark:border-white/10 dark:bg-black/20 dark:hover:bg-white/5 shadow-2xl"
                         >
                             {/* Image Container */}
-                            <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-[2rem] rounded-tr-none">
-                                <img 
-                                    src={service.image} 
-                                    alt={service.title} 
+                            <div className="relative mb-6 aspect-4/3 w-full overflow-hidden rounded-4xl rounded-tr-none">
+                                <img
+                                    src={service.image}
+                                    alt={service.title}
+                                    width={800}
+                                    height={600}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                             </div>
                             
                              {/* Icon Floating Outside - Bottom Left (No Clipping) */}
@@ -118,12 +122,12 @@ export default function Services() {
                                     <div className="h-[2px] w-0 bg-red-600 transition-all group-hover:w-8" />
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     ))}
                 </div>
                 
                 <div className="mt-24 text-center">
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         className="inline-flex items-center gap-4 rounded-full border border-white/20 bg-white/5 px-8 py-3 backdrop-blur-md"
@@ -134,7 +138,7 @@ export default function Services() {
                         <a href="#contact" className="text-sm font-bold text-red-600 hover:underline dark:text-red-500">
                             {t('ask_us')}
                         </a>
-                    </motion.div>
+                    </m.div>
                 </div>
             </div>
         </section>

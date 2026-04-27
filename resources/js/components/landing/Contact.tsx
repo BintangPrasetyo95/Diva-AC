@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
 

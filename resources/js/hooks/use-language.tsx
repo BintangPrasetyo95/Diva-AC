@@ -40,37 +40,9 @@ export const translations: Translations = {
         id: "Jadwalkan layanan dalam hitungan menit. Tim kami akan segera mengkonfirmasi slot Anda.",
         en: "Schedule a service in minutes. Our team will confirm your slot shortly."
     },
-    form_name: {
-        id: "Nama",
-        en: "Name"
-    },
-    form_name_placeholder: {
-        id: "Nama lengkap Anda",
-        en: "Your full name"
-    },
-    form_phone: {
-        id: "Telepon",
-        en: "Phone"
-    },
-    form_phone_placeholder: {
-        id: "Nomor telepon Anda",
-        en: "Your phone number"
-    },
-    form_car_model: {
-        id: "Model Mobil",
-        en: "Car Model"
-    },
-    form_car_placeholder: {
-        id: "misal: Mercedes GLS 580",
-        en: "e.g. Mercedes GLS 580"
-    },
-    form_date: {
-        id: "Tanggal Pilihan",
-        en: "Preferred Date"
-    },
-    form_confirm: {
-        id: "Konfirmasi Booking",
-        en: "Confirm Booking"
+    booking_go: {
+        id: "Atur Jadwal Sekarang!",
+        en: "Book Your Appointment Now!"
     },
     contact_title: {
         id: "Hubungi Kami",

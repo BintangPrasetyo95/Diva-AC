@@ -9,12 +9,14 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="icon" type="image/png" href="/logo.png">
-        <link rel="apple-touch-icon" href="/logo.png">
+        <link rel="icon" type="image/png" href="/logo-optimized.png">
+        <link rel="apple-touch-icon" href="/logo-optimized.png">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+        <link rel="preload" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" as="style" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @viteReactRefresh

@@ -137,6 +137,14 @@
         @apply border-border;
     }
 
+    body,
+    html {
+        /* Theme-switch transition scoped here only — avoids per-element style recalc on scroll */
+        transition:
+            background-color 0.4s ease,
+            color 0.4s ease;
+    }
+
     body {
         @apply bg-background text-foreground;
     }
