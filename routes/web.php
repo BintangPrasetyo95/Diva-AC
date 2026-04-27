@@ -14,3 +14,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 require __DIR__.'/settings.php';
 
 Route::inertia('/three', 'ThreePage')->name('three');
+Route::inertia('/booking', 'booking')->name('booking');

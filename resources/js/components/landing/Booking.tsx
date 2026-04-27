@@ -1,6 +1,7 @@
 import { m } from 'framer-motion';
 import { Calendar, Clock, Car, Phone } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
+import { Link } from '@inertiajs/react';
 
 export default function Booking() {
     const { t } = useLanguage();
@@ -20,14 +21,18 @@ export default function Booking() {
 
 
                     <div className="md:col-span-2">
-                        <m.button
+                        <m.div
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
-                            type="button"
-                            className="mt-4 w-full rounded-xl bg-red-600 py-4 font-bold text-white transition-all hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+                            className="mt-4 w-full"
                         >
-                            {t('booking_go')}
-                        </m.button>
+                            <Link
+                                href="/booking"
+                                className="block w-full rounded-xl bg-red-600 py-4 text-center font-bold text-white transition-all hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+                            >
+                                {t('booking_go')}
+                            </Link>
+                        </m.div>
                     </div>
                 </div>
             </div>

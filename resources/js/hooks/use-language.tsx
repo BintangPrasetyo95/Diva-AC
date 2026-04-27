@@ -316,6 +316,83 @@ export const translations: Translations = {
         id: "Konfirmasi kata sandi",
         en: "Confirm password"
     },
+    // Booking Page
+    book_appointment: {
+        id: "Pesan Jadwal",
+        en: "Book an Appointment"
+    },
+    booking_form_subtitle: {
+        id: "Isi formulir di bawah ini untuk menjadwalkan layanan Anda. Kami akan mengkonfirmasi jadwal Anda melalui WhatsApp.",
+        en: "Fill out the form below to schedule your service. We will confirm your appointment via WhatsApp."
+    },
+    name: {
+        id: "Nama Lengkap",
+        en: "Full Name"
+    },
+    phone: {
+        id: "Telepon / WhatsApp",
+        en: "Phone / WhatsApp"
+    },
+    car_model: {
+        id: "Model & Tahun Mobil",
+        en: "Car Model & Year"
+    },
+    booking_placeholder_name: {
+        id: "Nama Anda",
+        en: "Your Name"
+    },
+    booking_placeholder_phone: {
+        id: "Nomor Whatsapp Anda",
+        en: "Your Phone / WhatsApp"
+    },
+    booking_placeholder_notes: {
+        id: "Deskripsikan masalah yang Anda alami...",
+        en: "Describe any issues you are experiencing..."
+    },
+    booking_placeholder_car_model: {
+        id: "Contoh: Daihatsu Ayla 2022",
+        en: "e.g. Daihatsu Ayla 2022"
+    },
+    date: {
+        id: "Tanggal Pilihan",
+        en: "Preferred Date"
+    },
+    time: {
+        id: "Waktu Pilihan",
+        en: "Preferred Time"
+    },
+    service_type: {
+        id: "Jenis Layanan",
+        en: "Service Needed"
+    },
+    notes: {
+        id: "Catatan Tambahan",
+        en: "Additional Notes"
+    },
+    submit_booking: {
+        id: "Konfirmasi Pesanan",
+        en: "Confirm Booking"
+    },
+    service_opt_inspection: {
+        id: "Inspeksi / Pengecekan AC",
+        en: "AC Inspection / Check-up"
+    },
+    service_opt_cleaning: {
+        id: "Cuci AC",
+        en: "AC Cleaning"
+    },
+    service_opt_freon: {
+        id: "Isi Freon",
+        en: "Freon Refill"
+    },
+    service_opt_repair: {
+        id: "Perbaikan / Ganti Sparepart",
+        en: "Parts Repair / Replacement"
+    },
+    service_opt_other: {
+        id: "Lainnya / Kurang Yakin",
+        en: "Other / Not Sure"
+    },
 };
 
 interface LanguageContextType {

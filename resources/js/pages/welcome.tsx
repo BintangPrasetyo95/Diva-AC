@@ -52,7 +52,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
 
             <nav className="fixed top-6 right-6 z-50 flex items-center gap-4">
                 {/* Desktop Navigation */}
-                <div className="hidden sm:flex items-center gap-4">
+                <div className="hidden lg:flex items-center gap-4">
                     <AnimatePresence mode="wait">
                         {isDesktopMenuOpen && (
                             <m.div
@@ -117,7 +117,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 </div>
 
                 {/* Mobile Menu Toggle */}
-                <div className="sm:hidden flex flex-col items-end gap-2">
+                <div className="lg:hidden flex flex-col items-end gap-2">
                     <button 
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className={`flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md border shadow-xl transition-all active:scale-95 ${isMenuOpen ? 'bg-red-600 text-white border-red-600' : 'bg-[#1b1b18]/5 border-[#1b1b18]/10 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20'}`}
