@@ -1,3 +1,4 @@
+import Testimonials from '@/components/landing/Testimonials';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Language = 'id' | 'en';
@@ -193,41 +194,37 @@ export const translations: Translations = {
         id: "Baca apa yang dikatakan pelanggan kami tentang pengalaman mereka.",
         en: "Read what our customers have to say about their experience."
     },
-    testimonial_1_name: {
-        id: "James Wilson",
-        en: "James Wilson"
+    testimonials_day_ago: {
+        id: "Hari lalu",
+        en: "Day ago",
     },
-    testimonial_1_role: {
-        id: "Pemilik BMW",
-        en: "BMW Owner"
+    testimonials_days_ago: {
+        id: "Hari lalu",
+        en: "Days ago",
     },
-    testimonial_1_content: {
-        id: "Servis AC terbaik di kota. Sistem pendingin mobil saya terasa seperti baru lagi. Tim yang sangat profesional!",
-        en: "The best AC service in town. My car cooling system feels like new again. Highly professional team!"
+    testimonials_week_ago: {
+        id: "Minggu lalu",
+        en: "Week ago",
     },
-    testimonial_2_name: {
-        id: "Sarah Chen",
-        en: "Sarah Chen"
+    testimonials_weeks_ago: {
+        id: "Minggu lalu",
+        en: "Weeks ago",
     },
-    testimonial_2_role: {
-        id: "Pemilik Tesla Model 3",
-        en: "Tesla Model 3 Owner"
+    testimonials_month_ago: {
+        id: "Bulan lalu",
+        en: "Month ago",
     },
-    testimonial_2_content: {
-        id: "Diagnosa cepat dan harga transparan. Mereka memperbaiki masalah kompresor rumit yang tidak bisa dilakukan orang lain.",
-        en: "Quick diagnostics and transparent pricing. They fixed a complex compressor issue that others couldnt."
+    testimonials_months_ago: {
+        id: "Bulan lalu",
+        en: "Months ago",
     },
-    testimonial_3_name: {
-        id: "Michael Ross",
-        en: "Michael Ross"
+    testimonials_year_ago: {
+        id: "Tahun lalu",
+        en: "Year ago",
     },
-    testimonial_3_role: {
-        id: "Kolektor Mobil Klasik",
-        en: "Vintage Collector"
-    },
-    testimonial_3_content: {
-        id: "Mereka merestorasi AC di Mustang 1969 saya dengan sempurna. Perhatian mereka terhadap detail tidak tertandingi.",
-        en: "They restored the AC in my 1969 Mustang perfectly. Their attention to detail is unmatched."
+    testimonials_years_ago: {
+        id: "Tahun lalu",
+        en: "Years ago",
     },
     see_more: {
         id: "Lihat Selengkapnya",

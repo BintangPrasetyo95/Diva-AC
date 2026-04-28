@@ -7,27 +7,46 @@ export default function Testimonials() {
 
     const testimonials = [
         {
-            name: t('testimonial_1_name'),
-            role: t('testimonial_1_role'),
-            content: t('testimonial_1_content'),
+            name: "Prayoga galih",
+            content: "Pelayanan baik,pemilik dan karyawan ramah.memberikan solusi terbaik bila konsultasi 👍",
+            image: "https://lh3.googleusercontent.com/a-/ALV-UjVX-rSUEnbuW7IwJPV1uwuW6JI0LE49HulexQWHN43cxbtR-Hqr=w90-h90-p-rp-mo-ba3-br100",
+            rating: 5,
+            date: new Date('2024-01-10'),
+        },
+        {
+            name: "Oryza S",
+            content: "mantaplah cukup bintang yang berbicara",
             image: "https://lh3.googleusercontent.com/a-/ALV-UjUZlspvtt2IieRBMRkuyvk4Uj87TrNnB-xNf87YXZmJG9qysznduQ=w90-h90-p-rp-mo-ba4-br100",
             rating: 5,
+            date: new Date('2022-03-22'),
         },
         {
-            name: t('testimonial_2_name'),
-            role: t('testimonial_2_role'),
-            content: t('testimonial_2_content'),
-            image: "https://lh3.googleusercontent.com/a-/ALV-UjUySof9dNwxtfouN_U_mGoblOrOttNVEEw3B1h0pcOYJ5FFZFzF=w90-h90-p-rp-mo-ba5-br100",
+            name: "07_Arya Putra Hartoto",
+            content: "Bagus karna jujur",
+            image: "https://lh3.googleusercontent.com/a/ACg8ocJxETSZgrVaKUS9p0xa9rmYsqPMX646wbnpXVbXK3o-SX6_WQ=w90-h90-p-rp-mo-br100",
             rating: 5,
-        },
-        {
-            name: t('testimonial_3_name'),
-            role: t('testimonial_3_role'),
-            content: t('testimonial_3_content'),
-            image: "https://lh3.googleusercontent.com/a-/ALV-UjU-o8VcPwSviSqmay_zYwJ-vGwVwNopBOkfwvlDQJj04G4VlvW_=w90-h90-p-rp-mo-ba4-br100",
-            rating: 5,
+            date: new Date('2026-4-25'),
         },
     ];
+
+    const getRelativeTime = (date: Date): string => {
+        const now = new Date();
+        const diffMs = now.getTime() - date.getTime();
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 7) {
+            return diffDays <= 1 ? '1 ' + t('testimonials_day_ago') : `${diffDays} ${t('testimonials_days_ago')}`;
+        } else if (diffDays < 30) {
+            const weeks = Math.floor(diffDays / 7);
+            return weeks === 1 ? '1 ' + t('testimonials_week_ago') : `${weeks} ${t('testimonials_weeks_ago')}`;
+        } else if (diffDays < 365) {
+            const months = Math.floor(diffDays / 30);
+            return months === 1 ? '1 ' + t('testimonials_month_ago') : `${months} ${t('testimonials_months_ago')}`;
+        } else {
+            const years = Math.floor(diffDays / 365);
+            return years === 1 ? '1 ' + t('testimonials_year_ago') : `${years} ${t('testimonials_years_ago')}`;
+        }
+    };
 
     return (
         <section className="py-24 px-6">
@@ -60,12 +79,14 @@ export default function Testimonials() {
                                 "{testimonial.content}"
                             </p>
                             <div className="flex items-center gap-5">
-                                <div className='size-10'>
+                                <div className='size-10 shrink-0'>
                                     <img src={testimonial.image} alt="" className='rounded-full' />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-[#1b1b18] dark:text-white">{testimonial.name}</h4>
-                                    <p className="text-sm text-[#1b1b18]/40 dark:text-white/40">{testimonial.role}</p>
+                                    <p className="mt-0.5 text-sm text-[#1b1b18]/40 dark:text-white/40">
+                                        {getRelativeTime(testimonial.date)}
+                                    </p>
                                 </div>
                             </div>
                         </m.div>
