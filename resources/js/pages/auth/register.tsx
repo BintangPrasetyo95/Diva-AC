@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { useLanguage } from '@/hooks/use-language';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
-import { useLanguage } from '@/hooks/use-language';
 
 export default function Register() {
     const { t } = useLanguage();

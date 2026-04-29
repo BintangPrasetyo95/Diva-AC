@@ -38,12 +38,15 @@ export default function Testimonials() {
             return diffDays <= 1 ? '1 ' + t('testimonials_day_ago') : `${diffDays} ${t('testimonials_days_ago')}`;
         } else if (diffDays < 30) {
             const weeks = Math.floor(diffDays / 7);
+
             return weeks === 1 ? '1 ' + t('testimonials_week_ago') : `${weeks} ${t('testimonials_weeks_ago')}`;
         } else if (diffDays < 365) {
             const months = Math.floor(diffDays / 30);
+
             return months === 1 ? '1 ' + t('testimonials_month_ago') : `${months} ${t('testimonials_months_ago')}`;
         } else {
             const years = Math.floor(diffDays / 365);
+
             return years === 1 ? '1 ' + t('testimonials_year_ago') : `${years} ${t('testimonials_years_ago')}`;
         }
     };

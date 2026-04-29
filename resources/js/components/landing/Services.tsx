@@ -43,6 +43,7 @@ export default function Services() {
             image: '/img/services/s6.jpg',
         },
     ];
+
     return (
         <section id="services" className="py-24 px-6">
             <div className="mx-auto max-w-6xl">

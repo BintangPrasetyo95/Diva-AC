@@ -1,6 +1,6 @@
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, MeshDistortMaterial, ContactShadows, useProgress } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import React, { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { useAppearance } from '@/hooks/use-appearance';
 
@@ -21,7 +21,10 @@ function Bubble({ index, position, scale, speed, isDark, startAnim, delay, bubbl
   const velocity = useRef(new THREE.Vector3(0, 0, 0));
 
   useFrame((state) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current) {
+return;
+}
+
     const t = state.clock.getElapsedTime();
 
     let easeOutBack = 0;
@@ -31,7 +34,9 @@ function Bubble({ index, position, scale, speed, isDark, startAnim, delay, bubbl
     let idleAnim = false;
 
     if (startAnim) {
-      if (animStartTime.current === null) animStartTime.current = t;
+      if (animStartTime.current === null) {
+animStartTime.current = t;
+}
       
       const elapsed = t - animStartTime.current - delay;
       const duration = 2.0;
@@ -69,7 +74,10 @@ function Bubble({ index, position, scale, speed, isDark, startAnim, delay, bubbl
             
             if (timeSinceIdle > 3.0) {
                 for (let i = 0; i < bubblePositions.current.length; i++) {
-                  if (i === index) continue;
+                  if (i === index) {
+continue;
+}
+
                   const otherPos = bubblePositions.current[i];
                   const dist = currentPos.current.distanceTo(otherPos);
                   
@@ -131,11 +139,12 @@ function Bubbles({ isDark }: { isDark: boolean }) {
   React.useEffect(() => {
     if (!active && progress === 100) {
       const t = setTimeout(() => setStartAnim(true), 600); // Wait for preloader to hide
+
       return () => clearTimeout(t);
     }
   }, [active, progress]);
 
-  const bubblesData = useMemo(() => {
+  const [bubblesData] = React.useState(() => {
     return Array.from({ length: 12 }).map(() => ({
       position: [
         (Math.random() - 0.5) * 12,
@@ -146,9 +155,9 @@ function Bubbles({ isDark }: { isDark: boolean }) {
       speed: Math.random() * 0.4 + 0.2,
       delay: Math.random() * 1.5,
     }));
-  }, []);
+  });
 
-  const bubblePositions = useRef(bubblesData.map(d => new THREE.Vector3(0, -25, 0)));
+  const bubblePositions = useRef(bubblesData.map(() => new THREE.Vector3(0, -25, 0)));
   const scales = useMemo(() => bubblesData.map(d => d.scale), [bubblesData]);
 
   return (

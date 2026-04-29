@@ -1,9 +1,9 @@
-import { m } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Clock } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
 
 export default function Contact() {
     const { t } = useLanguage();
+
     return (
         <section id="contact" className="py-24 px-6">
             <div className="mx-auto max-w-6xl">

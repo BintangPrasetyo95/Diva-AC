@@ -1,5 +1,5 @@
-import ThreeScene from '@/components/ThreeScene';
 import { Head } from '@inertiajs/react';
+import ThreeScene from '@/components/ThreeScene';
 
 export default function ThreePage() {
   return (

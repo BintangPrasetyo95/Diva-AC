@@ -1,7 +1,6 @@
-import { m } from 'framer-motion';
-import { Calendar, Clock, Car, Phone } from 'lucide-react';
-import { useLanguage } from '@/hooks/use-language';
 import { Link } from '@inertiajs/react';
+import { m } from 'framer-motion';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function Booking() {
     const { t } = useLanguage();

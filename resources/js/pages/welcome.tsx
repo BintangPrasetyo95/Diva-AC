@@ -1,22 +1,22 @@
-import React, { Suspense } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Menu } from 'lucide-react';
-import { dashboard, login, register } from '@/routes';
 import { LazyMotion, domAnimation, m, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import Hero from '@/components/landing/Hero';
-import Description from '@/components/landing/Description';
-import Services from '@/components/landing/Services';
-import Brands from '@/components/landing/Brands';
-import Booking from '@/components/landing/Booking';
-import Sparepart from '@/components/landing/Sparepart';
-import Gallery from '@/components/landing/Gallery';
-import Testimonials from '@/components/landing/Testimonials';
-import Contact from '@/components/landing/Contact';
-import Footer from '@/components/landing/Footer';
-import AppearanceToggleTab from '@/components/appearance-tabs';
-import Preloader from '@/components/landing/Preloader';
+import { Menu } from 'lucide-react';
+import React, { Suspense } from 'react';
 import AppLogo from '@/components/app-logo';
+import AppearanceToggleTab from '@/components/appearance-tabs';
+import Booking from '@/components/landing/Booking';
+import Brands from '@/components/landing/Brands';
+import Contact from '@/components/landing/Contact';
+import Description from '@/components/landing/Description';
+import Footer from '@/components/landing/Footer';
+import Gallery from '@/components/landing/Gallery';
+import Hero from '@/components/landing/Hero';
+import Preloader from '@/components/landing/Preloader';
+import Services from '@/components/landing/Services';
+import Sparepart from '@/components/landing/Sparepart';
+import Testimonials from '@/components/landing/Testimonials';
 import { useLanguage } from '@/hooks/use-language';
+import { dashboard, login, register } from '@/routes';
 
 // Lazy-load the heavy Three.js scene — deferred to a separate chunk,
 // preventing Three.js/fiber/drei from blocking the main thread on initial load.

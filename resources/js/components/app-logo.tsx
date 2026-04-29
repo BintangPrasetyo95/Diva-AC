@@ -1,5 +1,5 @@
-import AppLogoIcon from '@/components/app-logo-icon';
 import { useState, useEffect } from 'react';
+import AppLogoIcon from '@/components/app-logo-icon';
 
 function useShopStatus() {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,11 @@ function useShopStatus() {
             const weekday = parts.find(p => p.type === 'weekday')?.value;
             // Handle cases where hour might be '24' instead of '0' depending on browser
             let hourStr = parts.find(p => p.type === 'hour')?.value || '0';
-            if (hourStr === '24') hourStr = '0';
+
+            if (hourStr === '24') {
+hourStr = '0';
+}
+
             const hour = parseInt(hourStr, 10);
             
             if (weekday === 'Sun') {
@@ -34,7 +38,8 @@ function useShopStatus() {
         };
 
         checkStatus();
-        const interval = setInterval(checkStatus, 60000); 
+        const interval = setInterval(checkStatus, 60000);
+ 
         return () => clearInterval(interval);
     }, []);
 

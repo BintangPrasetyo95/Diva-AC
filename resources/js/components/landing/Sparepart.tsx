@@ -1,7 +1,7 @@
-import React from 'react';
 import { m } from 'framer-motion';
-import { useLanguage } from '@/hooks/use-language';
 import { ShoppingCart, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function Sparepart() {
     const { t } = useLanguage();

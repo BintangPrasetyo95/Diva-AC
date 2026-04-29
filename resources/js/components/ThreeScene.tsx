@@ -1,11 +1,12 @@
-import React, { Suspense, useMemo } from 'react';
+import { OrbitControls, useFBX, useTexture, ContactShadows, Center } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useFBX, useTexture, PerspectiveCamera, ContactShadows, Center } from '@react-three/drei';
+import React, { Suspense } from 'react';
 import * as THREE from 'three';
 import { useAppearance } from '@/hooks/use-appearance';
 
 function Mercedes() {
   const fbx = useFBX('/models/mercedes.fbx');
+
   return (
     <Center top>
       <primitive object={fbx} scale={0.07} castShadow receiveShadow />
@@ -15,8 +16,10 @@ function Mercedes() {
 
 function Floor() {
   const texture = useTexture('/img/concrete_floor.png');
+  // eslint-disable-next-line react-hooks/immutability
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   texture.repeat.set(70, 70); // Reduced repeat to make the texture look "bigger"
+  // eslint-disable-next-line react-hooks/immutability
   texture.colorSpace = THREE.SRGBColorSpace;
 
   return (
@@ -106,6 +109,7 @@ export default function ThreeScene() {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 

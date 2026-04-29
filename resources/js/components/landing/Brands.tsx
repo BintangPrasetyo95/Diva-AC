@@ -1,5 +1,4 @@
 import { m } from 'framer-motion';
-import { useLanguage } from '@/hooks/use-language';
 
 const brands = [
     { name: 'Mercedes-Benz', logo: '/img/brands/mercedes.svg', link: 'https://www.mercedes-benz.com/en/' },
@@ -18,8 +17,6 @@ const brands = [
 ];
 
 export default function Brands() {
-    const { t } = useLanguage();
-
     return (
         <section className="bg-black/5 py-16 px-6 backdrop-blur-sm dark:bg-white/5">
             <div className="mx-auto max-w-6xl">

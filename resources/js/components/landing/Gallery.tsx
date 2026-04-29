@@ -1,8 +1,8 @@
 import { m, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '@/hooks/use-language';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
 
 const images = [
     '/img/gallery/g1.jpg',
@@ -32,9 +32,17 @@ function Lightbox({
     const next = () => setCurrent((c) => (c + 1) % images.length);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'ArrowLeft') prev();
-        if (e.key === 'ArrowRight') next();
-        if (e.key === 'Escape') onClose();
+        if (e.key === 'ArrowLeft') {
+prev();
+}
+
+        if (e.key === 'ArrowRight') {
+next();
+}
+
+        if (e.key === 'Escape') {
+onClose();
+}
     };
 
     return (
@@ -58,7 +66,9 @@ function Lightbox({
 
             <button
                 className="absolute left-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
-                onClick={(e) => { e.stopPropagation(); prev(); }}
+                onClick={(e) => {
+ e.stopPropagation(); prev(); 
+}}
             >
                 <ChevronLeft className="size-6" />
             </button>
@@ -79,7 +89,9 @@ function Lightbox({
 
             <button
                 className="absolute right-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
-                onClick={(e) => { e.stopPropagation(); next(); }}
+                onClick={(e) => {
+ e.stopPropagation(); next(); 
+}}
             >
                 <ChevronRight className="size-6" />
             </button>

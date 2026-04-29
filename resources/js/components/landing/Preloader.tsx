@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const PRELOAD_DURATION = 1500; // ms
 
@@ -8,6 +8,7 @@ export default function Preloader() {
 
     useEffect(() => {
         const timeout = setTimeout(() => setShow(false), PRELOAD_DURATION);
+
         return () => clearTimeout(timeout);
     }, []);
 

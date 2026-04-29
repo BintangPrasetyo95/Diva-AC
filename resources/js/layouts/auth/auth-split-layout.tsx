@@ -1,11 +1,11 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
-import { ArrowLeft, Menu } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowLeft, Menu } from 'lucide-react';
+import { useState } from 'react';
 import AppLogoIcon from '@/components/app-logo-icon';
+import AppearanceToggleTab from '@/components/appearance-tabs';
 import FluidBubblesScene from '@/components/FluidBubblesScene';
 import Preloader from '@/components/landing/Preloader';
-import AppearanceToggleTab from '@/components/appearance-tabs';
 import { useLanguage } from '@/hooks/use-language';
 import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
@@ -14,6 +14,7 @@ import type { AuthLayoutProps } from '@/types';
 // even if the parent layout is memoized by the React compiler.
 function AuthPageHeading({ titleKey, descKey }: { titleKey?: string; descKey?: string }) {
     const { t } = useLanguage();
+
     return (
         <div className="flex flex-col items-center gap-2 text-center">
             <h1 className="text-xl font-medium">{t(titleKey ?? '')}</h1>

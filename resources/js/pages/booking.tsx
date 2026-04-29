@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { ArrowLeft, Calendar, Clock, Car, Phone, User, PenTool, Menu } from 'lucide-react';
-import { useLanguage } from '@/hooks/use-language';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Calendar, Clock, Car, Phone, User, PenTool, Menu } from 'lucide-react';
+import React, { useState } from 'react';
 import AppLogo from '@/components/app-logo';
 import AppearanceToggleTab from '@/components/appearance-tabs';
+import { useLanguage } from '@/hooks/use-language';
 import { dashboard, login, register } from '@/routes';
 
 export default function Booking() {

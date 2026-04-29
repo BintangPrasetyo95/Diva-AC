@@ -1,5 +1,5 @@
+import { Instagram, Facebook } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { Instagram, Facebook, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
 
 export default function Footer() {
