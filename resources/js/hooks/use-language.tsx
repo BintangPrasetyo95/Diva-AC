@@ -95,12 +95,12 @@ export const translations: Translations = {
         en: "Specialized treatment to eliminate bacteria and unpleasant smells from your AC vents."
     },
     service_vintage_title: {
-        id: "Restorasi AC Klasik",
-        en: "Vintage AC Restoration"
+        id: "Alarm, Central Lock & Power Window",
+        en: "Alarm, Central Lock & Power Window"
     },
     service_vintage_desc: {
-        id: "Meresorasi sistem kontrol iklim pada kendaraan klasik dan vintage ke standar modern.",
-        en: "Restoring climate control systems in classic and vintage vehicles to modern standards."
+        id: "Layanan khusus untuk alarm, central lock, dan power window mobil.",
+        en: "Specialized services for alarm, central lock, and power window systems."
     },
     // Description Section
     desc_title: {
@@ -389,6 +389,19 @@ export const translations: Translations = {
     service_opt_other: {
         id: "Lainnya / Kurang Yakin",
         en: "Other / Not Sure"
+    },
+    // Sparepart Section
+    buy_sparepart_title: {
+        id: "Beli Sparepart Sekarang!",
+        en: "Buy Sparepart Now!"
+    },
+    buy_sparepart_desc: {
+        id: "Temukan berbagai macam sparepart original untuk kenyamanan AC mobil kesayangan Anda. Kualitas terjamin dan harga terbaik.",
+        en: "Find a wide range of original spare parts for your beloved car's AC comfort. Guaranteed quality and best prices."
+    },
+    buy_now: {
+        id: "Beli Sekarang",
+        en: "Buy Now"
     },
 };
 

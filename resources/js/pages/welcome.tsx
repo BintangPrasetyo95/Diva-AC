@@ -8,6 +8,7 @@ import Description from '@/components/landing/Description';
 import Services from '@/components/landing/Services';
 import Brands from '@/components/landing/Brands';
 import Booking from '@/components/landing/Booking';
+import Sparepart from '@/components/landing/Sparepart';
 import Gallery from '@/components/landing/Gallery';
 import Testimonials from '@/components/landing/Testimonials';
 import Contact from '@/components/landing/Contact';
@@ -201,6 +202,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 <Brands />
                 <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
                     <Booking />
+                    <Sparepart />
                     <Gallery />
                     <Testimonials />
                     <Contact />
