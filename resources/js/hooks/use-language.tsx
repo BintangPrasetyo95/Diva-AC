@@ -402,6 +402,59 @@ export const translations: Translations = {
         id: "Beli Sekarang",
         en: "Buy Now"
     },
+    // Spareparts Page
+    spareparts_page_title: {
+        id: "Beli Sparepart",
+        en: "Buy Spareparts"
+    },
+    spareparts_page_subtitle: {
+        id: "Pilih sparepart yang Anda butuhkan dan isi formulir untuk memesan.",
+        en: "Select the spareparts you need and fill the form to order."
+    },
+    add_more_spareparts: {
+        id: "Tambah Sparepart Lain",
+        en: "Add More Spareparts"
+    },
+    remove: {
+        id: "Hapus",
+        en: "Remove"
+    },
+    form_address: {
+        id: "Alamat Pengiriman",
+        en: "Shipping Address"
+    },
+    address_placeholder: {
+        id: "Masukkan alamat lengkap pengiriman...",
+        en: "Enter full shipping address..."
+    },
+    sp_compressor: {
+        id: "Kompresor AC",
+        en: "AC Compressor"
+    },
+    sp_condenser: {
+        id: "Kondensor AC",
+        en: "AC Condenser"
+    },
+    sp_evaporator: {
+        id: "Evaporator AC",
+        en: "AC Evaporator"
+    },
+    sp_filter: {
+        id: "Filter Kabin",
+        en: "Cabin Filter"
+    },
+    sp_freon: {
+        id: "Freon R134a",
+        en: "R134a Freon"
+    },
+    confirm_purchase: {
+        id: "Konfirmasi Pembelian",
+        en: "Confirm Purchase"
+    },
+    select_sparepart: {
+        id: "Pilih Sparepart",
+        en: "Select Sparepart"
+    }
 };
 
 interface LanguageContextType {
@@ -414,13 +467,17 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const [language, setLanguage] = useState<Language>(() => {
-        const saved = localStorage.getItem('language');
-
-        return (saved as Language) || 'id';
+        if (typeof window !== 'undefined') {
+            const saved = window.localStorage.getItem('language');
+            return (saved as Language) || 'id';
+        }
+        return 'id';
     });
 
     useEffect(() => {
-        localStorage.setItem('language', language);
+        if (typeof window !== 'undefined') {
+            window.localStorage.setItem('language', language);
+        }
     }, [language]);
 
     const t = (key: string) => {

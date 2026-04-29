@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { m } from 'framer-motion';
 import { ShoppingCart, ArrowRight } from 'lucide-react';
 import React from 'react';
@@ -23,10 +24,10 @@ export default function Sparepart() {
                             transition={{ duration: 0.6, ease: "easeOut" }}
                             className="col-start-1 row-start-1 row-span-2 rounded-3xl overflow-hidden border border-[#1b1b18]/10 dark:border-white/10 shadow-xl bg-white/50 dark:bg-black/50 backdrop-blur-sm"
                         >
-                            <img 
-                                src="/img/spareparts/sp1.png" 
-                                alt="Sparepart 1" 
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                            <img
+                                src="/img/spareparts/sp1.png"
+                                alt="Sparepart 1"
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </m.div>
                         <m.div
@@ -36,10 +37,10 @@ export default function Sparepart() {
                             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                             className="col-start-2 row-start-1 row-span-1 rounded-3xl overflow-hidden border border-[#1b1b18]/10 dark:border-white/10 shadow-xl bg-white/50 dark:bg-black/50 backdrop-blur-sm"
                         >
-                            <img 
-                                src="/img/spareparts/sp2.png" 
-                                alt="Sparepart 2" 
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                            <img
+                                src="/img/spareparts/sp2.png"
+                                alt="Sparepart 2"
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </m.div>
                         <m.div
@@ -49,10 +50,10 @@ export default function Sparepart() {
                             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                             className="col-start-1 row-start-3 row-span-1 rounded-3xl overflow-hidden border border-[#1b1b18]/10 dark:border-white/10 shadow-xl bg-white/50 dark:bg-black/50 backdrop-blur-sm"
                         >
-                            <img 
-                                src="/img/spareparts/sp3.png" 
-                                alt="Sparepart 3" 
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                            <img
+                                src="/img/spareparts/sp3.png"
+                                alt="Sparepart 3"
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </m.div>
                         <m.div
@@ -62,10 +63,10 @@ export default function Sparepart() {
                             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                             className="col-start-2 row-start-2 row-span-2 rounded-3xl overflow-hidden border border-[#1b1b18]/10 dark:border-white/10 shadow-xl bg-white/50 dark:bg-black/50 backdrop-blur-sm"
                         >
-                            <img 
-                                src="/img/spareparts/sp4.png" 
-                                alt="Sparepart 4" 
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                            <img
+                                src="/img/spareparts/sp4.png"
+                                alt="Sparepart 4"
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </m.div>
                     </div>
@@ -105,16 +106,19 @@ export default function Sparepart() {
                             {t('buy_sparepart_desc')}
                         </m.p>
 
-                        <m.button
+                        <m.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.3 }}
-                            className="group mt-4 inline-flex items-center justify-center gap-3 rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_30px_rgb(220,38,38,0.3)] transition-all hover:bg-red-700 hover:shadow-[0_8px_30px_rgb(220,38,38,0.5)] active:scale-95"
                         >
-                            <span>{t('buy_now')}</span>
-                            <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
-                        </m.button>
+                            <Link href="/spareparts"
+                                className="group mt-4 inline-flex items-center justify-center gap-3 rounded-full bg-red-600 px-8 py-4 text-base font-bold text-white shadow-[0_8px_30px_rgb(220,38,38,0.3)] transition-all hover:bg-red-700 hover:shadow-[0_8px_30px_rgb(220,38,38,0.5)] active:scale-95"
+                            >
+                                <span>{t('buy_now')}</span>
+                                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        </m.div>
                     </div>
                 </div>
             </div>

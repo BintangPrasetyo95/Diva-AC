@@ -104,8 +104,10 @@ export default function ThreeScene() {
   const bgColor = isDark ? '#080808' : '#ffffff';
   
   const [isMobile, setIsMobile] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
+    setMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -113,29 +115,33 @@ export default function ThreeScene() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Use a default for SSR and initial hydration to match server
+  const activeBgColor = mounted ? bgColor : '#ffffff';
+  const activeIsDark = mounted ? isDark : false;
+
   return (
-    <div style={{ width: '100%', height: '100%', background: bgColor }}>
+    <div style={{ width: '100%', height: '100%', background: activeBgColor }}>
       <Canvas
         shadows
         dpr={[1, 2]}
         gl={{
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: isDark ? 1.5 : 1.0
+          toneMappingExposure: activeIsDark ? 1.5 : 1.0
         }}
         camera={{ 
           position: [15, 8, 15], 
           fov: isMobile ? 65 : 45 
         }}
       >
-        <color attach="background" args={[bgColor]} />
-        {isDark && <fogExp2 attach="fog" args={['#080808', 0.01]} />}
+        <color attach="background" args={[activeBgColor]} />
+        {activeIsDark && <fogExp2 attach="fog" args={['#080808', 0.01]} />}
 
         <Suspense fallback={null}>
-          <Lighting isDark={isDark} />
+          <Lighting isDark={activeIsDark} />
           <Mercedes />
-          {isDark && <Floor />}
+          {activeIsDark && <Floor />}
           <ContactShadows
-            opacity={isDark ? 0.8 : 0.4}
+            opacity={activeIsDark ? 0.8 : 0.4}
             scale={20}
             blur={2}
             far={10}
@@ -149,7 +155,7 @@ export default function ThreeScene() {
           enableDamping
           dampingFactor={0.05}
           autoRotate
-          autoRotateSpeed={isDark ? 1.5 : 1.0}
+          autoRotateSpeed={activeIsDark ? 1.5 : 1.0}
           maxPolarAngle={Math.PI / 2 - 0.05}
           enableZoom={false}
         />

@@ -15,3 +15,4 @@ require __DIR__.'/settings.php';
 
 Route::inertia('/three', 'ThreePage')->name('three');
 Route::inertia('/booking', 'booking')->name('booking');
+Route::inertia('/spareparts', 'spareparts')->name('spareparts');

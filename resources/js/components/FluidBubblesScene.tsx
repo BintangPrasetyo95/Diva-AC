@@ -182,30 +182,39 @@ export default function FluidBubblesScene() {
   const isDark = resolvedAppearance === 'dark';
   const bgColor = isDark ? '#050505' : '#f8f9fa';
 
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const activeIsDark = mounted ? isDark : false;
+  const activeBgColor = mounted ? bgColor : '#f8f9fa';
+
   return (
-    <div style={{ width: '100%', height: '100%', background: bgColor, position: 'absolute', inset: 0 }}>
+    <div style={{ width: '100%', height: '100%', background: activeBgColor, position: 'absolute', inset: 0 }}>
       <Canvas camera={{ position: [0, 0, 18], fov: 45 }}>
-        <color attach="background" args={[bgColor]} />
-        {isDark && <fog attach="fog" args={['#050505', 10, 30]} />}
-        {!isDark && <fog attach="fog" args={['#f8f9fa', 10, 30]} />}
+        <color attach="background" args={[activeBgColor]} />
+        {activeIsDark && <fog attach="fog" args={['#050505', 10, 30]} />}
+        {!activeIsDark && <fog attach="fog" args={['#f8f9fa', 10, 30]} />}
         
-        <ambientLight intensity={isDark ? 0.2 : 0.8} />
-        <directionalLight position={[10, 10, 5]} intensity={isDark ? 2 : 2.5} color={isDark ? "#aa44ff" : "#ffffff"} />
-        <directionalLight position={[-10, -10, -5]} intensity={isDark ? 1 : 1.5} color={isDark ? "#006aff" : "#ffeedd"} />
-        <pointLight position={[0, 0, 5]} intensity={isDark ? 1 : 0.5} color={isDark ? "#ff0055" : "#ffffff"} />
+        <ambientLight intensity={activeIsDark ? 0.2 : 0.8} />
+        <directionalLight position={[10, 10, 5]} intensity={activeIsDark ? 2 : 2.5} color={activeIsDark ? "#aa44ff" : "#ffffff"} />
+        <directionalLight position={[-10, -10, -5]} intensity={activeIsDark ? 1 : 1.5} color={activeIsDark ? "#006aff" : "#ffeedd"} />
+        <pointLight position={[0, 0, 5]} intensity={activeIsDark ? 1 : 0.5} color={activeIsDark ? "#ff0055" : "#ffffff"} />
         
         <React.Suspense fallback={null}>
-          <Bubbles isDark={isDark} />
-          <Environment preset={isDark ? 'night' : 'city'} />
+          <Bubbles isDark={activeIsDark} />
+          <Environment preset={activeIsDark ? 'night' : 'city'} />
         </React.Suspense>
         
         <ContactShadows 
           position={[0, -10, 0]} 
-          opacity={isDark ? 0.8 : 0.3} 
+          opacity={activeIsDark ? 0.8 : 0.3} 
           scale={40} 
           blur={3} 
           far={15} 
-          color={isDark ? "#000000" : "#222222"}
+          color={activeIsDark ? "#000000" : "#222222"}
         />
       </Canvas>
     </div>
