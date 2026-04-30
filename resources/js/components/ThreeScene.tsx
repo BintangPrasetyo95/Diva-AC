@@ -41,13 +41,13 @@ function Floor() {
   const texture = useTexture('/img/concrete_floor.png');
   // eslint-disable-next-line react-hooks/immutability
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(70, 70);
+  texture.repeat.set(90, 90);
   // eslint-disable-next-line react-hooks/immutability
   texture.colorSpace = THREE.SRGBColorSpace;
 
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.6, 0]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.4, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
         <meshStandardMaterial
           map={texture}
@@ -64,11 +64,11 @@ function Lighting({ isDark }: { isDark: boolean }) {
   return (
     <>
       <ambientLight intensity={isDark ? 0.8 : 1.2} />
-      <Environment preset={isDark ? "night" : "city"} />
+      <Environment preset={isDark ? "night" : "forest"} />
       {isDark && (
         <>
           <spotLight
-            color="#ff0000"
+            color="#ffffff"
             position={[10, 20, 10]}
             angle={0.5}
             penumbra={1}
@@ -87,7 +87,7 @@ function Lighting({ isDark }: { isDark: boolean }) {
             intensity={1000}
             castShadow
           />
-          <pointLight position={[0, 5, 0]} intensity={500} color="red" />
+          <pointLight position={[0, 5, 0]} intensity={500} color="gray" />
         </>
       )}
       {!isDark && (

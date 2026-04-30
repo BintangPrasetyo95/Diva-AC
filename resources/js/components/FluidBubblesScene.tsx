@@ -205,7 +205,7 @@ export default function FluidBubblesScene() {
         
         <React.Suspense fallback={null}>
           <Bubbles isDark={activeIsDark} />
-          <Environment preset={activeIsDark ? 'night' : 'city'} />
+          <Environment preset={activeIsDark ? 'night' : 'night'} />
         </React.Suspense>
         
         <ContactShadows 
