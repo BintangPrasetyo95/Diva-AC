@@ -26,6 +26,9 @@ export default function Hero() {
                         <div className="h-8 w-px bg-linear-to-b from-[#1b1b18]/40 to-transparent dark:from-white/40 sm:h-12" />
                     </div>
                 </m.div>
+                {/* Model Credit - Bottom Left on Desktop */}
+
+
 
                 <m.div
                     initial={{ y: 20 }}

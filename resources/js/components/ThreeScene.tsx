@@ -1,16 +1,39 @@
-import { OrbitControls, useFBX, useTexture, ContactShadows, Center } from '@react-three/drei';
+import { OrbitControls, useTexture, ContactShadows, Center, useGLTF, useAnimations, Environment } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import React, { Suspense } from 'react';
 import * as THREE from 'three';
 import { useAppearance } from '@/hooks/use-appearance';
 
-function Mercedes() {
-  const fbx = useFBX('/models/mercedes.fbx');
+function CarModel() {
+  const { scene, animations } = useGLTF('/models/car.glb');
+  const { actions } = useAnimations(animations, scene);
+  
+  React.useEffect(() => {
+    if (actions && Object.keys(actions).length > 0) {
+      Object.values(actions).forEach((action) => action?.play());
+    }
+
+    scene.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        
+        if ((child as THREE.Mesh).material) {
+          const mat = (child as THREE.Mesh).material as THREE.MeshStandardMaterial;
+          if (mat.color && mat.color.r === 0 && mat.color.g === 0 && mat.color.b === 0) {
+            mat.color.set('#000000');
+          }
+        }
+      }
+    });
+  }, [scene, actions]);
 
   return (
-    <Center top>
-      <primitive object={fbx} scale={0.07} castShadow receiveShadow />
-    </Center>
+    <group position={[0, 0.2, 0]}>
+      <Center>
+        <primitive object={scene} scale={1.0} />
+      </Center>
+    </group>
   );
 }
 
@@ -18,13 +41,13 @@ function Floor() {
   const texture = useTexture('/img/concrete_floor.png');
   // eslint-disable-next-line react-hooks/immutability
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(70, 70); // Reduced repeat to make the texture look "bigger"
+  texture.repeat.set(70, 70);
   // eslint-disable-next-line react-hooks/immutability
   texture.colorSpace = THREE.SRGBColorSpace;
 
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.6, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
         <meshStandardMaterial
           map={texture}
@@ -33,25 +56,6 @@ function Floor() {
           metalness={0.1}
         />
       </mesh>
-      {/* Large light glow below the model */}
-      {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
-        <circleGeometry args={[10, 10]} />
-        <meshBasicMaterial transparent opacity={0.4}>
-          <canvasTexture attach="map" args={[(() => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d')!;
-            const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-            gradient.addColorStop(0, 'rgba(150, 220, 255, 1)');
-            gradient.addColorStop(0.5, 'rgba(150, 220, 255, 0.2)');
-            gradient.addColorStop(1, 'rgba(150, 220, 255, 0)');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 512, 512);
-            return canvas;
-          })()]} />
-        </meshBasicMaterial>
-      </mesh> */}
     </group>
   );
 }
@@ -60,6 +64,7 @@ function Lighting({ isDark }: { isDark: boolean }) {
   return (
     <>
       <ambientLight intensity={isDark ? 0.8 : 1.2} />
+      <Environment preset={isDark ? "night" : "city"} />
       {isDark && (
         <>
           <spotLight
@@ -111,13 +116,18 @@ export default function ThreeScene() {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
+    useGLTF.preload('/models/car.glb');
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Use a default for SSR and initial hydration to match server
   const activeBgColor = mounted ? bgColor : '#ffffff';
   const activeIsDark = mounted ? isDark : false;
+
+  // SSR Guard: Never render Three.js content on the server to avoid Suspense/Canvas errors
+  if (!mounted) {
+    return <div style={{ width: '100%', height: '100%', background: activeBgColor }} />;
+  }
 
   return (
     <div style={{ width: '100%', height: '100%', background: activeBgColor }}>
@@ -126,10 +136,13 @@ export default function ThreeScene() {
         dpr={[1, 2]}
         gl={{
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: activeIsDark ? 1.5 : 1.0
+          toneMappingExposure: activeIsDark ? 1.5 : 1.0,
+        }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.type = THREE.PCFShadowMap;
         }}
         camera={{ 
-          position: [15, 8, 15], 
+          position: [4, 2, 4], // Moved closer for better framing
           fov: isMobile ? 65 : 45 
         }}
       >
@@ -138,13 +151,14 @@ export default function ThreeScene() {
 
         <Suspense fallback={null}>
           <Lighting isDark={activeIsDark} />
-          <Mercedes />
+          <CarModel />
           {activeIsDark && <Floor />}
           <ContactShadows
             opacity={activeIsDark ? 0.8 : 0.4}
             scale={20}
             blur={2}
             far={10}
+            position={[0, -0.5, 0]} 
             resolution={512}
             color="#000000"
           />
@@ -158,6 +172,7 @@ export default function ThreeScene() {
           autoRotateSpeed={activeIsDark ? 1.5 : 1.0}
           maxPolarAngle={Math.PI / 2 - 0.05}
           enableZoom={false}
+          target={[0, -0.5, 0]}
         />
       </Canvas>
     </div>
