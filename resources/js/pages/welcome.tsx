@@ -221,7 +221,7 @@ export default function Welcome({
 }) {
     return (
         <>
-            <Head title="" />
+            <Head title="Welcome" />
             <Preloader />
             <LandingPage canRegister={canRegister} />
         </>
