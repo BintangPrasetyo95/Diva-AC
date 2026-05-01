@@ -278,7 +278,9 @@ export default function Dashboard() {
                                     <div className={`size-2 rounded-full ${item.stock === 0 ? 'bg-red-600' : 'bg-amber-500'}`} />
                                     <div className="flex-1">
                                         <p className="text-sm font-bold text-[#1b1b18] dark:text-white">{item.name}</p>
-                                        <p className="text-[10px] text-[#1b1b18]/40 dark:text-white/40">{item.status} • {item.stock} in stock</p>
+                                        <p className="text-[10px] text-[#1b1b18]/40 dark:text-white/40">
+                                            {item.stock === 0 ? t('dash_out_of_stock') : t('dash_low_stock_alert')} • {item.stock} {t('dash_in_stock')}
+                                        </p>
                                     </div>
                                     <button className="text-[10px] font-bold text-red-600 uppercase">{t('dash_order')}</button>
                                 </div>

@@ -109,9 +109,9 @@ export default function ServicesPage() {
                 <m.div variants={itemVariants} className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
                         <h1 className="text-3xl font-black tracking-tight text-[#1b1b18] dark:text-white uppercase">
-                            {t('dash_stat_active')} <span className="text-red-600">Management</span>
+                            {t('dash_stat_active')} <span className="text-red-600">{t('dash_management')}</span>
                         </h1>
-                        <p className="text-sm text-[#1b1b18]/50 dark:text-white/50">Manage your workshop orders and service history.</p>
+                        <p className="text-sm text-[#1b1b18]/50 dark:text-white/50">{t('dash_services_desc')}</p>
                     </div>
 
                     <Button className="bg-red-600 hover:bg-red-700 text-white rounded-2xl px-6 h-12 font-bold uppercase tracking-widest text-xs shadow-lg shadow-red-600/20 transition-all hover:scale-105 active:scale-95">
@@ -134,11 +134,11 @@ export default function ServicesPage() {
                     <div className="flex items-center gap-2">
                         <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
                             <Filter className="mr-2 size-3" />
-                            Filter
+                            {t('dash_filter')}
                         </Button>
                         <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
                             <ArrowUpDown className="mr-2 size-3" />
-                            Sort
+                            {t('dash_sort')}
                         </Button>
                     </div>
                 </m.div>
@@ -149,12 +149,12 @@ export default function ServicesPage() {
                         <table className="w-full text-left">
                             <thead className="bg-[#1b1b18]/2 dark:bg-white/2 border-b border-[#1b1b18]/5 dark:border-white/5">
                                 <tr>
-                                    <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">Service ID</th>
+                                    <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">{t('dash_col_id')}</th>
                                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">{t('dash_col_customer')}</th>
                                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">{t('dash_col_car')}</th>
-                                    <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">Mechanic</th>
+                                    <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">{t('dash_col_mechanic')}</th>
                                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">{t('dash_col_status')}</th>
-                                    <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">Total</th>
+                                    <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">{t('dash_col_total')}</th>
                                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40"></th>
                                 </tr>
                             </thead>
@@ -198,9 +198,9 @@ export default function ServicesPage() {
                                                     </button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
-                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">View Details</DropdownMenuItem>
-                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">Edit Order</DropdownMenuItem>
-                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer text-red-600">Cancel Service</DropdownMenuItem>
+                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_view_details')}</DropdownMenuItem>
+                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_edit_order')}</DropdownMenuItem>
+                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer text-red-600">{t('dash_cancel_service')}</DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
                                         </td>
@@ -210,7 +210,7 @@ export default function ServicesPage() {
                                         <td colSpan={7} className="px-6 py-20 text-center">
                                             <div className="flex flex-col items-center gap-2 opacity-20">
                                                 <Wrench className="size-12" />
-                                                <p className="text-lg font-black uppercase tracking-tighter">No services found</p>
+                                                <p className="text-lg font-black uppercase tracking-tighter">{t('dash_no_services')}</p>
                                             </div>
                                         </td>
                                     </tr>

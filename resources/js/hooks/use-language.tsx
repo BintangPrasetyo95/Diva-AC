@@ -565,6 +565,190 @@ export const translations: Translations = {
         id: "TUTUP",
         en: "CLOSED"
     },
+    dash_pos: {
+        id: "Kasir (POS)",
+        en: "Point of Sale (POS)"
+    },
+    dash_system: {
+        id: "Sistem",
+        en: "System"
+    },
+    dash_settings: {
+        id: "Pengaturan",
+        en: "Settings"
+    },
+    dash_help: {
+        id: "Bantuan & Dukungan",
+        en: "Help & Support"
+    },
+    dash_inventory_desc: {
+        id: "Kelola suku cadang, tingkat stok, dan harga.",
+        en: "Manage your spare parts, stock levels, and pricing."
+    },
+    dash_customers_desc: {
+        id: "Kelola hubungan pelanggan dan catatan kendaraan.",
+        en: "Manage your customer relationships and vehicle records."
+    },
+    dash_services_desc: {
+        id: "Kelola pesanan bengkel dan riwayat layanan.",
+        en: "Manage your workshop orders and service history."
+    },
+    dash_inventory: {
+        id: "Inventaris",
+        en: "Inventory"
+    },
+    dash_database: {
+        id: "Database",
+        en: "Database"
+    },
+    dash_management: {
+        id: "Manajemen",
+        en: "Management"
+    },
+    dash_logs: {
+        id: "Log",
+        en: "Logs"
+    },
+    dash_add_part: {
+        id: "Tambah Part",
+        en: "Add Part"
+    },
+    dash_add_customer: {
+        id: "Tambah Pelanggan",
+        en: "Add Customer"
+    },
+    dash_total_items: {
+        id: "Total Barang",
+        en: "Total Items"
+    },
+    dash_low_stock: {
+        id: "Stok Menipis",
+        en: "Low Stock"
+    },
+    dash_total_value: {
+        id: "Total Nilai",
+        en: "Total Value"
+    },
+    dash_total_vehicles: {
+        id: "Total Kendaraan",
+        en: "Total Vehicles"
+    },
+    dash_new_this_month: {
+        id: "Baru Bulan Ini",
+        en: "New This Month"
+    },
+    dash_filter: {
+        id: "Filter",
+        en: "Filter"
+    },
+    dash_sort: {
+        id: "Urutkan",
+        en: "Sort"
+    },
+    dash_col_id: {
+        id: "ID",
+        en: "ID"
+    },
+    dash_col_item_name: {
+        id: "Nama Barang",
+        en: "Item Name"
+    },
+    dash_col_category: {
+        id: "Kategori",
+        en: "Category"
+    },
+    dash_col_stock_status: {
+        id: "Status Stok",
+        en: "Stock Status"
+    },
+    dash_col_price: {
+        id: "Harga",
+        en: "Price"
+    },
+    dash_col_joined_date: {
+        id: "Tanggal Daftar",
+        en: "Joined Date"
+    },
+    dash_col_mechanic: {
+        id: "Mekanik",
+        en: "Mechanic"
+    },
+    dash_col_total: {
+        id: "Total",
+        en: "Total"
+    },
+    dash_out_of_stock: {
+        id: "Stok Habis",
+        en: "Out of Stock"
+    },
+    dash_in_stock: {
+        id: "Tersedia",
+        en: "In Stock"
+    },
+    dash_low_stock_alert: {
+        id: "Stok Rendah",
+        en: "Low Stock"
+    },
+    dash_edit_details: {
+        id: "Edit Detail",
+        en: "Edit Details"
+    },
+    dash_update_stock: {
+        id: "Update Stok",
+        en: "Update Stock"
+    },
+    dash_delete_item: {
+        id: "Hapus Barang",
+        en: "Delete Item"
+    },
+    dash_edit_profile: {
+        id: "Edit Profil",
+        en: "Edit Profile"
+    },
+    dash_manage_cars: {
+        id: "Kelola Mobil",
+        en: "Manage Cars"
+    },
+    dash_delete_customer: {
+        id: "Hapus Pelanggan",
+        en: "Delete Customer"
+    },
+    dash_view_details: {
+        id: "Lihat Detail",
+        en: "View Details"
+    },
+    dash_edit_order: {
+        id: "Edit Pesanan",
+        en: "Edit Order"
+    },
+    dash_cancel_service: {
+        id: "Batalkan Layanan",
+        en: "Cancel Service"
+    },
+    dash_no_items: {
+        id: "Barang tidak ditemukan",
+        en: "No items found"
+    },
+    dash_no_customers: {
+        id: "Pelanggan tidak ditemukan",
+        en: "No customers found"
+    },
+    dash_no_services: {
+        id: "Layanan tidak ditemukan",
+        en: "No services found"
+    },
+    dash_male: {
+        id: "Laki-laki",
+        en: "Male"
+    },
+    dash_female: {
+        id: "Perempuan",
+        en: "Female"
+    },
+    dash_registration: {
+        id: "Pendaftaran",
+        en: "Registration"
+    },
     dash_confirm_q: {
         id: "Yakin?",
         en: "Are you sure?"

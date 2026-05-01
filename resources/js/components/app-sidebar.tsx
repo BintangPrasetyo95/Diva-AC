@@ -41,12 +41,12 @@ export function AppSidebar() {
         },
         {
             title: t('dash_stat_stock'),
-            href: '#',
+            href: '/inventory',
             icon: Package,
         },
         {
             title: t('dash_stat_customers'),
-            href: '#',
+            href: '/customers',
             icon: Users,
         },
         {
@@ -58,12 +58,12 @@ export function AppSidebar() {
 
     const secondaryNavItems: NavItem[] = [
         {
-            title: 'Settings',
+            title: t('dash_settings'),
             href: '#',
             icon: Settings,
         },
         {
-            title: 'Help & Support',
+            title: t('dash_help'),
             href: '#',
             icon: HelpCircle,
         },
@@ -85,12 +85,12 @@ export function AppSidebar() {
 
             <SidebarContent className="gap-4">
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_title')}</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_overview')}</SidebarGroupLabel>
                     <NavMain items={mainNavItems} />
                 </SidebarGroup>
 
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">System</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_system')}</SidebarGroupLabel>
                     <NavMain items={secondaryNavItems} />
                 </SidebarGroup>
             </SidebarContent>

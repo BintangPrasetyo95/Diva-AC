@@ -19,3 +19,5 @@ Route::inertia('/three', 'ThreePage')->name('three');
 Route::inertia('/booking', 'booking')->name('booking');
 Route::inertia('/spareparts', 'spareparts')->name('spareparts');
 Route::inertia('/services', 'services')->name('services');
+Route::inertia('/inventory', 'inventory')->name('inventory');
+Route::inertia('/customers', 'customers')->name('customers');
