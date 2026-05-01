@@ -61,7 +61,7 @@ export default function Booking() {
                                         
                                         {auth.user ? (
                                             <Link
-                                                href={dashboard()}
+                                                href="/dashboard"
                                                 className="inline-flex h-10 items-center justify-center rounded-full bg-[#1b1b18]/5 px-6 text-sm font-medium text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/10 border border-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
                                             >
                                                 {t('dashboard')}
@@ -140,7 +140,7 @@ export default function Booking() {
                                             <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-1">{t('account')}</span>
                                             {auth.user ? (
                                                 <Link
-                                                    href={dashboard()}
+                                                    href="/dashboard"
                                                     className="block rounded-xl bg-[#1b1b18]/5 px-4 py-2 text-sm font-medium text-[#1b1b18] transition-all hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                                                 >
                                                     {t('dashboard')}

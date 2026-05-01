@@ -502,16 +502,16 @@ export const translations: Translations = {
         en: "Monthly Revenue"
     },
     dash_stat_active: {
-        id: "Service Aktif",
-        en: "Active Services"
+        id: "Service",
+        en: "Services"
     },
     dash_stat_stock: {
-        id: "Stok Menipis",
-        en: "Low Stock Parts"
+        id: "Spare part",
+        en: "Spare Parts"
     },
     dash_stat_customers: {
-        id: "Pelanggan Baru",
-        en: "New Customers"
+        id: "Pelanggan",
+        en: "Customers"
     },
     dash_active_orders: {
         id: "Daftar Service Aktif",

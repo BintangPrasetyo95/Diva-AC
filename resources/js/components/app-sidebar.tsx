@@ -22,7 +22,6 @@ import {
     SidebarGroup,
     SidebarGroupLabel,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 import { useLanguage } from '@/hooks/use-language';
 
@@ -32,12 +31,12 @@ export function AppSidebar() {
     const mainNavItems: NavItem[] = [
         {
             title: t('dash_title'),
-            href: dashboard(),
+            href: '/dashboard',
             icon: LayoutGrid,
         },
         {
             title: t('dash_stat_active'),
-            href: '#',
+            href: '/services',
             icon: Wrench,
         },
         {
@@ -51,7 +50,7 @@ export function AppSidebar() {
             icon: Users,
         },
         {
-            title: 'Point of Sale',
+            title: t('dash_pos'),
             href: '#',
             icon: ShoppingBag,
         },
@@ -76,7 +75,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()}>
+                            <Link href="/dashboard">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

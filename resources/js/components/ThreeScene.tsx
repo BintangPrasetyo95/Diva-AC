@@ -37,7 +37,7 @@ function CarModel() {
   );
 }
 
-function Floor() {
+function Floor({ isDark }: { isDark: boolean }) {
   const texture = useTexture('/img/concrete_floor.png');
   // eslint-disable-next-line react-hooks/immutability
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -51,7 +51,7 @@ function Floor() {
         <planeGeometry args={[1000, 1000]} />
         <meshStandardMaterial
           map={texture}
-          color="#888888"
+          color={isDark ? "#222222" : "#888888"}
           roughness={0.9}
           metalness={0.1}
         />
@@ -63,31 +63,25 @@ function Floor() {
 function Lighting({ isDark }: { isDark: boolean }) {
   return (
     <>
-      <ambientLight intensity={isDark ? 0.8 : 1.2} />
-      <Environment preset={isDark ? "night" : "forest"} />
+      <ambientLight intensity={isDark ? 0.05 : 1.2} />
+      <Environment preset={isDark ? "night" : "forest"} blur={0.8} />
       {isDark && (
         <>
           <spotLight
             color="#ffffff"
-            position={[10, 20, 10]}
-            angle={0.5}
-            penumbra={1}
-            decay={2}
+            position={[0, 10, 0]}
+            angle={0.4}
+            penumbra={0.5}
+            decay={1}
             distance={50}
-            intensity={10}
+            intensity={150}
             castShadow
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
           />
-          <spotLight
-            color="#ffffff"
-            position={[-10, 20, -10]}
-            angle={0.5}
-            penumbra={1}
-            decay={2}
-            distance={50}
-            intensity={10}
-            castShadow
-          />
-          <pointLight position={[0, 5, 0]} intensity={50} color="gray" />
+          {/* Subtle rim light for the car */}
+          <pointLight position={[5, 2, 5]} intensity={10} color="#ffffff" />
+          <pointLight position={[-5, 2, -5]} intensity={10} color="#ffffff" />
         </>
       )}
       {!isDark && (
@@ -147,18 +141,18 @@ export default function ThreeScene() {
         }}
       >
         <color attach="background" args={[activeBgColor]} />
-        {activeIsDark && <fogExp2 attach="fog" args={['#080808', 0.01]} />}
+        {activeIsDark && <fogExp2 attach="fog" args={['#080808', 0.05]} />}
 
         <Suspense fallback={null}>
           <Lighting isDark={activeIsDark} />
           <CarModel />
-          {activeIsDark && <Floor />}
+          {activeIsDark && <Floor isDark={activeIsDark} />}
           <ContactShadows
-            opacity={activeIsDark ? 0.8 : 0.4}
-            scale={20}
-            blur={2}
+            opacity={activeIsDark ? 0.6 : 0.4}
+            scale={10}
+            blur={2.5}
             far={10}
-            position={[0, -0.5, 0]} 
+            position={[0, -0.39, 0]} 
             resolution={512}
             color="#000000"
           />

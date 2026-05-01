@@ -64,7 +64,6 @@ export default function Dashboard() {
     const [isStoreOpen, setIsStoreOpen] = React.useState(true);
     const [showConfirm, setShowConfirm] = React.useState(false);
 
-    // Stats with translated names
     const translatedStats = [
         { ...stats[0], name: t('dash_stat_revenue') },
         { ...stats[1], name: t('dash_stat_active') },
@@ -299,7 +298,7 @@ Dashboard.layout = {
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: dashboard(),
+            href: '/dashboard',
         },
     ],
 };
