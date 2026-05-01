@@ -55,8 +55,14 @@ export default function Footer() {
                 
                 <div className="mt-12 border-t border-[#1b1b18]/5 pt-8 text-center text-xs text-[#1b1b18]/40 dark:border-white/5 dark:text-white/40">
                     <p>© {new Date().getFullYear()} Diva AC. {t('footer_all_rights')}</p>
-                    <div className="mt-2 flex flex-col items-center gap-1 opacity-50">
-                        <p>
+                    <div className="mt-4 flex flex-col items-center gap-1 opacity-50">
+                        <p className="text-[10px] uppercase tracking-[0.2em] mb-2">
+                            {t('footer_trademark_disclaimer')}
+                        </p>
+                        <p className="max-w-md text-[10px] leading-relaxed">
+                            {t('footer_trademark_desc')}
+                        </p>
+                        <p className="mt-4">
                             3D Model: <a href="https://sketchfab.com/3d-models/free-ai-based-conceptcar-049-public-domain-cc0-72547082a35946878d3f59101ab583fa" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors">FREE Concept Car 049 by Unity Fan</a>
                         </p>
                     </div>

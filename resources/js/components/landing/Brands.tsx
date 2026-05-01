@@ -1,4 +1,5 @@
 import { m } from 'framer-motion';
+import { useLanguage } from '@/hooks/use-language';
 
 const brands = [
     { name: 'Mercedes-Benz', logo: '/img/brands/mercedes.svg', link: 'https://www.mercedes-benz.com/en/' },
@@ -17,9 +18,24 @@ const brands = [
 ];
 
 export default function Brands() {
+    const { t } = useLanguage();
+
     return (
         <section className="bg-black/5 py-16 px-6 backdrop-blur-sm dark:bg-white/5">
             <div className="mx-auto max-w-6xl">
+                <m.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-12 text-center"
+                >
+                    <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1b1b18]/40 dark:text-white/40">
+                        {t('brands_header_subtitle')}
+                    </h2>
+                    <h3 className="mt-2 text-2xl font-black uppercase tracking-tight text-[#1b1b18] dark:text-white">
+                        {t('brands_header_title_premium')} <span className="text-red-600">{t('brands_header_title_brands')}</span>
+                    </h3>
+                </m.div>
 
                 <div className="flex flex-wrap justify-center gap-12 md:gap-20">
                     {brands.map((brand, index) => (

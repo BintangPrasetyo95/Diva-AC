@@ -454,6 +454,108 @@ export const translations: Translations = {
     select_sparepart: {
         id: "Pilih Sparepart",
         en: "Select Sparepart"
+    },
+    // Brands & Legal
+    brands_header_subtitle: {
+        id: "Layanan Ahli untuk",
+        en: "Expert Care for"
+    },
+    brands_header_title_premium: {
+        id: "Brand",
+        en: "Premium"
+    },
+    brands_header_title_brands: {
+        id: "Premium",
+        en: "Brands"
+    },
+    footer_trademark_disclaimer: {
+        id: "Sanggahan Merek Dagang",
+        en: "Trademark Disclaimer"
+    },
+    footer_trademark_desc: {
+        id: "Semua nama merek, logo, dan merek dagang yang digunakan di situs ini adalah milik dari pemiliknya masing-masing. Diva AC adalah pusat layanan independen dan tidak berafiliasi dengan, atau didukung oleh, merek-merek tersebut.",
+        en: "All brand names, logos, and trademarks used on this site are property of their respective owners. Diva AC is an independent service center and is not affiliated with, or endorsed by, these brands."
+    },
+    // Dashboard
+    dash_title: {
+        id: "Dashboard",
+        en: "Dashboard"
+    },
+    dash_overview: {
+        id: "Ringkasan",
+        en: "Overview"
+    },
+    dash_welcome: {
+        id: "Selamat datang kembali, berikut perkembangan hari ini.",
+        en: "Welcome back, here's what's happening today."
+    },
+    dash_search: {
+        id: "Cari...",
+        en: "Search..."
+    },
+    dash_new_service: {
+        id: "Service Baru",
+        en: "New Service"
+    },
+    dash_stat_revenue: {
+        id: "Pendapatan Bulanan",
+        en: "Monthly Revenue"
+    },
+    dash_stat_active: {
+        id: "Service Aktif",
+        en: "Active Services"
+    },
+    dash_stat_stock: {
+        id: "Stok Menipis",
+        en: "Low Stock Parts"
+    },
+    dash_stat_customers: {
+        id: "Pelanggan Baru",
+        en: "New Customers"
+    },
+    dash_active_orders: {
+        id: "Daftar Service Aktif",
+        en: "Active Work Orders"
+    },
+    dash_view_all: {
+        id: "Lihat Semua",
+        en: "View All"
+    },
+    dash_col_customer: {
+        id: "Pelanggan",
+        en: "Customer"
+    },
+    dash_col_car: {
+        id: "Mobil",
+        en: "Car"
+    },
+    dash_col_status: {
+        id: "Status",
+        en: "Status"
+    },
+    dash_status_in_progress: {
+        id: "Proses",
+        en: "In Progress"
+    },
+    dash_status_pending: {
+        id: "Menunggu",
+        en: "Pending"
+    },
+    dash_status_completed: {
+        id: "Selesai",
+        en: "Completed"
+    },
+    dash_stock_alerts: {
+        id: "Peringatan Stok",
+        en: "Stock Alerts"
+    },
+    dash_order: {
+        id: "Pesan",
+        en: "Order"
+    },
+    dash_manage_inventory: {
+        id: "Kelola Inventaris",
+        en: "Manage Inventory"
     }
 };
 

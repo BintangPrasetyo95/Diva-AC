@@ -73,8 +73,8 @@ function Lighting({ isDark }: { isDark: boolean }) {
             angle={0.5}
             penumbra={1}
             decay={2}
-            distance={100}
-            intensity={1500}
+            distance={50}
+            intensity={10}
             castShadow
           />
           <spotLight
@@ -83,11 +83,11 @@ function Lighting({ isDark }: { isDark: boolean }) {
             angle={0.5}
             penumbra={1}
             decay={2}
-            distance={100}
-            intensity={1000}
+            distance={50}
+            intensity={10}
             castShadow
           />
-          <pointLight position={[0, 5, 0]} intensity={500} color="gray" />
+          <pointLight position={[0, 5, 0]} intensity={50} color="gray" />
         </>
       )}
       {!isDark && (

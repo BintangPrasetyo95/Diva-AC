@@ -32,7 +32,6 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
     const opacityValue = useTransform(scrollY, [0, 500], [1, 0.3]);
 
     return (
-        <LazyMotion features={domAnimation}>
         <div className="relative w-full">
             {/* Fixed Background Scene — lazy loaded to avoid blocking the main thread */}
             <m.div
@@ -210,7 +209,6 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 </div>
             </div>
         </div>
-        </LazyMotion>
     );
 }
 
@@ -219,11 +217,27 @@ export default function Welcome({
 }: {
     canRegister?: boolean;
 }) {
+    const [isLoaded, setIsLoaded] = React.useState(false);
+
     return (
-        <>
+        <LazyMotion features={domAnimation}>
             <Head title="Welcome" />
-            <Preloader />
-            <LandingPage canRegister={canRegister} />
-        </>
+            <Preloader onLoadingComplete={() => setIsLoaded(true)} />
+            
+            <m.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                    opacity: isLoaded ? 1 : 0, 
+                    y: isLoaded ? 0 : 20 
+                }}
+                transition={{ 
+                    duration: 1.5, 
+                    ease: [0.22, 1, 0.36, 1], // Custom easeOutExpo
+                    delay: 0.2 // Small delay to sync better with preloader exit
+                }}
+            >
+                <LandingPage canRegister={canRegister} />
+            </m.div>
+        </LazyMotion>
     );
 }
