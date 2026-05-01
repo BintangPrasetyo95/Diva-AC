@@ -69,3 +69,10 @@ export default function Brands() {
         </section>
     );
 }
+
+
+
+// Denso (Original/OEM): Paling populer dan sering menjadi standar bawaan (OEM) berbagai merk mobil.Sanden: Terkenal berkualitas, terutama untuk kompresor AC.Valeo: Sering digunakan untuk mobil-mobil buatan Eropa.Seiko Seiki: Produsen terkemuka lainnya.AC Delco: Menyediakan spare part aftermarket dengan kualitas teruji, sering untuk Chevrolet.Paco & Formula: Pilihan terjangkau untuk kondensor dan evaporator.Yaruki: Menyediakan berbagai komponen AC mobil.Fuji Cool, UCM, Seasons: Merek aftermarket alternatif yang harganya lebih ekonomis dibandingkan genuine part.
+
+// Denso 
+

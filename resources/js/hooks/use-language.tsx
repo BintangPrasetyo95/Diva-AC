@@ -101,6 +101,122 @@ export const translations: Translations = {
         id: "Layanan khusus untuk alarm, central lock, dan power window mobil.",
         en: "Specialized services for alarm, central lock, and power window systems."
     },
+    service_diagnostic_title: {
+        id: "Diagnostik Sistem",
+        en: "System Diagnostics"
+    },
+    service_diagnostic_desc: {
+        id: "Pemeriksaan menyeluruh menggunakan alat scan komputer canggih.",
+        en: "Thorough inspection using advanced computer scanning tools."
+    },
+    service_overhaul_title: {
+        id: "Overhaul Kompresor",
+        en: "Compressor Overhaul"
+    },
+    service_overhaul_desc: {
+        id: "Perbaikan total kompresor untuk mengembalikan performa seperti baru.",
+        en: "Complete compressor repair to restore performance to like-new condition."
+    },
+    service_whats_included: {
+        id: "Apa yang Termasuk",
+        en: "What's Included"
+    },
+    service_comp_solutions: {
+        id: "Solusi Komprehensif",
+        en: "Comprehensive Solutions"
+    },
+    service_why_choose: {
+        id: "Mengapa Memilih Ini",
+        en: "Why Choose This"
+    },
+    service_expert_benefits: {
+        id: "Manfaat Ahli",
+        en: "Expert Benefits"
+    },
+    service_ready_start: {
+        id: "Siap untuk memulai?",
+        en: "Ready to start?"
+    },
+    service_book_now_cta: {
+        id: "Pesan layanan ini sekarang",
+        en: "Book this service now"
+    },
+    // Features & Benefits
+    f_ac_1: { id: "Diagnostik Sistem Menyeluruh", en: "Full System Diagnostics" },
+    f_ac_2: { id: "Pembersihan Evaporator", en: "Evaporator Cleaning" },
+    f_ac_3: { id: "Flushing Kondensor", en: "Condenser Flushing" },
+    f_ac_4: { id: "Deteksi Kebocoran", en: "Leak Detection" },
+    b_ac_1: { id: "Performa Pendinginan Optimal", en: "Optimal Cooling Performance" },
+    b_ac_2: { id: "Kualitas Udara Lebih Baik", en: "Improved Air Quality" },
+    b_ac_3: { id: "Usia Komponen Lebih Lama", en: "Longer Component Life" },
+    b_ac_4: { id: "Efisiensi Bahan Bakar", en: "Fuel Efficiency" },
+    
+    f_sp_1: { id: "Kompresor Orisinal", en: "Genuine Compressors" },
+    f_sp_2: { id: "Kondensor Berkualitas Tinggi", en: "High-Quality Condensers" },
+    f_sp_3: { id: "Katup Ekspansi", en: "Expansion Valves" },
+    f_sp_4: { id: "Receiver Drier", en: "Receiver Driers" },
+    b_sp_1: { id: "Performa Standar Pabrik", en: "Factory Performance" },
+    b_sp_2: { id: "Garansi Terjamin", en: "Warranty Guaranteed" },
+    b_sp_3: { id: "Kecocokan Sempurna", en: "Perfect Fitment" },
+    b_sp_4: { id: "Ketahanan yang Handal", en: "Reliable Longevity" },
+    
+    f_mn_1: { id: "Pemeriksaan Berkala", en: "Periodic Check-ups" },
+    f_mn_2: { id: "Inspeksi Sabuk/Belt", en: "Belt Inspection" },
+    f_mn_3: { id: "Uji Tekanan", en: "Pressure Testing" },
+    f_mn_4: { id: "Penggantian Filter", en: "Filter Replacement" },
+    b_mn_1: { id: "Mencegah Perbaikan Mahal", en: "Prevent Costly Repairs" },
+    b_mn_2: { id: "Ketenangan Pikiran", en: "Peace of Mind" },
+    b_mn_3: { id: "Kenyamanan Konsisten", en: "Consistent Comfort" },
+    b_mn_4: { id: "Nilai Jual Kembali Kendaraan", en: "Vehicle Resale Value" },
+    
+    f_fr_1: { id: "Refrigeran Kemurnian Tinggi", en: "High-Purity Refrigerant" },
+    f_fr_2: { id: "Pengukuran Presisi", en: "Precise Measurement" },
+    f_fr_3: { id: "Uji Vakum", en: "Vacuum Testing" },
+    f_fr_4: { id: "Isi Ulang Pelumas", en: "Lubricant Recharge" },
+    b_fr_1: { id: "Pendinginan Instan", en: "Instant Cooling" },
+    b_fr_2: { id: "Gas Ramah Lingkungan", en: "Eco-Friendly Gases" },
+    b_fr_3: { id: "Perlindungan Kompresor", en: "Compressor Protection" },
+    b_fr_4: { id: "Beban Energi Rendah", en: "Low Energy Draw" },
+    
+    f_or_1: { id: "Perawatan Ozon", en: "Ozone Treatment" },
+    f_or_2: { id: "Fogging Antibakteri", en: "Antibacterial Fogging" },
+    f_or_3: { id: "Sanitasi Filter", en: "Filter Sanitization" },
+    f_or_4: { id: "Pembersihan Saluran Dalam", en: "Deep Duct Cleaning" },
+    b_or_1: { id: "Aroma Kabin Segar", en: "Fresh Cabin Scent" },
+    b_or_2: { id: "Eliminasi Alergen", en: "Eliminate Allergens" },
+    b_or_3: { id: "Lingkungan Lebih Sehat", en: "Healthier Environment" },
+    b_or_4: { id: "Menghilangkan Bau Membandel", en: "Remove Stubborn Smells" },
+    
+    f_cl_1: { id: "Pemasangan Alarm", en: "Alarm Installation" },
+    f_cl_2: { id: "Perbaikan Central Lock", en: "Central Lock Repair" },
+    f_cl_3: { id: "Servis Power Window", en: "Power Window Service" },
+    f_cl_4: { id: "Kabel Elektrikal", en: "Electrical Wiring" },
+    b_cl_1: { id: "Keamanan Kendaraan", en: "Vehicle Security" },
+    b_cl_2: { id: "Kemudahan Penggunaan", en: "Convenience" },
+    b_cl_3: { id: "Operasi yang Halus", en: "Smooth Operation" },
+    b_cl_4: { id: "Utamakan Keselamatan", en: "Safety First" },
+    
+    f_dg_1: { id: "Scanning Komputerisasi", en: "Computerized Scanning" },
+    f_dg_2: { id: "Kalibrasi Sensor", en: "Sensor Calibration" },
+    f_dg_3: { id: "Uji Kontinuitas Elektrikal", en: "Electrical Continuity Test" },
+    f_dg_4: { id: "Pembersihan Kode Error", en: "Error Code Clearing" },
+    b_dg_1: { id: "Akurasi Tepat", en: "Pinpoint Accuracy" },
+    b_dg_2: { id: "Troubleshooting Cepat", en: "Fast Troubleshooting" },
+    b_dg_3: { id: "Cegah Spekulasi Ganti Part", en: "Prevent Parts Guessing" },
+    b_dg_4: { id: "Laporan Kesehatan Digital", en: "Digital Health Report" },
+    
+    f_ov_1: { id: "Pembongkaran Total", en: "Full Disassembly" },
+    f_ov_2: { id: "Pembersihan Internal", en: "Internal Cleaning" },
+    f_ov_3: { id: "Ganti Seal & Gasket", en: "Seal & Gasket Replacement" },
+    f_ov_4: { id: "Uji Tekanan", en: "Pressure Testing" },
+    b_ov_1: { id: "Kembalikan Daya Dingin", en: "Restore Cooling Power" },
+    b_ov_2: { id: "Operasi Hening", en: "Quiet Operation" },
+    b_ov_3: { id: "Perbaikan Hemat Biaya", en: "Cost-Effective Repair" },
+    b_ov_4: { id: "Perpanjang Usia Komponen", en: "Extended Component Life" },
+    service_stat_clients: { id: "Pelanggan Puas", en: "Satisfied Clients" },
+    service_stat_experience: { id: "Tahun Pengalaman", en: "Years Experience" },
+    service_stat_parts: { id: "Suku Cadang Asli", en: "Genuine Parts" },
+    service_stat_support: { id: "Respon Dukungan", en: "Support Response" },
     // Description Section
     desc_title: {
         id: "Standar Keunggulan dalam Perawatan AC Mobil",
@@ -760,6 +876,54 @@ export const translations: Translations = {
     dash_no: {
         id: "Tidak",
         en: "No"
+    },
+    dash_service_details: {
+        id: "Detail Layanan",
+        en: "Service Details"
+    },
+    dash_customer_info: {
+        id: "Informasi Pelanggan",
+        en: "Customer Information"
+    },
+    dash_vehicle_info: {
+        id: "Informasi Kendaraan",
+        en: "Vehicle Information"
+    },
+    dash_service_info: {
+        id: "Informasi Layanan",
+        en: "Service Information"
+    },
+    dash_items_summary: {
+        id: "Ringkasan Barang",
+        en: "Items Summary"
+    },
+    dash_subtotal: {
+        id: "Subtotal",
+        en: "Subtotal"
+    },
+    dash_tax: {
+        id: "Pajak",
+        en: "Tax"
+    },
+    dash_grand_total: {
+        id: "Total Keseluruhan",
+        en: "Grand Total"
+    },
+    dash_print_invoice: {
+        id: "Cetak Invoice",
+        en: "Print Invoice"
+    },
+    dash_complete_service: {
+        id: "Selesaikan Layanan",
+        en: "Complete Service"
+    },
+    dash_back_to_services: {
+        id: "Kembali ke Layanan",
+        en: "Back to Services"
+    },
+    dash_col_qty: {
+        id: "Jumlah",
+        en: "Qty"
     }
 };
 

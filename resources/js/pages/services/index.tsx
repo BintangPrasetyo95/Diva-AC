@@ -1,4 +1,5 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+
 import { m, Variants, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 import {
     Wrench,
@@ -198,7 +199,9 @@ export default function ServicesPage() {
                                                     </button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
-                                                    <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_view_details')}</DropdownMenuItem>
+                                                    <DropdownMenuItem asChild className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">
+                                                        <Link href={`/services/${service.id}`}>{t('dash_view_details')}</Link>
+                                                    </DropdownMenuItem>
                                                     <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_edit_order')}</DropdownMenuItem>
                                                     <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer text-red-600">{t('dash_cancel_service')}</DropdownMenuItem>
                                                 </DropdownMenuContent>

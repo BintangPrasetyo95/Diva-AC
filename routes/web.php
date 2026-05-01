@@ -19,5 +19,13 @@ Route::inertia('/three', 'ThreePage')->name('three');
 Route::inertia('/booking', 'booking')->name('booking');
 Route::inertia('/spareparts', 'spareparts')->name('spareparts');
 Route::inertia('/services', 'services')->name('services');
+Route::get('/services/{id}', function ($id) {
+    return inertia('services/details', ['id' => $id]);
+})->name('services.details');
+Route::get('/services/info/{slug}', function ($slug) {
+    return inertia('services/info', ['slug' => $slug]);
+})->name('services.info');
+
+
 Route::inertia('/inventory', 'inventory')->name('inventory');
 Route::inertia('/customers', 'customers')->name('customers');

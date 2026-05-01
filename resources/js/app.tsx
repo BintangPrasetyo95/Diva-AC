@@ -17,6 +17,7 @@ createInertiaApp({
             case name === 'ThreePage':
             case name === 'booking':
             case name === 'spareparts':
+            case name === 'services/info':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
