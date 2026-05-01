@@ -556,6 +556,26 @@ export const translations: Translations = {
     dash_manage_inventory: {
         id: "Kelola Inventaris",
         en: "Manage Inventory"
+    },
+    dash_store_open: {
+        id: "BUKA",
+        en: "OPEN"
+    },
+    dash_store_closed: {
+        id: "TUTUP",
+        en: "CLOSED"
+    },
+    dash_confirm_q: {
+        id: "Yakin?",
+        en: "Are you sure?"
+    },
+    dash_yes: {
+        id: "Ya",
+        en: "Yes"
+    },
+    dash_no: {
+        id: "Tidak",
+        en: "No"
     }
 };
 

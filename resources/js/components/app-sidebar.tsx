@@ -1,7 +1,14 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { 
+    LayoutGrid, 
+    Wrench, 
+    Package, 
+    Users, 
+    Settings, 
+    HelpCircle,
+    ShoppingBag
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -12,34 +19,59 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarGroup,
+    SidebarGroupLabel,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+import { useLanguage } from '@/hooks/use-language';
 
 export function AppSidebar() {
+    const { t } = useLanguage();
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: t('dash_title'),
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        {
+            title: t('dash_stat_active'),
+            href: '#',
+            icon: Wrench,
+        },
+        {
+            title: t('dash_stat_stock'),
+            href: '#',
+            icon: Package,
+        },
+        {
+            title: t('dash_stat_customers'),
+            href: '#',
+            icon: Users,
+        },
+        {
+            title: 'Point of Sale',
+            href: '#',
+            icon: ShoppingBag,
+        },
+    ];
+
+    const secondaryNavItems: NavItem[] = [
+        {
+            title: 'Settings',
+            href: '#',
+            icon: Settings,
+        },
+        {
+            title: 'Help & Support',
+            href: '#',
+            icon: HelpCircle,
+        },
+    ];
+
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="inset" className="border-r-0">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -52,13 +84,22 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            <SidebarContent>
-                <NavMain items={mainNavItems} />
+            <SidebarContent className="gap-4">
+                <SidebarGroup>
+                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_title')}</SidebarGroupLabel>
+                    <NavMain items={mainNavItems} />
+                </SidebarGroup>
+
+                <SidebarGroup>
+                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">System</SidebarGroupLabel>
+                    <NavMain items={secondaryNavItems} />
+                </SidebarGroup>
             </SidebarContent>
 
-            <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
-                <NavUser />
+            <SidebarFooter className="p-2">
+                <div className="rounded-2xl bg-[#1b1b18]/5 p-2 dark:bg-white/5 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:p-0">
+                    <NavUser />
+                </div>
             </SidebarFooter>
         </Sidebar>
     );

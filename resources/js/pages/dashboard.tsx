@@ -1,13 +1,13 @@
 import { Head } from '@inertiajs/react';
-import { m, Variants, LazyMotion, domAnimation } from 'framer-motion';
-import { 
-    TrendingUp, 
-    Wrench, 
-    Package, 
-    Users, 
-    ArrowUpRight, 
-    Clock, 
-    CheckCircle2, 
+import { m, Variants, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
+import {
+    TrendingUp,
+    Wrench,
+    Package,
+    Users,
+    ArrowUpRight,
+    Clock,
+    CheckCircle2,
     Plus,
     Search,
     MoreHorizontal,
@@ -61,6 +61,8 @@ const itemVariants: Variants = {
 export default function Dashboard() {
     const { language, setLanguage, t } = useLanguage();
     const { appearance, updateAppearance } = useAppearance();
+    const [isStoreOpen, setIsStoreOpen] = React.useState(true);
+    const [showConfirm, setShowConfirm] = React.useState(false);
 
     // Stats with translated names
     const translatedStats = [
@@ -80,8 +82,8 @@ export default function Dashboard() {
     return (
         <LazyMotion features={domAnimation}>
             <Head title={t('dash_title')} />
-            
-            <m.div 
+
+            <m.div
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
@@ -95,48 +97,53 @@ export default function Dashboard() {
                         </h1>
                         <p className="text-sm text-[#1b1b18]/50 dark:text-white/50">{t('dash_welcome')}</p>
                     </div>
-                    
+
                     <div className="flex flex-wrap items-center gap-3">
-                        {/* Search */}
-                        <div className="relative hidden xl:block">
-                            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#1b1b18]/30 dark:text-white/30" />
-                            <input 
-                                type="text" 
-                                placeholder={t('dash_search')} 
-                                className="h-10 w-48 rounded-full border border-[#1b1b18]/10 bg-white/50 px-10 text-sm backdrop-blur-md transition-all focus:border-red-600/50 focus:outline-none dark:border-white/10 dark:bg-black/20"
-                            />
-                        </div>
-
-                        {/* Language Toggler */}
-                        <div className="flex items-center gap-1 rounded-full bg-[#1b1b18]/5 p-1 dark:bg-white/5">
-                            <button 
-                                onClick={() => setLanguage('id')}
-                                className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white'}`}
-                            >
-                                ID
-                            </button>
-                            <button 
-                                onClick={() => setLanguage('en')}
-                                className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white'}`}
-                            >
-                                EN
-                            </button>
-                        </div>
-
-                        {/* Theme Toggler */}
-                        <div className="flex items-center gap-1 rounded-full bg-[#1b1b18]/5 p-1 dark:bg-white/5">
-                            <button 
-                                onClick={() => updateAppearance('light')}
-                                className={`p-1.5 rounded-full transition-all ${appearance === 'light' ? 'bg-white text-amber-500 shadow-sm' : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40'}`}
-                            >
-                                <Sun className="size-3.5" />
-                            </button>
-                            <button 
-                                onClick={() => updateAppearance('dark')}
-                                className={`p-1.5 rounded-full transition-all ${appearance === 'dark' ? 'bg-[#1b1b18] text-indigo-400 shadow-sm' : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40'}`}
-                            >
-                                <Moon className="size-3.5" />
-                            </button>
+                        {/* Store Status Toggle */}
+                        <div className="relative">
+                            <AnimatePresence mode="wait">
+                                {!showConfirm ? (
+                                    <m.button
+                                        key="status-btn"
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        onClick={() => setShowConfirm(true)}
+                                        className={`flex h-10 items-center gap-2 rounded-full px-5 text-xs font-black uppercase tracking-widest transition-all shadow-lg ${isStoreOpen
+                                                ? 'bg-green-500 text-white shadow-green-500/20 hover:bg-green-600'
+                                                : 'bg-[#1b1b18] text-white shadow-[#1b1b18]/20 hover:bg-[#2b2b28] dark:bg-white dark:text-black'
+                                            }`}
+                                    >
+                                        <div className={`size-2 rounded-full ${isStoreOpen ? 'bg-white animate-pulse' : 'bg-red-500'}`} />
+                                        {isStoreOpen ? t('dash_store_open') : t('dash_store_closed')}
+                                    </m.button>
+                                ) : (
+                                    <m.div
+                                        key="confirm-box"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: 20 }}
+                                        className="flex items-center gap-2 rounded-full bg-[#1b1b18] p-1 dark:bg-white"
+                                    >
+                                        <span className="px-3 text-[10px] font-bold text-white dark:text-black uppercase">{t('dash_confirm_q')}</span>
+                                        <button
+                                            onClick={() => {
+                                                setIsStoreOpen(!isStoreOpen);
+                                                setShowConfirm(false);
+                                            }}
+                                            className="rounded-full bg-red-600 px-4 py-1.5 text-[10px] font-black text-white hover:bg-red-700"
+                                        >
+                                            {t('dash_yes')}
+                                        </button>
+                                        <button
+                                            onClick={() => setShowConfirm(false)}
+                                            className="px-3 py-1.5 text-[10px] font-black text-white/50 hover:text-white dark:text-black/50 dark:hover:text-black"
+                                        >
+                                            {t('dash_no')}
+                                        </button>
+                                    </m.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
                         <button className="flex h-10 items-center gap-2 rounded-full bg-red-600 px-6 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition-all hover:bg-red-700 active:scale-95">
@@ -172,17 +179,17 @@ export default function Dashboard() {
                                 {stat.subtitle && <p className="mt-1 text-xs font-medium text-red-600/70">{stat.subtitle}</p>}
                             </div>
                             {/* Decorative Floating Element */}
-                            <m.div 
-                                animate={{ 
+                            <m.div
+                                animate={{
                                     scale: [1, 1.2, 1],
                                     opacity: [0.05, 0.1, 0.05]
                                 }}
-                                transition={{ 
+                                transition={{
                                     duration: 4,
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute -right-4 -top-4 size-24 rounded-full bg-red-600/10 blur-3xl" 
+                                className="absolute -right-4 -top-4 size-24 rounded-full bg-red-600/10 blur-3xl"
                             />
                         </m.div>
                     ))}
@@ -191,7 +198,7 @@ export default function Dashboard() {
                 {/* Main Content Area */}
                 <div className="grid gap-6 lg:grid-cols-3">
                     {/* Recent Services Table */}
-                    <m.div 
+                    <m.div
                         variants={itemVariants}
                         className="overflow-hidden rounded-3xl border border-[#1b1b18]/5 bg-white shadow-sm dark:border-white/5 dark:bg-[#121212] lg:col-span-2"
                     >
@@ -254,7 +261,7 @@ export default function Dashboard() {
                     </m.div>
 
                     {/* Inventory Alerts */}
-                    <m.div 
+                    <m.div
                         variants={itemVariants}
                         className="rounded-3xl border border-[#1b1b18]/5 bg-white p-6 shadow-sm dark:border-white/5 dark:bg-[#121212]"
                     >

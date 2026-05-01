@@ -51,8 +51,8 @@ export default function AppLogo() {
 
     return (
         <div className="flex items-center gap-3">
-            <AppLogoIcon className="size-8" />
-            <div className="flex flex-col">
+            <AppLogoIcon className="size-8 shrink-0" />
+            <div className="flex flex-col group-data-[collapsible=icon]:hidden">
                 <div className="flex items-center gap-2">
                     <span className="text-xl font-black tracking-tighter leading-none text-[#1b1b18] dark:text-white uppercase">
                         Diva <span className="text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.3)]">AC</span>
