@@ -11,12 +11,14 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
+import { useLanguage } from '@/hooks/use-language';
 
 type Props = {
     user: User;
 };
 
 export function UserMenuContent({ user }: Props) {
+    const { t } = useLanguage();
     const cleanup = useMobileNavigation();
 
     const handleLogout = () => {
@@ -40,7 +42,7 @@ export function UserMenuContent({ user }: Props) {
                         onClick={cleanup}
                     >
                         <Settings className="mr-2" />
-                        Settings
+                        {t('dash_settings')}
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -54,7 +56,7 @@ export function UserMenuContent({ user }: Props) {
                     data-test="logout-button"
                 >
                     <LogOut className="mr-2" />
-                    Log out
+                    {t('auth_logout')}
                 </Link>
             </DropdownMenuItem>
         </>

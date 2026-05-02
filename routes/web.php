@@ -1,11 +1,10 @@
 <?php
 
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::inertia('/', 'welcome', [
-    'canRegister' => Features::enabled(Features::registration()),
-])->name('home');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 Route::inertia('dashboard', 'dashboard')->name('dashboard');
 
@@ -20,10 +19,12 @@ Route::inertia('/booking', 'booking')->name('booking');
 Route::inertia('/spareparts', 'spareparts')->name('spareparts');
 Route::inertia('/services', 'services')->name('services');
 Route::get('/services/{id}', function ($id) {
-    return inertia('services/details', ['id' => $id]);
+    return Inertia::render('services/details', ['id' => $id]);
 })->name('services.details');
 Route::get('/services/info/{slug}', function ($slug) {
-    return inertia('services/info', ['slug' => $slug]);
+    return Inertia::render('services/info', [
+        'service' => \App\Models\ServiceItem::where('slug', $slug)->firstOrFail()
+    ]);
 })->name('services.info');
 
 

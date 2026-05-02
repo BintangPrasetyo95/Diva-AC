@@ -58,6 +58,11 @@ export function AppSidebar() {
 
     const secondaryNavItems: NavItem[] = [
         {
+            title: t('dash_services_settings'),
+            href: '/settings/services',
+            icon: Wrench,
+        },
+        {
             title: t('dash_settings'),
             href: '#',
             icon: Settings,
@@ -75,7 +80,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard">
+                            <Link href="./">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

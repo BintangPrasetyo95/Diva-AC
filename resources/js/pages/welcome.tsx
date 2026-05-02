@@ -22,26 +22,33 @@ import { dashboard, login, register } from '@/routes';
 // preventing Three.js/fiber/drei from blocking the main thread on initial load.
 const ThreeScene = React.lazy(() => import('@/components/ThreeScene'));
 
-function LandingPage({ canRegister }: { canRegister: boolean }) {
+function LandingPage({ canRegister, services = [] }: { canRegister: boolean; services: any[] }) {
     const { auth } = usePage().props;
     const { scrollY } = useScroll();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = React.useState(false);
     const { language, setLanguage, t } = useLanguage();
+    const [mounted, setMounted] = React.useState(false);
+    
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
     
     const opacityValue = useTransform(scrollY, [0, 500], [1, 0.3]);
 
     return (
         <div className="relative w-full">
             {/* Fixed Background Scene — lazy loaded to avoid blocking the main thread */}
-            <m.div
-                style={{ opacity: opacityValue }}
-                className="fixed inset-0 z-0 pointer-events-none"
-            >
-                <Suspense fallback={<div className="w-full h-full bg-white dark:bg-[#080808]" />}>
-                    <ThreeScene />
-                </Suspense>
-            </m.div>
+            {mounted && (
+                <m.div
+                    style={{ opacity: opacityValue }}
+                    className="fixed inset-0 z-0 pointer-events-none"
+                >
+                    <Suspense fallback={<div className="w-full h-full bg-white dark:bg-[#080808]" />}>
+                        <ThreeScene />
+                    </Suspense>
+                </m.div>
+            )}
 
             {/* Sticky Branding Title */}
             <div className="fixed top-6 left-6 z-50">
@@ -196,7 +203,7 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
                 <Hero />
                 <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
                     <Description />
-                    <Services />
+                    <Services services={services} />
                 </div>
                 <Brands />
                 <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
@@ -214,8 +221,10 @@ function LandingPage({ canRegister }: { canRegister: boolean }) {
 
 export default function Welcome({
     canRegister = true,
+    services = [],
 }: {
     canRegister?: boolean;
+    services: any[];
 }) {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -236,7 +245,7 @@ export default function Welcome({
                     delay: 0.2 // Small delay to sync better with preloader exit
                 }}
             >
-                <LandingPage canRegister={canRegister} />
+                <LandingPage canRegister={canRegister} services={services} />
             </m.div>
         </LazyMotion>
     );

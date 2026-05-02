@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
+use App\Http\Controllers\Settings\ServiceSettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -22,3 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::inertia('settings/appearance', 'settings/appearance')->name('appearance.edit');
 });
+
+Route::get('settings/services', [ServiceSettingsController::class, 'edit'])->name('services.settings.edit');
+Route::patch('settings/services', [ServiceSettingsController::class, 'update'])->name('services.settings.update');
+

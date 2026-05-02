@@ -263,6 +263,14 @@ export const translations: Translations = {
         id: "Tanya kami apa saja",
         en: "Ask us anything"
     },
+    show_all: {
+        id: "Tampilkan Semua",
+        en: "Show All"
+    },
+    show_less: {
+        id: "Tampilkan Lebih Sedikit",
+        en: "Show Less"
+    },
     // Menu
     appearance: {
         id: "Tampilan",
@@ -400,6 +408,10 @@ export const translations: Translations = {
         en: "Log in"
     },
     // Auth - Shared fields
+    auth_logout: {
+        id: "Keluar",
+        en: "Log out"
+    },
     auth_email: {
         id: "Alamat Email",
         en: "Email address"
@@ -693,6 +705,10 @@ export const translations: Translations = {
         id: "Pengaturan",
         en: "Settings"
     },
+    dash_services_settings: {
+        id: "Pengaturan Layanan",
+        en: "Service Settings"
+    },
     dash_help: {
         id: "Bantuan & Dukungan",
         en: "Help & Support"
@@ -936,19 +952,26 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-    const [language, setLanguage] = useState<Language>(() => {
-        if (typeof window !== 'undefined') {
-            const saved = window.localStorage.getItem('language');
-            return (saved as Language) || 'id';
-        }
-        return 'id';
-    });
+    // Start with a fixed default language to avoid hydration mismatch
+    const [language, setLanguage] = useState<Language>('id');
+    const [isHydrated, setIsHydrated] = useState(false);
 
     useEffect(() => {
+        // Sync with localStorage after mount
         if (typeof window !== 'undefined') {
+            const saved = window.localStorage.getItem('language');
+            if (saved && (saved === 'id' || saved === 'en')) {
+                setLanguage(saved as Language);
+            }
+            setIsHydrated(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isHydrated && typeof window !== 'undefined') {
             window.localStorage.setItem('language', language);
         }
-    }, [language]);
+    }, [language, isHydrated]);
 
     const t = (key: string) => {
         return translations[key]?.[language] || key;
