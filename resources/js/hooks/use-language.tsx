@@ -701,6 +701,90 @@ export const translations: Translations = {
         id: "Sistem",
         en: "System"
     },
+    dash_website_content: {
+        id: "Manajemen Website",
+        en: "Website Content"
+    },
+    dash_gallery: {
+        id: "Galeri",
+        en: "Gallery"
+    },
+    dash_gallery_desc: {
+        id: "Kelola foto showcase bengkel Anda.",
+        en: "Manage your workshop showcase photos."
+    },
+    dash_add_new: {
+        id: "Tambah Baru",
+        en: "Add New"
+    },
+    dash_display_icon: {
+        id: "Ikon Tampilan",
+        en: "Display Icon"
+    },
+    dash_sort_order: {
+        id: "Urutan",
+        en: "Sort Order"
+    },
+    dash_visible_on_landing: {
+        id: "Tampilkan di Beranda",
+        en: "Visible on Landing"
+    },
+    dash_upload_photo: {
+        id: "Unggah Foto Baru",
+        en: "Upload New Photo"
+    },
+    dash_edit_info: {
+        id: "Edit Info",
+        en: "Edit Info"
+    },
+    dash_save_changes: {
+        id: "Simpan Perubahan",
+        en: "Save Changes"
+    },
+    dash_general_config: {
+        id: "Konfigurasi Umum",
+        en: "General Configuration"
+    },
+    dash_multilingual_content: {
+        id: "Konten Multibahasa",
+        en: "Multilingual Content"
+    },
+    dash_visual_assets: {
+        id: "Aset Visual",
+        en: "Visual Assets"
+    },
+    dash_service_image: {
+        id: "Gambar Layanan",
+        en: "Service Image"
+    },
+    dash_card_summary_id: {
+        id: "Ringkasan Kartu (ID)",
+        en: "Card Summary (ID)"
+    },
+    dash_card_summary_en: {
+        id: "Ringkasan Kartu (EN)",
+        en: "Card Summary (EN)"
+    },
+    dash_page_content_id: {
+        id: "Konten Halaman (ID)",
+        en: "Page Content (ID)"
+    },
+    dash_page_content_en: {
+        id: "Konten Halaman (EN)",
+        en: "Page Content (EN)"
+    },
+    dash_saving: {
+        id: "Menyimpan...",
+        en: "Saving Changes..."
+    },
+    dash_update_all: {
+        id: "Perbarui Semua Layanan",
+        en: "Update All Services"
+    },
+    dash_saved_success: {
+        id: "Berhasil disimpan",
+        en: "All Changes Saved"
+    },
     dash_settings: {
         id: "Pengaturan",
         en: "Settings"
@@ -714,60 +798,92 @@ export const translations: Translations = {
         en: "Help & Support"
     },
     dash_inventory_desc: {
-        id: "Kelola suku cadang, tingkat stok, dan harga.",
-        en: "Manage your spare parts, stock levels, and pricing."
+        id: "Kelola stok suku cadang dan peringatan.",
+        en: "Manage spare parts stock and alerts."
     },
-    dash_customers_desc: {
-        id: "Kelola hubungan pelanggan dan catatan kendaraan.",
-        en: "Manage your customer relationships and vehicle records."
+    dash_total_services: {
+        id: "Total Layanan",
+        en: "Total Services"
     },
-    dash_services_desc: {
-        id: "Kelola pesanan bengkel dan riwayat layanan.",
-        en: "Manage your workshop orders and service history."
+    dash_filter_all: {
+        id: "Semua",
+        en: "All"
     },
-    dash_inventory: {
-        id: "Inventaris",
-        en: "Inventory"
+    dash_sort_date: {
+        id: "Tanggal",
+        en: "Date"
     },
-    dash_database: {
-        id: "Database",
-        en: "Database"
+    dash_sort_name: {
+        id: "Nama",
+        en: "Name"
+    },
+    dash_sort_id: {
+        id: "ID",
+        en: "ID"
+    },
+    dash_sort_stock: {
+        id: "Stok",
+        en: "Stock"
+    },
+    dash_sort_price: {
+        id: "Harga",
+        en: "Price"
+    },
+    dash_gender: {
+        id: "Jenis Kelamin",
+        en: "Gender"
+    },
+    dash_ascending: {
+        id: "Menaik",
+        en: "Ascending"
+    },
+    dash_descending: {
+        id: "Menurun",
+        en: "Descending"
+    },
+    dash_newest: {
+        id: "Terbaru",
+        en: "Newest"
+    },
+    dash_oldest: {
+        id: "Terlama",
+        en: "Oldest"
     },
     dash_management: {
         id: "Manajemen",
         en: "Management"
     },
-    dash_logs: {
-        id: "Log",
-        en: "Logs"
+    dash_services_desc: {
+        id: "Kelola antrian service dan riwayat pelanggan.",
+        en: "Manage service queue and customer history."
     },
-    dash_add_part: {
-        id: "Tambah Part",
-        en: "Add Part"
+    dash_col_id: {
+        id: "ID",
+        en: "ID"
     },
-    dash_add_customer: {
-        id: "Tambah Pelanggan",
-        en: "Add Customer"
+    dash_col_mechanic: {
+        id: "Mekanik",
+        en: "Mechanic"
     },
-    dash_total_items: {
-        id: "Total Barang",
-        en: "Total Items"
+    dash_col_total: {
+        id: "Total",
+        en: "Total"
     },
-    dash_low_stock: {
-        id: "Stok Menipis",
-        en: "Low Stock"
+    dash_no_services: {
+        id: "Tidak ada layanan ditemukan",
+        en: "No services found"
     },
-    dash_total_value: {
-        id: "Total Nilai",
-        en: "Total Value"
+    dash_view_details: {
+        id: "Lihat Detail",
+        en: "View Details"
     },
-    dash_total_vehicles: {
-        id: "Total Kendaraan",
-        en: "Total Vehicles"
+    dash_edit_order: {
+        id: "Edit Pesanan",
+        en: "Edit Order"
     },
-    dash_new_this_month: {
-        id: "Baru Bulan Ini",
-        en: "New This Month"
+    dash_cancel_service: {
+        id: "Batalkan Layanan",
+        en: "Cancel Service"
     },
     dash_filter: {
         id: "Filter",
@@ -776,10 +892,6 @@ export const translations: Translations = {
     dash_sort: {
         id: "Urutkan",
         en: "Sort"
-    },
-    dash_col_id: {
-        id: "ID",
-        en: "ID"
     },
     dash_col_item_name: {
         id: "Nama Barang",
@@ -797,30 +909,6 @@ export const translations: Translations = {
         id: "Harga",
         en: "Price"
     },
-    dash_col_joined_date: {
-        id: "Tanggal Daftar",
-        en: "Joined Date"
-    },
-    dash_col_mechanic: {
-        id: "Mekanik",
-        en: "Mechanic"
-    },
-    dash_col_total: {
-        id: "Total",
-        en: "Total"
-    },
-    dash_out_of_stock: {
-        id: "Stok Habis",
-        en: "Out of Stock"
-    },
-    dash_in_stock: {
-        id: "Tersedia",
-        en: "In Stock"
-    },
-    dash_low_stock_alert: {
-        id: "Stok Rendah",
-        en: "Low Stock"
-    },
     dash_edit_details: {
         id: "Edit Detail",
         en: "Edit Details"
@@ -832,6 +920,82 @@ export const translations: Translations = {
     dash_delete_item: {
         id: "Hapus Barang",
         en: "Delete Item"
+    },
+    dash_no_items: {
+        id: "Tidak ada barang ditemukan",
+        en: "No items found"
+    },
+    dash_logs: {
+        id: "Log",
+        en: "Logs"
+    },
+    dash_add_part: {
+        id: "Tambah Suku Cadang",
+        en: "Add Part"
+    },
+    dash_total_items: {
+        id: "Total Barang",
+        en: "Total Items"
+    },
+    dash_low_stock: {
+        id: "Stok Menipis",
+        en: "Low Stock"
+    },
+    dash_total_value: {
+        id: "Total Nilai",
+        en: "Total Value"
+    },
+    dash_out_of_stock: {
+        id: "Stok Habis",
+        en: "Out of Stock"
+    },
+    dash_low_stock_alert: {
+        id: "Stok Rendah",
+        en: "Low Stock"
+    },
+    dash_in_stock: {
+        id: "Tersedia",
+        en: "In Stock"
+    },
+    dash_inventory: {
+        id: "Inventaris",
+        en: "Inventory"
+    },
+    dash_database: {
+        id: "Database",
+        en: "Database"
+    },
+    dash_customers_desc: {
+        id: "Kelola data pelanggan dan riwayat kendaraan.",
+        en: "Manage customer data and vehicle history."
+    },
+    dash_add_customer: {
+        id: "Tambah Pelanggan",
+        en: "Add Customer"
+    },
+    dash_total_vehicles: {
+        id: "Total Kendaraan",
+        en: "Total Vehicles"
+    },
+    dash_new_this_month: {
+        id: "Baru Bulan Ini",
+        en: "New This Month"
+    },
+    dash_col_joined_date: {
+        id: "Tanggal Bergabung",
+        en: "Joined Date"
+    },
+    dash_male: {
+        id: "Laki-laki",
+        en: "Male"
+    },
+    dash_female: {
+        id: "Perempuan",
+        en: "Female"
+    },
+    dash_registration: {
+        id: "Registrasi",
+        en: "Registration"
     },
     dash_edit_profile: {
         id: "Edit Profil",
@@ -845,41 +1009,9 @@ export const translations: Translations = {
         id: "Hapus Pelanggan",
         en: "Delete Customer"
     },
-    dash_view_details: {
-        id: "Lihat Detail",
-        en: "View Details"
-    },
-    dash_edit_order: {
-        id: "Edit Pesanan",
-        en: "Edit Order"
-    },
-    dash_cancel_service: {
-        id: "Batalkan Layanan",
-        en: "Cancel Service"
-    },
-    dash_no_items: {
-        id: "Barang tidak ditemukan",
-        en: "No items found"
-    },
     dash_no_customers: {
-        id: "Pelanggan tidak ditemukan",
+        id: "Tidak ada pelanggan ditemukan",
         en: "No customers found"
-    },
-    dash_no_services: {
-        id: "Layanan tidak ditemukan",
-        en: "No services found"
-    },
-    dash_male: {
-        id: "Laki-laki",
-        en: "Male"
-    },
-    dash_female: {
-        id: "Perempuan",
-        en: "Female"
-    },
-    dash_registration: {
-        id: "Pendaftaran",
-        en: "Registration"
     },
     dash_confirm_q: {
         id: "Yakin?",

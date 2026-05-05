@@ -136,7 +136,7 @@ export default function ServiceInfo({ service }: { service: ServiceItem }) {
                                         
                                         {auth.user ? (
                                             <Link
-                                                href="/dashboard"
+                                                href="/admin/dashboard"
                                                 className="inline-flex h-10 items-center justify-center rounded-full bg-[#1b1b18]/5 px-6 text-sm font-medium text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/10 border border-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
                                             >
                                                 {t('dashboard')}

@@ -329,11 +329,11 @@ ServiceDetails.layout = {
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: '/admin/dashboard',
         },
         {
             title: 'Services',
-            href: '/services',
+            href: '/admin/services',
         },
         {
             title: 'Details',

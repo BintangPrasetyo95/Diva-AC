@@ -34,17 +34,17 @@ export default function Hero() {
                     initial={{ y: 20 }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="rounded-4xl border border-white/20 bg-white/5 p-8 backdrop-blur-md dark:border-white/5 dark:bg-black/5 max-w-3xl"
+                    className="rounded-3xl sm:rounded-4xl border border-white/20 bg-white/5 p-6 sm:p-8 backdrop-blur-md dark:border-white/5 dark:bg-black/5 max-w-3xl mx-4 mb-16 sm:mx-0"
                 >
-                    <p className="mx-auto mb-8 text-lg font-medium text-[#1b1b18]/80 sm:text-xl dark:text-white/80">
+                    <p className="mx-auto mb-6 sm:mb-8 text-sm sm:text-lg font-medium text-[#1b1b18]/80 dark:text-white/80">
                         {t('hero_tagline')}
                     </p>
-                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row">
                         <m.a
                             href="#booking"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="flex items-center gap-2 rounded-full bg-red-600 px-8 py-4 text-sm font-bold text-white transition-all hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-red-600 px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-bold text-white transition-all hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]"
                         >
                             {t('book_now')}
                             <ArrowRight className="size-4" />
@@ -53,7 +53,7 @@ export default function Hero() {
                             href="#services"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="rounded-full border border-[#1b1b18]/20 bg-white/10 px-8 py-4 text-sm font-semibold text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/5 dark:border-white/20 dark:text-white dark:hover:bg-white/5"
+                            className="w-full sm:w-auto rounded-full border border-[#1b1b18]/20 bg-white/10 px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-semibold text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/5 dark:border-white/20 dark:text-white dark:hover:bg-white/5"
                         >
                             {t('explore_services')}
                         </m.a>

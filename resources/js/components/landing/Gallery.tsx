@@ -160,21 +160,47 @@ const MarqueeRow = ({
     );
 };
 
-export default function Gallery() {
+interface GalleryItem {
+    id: number;
+    image_path: string;
+    title: string | null;
+    description: string | null;
+    order: number;
+}
+
+const STATIC_IMAGES = [
+    '/img/gallery/g1.jpg',
+    '/img/gallery/g2.jpg',
+    '/img/gallery/g3.jpg',
+    '/img/gallery/g4.jpg',
+    '/img/gallery/g5.jpg',
+    '/img/gallery/g6.jpg',
+    '/img/gallery/g7.jpg',
+    '/img/gallery/g8.jpg',
+    '/img/gallery/g9.jpg',
+    '/img/gallery/g10.jpg',
+];
+
+export default function Gallery({ items = [] }: { items?: GalleryItem[] }) {
     const { t } = useLanguage();
     const [showAll, setShowAll] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-    const row1Images = images.slice(0, 5);
-    const row2Images = images.slice(5, 10);
-    const remainingImages = images.slice(10);
+    // Combine database images with static images if no dynamic images exist
+    const displayImages = items.length > 0 
+        ? items.map(item => item.image_path.startsWith('gallery/') ? `/storage/${item.image_path}` : item.image_path)
+        : STATIC_IMAGES;
+
+    const row1Images = displayImages.slice(0, 5);
+    const row2Images = displayImages.slice(5, 10);
+    const remainingImages = displayImages.slice(10);
 
     return (
         <>
             {lightboxIndex !== null && createPortal(
                 <AnimatePresence>
                     <Lightbox
-                        images={images}
+                        images={displayImages}
                         index={lightboxIndex}
                         onClose={() => setLightboxIndex(null)}
                     />
@@ -193,7 +219,7 @@ export default function Gallery() {
                     {row1Images.length > 0 && (
                         <MarqueeRow
                             images={row1Images}
-                            allImages={images}
+                            allImages={displayImages}
                             direction="right"
                             isFirst
                             onImageClick={setLightboxIndex}
@@ -202,7 +228,7 @@ export default function Gallery() {
                     {row2Images.length > 0 && (
                         <MarqueeRow
                             images={row2Images}
-                            allImages={images}
+                            allImages={displayImages}
                             direction="left"
                             onImageClick={setLightboxIndex}
                         />

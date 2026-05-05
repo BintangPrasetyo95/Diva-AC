@@ -38,7 +38,7 @@ export default function Brands() {
                 <div className="flex flex-wrap justify-center gap-12 md:gap-20">
                     {brands.map((brand, index) => {
                         const isTextOnly = 'isTextOnly' in brand && brand.isTextOnly;
-                        const Wrapper = isTextOnly ? 'div' : m.a;
+                        const Wrapper = isTextOnly ? m.div : m.a;
                         
                         return (
                             <Wrapper

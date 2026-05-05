@@ -21,6 +21,7 @@ class WelcomeController extends Controller
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'services' => ServiceItem::where('is_active', true)->orderBy('order')->get(),
+            'gallery' => \App\Models\GalleryItem::where('is_active', true)->orderBy('order')->get(),
         ]);
     }
 }

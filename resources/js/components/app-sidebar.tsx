@@ -6,7 +6,10 @@ import {
     Users, 
     Settings, 
     HelpCircle,
-    ShoppingBag
+    ShoppingBag,
+    Image as ImageIcon,
+    ShieldCheck,
+    Store
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
@@ -31,46 +34,54 @@ export function AppSidebar() {
     const mainNavItems: NavItem[] = [
         {
             title: t('dash_title'),
-            href: '/dashboard',
+            href: '/admin/dashboard',
             icon: LayoutGrid,
         },
         {
             title: t('dash_stat_active'),
-            href: '/services',
+            href: '/admin/services',
             icon: Wrench,
         },
         {
             title: t('dash_stat_stock'),
-            href: '/inventory',
+            href: '/admin/inventory',
             icon: Package,
         },
         {
             title: t('dash_stat_customers'),
-            href: '/customers',
+            href: '/admin/customers',
             icon: Users,
         },
+    ];
+
+    const websiteNavItems: NavItem[] = [
         {
-            title: t('dash_pos'),
-            href: '#',
-            icon: ShoppingBag,
+            title: t('dash_services_settings'),
+            href: '/admin/landing-services',
+            icon: Settings,
+        },
+        {
+            title: t('dash_gallery'),
+            href: '/admin/gallery',
+            icon: ImageIcon,
         },
     ];
 
     const secondaryNavItems: NavItem[] = [
         {
-            title: t('dash_services_settings'),
-            href: '/settings/services',
-            icon: Wrench,
+            title: 'User Management',
+            href: '/admin/users',
+            icon: ShieldCheck,
+        },
+        {
+            title: 'Business Profile',
+            href: '/admin/profile',
+            icon: Store,
         },
         {
             title: t('dash_settings'),
             href: '#',
             icon: Settings,
-        },
-        {
-            title: t('dash_help'),
-            href: '#',
-            icon: HelpCircle,
         },
     ];
 
@@ -80,7 +91,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="./">
+                            <Link href="/">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -92,6 +103,11 @@ export function AppSidebar() {
                 <SidebarGroup>
                     <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_overview')}</SidebarGroupLabel>
                     <NavMain items={mainNavItems} />
+                </SidebarGroup>
+
+                <SidebarGroup>
+                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_website_content')}</SidebarGroupLabel>
+                    <NavMain items={websiteNavItems} />
                 </SidebarGroup>
 
                 <SidebarGroup>

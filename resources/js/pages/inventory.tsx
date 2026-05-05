@@ -65,6 +65,8 @@ const itemVariants: Variants = {
 export default function InventoryPage() {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const [statusFilter, setStatusFilter] = React.useState('All');
+    const [sortConfig, setSortConfig] = React.useState<{ key: string; direction: 'asc' | 'desc' }>({ key: 'name', direction: 'asc' });
 
     const getStockBadge = (stock: number, status: string) => {
         if (stock === 0) {
@@ -90,11 +92,29 @@ export default function InventoryPage() {
         );
     };
 
-    const filteredInventory = inventory.filter(item => 
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        item.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.id.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredInventory = inventory
+        .filter(item => {
+            const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                 item.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                 item.id.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesStatus = statusFilter === 'All' || item.status === statusFilter;
+            return matchesSearch && matchesStatus;
+        })
+        .sort((a, b) => {
+            const direction = sortConfig.direction === 'asc' ? 1 : -1;
+            if (sortConfig.key === 'stock') {
+                return (a.stock - b.stock) * direction;
+            }
+            if (sortConfig.key === 'price') {
+                const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+                const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+                return (priceA - priceB) * direction;
+            }
+            if (sortConfig.key === 'name') {
+                return a.name.localeCompare(b.name) * direction;
+            }
+            return 0;
+        });
 
     return (
         <LazyMotion features={domAnimation}>
@@ -170,14 +190,38 @@ export default function InventoryPage() {
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
-                            <Filter className="mr-2 size-3" />
-                            {t('dash_filter')}
-                        </Button>
-                        <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
-                            <ArrowUpDown className="mr-2 size-3" />
-                            {t('dash_sort')}
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
+                                    <Filter className="mr-2 size-3" />
+                                    {t('dash_filter')}: {statusFilter === 'All' ? t('dash_filter_all') : statusFilter}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
+                                <DropdownMenuItem onClick={() => setStatusFilter('All')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_filter_all')}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('Normal')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">Normal</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('Low')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">Low</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('Critical')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">Critical</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('Out of Stock')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">Out of Stock</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
+                                    <ArrowUpDown className="mr-2 size-3" />
+                                    {t('dash_sort')}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'name', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_name')} (A-Z)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'name', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_name')} (Z-A)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'stock', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_stock')} (High-Low)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'stock', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_stock')} (Low-High)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'price', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_price')} (High-Low)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'price', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_price')} (Low-High)</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </m.div>
 
@@ -264,11 +308,11 @@ InventoryPage.layout = {
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: '/admin/dashboard',
         },
         {
             title: 'Inventory',
-            href: '/inventory',
+            href: '/admin/inventory',
         },
     ],
 };

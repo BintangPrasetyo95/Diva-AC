@@ -62,6 +62,8 @@ const itemVariants: Variants = {
 export default function ServicesPage() {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const [statusFilter, setStatusFilter] = React.useState('All');
+    const [sortConfig, setSortConfig] = React.useState<{ key: string; direction: 'asc' | 'desc' }>({ key: 'date', direction: 'desc' });
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -90,11 +92,34 @@ export default function ServicesPage() {
         }
     };
 
-    const filteredServices = services.filter(s => 
-        s.customer.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        s.car.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        s.id.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const stats = {
+        total: services.length,
+        pending: services.filter(s => s.status === 'Pending').length,
+        inProgress: services.filter(s => s.status === 'In Progress').length,
+        completed: services.filter(s => s.status === 'Completed').length,
+    };
+
+    const filteredServices = services
+        .filter(s => {
+            const matchesSearch = s.customer.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                 s.car.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                 s.id.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesStatus = statusFilter === 'All' || s.status === statusFilter;
+            return matchesSearch && matchesStatus;
+        })
+        .sort((a, b) => {
+            const direction = sortConfig.direction === 'asc' ? 1 : -1;
+            if (sortConfig.key === 'date') {
+                return (new Date(a.date).getTime() - new Date(b.date).getTime()) * direction;
+            }
+            if (sortConfig.key === 'customer') {
+                return a.customer.localeCompare(b.customer) * direction;
+            }
+            if (sortConfig.key === 'id') {
+                return a.id.localeCompare(b.id) * direction;
+            }
+            return 0;
+        });
 
     return (
         <LazyMotion features={domAnimation}>
@@ -121,6 +146,46 @@ export default function ServicesPage() {
                     </Button>
                 </m.div>
 
+                {/* Stats Cards */}
+                <m.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-white dark:bg-[#121212] p-6 rounded-3xl border border-[#1b1b18]/5 dark:border-white/5 shadow-sm flex items-center gap-4">
+                        <div className="size-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600">
+                            <Wrench className="size-6" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-[#1b1b18]/40 dark:text-white/40 uppercase tracking-widest">{t('dash_total_services')}</p>
+                            <p className="text-2xl font-black text-[#1b1b18] dark:text-white">{stats.total}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white dark:bg-[#121212] p-6 rounded-3xl border border-[#1b1b18]/5 dark:border-white/5 shadow-sm flex items-center gap-4">
+                        <div className="size-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600">
+                            <Clock className="size-6" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-[#1b1b18]/40 dark:text-white/40 uppercase tracking-widest">{t('dash_status_pending')}</p>
+                            <p className="text-2xl font-black text-[#1b1b18] dark:text-white">{stats.pending}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white dark:bg-[#121212] p-6 rounded-3xl border border-[#1b1b18]/5 dark:border-white/5 shadow-sm flex items-center gap-4">
+                        <div className="size-12 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-600">
+                            <Wrench className="size-6" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-[#1b1b18]/40 dark:text-white/40 uppercase tracking-widest">{t('dash_status_in_progress')}</p>
+                            <p className="text-2xl font-black text-[#1b1b18] dark:text-white">{stats.inProgress}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white dark:bg-[#121212] p-6 rounded-3xl border border-[#1b1b18]/5 dark:border-white/5 shadow-sm flex items-center gap-4">
+                        <div className="size-12 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-600">
+                            <CheckCircle2 className="size-6" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-[#1b1b18]/40 dark:text-white/40 uppercase tracking-widest">{t('dash_status_completed')}</p>
+                            <p className="text-2xl font-black text-[#1b1b18] dark:text-white">{stats.completed}</p>
+                        </div>
+                    </div>
+                </m.div>
+
                 {/* Filters & Search */}
                 <m.div variants={itemVariants} className="flex flex-col gap-4 md:flex-row md:items-center justify-between bg-white dark:bg-[#121212] p-4 rounded-3xl border border-[#1b1b18]/5 dark:border-white/5 shadow-sm">
                     <div className="relative w-full md:w-96">
@@ -133,14 +198,36 @@ export default function ServicesPage() {
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
-                            <Filter className="mr-2 size-3" />
-                            {t('dash_filter')}
-                        </Button>
-                        <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
-                            <ArrowUpDown className="mr-2 size-3" />
-                            {t('dash_sort')}
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
+                                    <Filter className="mr-2 size-3" />
+                                    {t('dash_filter')}: {statusFilter === 'All' ? t('dash_filter_all') : t(`dash_status_${statusFilter.toLowerCase().replace(' ', '_')}`)}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
+                                <DropdownMenuItem onClick={() => setStatusFilter('All')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_filter_all')}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('Pending')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_status_pending')}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('In Progress')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_status_in_progress')}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setStatusFilter('Completed')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_status_completed')}</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
+                                    <ArrowUpDown className="mr-2 size-3" />
+                                    {t('dash_sort')}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'date', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_date')} ({t('dash_newest')})</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'date', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_date')} ({t('dash_oldest')})</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'customer', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_name')} (A-Z)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'customer', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_name')} (Z-A)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'id', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_id')}</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </m.div>
 
@@ -200,7 +287,7 @@ export default function ServicesPage() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
                                                     <DropdownMenuItem asChild className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">
-                                                        <Link href={`/services/${service.id}`}>{t('dash_view_details')}</Link>
+                                                        <Link href={`/admin/services/${service.id}`}>{t('dash_view_details')}</Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_edit_order')}</DropdownMenuItem>
                                                     <DropdownMenuItem className="rounded-xl focus:bg-red-600 focus:text-white font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer text-red-600">{t('dash_cancel_service')}</DropdownMenuItem>
@@ -231,11 +318,11 @@ ServicesPage.layout = {
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: '/admin/dashboard',
         },
         {
             title: 'Services',
-            href: '/services',
+            href: '/admin/services',
         },
     ],
 };

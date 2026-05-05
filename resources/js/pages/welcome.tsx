@@ -22,7 +22,7 @@ import { dashboard, login, register } from '@/routes';
 // preventing Three.js/fiber/drei from blocking the main thread on initial load.
 const ThreeScene = React.lazy(() => import('@/components/ThreeScene'));
 
-function LandingPage({ canRegister, services = [] }: { canRegister: boolean; services: any[] }) {
+function LandingPage({ canRegister, services = [], gallery = [] }: { canRegister: boolean; services: any[]; gallery: any[] }) {
     const { auth } = usePage().props;
     const { scrollY } = useScroll();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -88,7 +88,7 @@ function LandingPage({ canRegister, services = [] }: { canRegister: boolean; ser
                                 
                                 {auth.user ? (
                                     <Link
-                                        href="/dashboard"
+                                        href="/admin/dashboard"
                                         className="inline-block rounded-full bg-[#1b1b18]/5 px-6 py-2 text-sm font-medium text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/10 border border-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
                                     >
                                         {t('dashboard')}
@@ -169,7 +169,7 @@ function LandingPage({ canRegister, services = [] }: { canRegister: boolean; ser
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-1">{t('account')}</span>
                                     {auth.user ? (
                                         <Link
-                                            href="/dashboard"
+                                            href="/admin/dashboard"
                                             className="block rounded-xl bg-[#1b1b18]/5 px-4 py-2 text-sm font-medium text-[#1b1b18] transition-all hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                                         >
                                             {t('dashboard')}
@@ -209,7 +209,7 @@ function LandingPage({ canRegister, services = [] }: { canRegister: boolean; ser
                 <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
                     <Booking />
                     <Sparepart />
-                    <Gallery />
+                    <Gallery items={gallery} />
                     <Testimonials />
                     <Contact />
                     <Footer />
@@ -222,9 +222,11 @@ function LandingPage({ canRegister, services = [] }: { canRegister: boolean; ser
 export default function Welcome({
     canRegister = true,
     services = [],
+    gallery = [],
 }: {
     canRegister?: boolean;
     services: any[];
+    gallery: any[];
 }) {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -245,7 +247,7 @@ export default function Welcome({
                     delay: 0.2 // Small delay to sync better with preloader exit
                 }}
             >
-                <LandingPage canRegister={canRegister} services={services} />
+                <LandingPage canRegister={canRegister} services={services} gallery={gallery} />
             </m.div>
         </LazyMotion>
     );

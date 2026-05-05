@@ -126,14 +126,11 @@ export default function ThreeScene() {
   return (
     <div style={{ width: '100%', height: '100%', background: activeBgColor }}>
       <Canvas
-        shadows
+        shadows="percentage"
         dpr={[1, 2]}
         gl={{
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: activeIsDark ? 1.5 : 1.0,
-        }}
-        onCreated={({ gl }) => {
-          gl.shadowMap.type = THREE.PCFShadowMap;
         }}
         camera={{ 
           position: [4, 2, 4], // Moved closer for better framing

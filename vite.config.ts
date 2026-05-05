@@ -9,7 +9,7 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         hmr: {
-            host: '10.4.27.104',
+            host: '192.168.1.3',
         },
     },
     plugins: [

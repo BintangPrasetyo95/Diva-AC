@@ -65,13 +65,28 @@ const itemVariants: Variants = {
 export default function CustomersPage() {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const [genderFilter, setGenderFilter] = React.useState('All');
+    const [sortConfig, setSortConfig] = React.useState<{ key: string; direction: 'asc' | 'desc' }>({ key: 'joined', direction: 'desc' });
 
-    const filteredCustomers = customers.filter(c => 
-        c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        c.phone.includes(searchQuery) ||
-        c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.id.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredCustomers = customers
+        .filter(c => {
+            const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                 c.phone.includes(searchQuery) ||
+                                 c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                 c.id.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesGender = genderFilter === 'All' || c.gender === genderFilter;
+            return matchesSearch && matchesGender;
+        })
+        .sort((a, b) => {
+            const direction = sortConfig.direction === 'asc' ? 1 : -1;
+            if (sortConfig.key === 'joined') {
+                return (new Date(a.joined).getTime() - new Date(b.joined).getTime()) * direction;
+            }
+            if (sortConfig.key === 'name') {
+                return a.name.localeCompare(b.name) * direction;
+            }
+            return 0;
+        });
 
     return (
         <LazyMotion features={domAnimation}>
@@ -143,14 +158,34 @@ export default function CustomersPage() {
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
-                            <Filter className="mr-2 size-3" />
-                            {t('dash_filter')}
-                        </Button>
-                        <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
-                            <ArrowUpDown className="mr-2 size-3" />
-                            {t('dash_sort')}
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
+                                    <Filter className="mr-2 size-3" />
+                                    {t('dash_filter')}: {genderFilter === 'All' ? t('dash_filter_all') : (genderFilter === 'L' ? t('dash_male') : t('dash_female'))}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
+                                <DropdownMenuItem onClick={() => setGenderFilter('All')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_filter_all')}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setGenderFilter('L')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_male')}</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setGenderFilter('P')} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_female')}</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="rounded-2xl h-12 px-5 border-[#1b1b18]/10 dark:border-white/10 font-bold uppercase tracking-widest text-[10px]">
+                                    <ArrowUpDown className="mr-2 size-3" />
+                                    {t('dash_sort')}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#1b1b18]/5 dark:border-white/5 shadow-xl">
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'joined', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_date')} ({t('dash_newest')})</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'joined', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_date')} ({t('dash_oldest')})</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'name', direction: 'asc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_name')} (A-Z)</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setSortConfig({ key: 'name', direction: 'desc' })} className="rounded-xl font-bold text-xs uppercase tracking-widest px-4 py-3 cursor-pointer">{t('dash_sort_name')} (Z-A)</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </m.div>
 
@@ -262,11 +297,11 @@ CustomersPage.layout = {
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: '/admin/dashboard',
         },
         {
             title: 'Customers',
-            href: '/customers',
+            href: '/admin/customers',
         },
     ],
 };
