@@ -585,15 +585,15 @@ export const translations: Translations = {
     },
     // Brands & Legal
     brands_header_subtitle: {
-        id: "Layanan Ahli untuk",
-        en: "Expert Care for"
+        id: "Layanan Ahli dengan",
+        en: "Expert Care with"
     },
     brands_header_title_premium: {
         id: "Brand",
-        en: "Premium"
+        en: "Trusted"
     },
     brands_header_title_brands: {
-        id: "Premium",
+        id: "Terpercaya",
         en: "Brands"
     },
     footer_trademark_disclaimer: {
