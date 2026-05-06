@@ -7,12 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[Fillable(['nama_sparepart', 'tipe_sparepart', 'harga_sparepart', 'stock_sparepart', 'keterangan'])]
+#[Fillable(['nama_sparepart', 'tipe_sparepart', 'harga_sparepart', 'stock_sparepart', 'keterangan', 'image', 'is_public'])]
 class Sparepart extends Model
 {
     use HasFactory;
 
     protected $table = 'sparepart';
+
+    protected function casts(): array
+    {
+        return [
+            'is_public' => 'boolean',
+        ];
+    }
 
     public function services(): BelongsToMany
     {

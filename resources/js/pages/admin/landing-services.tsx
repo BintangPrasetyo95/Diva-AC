@@ -114,7 +114,7 @@ const ServiceCard = ({
                     </button>
 
                     <div className={`size-10 rounded-full border border-[#1b1b18]/10 dark:border-white/10 flex items-center justify-center transition-transform duration-300 ${isExpanded ? 'rotate-180 bg-white dark:bg-[#1b1b18]' : ''}`}>
-                        <ChevronDown className="size-5 text-[#1b1b18]/40" />
+                        <ChevronDown className="size-5 text-[#1b1b18]/40 dark:text-white/40" />
                     </div>
                 </div>
             </div>

@@ -737,6 +737,14 @@ export const translations: Translations = {
         id: "Edit Info",
         en: "Edit Info"
     },
+    dash_add_info: {
+        id: "Tambah Info",
+        en: "Add Info"
+    },
+    dash_delete_info: {
+        id: "Hapus Info",
+        en: "Delete Info"
+    },
     dash_save_changes: {
         id: "Simpan Perubahan",
         en: "Save Changes"
@@ -885,6 +893,22 @@ export const translations: Translations = {
         id: "Batalkan Layanan",
         en: "Cancel Service"
     },
+    dash_service_queue: {
+        id: "Antrian Layanan",
+        en: "Service Queue"
+    },
+    dash_service_process: {
+        id: "Sedang Proses",
+        en: "Processing"
+    },
+    dash_service_done: {
+        id: "Selesai",
+        en: "Completed"
+    },
+    dash_service_cancel: {
+        id: "Dibatalkan",
+        en: "Cancelled"
+    },
     dash_filter: {
         id: "Filter",
         en: "Filter"
@@ -996,6 +1020,34 @@ export const translations: Translations = {
     dash_registration: {
         id: "Registrasi",
         en: "Registration"
+    },
+    dash_public_visibility: {
+        id: "Visibilitas Publik",
+        en: "Public Visibility"
+    },
+    dash_show_in_public: {
+        id: "Tampilkan di Publik",
+        en: "Show in Public"
+    },
+    dash_hide_from_public: {
+        id: "Sembunyikan dari Publik",
+        en: "Hide from Public"
+    },
+    dash_stock_amount: {
+        id: "Jumlah Stok",
+        en: "Stock Amount"
+    },
+    dash_part_name: {
+        id: "Nama Suku Cadang",
+        en: "Part Name"
+    },
+    dash_part_type: {
+        id: "Tipe Suku Cadang",
+        en: "Part Type"
+    },
+    dash_description: {
+        id: "Deskripsi",
+        en: "Description"
     },
     dash_edit_profile: {
         id: "Edit Profil",

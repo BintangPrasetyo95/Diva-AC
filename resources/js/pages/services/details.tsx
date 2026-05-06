@@ -124,7 +124,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                 <m.div variants={itemVariants} className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                     <div className="flex flex-col gap-4">
                         <Link 
-                            href="/services" 
+                            href="/admin/services" 
                             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 hover:text-red-600 transition-colors"
                         >
                             <ArrowLeft className="size-3" />

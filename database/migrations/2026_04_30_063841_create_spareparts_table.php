@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('tipe_sparepart', 50);
             $table->decimal('harga_sparepart', 12, 2)->default(0);
             $table->integer('stock_sparepart')->default(0);
+            $table->string('image')->nullable();
+            $table->boolean('is_public')->default(true);
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

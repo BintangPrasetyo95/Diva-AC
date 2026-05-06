@@ -9,7 +9,7 @@ Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 // Public Pages
 Route::inertia('booking', 'booking')->name('booking');
-Route::inertia('spareparts', 'spareparts')->name('spareparts');
+Route::get('spareparts', [WelcomeController::class, 'spareparts'])->name('spareparts');
 
 Route::get('services/info/{slug}', function ($slug) {
     return Inertia::render('services/info', [
@@ -20,9 +20,26 @@ Route::get('services/info/{slug}', function ($slug) {
 // Admin Pages
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
-    Route::inertia('inventory', 'inventory')->name('inventory');
-    Route::inertia('customers', 'customers')->name('customers');
-    Route::inertia('services', 'services')->name('services');
+    
+    // Inventory
+    Route::get('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'index'])->name('inventory');
+    Route::post('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'store'])->name('inventory.store');
+    Route::post('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'update'])->name('inventory.update');
+    Route::delete('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'destroy'])->name('inventory.destroy');
+
+    // Customers
+    Route::get('customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers');
+    Route::post('customers', [App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('customers.store');
+    Route::put('customers/{customer}', [App\Http\Controllers\Admin\CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('customers/{customer}', [App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::post('customers/{customer}/mobils', [App\Http\Controllers\Admin\CustomerController::class, 'storeMobil'])->name('customers.mobils.store');
+
+    // Services
+    Route::get('services', [App\Http\Controllers\Admin\ServiceController::class, 'index'])->name('services');
+    Route::post('services', [App\Http\Controllers\Admin\ServiceController::class, 'store'])->name('services.store');
+    Route::put('services/{service}', [App\Http\Controllers\Admin\ServiceController::class, 'update'])->name('services.update');
+    Route::delete('services/{service}', [App\Http\Controllers\Admin\ServiceController::class, 'destroy'])->name('services.destroy');
+    Route::get('services/{id}', [App\Http\Controllers\Admin\ServiceController::class, 'show'])->name('services.details');
     Route::get('gallery', [App\Http\Controllers\Admin\GalleryController::class, 'index'])->name('admin.gallery');
     Route::post('gallery', [App\Http\Controllers\Admin\GalleryController::class, 'store'])->name('admin.gallery.store');
     Route::patch('gallery/{id}', [App\Http\Controllers\Admin\GalleryController::class, 'update'])->name('admin.gallery.update');
