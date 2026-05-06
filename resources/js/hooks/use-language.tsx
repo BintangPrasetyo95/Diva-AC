@@ -661,6 +661,10 @@ export const translations: Translations = {
         id: "Status",
         en: "Status"
     },
+    dash_col_date: {
+        id: "Tanggal",
+        en: "Date"
+    },
     dash_status_in_progress: {
         id: "Proses",
         en: "In Progress"

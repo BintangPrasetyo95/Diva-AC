@@ -434,6 +434,15 @@ export default function ServicesPage({ services, mobils, mekaniks }: { services:
                                         </div>
                                     </th>
                                     <th 
+                                        onClick={() => handleSort('date')}
+                                        className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 cursor-pointer group hover:bg-[#1b1b18]/5 transition-colors"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            {t('dash_col_date')}
+                                            {getSortIcon('date')}
+                                        </div>
+                                    </th>
+                                    <th 
                                         onClick={() => handleSort('total')}
                                         className="px-6 py-5 text-xs font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 cursor-pointer group hover:bg-[#1b1b18]/5 transition-colors"
                                     >
@@ -475,6 +484,12 @@ export default function ServicesPage({ services, mobils, mekaniks }: { services:
                                             {getStatusBadge(service.status_service)}
                                         </td>
                                         <td className="px-6 py-5">
+                                            <div className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70">
+                                                <Calendar className="size-3" />
+                                                <span className="text-sm whitespace-nowrap">{new Date(service.tanggal_service).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-5">
                                             <span className="text-sm font-black text-[#1b1b18] dark:text-white">{formatCurrency(service.total_service || 0)}</span>
                                         </td>
                                         <td className="px-6 py-5 text-right">
@@ -497,7 +512,7 @@ export default function ServicesPage({ services, mobils, mekaniks }: { services:
                                     </tr>
                                 )) : (
                                     <tr>
-                                        <td colSpan={7} className="px-6 py-20 text-center">
+                                        <td colSpan={8} className="px-6 py-20 text-center">
                                             <div className="flex flex-col items-center gap-2 opacity-20">
                                                 <Wrench className="size-12" />
                                                 <p className="text-lg font-black uppercase tracking-tighter">{t('dash_no_services')}</p>
