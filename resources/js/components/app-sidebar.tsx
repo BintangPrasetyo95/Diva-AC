@@ -36,6 +36,12 @@ export function AppSidebar() {
             title: t('dash_title'),
             href: '/admin/dashboard',
             icon: LayoutGrid,
+            items: [
+                {
+                    title: 'Pendapatan',
+                    href: '/admin/income',
+                },
+            ],
         },
         {
             title: t('dash_stat_active'),
@@ -46,11 +52,23 @@ export function AppSidebar() {
             title: t('dash_stat_stock'),
             href: '/admin/inventory',
             icon: Package,
+            items: [
+                {
+                    title: 'Sparepart Sell',
+                    href: '/admin/spareparts/sell',
+                }
+            ]
         },
         {
             title: t('dash_stat_customers'),
             href: '/admin/customers',
             icon: Users,
+            items: [
+                {
+                    title: 'Cars',
+                    href: '/admin/cars',
+                }
+            ]
         },
     ];
 

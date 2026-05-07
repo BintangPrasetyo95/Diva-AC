@@ -219,8 +219,8 @@ export const translations: Translations = {
     service_stat_support: { id: "Respon Dukungan", en: "Support Response" },
     // Description Section
     desc_title: {
-        id: "Standar Keunggulan dalam Perawatan AC Mobil",
-        en: "The Standard of Excellence in Car AC Maintenance"
+        id: "Menghadirkan kenyamanan perjalanan maksimal melalui layanan ahli yang memastikan sistem pendingin kendaraan Anda selalu pada performa puncak.",
+        en: "Delivering maximum driving comfort through expert services that ensure your vehicle's cooling system is always at peak performance."
     },
     desc_p1: {
         id: "Di Diva AC, kami percaya bahwa setiap perjalanan harus terasa nyaman. Dengan keahlian bertahun-tahun dalam kontrol iklim otomotif, kami menyediakan layanan khusus yang memastikan sistem AC kendaraan Anda berjalan pada performa puncak.",

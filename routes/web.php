@@ -19,13 +19,14 @@ Route::get('services/info/{slug}', function ($slug) {
 
 // Admin Pages
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     
     // Inventory
     Route::get('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'index'])->name('inventory');
     Route::post('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'store'])->name('inventory.store');
     Route::post('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'update'])->name('inventory.update');
     Route::delete('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'destroy'])->name('inventory.destroy');
+    Route::inertia('spareparts/sell', 'spareparts/sell')->name('spareparts.sell');
 
     // Customers
     Route::get('customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers');
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::put('customers/{customer}', [App\Http\Controllers\Admin\CustomerController::class, 'update'])->name('customers.update');
     Route::delete('customers/{customer}', [App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('customers.destroy');
     Route::post('customers/{customer}/mobils', [App\Http\Controllers\Admin\CustomerController::class, 'storeMobil'])->name('customers.mobils.store');
+    Route::get('cars', [App\Http\Controllers\Admin\CarController::class, 'index'])->name('cars');
 
     // Services
     Route::get('services', [App\Http\Controllers\Admin\ServiceController::class, 'index'])->name('services');
@@ -53,6 +55,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('services/{id}', function ($id) {
         return Inertia::render('services/details', ['id' => $id]);
     })->name('services.details');
+
+    // Income
+    Route::get('income', [App\Http\Controllers\Admin\IncomeController::class, 'index'])->name('admin.income');
 });
 
 Route::inertia('/three', 'ThreePage')->name('three');
