@@ -11,7 +11,7 @@ class PenjualanSparepartSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::where('role', 'staff')->first();
+        $user = User::where('role', 'admin')->first();
         $sparepart = Sparepart::where('nama_sparepart', 'Filter Udara Toyota Avanza')->first();
 
         $penjualan = PenjualanSparepart::create([

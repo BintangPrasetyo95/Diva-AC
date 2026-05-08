@@ -20,6 +20,11 @@ class Mobil extends Model
         return $this->belongsTo(Pelanggan::class, 'id_pelanggan');
     }
 
+    public function getNamaMobilAttribute(): string
+    {
+        return "{$this->merk} {$this->model}";
+    }
+
     public function services(): HasMany
     {
         return $this->hasMany(Service::class, 'id_mobil');

@@ -29,7 +29,7 @@ class IncomeController extends Controller
                 'id'       => $s->id,
                 'date'     => $s->tanggal_service,
                 'label'    => $s->tipe_service,
-                'customer' => optional(optional($s->mobil)->pelanggan)->nama ?? '-',
+                'customer' => optional(optional($s->mobil)->pelanggan)->name ?? '-',
                 'amount'   => (float) $s->bayar_service,
                 'type'     => 'service',
             ]);

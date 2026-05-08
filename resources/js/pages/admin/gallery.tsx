@@ -8,6 +8,7 @@ import { useLanguage } from '@/hooks/use-language';
 interface GalleryItem {
     id: number;
     image_path: string;
+    image_url: string;
     title: string | null;
     description: string | null;
     order: number;
@@ -136,7 +137,7 @@ export default function GalleryManager({ images }: Props) {
                             >
                                 <div className="aspect-video relative overflow-hidden bg-[#1b1b18]/5 dark:bg-white/5">
                                     <img 
-                                        src={`/storage/${img.image_path}`} 
+                                        src={img.image_url} 
                                         alt={img.title || ''} 
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     />

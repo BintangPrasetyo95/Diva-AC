@@ -27,12 +27,19 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => ['required', Rule::in(['admin', 'staff', 'kasir'])],
+            'role' => ['required', Rule::in(['admin', 'mekanik', 'customer'])],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
 
-        User::create($validated);
+        $user = User::create($validated);
+        
+        // Create specialized profiles if needed
+        if ($user->role === 'admin') {
+            $user->admin()->create();
+        } elseif ($user->role === 'mekanik') {
+            $user->mekanik()->create(['aktif' => true]);
+        }
 
         return back()->with('status', 'user-created');
     }
@@ -43,7 +50,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'role' => ['required', Rule::in(['admin', 'staff', 'kasir'])],
+            'role' => ['required', Rule::in(['admin', 'mekanik', 'customer'])],
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 

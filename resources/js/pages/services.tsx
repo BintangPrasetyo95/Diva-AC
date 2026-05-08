@@ -213,9 +213,9 @@ export default function ServicesPage({ services, mobils, mekaniks }: { services:
 
     const filteredServices = services
         .filter(s => {
-            const matchesSearch = s.mobil?.pelanggan?.nama_pelanggan?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                 s.mobil?.no_polisi?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                 String(s.id).toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesSearch = (s.mobil?.pelanggan?.nama_pelanggan || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                 (s.mobil?.no_polisi || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                 String(s.id || '').toLowerCase().includes(searchQuery.toLowerCase());
             const matchesStatus = statusFilter === 'All' || s.status_service === statusFilter;
             return matchesSearch && matchesStatus;
         })

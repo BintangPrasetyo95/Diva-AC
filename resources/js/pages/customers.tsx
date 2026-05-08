@@ -201,10 +201,10 @@ export default function CustomersPage({ customers }: { customers: Customer[] }) 
 
     const filteredCustomers = customers
         .filter(c => {
-            const matchesSearch = c.nama_pelanggan.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                 c.no_telp.includes(searchQuery) ||
-                                 c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                 String(c.id).toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesSearch = (c.nama_pelanggan || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                 (c.no_telp || '').includes(searchQuery) ||
+                                 (c.email || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                 String(c.id || '').toLowerCase().includes(searchQuery.toLowerCase());
             const matchesGender = genderFilter === 'All' || c.jenis_kelamin === genderFilter;
             return matchesSearch && matchesGender;
         })

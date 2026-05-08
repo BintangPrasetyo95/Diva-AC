@@ -14,6 +14,7 @@ interface ServiceItem {
     description_en: string;
     icon: string;
     image: string | null;
+    image_url: string | null;
 }
 
 interface Props {
@@ -96,7 +97,7 @@ export default function Services({ services = [] }: Props) {
                                             {/* Image Container */}
                                             <div className="relative mb-6 aspect-4/3 w-full overflow-hidden rounded-4xl rounded-tr-none">
                                                 <img
-                                                    src={service.image || '/img/placeholder.jpg'}
+                                                    src={service.image_url || '/img/placeholder.jpg'}
                                                     alt={title}
                                                     width={800}
                                                     height={600}

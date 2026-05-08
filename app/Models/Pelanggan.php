@@ -8,11 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable(['nama_pelanggan', 'no_telp', 'email', 'jenis_kelamin', 'alamat', 'tanggal_daftar'])]
-class Pelanggan extends Model
+class Pelanggan extends User
 {
     use HasFactory;
 
-    protected $table = 'pelanggan';
+    protected $table = 'users';
+
+    protected static function booted()
+    {
+        static::addGlobalScope('role', function ($builder) {
+            $builder->where('role', 'customer');
+        });
+
+        static::creating(function ($model) {
+            $model->role = 'customer';
+        });
+    }
 
     public function mobils(): HasMany
     {

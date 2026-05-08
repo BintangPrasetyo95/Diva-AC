@@ -7,17 +7,20 @@ import AppearanceToggleTab from '@/components/appearance-tabs';
 import { useLanguage } from '@/hooks/use-language';
 import { dashboard, login, register } from '@/routes';
 
-// Dummy data for spareparts based on placeholder images
-const SPAREPARTS_DATA = [
-    { id: 'compressor', image: '/img/spareparts/sp1.png', labelKey: 'sp_compressor' },
-    { id: 'condenser', image: '/img/spareparts/sp2.png', labelKey: 'sp_condenser' },
-    { id: 'evaporator', image: '/img/spareparts/sp3.png', labelKey: 'sp_evaporator' },
-    { id: 'filter', image: '/img/spareparts/sp4.png', labelKey: 'sp_filter' },
-];
+interface Sparepart {
+    id: number;
+    nama_sparepart: string;
+    tipe_sparepart: string;
+    image_url: string | null;
+}
 
-export default function Spareparts() {
+interface Props {
+    auth: any;
+    spareparts: Sparepart[];
+}
+
+export default function Spareparts({ auth, spareparts = [] }: Props) {
     const { t, language, setLanguage } = useLanguage();
-    const { auth } = usePage().props;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
 
@@ -243,16 +246,16 @@ export default function Spareparts() {
                         >
                             <h2 className="text-xl font-bold uppercase tracking-wider">{t('select_sparepart')}</h2>
                             <div className="grid grid-cols-2 gap-4">
-                                {SPAREPARTS_DATA.map((part) => {
-                                    const isSelected = rows.some(r => r.partId === part.id);
+                                {spareparts.map((part) => {
+                                    const isSelected = rows.some(r => r.partId === String(part.id));
                                     return (
                                         <button
                                             key={part.id}
                                             type="button"
-                                            onClick={() => handleImageClick(part.id)}
+                                            onClick={() => handleImageClick(String(part.id))}
                                             className={`relative aspect-square overflow-hidden rounded-3xl transition-all duration-300 ${isSelected ? 'ring-4 ring-red-600 scale-[0.98] shadow-lg' : 'hover:scale-[1.02] hover:shadow-xl'}`}
                                         >
-                                            <img src={part.image} alt={t(part.labelKey)} className="w-full h-full object-cover" />
+                                            <img src={part.image_url || '/img/placeholder.jpg'} alt={part.nama_sparepart} className="w-full h-full object-cover" />
                                             <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${isSelected ? 'opacity-100' : 'opacity-0 hover:opacity-100'}`} />
                                             {isSelected && (
                                                 <div className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-1 shadow-lg">
@@ -260,7 +263,7 @@ export default function Spareparts() {
                                                 </div>
                                             )}
                                             <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent">
-                                                <p className="text-white font-bold text-sm">{t(part.labelKey)}</p>
+                                                <p className="text-white font-bold text-sm">{part.nama_sparepart}</p>
                                             </div>
                                         </button>
                                     );
@@ -322,8 +325,8 @@ export default function Spareparts() {
                                                     className="flex-1 rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 dark:border-white/20 dark:text-white [&>option]:dark:bg-zinc-900"
                                                 >
                                                     <option value="" disabled>{t('select_sparepart')}</option>
-                                                    {SPAREPARTS_DATA.map(part => (
-                                                        <option key={part.id} value={part.id}>{t(part.labelKey)}</option>
+                                                    {spareparts.map(part => (
+                                                        <option key={part.id} value={part.id}>{part.nama_sparepart}</option>
                                                     ))}
                                                 </select>
                                                 

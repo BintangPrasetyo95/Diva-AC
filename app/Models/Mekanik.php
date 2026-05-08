@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['nama_mekanik', 'jenis_kelamin', 'no_telp', 'level_mekanik', 'alamat', 'username', 'password', 'keterangan', 'aktif'])]
-#[Hidden(['password'])]
+#[Fillable(['user_id', 'level_mekanik', 'keterangan', 'aktif'])]
 class Mekanik extends Model
 {
     use HasFactory;
@@ -19,9 +18,13 @@ class Mekanik extends Model
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
             'aktif' => 'boolean',
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function services(): HasMany

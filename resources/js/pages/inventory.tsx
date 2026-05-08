@@ -42,6 +42,7 @@ interface Sparepart {
     harga_sparepart: string | number;
     stock_sparepart: number;
     image: string | null;
+    image_url: string | null;
     is_public: boolean;
     keterangan: string | null;
     created_at?: string;
@@ -436,8 +437,8 @@ export default function InventoryPage({ spareparts }: { spareparts: Sparepart[] 
                                         </td>
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-3">
-                                                {item.image ? (
-                                                    <img src={`/storage/${item.image}`} alt={item.nama_sparepart} className="w-10 h-10 rounded-lg object-cover" />
+                                                {item.image_url ? (
+                                                    <img src={item.image_url} alt={item.nama_sparepart} className="w-10 h-10 rounded-lg object-cover" />
                                                 ) : (
                                                     <div className="w-10 h-10 rounded-lg bg-[#1b1b18]/5 dark:bg-white/5 flex items-center justify-center">
                                                         <Package className="size-5 text-[#1b1b18]/30 dark:text-white/30" />
@@ -548,9 +549,9 @@ export default function InventoryPage({ spareparts }: { spareparts: Sparepart[] 
                                                 <CheckCircle2 className="size-10 text-green-500" />
                                                 <p className="text-xs font-bold text-green-600">{data.image_file.name}</p>
                                             </div>
-                                        ) : editingPart && editingPart.image ? (
+                                        ) : editingPart && editingPart.image_url ? (
                                             <div className="relative w-full h-full">
-                                                <img src={`/storage/${editingPart.image}`} className="w-full h-full object-cover opacity-50" />
+                                                <img src={editingPart.image_url} className="w-full h-full object-cover opacity-50" />
                                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-[#1b1b18] dark:text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity bg-white/20 dark:bg-black/20 backdrop-blur-sm">
                                                     <Upload className="size-8 mb-2" />
                                                     Change Image

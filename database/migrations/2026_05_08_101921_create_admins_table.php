@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mekanik', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('level_mekanik', ['junior', 'senior', 'kepala'])->default('junior');
-            $table->text('keterangan')->nullable();
-            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mekanik');
+        Schema::dropIfExists('admins');
     }
 };

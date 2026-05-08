@@ -21,6 +21,18 @@ class Sparepart extends Model
         ];
     }
 
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) return null;
+        if (str_starts_with($this->image, 'http')) return $this->image;
+        if (str_starts_with($this->image, 'img/')) return asset($this->image);
+        if (str_starts_with($this->image, '/img/')) return asset($this->image);
+        
+        return asset('storage/' . $this->image);
+    }
+
     public function services(): BelongsToMany
     {
         return $this->belongsToMany(Service::class, 'service_sparepart', 'id_sparepart', 'id_service')

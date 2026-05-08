@@ -15,7 +15,7 @@ class CustomerController extends Controller
     public function index(): Response
     {
         return Inertia::render('customers', [
-            'customers' => Pelanggan::with('mobils')->orderBy('nama_pelanggan', 'asc')->get(),
+            'customers' => Pelanggan::with('mobils')->orderBy('name', 'asc')->get(),
         ]);
     }
 
@@ -24,7 +24,7 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'nama_pelanggan' => 'required|string|max:100',
             'no_telp' => 'required|string|max:20',
-            'email' => 'required|email|max:100|unique:pelanggan,email',
+            'email' => 'required|email|max:100|unique:users,email',
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string|max:255',
         ]);
@@ -39,7 +39,7 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'nama_pelanggan' => 'required|string|max:100',
             'no_telp' => 'required|string|max:20',
-            'email' => 'required|email|max:100|unique:pelanggan,email,' . $customer->id,
+            'email' => 'required|email|max:100|unique:users,email,' . $customer->id,
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string|max:255',
         ]);

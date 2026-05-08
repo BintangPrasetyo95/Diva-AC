@@ -24,6 +24,7 @@ interface ServiceItem {
     benefits_en: string[] | null;
     icon: string;
     image: string | null;
+    image_url: string | null;
     image_file?: File | null;
     order: number;
     is_active: boolean;
@@ -264,8 +265,8 @@ const ServiceCard = ({
                                 <div className="h-64 rounded-4xl overflow-hidden bg-[#1b1b18]/5 dark:bg-white/5 border border-[#1b1b18]/5 dark:border-white/5 flex items-center justify-center">
                                     {service.image_file ? (
                                         <img src={URL.createObjectURL(service.image_file)} alt="Preview" className="w-full h-full object-cover" />
-                                    ) : service.image ? (
-                                        <img src={`/storage/${service.image}`} alt="Current" className="w-full h-full object-cover" />
+                                    ) : service.image_url ? (
+                                        <img src={service.image_url} alt="Current" className="w-full h-full object-cover" />
                                     ) : (
                                         <div className="flex h-full flex-col items-center justify-center text-[#1b1b18]/20">
                                             <ImageIcon className="size-10 mb-2" />

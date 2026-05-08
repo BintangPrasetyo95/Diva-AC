@@ -84,7 +84,7 @@ export default function Description() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.15, duration: 0.6 }}
-                                className="mb-8 text-3xl font-black leading-tight tracking-tight text-[#1b1b18] dark:text-white sm:text-4xl lg:text-md"
+                                className="mb-8 text-3xl font-black leading-tight tracking-tight text-[#1b1b18] dark:text-white sm:text-4xl lg:text-sm"
                             >
                                 {t('desc_title')}
                             </m.h2>

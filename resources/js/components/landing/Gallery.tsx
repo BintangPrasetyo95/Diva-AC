@@ -163,6 +163,7 @@ const MarqueeRow = ({
 interface GalleryItem {
     id: number;
     image_path: string;
+    image_url: string;
     title: string | null;
     description: string | null;
     order: number;
@@ -188,7 +189,7 @@ export default function Gallery({ items = [] }: { items?: GalleryItem[] }) {
 
     // Combine database images with static images if no dynamic images exist
     const displayImages = items.length > 0 
-        ? items.map(item => item.image_path.startsWith('gallery/') ? `/storage/${item.image_path}` : item.image_path)
+        ? items.map(item => item.image_url)
         : STATIC_IMAGES;
 
     const row1Images = displayImages.slice(0, 5);
