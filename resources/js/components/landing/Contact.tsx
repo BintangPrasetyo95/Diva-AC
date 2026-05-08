@@ -1,8 +1,16 @@
 import { MapPin, Clock } from 'lucide-react';
 import { useLanguage } from '@/hooks/use-language';
 
-export default function Contact() {
+export default function Contact({ settings }: { settings: any }) {
     const { t } = useLanguage();
+
+    const whatsappNumber = settings?.whatsapp || '628117998851';
+    const address = settings?.address || 'Jl. Brigjend Katamso, Lampung Tengah, Indonesia';
+    const mapsLink = settings?.maps_link || 'https://maps.app.goo.gl/U7B13w6BFdYH7e7e8';
+    
+    // Format hours
+    const hours = settings?.opening_hours || {};
+    const monSat = hours['Monday'] ? `${hours['Monday'].open} - ${hours['Monday'].close}` : '08:00 - 17:00';
 
     return (
         <section id="contact" className="py-24 px-6">
@@ -15,17 +23,17 @@ export default function Contact() {
                         
                         <div className="space-y-8">
                             <div className="flex gap-4">
-                                <a className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:text-red-600 hover:bg-white transition-colors cursor-pointer" href="https://maps.app.goo.gl/U7B13w6BFdYH7e7e8" target="_blank">
+                                <a className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:text-red-600 hover:bg-white transition-colors cursor-pointer" href={mapsLink} target="_blank">
                                     <MapPin className="size-6" />
                                 </a>
                                 <div>
                                     <h4 className="font-bold text-[#1b1b18] dark:text-white">{t('location_label')}</h4>
-                                    <p className="text-[#1b1b18]/60 dark:text-white/60">Jl. Brigjend Katamso, Lampung Tengah, Indonesia</p>
+                                    <p className="text-[#1b1b18]/60 dark:text-white/60">{address}</p>
                                 </div>
                             </div>
                             
                             <div className="flex gap-4">
-                                <a className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:text-red-600 hover:bg-white transition-colors cursor-pointer" href="https://wa.me/628117998851" target="_blank">
+                                <a className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:text-red-600 hover:bg-white transition-colors cursor-pointer" href={`https://wa.me/${whatsappNumber}`} target="_blank">
                                     <svg 
                                         className="size-6 fill-current" 
                                         viewBox="0 0 24 24" 
@@ -36,7 +44,7 @@ export default function Contact() {
                                 </a>
                                 <div>
                                     <h4 className="font-bold text-[#1b1b18] dark:text-white">{t('whatsapp_phone')}</h4>
-                                    <p className="text-[#1b1b18]/60 dark:text-white/60">+62 811-7998-851</p>
+                                    <p className="text-[#1b1b18]/60 dark:text-white/60">+{whatsappNumber.replace(/^(\d{2})(\d{3})(\d{4})(\d{4})$/, '$1 $2-$3-$4')}</p>
                                 </div>
                             </div>
                             
@@ -46,8 +54,8 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-[#1b1b18] dark:text-white">{t('opening_hours')}</h4>
-                                    <p className="text-[#1b1b18]/60 dark:text-white/60">{t('mon_sat')}: 08:00 - 17:00</p>
-                                    <p className="text-[#1b1b18]/60 dark:text-white/60">{t('sun_closed')}</p>
+                                    <p className="text-[#1b1b18]/60 dark:text-white/60">{t('mon_sat')}: {monSat}</p>
+                                    <p className="text-[#1b1b18]/60 dark:text-white/60">{hours['Sunday']?.is_closed ? t('sun_closed') : `${hours['Sunday']?.open} - ${hours['Sunday']?.close}`}</p>
                                 </div>
                             </div>
                         </div>

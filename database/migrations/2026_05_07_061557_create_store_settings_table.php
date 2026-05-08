@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('store_settings', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->default('Diva AC');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->text('address')->nullable();
+            $table->text('maps_link')->nullable();
+            $table->string('instagram_link')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('tiktok_link')->nullable();
+            $table->json('opening_hours')->nullable();
+            $table->string('logo_path')->nullable();
+            $table->string('favicon_path')->nullable();
             $table->timestamps();
         });
     }

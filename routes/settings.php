@@ -27,3 +27,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('admin/landing-services', [ServiceSettingsController::class, 'edit'])->name('services.settings.edit');
 Route::patch('admin/landing-services', [ServiceSettingsController::class, 'update'])->name('services.settings.update');
 
+Route::get('admin/workshop-settings', [App\Http\Controllers\Admin\WorkshopSettingsController::class, 'edit'])->name('workshop.settings.edit');
+Route::patch('admin/workshop-settings', [App\Http\Controllers\Admin\WorkshopSettingsController::class, 'update'])->name('workshop.settings.update');
+

@@ -98,7 +98,7 @@ export function AppSidebar() {
         },
         {
             title: t('dash_settings'),
-            href: '#',
+            href: '/admin/workshop-settings',
             icon: Settings,
         },
     ];

@@ -22,7 +22,7 @@ import { dashboard, login, register } from '@/routes';
 // preventing Three.js/fiber/drei from blocking the main thread on initial load.
 const ThreeScene = React.lazy(() => import('@/components/ThreeScene'));
 
-function LandingPage({ canRegister, services = [], gallery = [] }: { canRegister: boolean; services: any[]; gallery: any[] }) {
+function LandingPage({ canRegister, services = [], gallery = [], settings }: { canRegister: boolean; services: any[]; gallery: any[]; settings: any }) {
     const { auth } = usePage().props;
     const { scrollY } = useScroll();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -211,8 +211,8 @@ function LandingPage({ canRegister, services = [], gallery = [] }: { canRegister
                     <Sparepart />
                     <Gallery items={gallery} />
                     <Testimonials />
-                    <Contact />
-                    <Footer />
+                    <Contact settings={settings} />
+                    <Footer settings={settings} />
                 </div>
             </div>
         </div>
@@ -223,10 +223,12 @@ export default function Welcome({
     canRegister = true,
     services = [],
     gallery = [],
+    settings,
 }: {
     canRegister?: boolean;
     services: any[];
     gallery: any[];
+    settings: any;
 }) {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -247,7 +249,7 @@ export default function Welcome({
                     delay: 0.2 // Small delay to sync better with preloader exit
                 }}
             >
-                <LandingPage canRegister={canRegister} services={services} gallery={gallery} />
+                <LandingPage canRegister={canRegister} services={services} gallery={gallery} settings={settings} />
             </m.div>
         </LazyMotion>
     );

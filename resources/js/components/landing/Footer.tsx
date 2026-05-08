@@ -2,8 +2,13 @@ import { Instagram, Facebook } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { useLanguage } from '@/hooks/use-language';
 
-export default function Footer() {
+export default function Footer({ settings }: { settings: any }) {
     const { t } = useLanguage();
+
+    const workshopName = settings?.name || 'Diva AC';
+    const instagramLink = settings?.instagram_link || 'https://www.instagram.com/diva_ac50/';
+    const facebookLink = settings?.facebook_link || 'https://www.facebook.com/DivaAc/';
+    const whatsappNumber = settings?.whatsapp || '628117998851';
 
     return (
         <footer className="bg-white py-12 px-6 dark:bg-[#0a0a0a]">
@@ -21,7 +26,7 @@ export default function Footer() {
                     
                     <div className="flex gap-4">
                         <a 
-                            href="https://www.instagram.com/diva_ac50/" 
+                            href={instagramLink} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-pink-600 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-pink-600 transition-all"
@@ -29,7 +34,7 @@ export default function Footer() {
                             <Instagram className="size-5" />
                         </a>
                         <a 
-                            href="https://www.facebook.com/DivaAc/" 
+                            href={facebookLink} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-blue-600 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-blue-600 transition-all"
@@ -37,7 +42,7 @@ export default function Footer() {
                             <Facebook className="size-5" />
                         </a>
                         <a 
-                            href="https://wa.me/628117998851" 
+                            href={`https://wa.me/${whatsappNumber}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-green-500 hover:text-white dark:bg-white/5 dark:text-white dark:hover:bg-green-500 transition-all"
@@ -54,7 +59,7 @@ export default function Footer() {
                 </div>
                 
                 <div className="mt-12 border-t border-[#1b1b18]/5 pt-8 text-center text-xs text-[#1b1b18]/40 dark:border-white/5 dark:text-white/40">
-                    <p>© {new Date().getFullYear()} Diva AC. {t('footer_all_rights')}</p>
+                    <p>© {new Date().getFullYear()} {workshopName}. {t('footer_all_rights')}</p>
                     <div className="mt-4 flex flex-col items-center gap-1 opacity-50">
                         <p className="text-[10px] uppercase tracking-[0.2em] mb-2">
                             {t('footer_trademark_disclaimer')}
