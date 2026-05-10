@@ -1,15 +1,11 @@
 import { Head, useForm } from '@inertiajs/react';
 import { 
     Store, 
-    Phone, 
-    Mail, 
     MapPin, 
     Instagram, 
     Facebook, 
-    Clock, 
     Save, 
     Loader2, 
-    Upload, 
     CheckCircle2,
     MessageCircle,
     Globe,
@@ -57,16 +53,6 @@ export default function WorkshopSettings({ settings }: Props) {
         logo: null as File | null,
     });
 
-    const handleHoursChange = (day: string, field: string, value: any) => {
-        setData('opening_hours', {
-            ...data.opening_hours,
-            [day]: {
-                ...data.opening_hours[day],
-                [field]: value
-            }
-        });
-    };
-
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
         patch(route('workshop.settings.update'), {
@@ -74,8 +60,6 @@ export default function WorkshopSettings({ settings }: Props) {
             onError: () => toast.error('Failed to update settings'),
         });
     };
-
-    const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     return (
         <div className="p-6 lg:p-8 max-w-6xl mx-auto space-y-8 pb-24">
@@ -99,9 +83,9 @@ export default function WorkshopSettings({ settings }: Props) {
                 </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="max-w-3xl mx-auto space-y-8">
                 {/* Left Column: General & Branding */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="space-y-8">
                     {/* General Information */}
                     <section className="bg-white dark:bg-[#121212] rounded-[2.5rem] p-8 border border-[#1b1b18]/5 dark:border-white/5 shadow-sm space-y-8">
                         <div className="flex items-center gap-3">
@@ -117,7 +101,8 @@ export default function WorkshopSettings({ settings }: Props) {
                                 <Input 
                                     value={data.name}
                                     onChange={e => setData('name', e.target.value)}
-                                    className="h-14 rounded-2xl bg-[#1b1b18]/5 dark:bg-white/5 border-none font-bold"
+                                    disabled
+                                    className="h-14 rounded-2xl bg-[#1b1b18]/5 dark:bg-white/5 border-none font-bold opacity-50 cursor-not-allowed"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -169,31 +154,26 @@ export default function WorkshopSettings({ settings }: Props) {
                             <h2 className="text-sm font-black uppercase tracking-[0.2em] text-[#1b1b18]/40">Contact & Social</h2>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">Phone Number</Label>
-                                <div className="relative">
-                                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
-                                    <Input 
-                                        value={data.phone || ''}
-                                        onChange={e => setData('phone', e.target.value)}
-                                        className="h-14 pl-12 rounded-2xl bg-[#1b1b18]/5 dark:bg-white/5 border-none font-bold"
-                                    />
+                        <div className="grid grid-cols-1 gap-6">
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">Contact / WhatsApp Number</Label>
+                                    <div className="relative">
+                                        <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
+                                        <Input 
+                                            value={data.whatsapp || ''}
+                                            onChange={e => {
+                                                setData(prev => ({
+                                                    ...prev,
+                                                    whatsapp: e.target.value,
+                                                    phone: e.target.value
+                                                }));
+                                            }}
+                                            placeholder="628123456789"
+                                            className="h-14 pl-12 rounded-2xl bg-[#1b1b18]/5 dark:bg-white/5 border-none font-bold"
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">WhatsApp Number</Label>
-                                <div className="relative">
-                                    <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
-                                    <Input 
-                                        value={data.whatsapp || ''}
-                                        onChange={e => setData('whatsapp', e.target.value)}
-                                        placeholder="628123456789"
-                                        className="h-14 pl-12 rounded-2xl bg-[#1b1b18]/5 dark:bg-white/5 border-none font-bold"
-                                    />
-                                </div>
-                            </div>
-                        </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="space-y-2">
@@ -229,87 +209,6 @@ export default function WorkshopSettings({ settings }: Props) {
                                     />
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-
-                {/* Right Column: Operating Hours & Logo */}
-                <div className="space-y-8">
-                    {/* Operating Hours */}
-                    <section className="bg-white dark:bg-[#121212] rounded-[2.5rem] p-8 border border-[#1b1b18]/5 dark:border-white/5 shadow-sm space-y-8">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-xl bg-red-600/10 text-red-600">
-                                <Clock className="size-5" />
-                            </div>
-                            <h2 className="text-sm font-black uppercase tracking-[0.2em] text-[#1b1b18]/40">Business Hours</h2>
-                        </div>
-
-                        <div className="space-y-4">
-                            {DAYS.map(day => (
-                                <div key={day} className="flex items-center justify-between group">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/60">{day}</span>
-                                        <button 
-                                            type="button"
-                                            onClick={() => handleHoursChange(day, 'is_closed', !data.opening_hours[day].is_closed)}
-                                            className={`text-[9px] font-black uppercase tracking-[0.2em] ${data.opening_hours[day].is_closed ? 'text-red-600' : 'text-green-600'}`}
-                                        >
-                                            {data.opening_hours[day].is_closed ? 'Closed' : 'Open'}
-                                        </button>
-                                    </div>
-
-                                    {!data.opening_hours[day].is_closed && (
-                                        <div className="flex items-center gap-2">
-                                            <input 
-                                                type="time" 
-                                                value={data.opening_hours[day].open}
-                                                onChange={e => handleHoursChange(day, 'open', e.target.value)}
-                                                className="bg-transparent border-none p-0 text-xs font-bold focus:ring-0"
-                                            />
-                                            <span className="text-[#1b1b18]/20">-</span>
-                                            <input 
-                                                type="time" 
-                                                value={data.opening_hours[day].close}
-                                                onChange={e => handleHoursChange(day, 'close', e.target.value)}
-                                                className="bg-transparent border-none p-0 text-xs font-bold focus:ring-0"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* Logo & Branding */}
-                    <section className="bg-white dark:bg-[#121212] rounded-[2.5rem] p-8 border border-[#1b1b18]/5 dark:border-white/5 shadow-sm space-y-8">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-xl bg-red-600/10 text-red-600">
-                                <Upload className="size-5" />
-                            </div>
-                            <h2 className="text-sm font-black uppercase tracking-[0.2em] text-[#1b1b18]/40">Branding</h2>
-                        </div>
-
-                        <div className="space-y-4 text-center">
-                            <div className="relative mx-auto size-32 rounded-3xl bg-[#1b1b18]/5 dark:bg-white/5 flex items-center justify-center overflow-hidden group">
-                                {data.logo_path ? (
-                                    <img src={`/storage/${data.logo_path}`} className="w-full h-full object-contain p-4" />
-                                ) : (
-                                    <Store className="size-10 text-[#1b1b18]/20" />
-                                )}
-                                <div 
-                                    className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
-                                    onClick={() => document.getElementById('logo-upload')?.click()}
-                                >
-                                    <Upload className="size-6 text-white" />
-                                </div>
-                                <input 
-                                    id="logo-upload"
-                                    type="file"
-                                    className="hidden"
-                                    onChange={e => setData('logo', e.target.files?.[0] || null)}
-                                />
-                            </div>
-                            <p className="text-[10px] font-bold text-[#1b1b18]/40 uppercase tracking-widest">Workshop Logo</p>
                         </div>
                     </section>
                 </div>

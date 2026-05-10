@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PenjualanSparepartSeeder::class,
             GalleryItemSeeder::class,
             ServiceItemSeeder::class,
+            StoreSettingSeeder::class,
         ]);
     }
 }
