@@ -84,7 +84,7 @@ export default function GalleryManager({ images }: Props) {
     };
 
     const handleDelete = (id: number) => {
-        if (confirm('Are you sure you want to delete this image?')) {
+        if (confirm(t('dash_confirm_delete'))) {
             router.delete(`/admin/gallery/${id}`, {
                 onSuccess: () => toast.success('Image deleted successfully'),
                 onError: () => toast.error('Failed to delete image'),
@@ -94,7 +94,7 @@ export default function GalleryManager({ images }: Props) {
 
     return (
         <LazyMotion features={domAnimation}>
-            <Head title="Gallery Manager" />
+            <Head title={t('dash_gallery_manager')} />
 
             <m.div
                 initial="hidden"
@@ -124,7 +124,7 @@ export default function GalleryManager({ images }: Props) {
                         <div className="size-20 rounded-full bg-[#1b1b18]/5 dark:bg-white/5 flex items-center justify-center mb-4">
                             <ImageIcon className="size-10 text-[#1b1b18]/20 dark:text-white/20" />
                         </div>
-                        <p className="text-[#1b1b18]/40 dark:text-white/40 font-bold uppercase tracking-widest text-xs">No images found</p>
+                        <p className="text-[#1b1b18]/40 dark:text-white/40 font-bold uppercase tracking-widest text-xs">{t('dash_no_images')}</p>
                     </m.div>
                 ) : (
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -191,7 +191,7 @@ export default function GalleryManager({ images }: Props) {
                         >
                             <div className="mb-6 flex items-center justify-between">
                                 <h2 className="text-2xl font-black uppercase tracking-tight text-[#1b1b18] dark:text-white">
-                                    Add <span className="text-red-600">Image</span>
+                                    {t('dash_add_info')} <span className="text-red-600">Image</span>
                                 </h2>
                                 <button 
                                     onClick={() => setIsUploading(false)}
@@ -230,7 +230,7 @@ export default function GalleryManager({ images }: Props) {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40">{t('auth_name')} (Optional)</label>
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40">{t('auth_name')} ({t('dash_filter_all')})</label>
                                     <input 
                                         type="text" 
                                         value={data.title}
@@ -278,7 +278,7 @@ export default function GalleryManager({ images }: Props) {
                         >
                             <div className="mb-6 flex items-center justify-between">
                                 <h2 className="text-2xl font-black uppercase tracking-tight text-[#1b1b18] dark:text-white">
-                                    Edit <span className="text-red-600">Info</span>
+                                    {t('dash_edit_info')} <span className="text-red-600">Info</span>
                                 </h2>
                                 <button 
                                     onClick={() => setEditingImage(null)}

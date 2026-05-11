@@ -408,10 +408,87 @@ export const translations: Translations = {
         en: "Log in"
     },
     // Auth - Shared fields
-    auth_logout: {
+    dash_logout: {
         id: "Keluar",
         en: "Log out"
     },
+    dash_workshop_identity: {
+        id: "Identitas Bengkel",
+        en: "Workshop Identity"
+    },
+    dash_user_management: {
+        id: "Manajemen Pengguna",
+        en: "User Management"
+    },
+    dash_general_info: {
+        id: "Info Umum",
+        en: "General Info"
+    },
+    dash_operational_hours: {
+        id: "Jam Operasional",
+        en: "Operational Hours"
+    },
+    dash_contact_social: {
+        id: "Kontak & Sosial",
+        en: "Contact & Social"
+    },
+    dash_workshop_name: {
+        id: "Nama Bengkel",
+        en: "Workshop Name"
+    },
+    dash_workshop_email: {
+        id: "Email Bisnis",
+        en: "Business Email"
+    },
+    dash_workshop_address: {
+        id: "Alamat Fisik",
+        en: "Physical Address"
+    },
+    dash_maps_link: {
+        id: "Lokasi Maps (URL)",
+        en: "Maps Location (URL)"
+    },
+    dash_whatsapp: {
+        id: "Nomor WhatsApp",
+        en: "WhatsApp Number"
+    },
+    dash_save_changes: {
+        id: "Simpan Semua Perubahan",
+        en: "Save All Changes"
+    },
+    dash_saving: {
+        id: "Menyimpan...",
+        en: "Saving..."
+    },
+    dash_saved: {
+        id: "Pengaturan Tersimpan",
+        en: "Settings Saved"
+    },
+    dash_user_details: { id: "Detail Pengguna", en: "User Details" },
+    dash_account_info: { id: "Info Akun", en: "Account Info" },
+    dash_add_user: { id: "Tambah Pengguna Baru", en: "Add New User" },
+    dash_edit_user: { id: "Edit Pengguna", en: "Edit User" },
+    dash_system_role: { id: "Role Sistem", en: "System Role" },
+    dash_full_name: { id: "Nama Lengkap", en: "Full Name" },
+    dash_password: { id: "Kata Sandi", en: "Password" },
+    dash_confirm_password: { id: "Konfirmasi Kata Sandi", en: "Confirm Password" },
+    dash_cancel: { id: "Batal", en: "Cancel" },
+    dash_update_user: { id: "Update Pengguna", en: "Update User" },
+    dash_create_user: { id: "Buat Pengguna", en: "Create User" },
+    dash_gallery_manager: { id: "Manajer Galeri", en: "Gallery Manager" },
+    dash_no_images: { id: "Tidak ada gambar ditemukan", en: "No images found" },
+    dash_confirm_delete: { id: "Apakah Anda yakin ingin menghapus ini?", en: "Are you sure you want to delete this?" },
+    dash_income: { id: "Pendapatan", en: "Income" },
+    dash_sparepart_sell: { id: "Penjualan Suku Cadang", en: "Sparepart Sell" },
+    dash_cars: { id: "Mobil", en: "Cars" },
+    day_monday: { id: "Senin", en: "Monday" },
+    day_tuesday: { id: "Selasa", en: "Tuesday" },
+    day_wednesday: { id: "Rabu", en: "Wednesday" },
+    day_thursday: { id: "Kamis", en: "Thursday" },
+    day_friday: { id: "Jumat", en: "Friday" },
+    day_saturday: { id: "Sabtu", en: "Saturday" },
+    day_sunday: { id: "Minggu", en: "Sunday" },
+    day_closed: { id: "Tutup", en: "Closed" },
     auth_email: {
         id: "Alamat Email",
         en: "Email address"
@@ -765,10 +842,6 @@ export const translations: Translations = {
         id: "Hapus Info",
         en: "Delete Info"
     },
-    dash_save_changes: {
-        id: "Simpan Perubahan",
-        en: "Save Changes"
-    },
     dash_general_config: {
         id: "Konfigurasi Umum",
         en: "General Configuration"
@@ -800,10 +873,6 @@ export const translations: Translations = {
     dash_page_content_en: {
         id: "Konten Halaman (EN)",
         en: "Page Content (EN)"
-    },
-    dash_saving: {
-        id: "Menyimpan...",
-        en: "Saving Changes..."
     },
     dash_update_all: {
         id: "Perbarui Semua Layanan",

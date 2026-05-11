@@ -50,7 +50,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('users', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.users.store');
     Route::put('users/{user}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.users.update');
     Route::delete('users/{user}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
-    Route::inertia('profile', 'admin/business-profile')->name('admin.profile');
 
     Route::get('services/{id}', function ($id) {
         return Inertia::render('services/details', ['id' => $id]);

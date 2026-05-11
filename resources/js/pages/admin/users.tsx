@@ -105,7 +105,7 @@ export default function UserManagement({ users }: Props) {
 
     return (
         <LazyMotion features={domAnimation}>
-            <Head title="User Management" />
+            <Head title={t('dash_user_management')} />
 
             <m.div
                 initial="hidden"
@@ -118,7 +118,9 @@ export default function UserManagement({ users }: Props) {
                         <h1 className="text-3xl font-black tracking-tight text-[#1b1b18] dark:text-white uppercase">
                             User <span className="text-red-600">Management</span>
                         </h1>
-                        <p className="text-sm text-[#1b1b18]/50 dark:text-white/50">Manage admin and staff permissions</p>
+                        <p className="text-sm text-[#1b1b18]/50 dark:text-white/50">
+                            {t('dash_user_management')} - Manage admin and staff permissions
+                        </p>
                     </div>
 
                     <button 
@@ -126,7 +128,7 @@ export default function UserManagement({ users }: Props) {
                         className="flex h-12 items-center gap-2 rounded-full bg-red-600 px-8 text-sm font-black uppercase tracking-widest text-white shadow-lg shadow-red-600/20 transition-all hover:bg-red-700 active:scale-95"
                     >
                         <UserPlus className="size-4" />
-                        Add New User
+                        {t('dash_add_user')}
                     </button>
                 </m.div>
 
@@ -138,8 +140,8 @@ export default function UserManagement({ users }: Props) {
                         <table className="w-full text-left">
                             <thead className="bg-[#1b1b18]/2 dark:bg-white/2">
                                 <tr>
-                                    <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30">User Details</th>
-                                    <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30">Account Info</th>
+                                    <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30">{t('dash_user_details')}</th>
+                                    <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30">{t('dash_account_info')}</th>
                                     <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30">Role</th>
                                     <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 text-right">Actions</th>
                                 </tr>
@@ -219,7 +221,7 @@ export default function UserManagement({ users }: Props) {
                         >
                             <div className="flex items-center justify-between border-b border-[#1b1b18]/5 p-8 dark:border-white/5">
                                 <h2 className="text-2xl font-black uppercase tracking-tight text-[#1b1b18] dark:text-white">
-                                    {editingUser ? 'Edit' : 'Add New'} <span className="text-red-600">User</span>
+                                    {editingUser ? t('dash_edit_user') : t('dash_add_user')}
                                 </h2>
                                 <button onClick={closeModal} className="rounded-full p-2 hover:bg-[#1b1b18]/5 dark:hover:bg-white/5">
                                     <X className="size-6 text-[#1b1b18]/20" />
@@ -229,7 +231,7 @@ export default function UserManagement({ users }: Props) {
                             <form onSubmit={submit} className="p-8 space-y-6">
                                 <div className="grid grid-cols-1 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">Full Name</label>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">{t('dash_full_name')}</label>
                                         <div className="relative">
                                             <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
                                             <input 
@@ -244,7 +246,7 @@ export default function UserManagement({ users }: Props) {
 
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">Email Address</label>
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">{t('auth_email')}</label>
                                             <div className="relative">
                                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
                                                 <input 
@@ -258,7 +260,7 @@ export default function UserManagement({ users }: Props) {
                                             {errors.email && <p className="text-[10px] font-bold text-red-600 ml-1 uppercase">{errors.email}</p>}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">Username</label>
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">{t('auth_username')}</label>
                                             <div className="relative">
                                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-[#1b1b18]/20">@</span>
                                                 <input 
@@ -273,7 +275,7 @@ export default function UserManagement({ users }: Props) {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">System Role</label>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">{t('dash_system_role')}</label>
                                         <div className="grid grid-cols-3 gap-3">
                                             {(['admin', 'staff', 'kasir'] as const).map(role => (
                                                 <button
@@ -295,7 +297,7 @@ export default function UserManagement({ users }: Props) {
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">
-                                                {editingUser ? 'New Password (Optional)' : 'Password'}
+                                                {editingUser ? t('dash_password') + ' (Optional)' : t('dash_password')}
                                             </label>
                                             <div className="relative">
                                                 <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
@@ -309,7 +311,7 @@ export default function UserManagement({ users }: Props) {
                                             {errors.password && <p className="text-[10px] font-bold text-red-600 ml-1 uppercase">{errors.password}</p>}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">Confirm Password</label>
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 ml-1">{t('dash_confirm_password')}</label>
                                             <div className="relative">
                                                 <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#1b1b18]/20" />
                                                 <input 
@@ -329,14 +331,14 @@ export default function UserManagement({ users }: Props) {
                                         onClick={closeModal}
                                         className="flex-1 h-14 rounded-full bg-[#1b1b18]/5 text-[#1b1b18]/40 text-sm font-black uppercase tracking-widest hover:bg-[#1b1b18]/10 transition-all"
                                     >
-                                        Cancel
+                                        {t('dash_cancel')}
                                     </button>
                                     <button 
                                         disabled={processing}
-                                        className="flex-[2] h-14 rounded-full bg-red-600 text-white text-sm font-black uppercase tracking-widest shadow-lg shadow-red-600/20 hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                                        className="flex-2 h-14 rounded-full bg-red-600 text-white text-sm font-black uppercase tracking-widest shadow-lg shadow-red-600/20 hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                                     >
                                         {processing ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle2 className="size-4" />}
-                                        {editingUser ? 'Update User' : 'Create User'}
+                                        {editingUser ? t('dash_update_user') : t('dash_create_user')}
                                     </button>
                                 </div>
                             </form>

@@ -38,7 +38,7 @@ export function AppSidebar() {
             icon: LayoutGrid,
             items: [
                 {
-                    title: 'Pendapatan',
+                    title: t('dash_income'),
                     href: '/admin/income',
                 },
             ],
@@ -54,7 +54,7 @@ export function AppSidebar() {
             icon: Package,
             items: [
                 {
-                    title: 'Sparepart Sell',
+                    title: t('dash_sparepart_sell'),
                     href: '/admin/spareparts/sell',
                 }
             ]
@@ -65,7 +65,7 @@ export function AppSidebar() {
             icon: Users,
             items: [
                 {
-                    title: 'Cars',
+                    title: t('dash_cars'),
                     href: '/admin/cars',
                 }
             ]
@@ -87,19 +87,14 @@ export function AppSidebar() {
 
     const secondaryNavItems: NavItem[] = [
         {
-            title: 'User Management',
+            title: t('dash_user_management'),
             href: '/admin/users',
             icon: ShieldCheck,
         },
         {
-            title: 'Business Profile',
-            href: '/admin/profile',
-            icon: Store,
-        },
-        {
-            title: t('dash_settings'),
+            title: t('dash_workshop_identity'),
             href: '/admin/workshop-settings',
-            icon: Settings,
+            icon: Store,
         },
     ];
 
