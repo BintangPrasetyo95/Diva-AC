@@ -416,6 +416,10 @@ export const translations: Translations = {
         id: "Alamat Email",
         en: "Email address"
     },
+    auth_email_placeholder: {
+        id: "Alamat Email anda",
+        en: "Your Email Address"
+    },
     auth_password: {
         id: "Kata Sandi",
         en: "Password"
@@ -427,6 +431,14 @@ export const translations: Translations = {
     auth_name: {
         id: "Nama",
         en: "Name"
+    },
+    auth_username: {
+        id: "Username",
+        en: "Username"
+    },
+    auth_username_placeholder: {
+        id: "Username anda untuk login",
+        en: "Your Username for Login Credentials"
     },
     auth_name_placeholder: {
         id: "Nama lengkap",
@@ -456,6 +468,10 @@ export const translations: Translations = {
     phone: {
         id: "Telepon / WhatsApp",
         en: "Phone / WhatsApp"
+    },
+    phone_placeholder: {
+        id: "No telepon/whatsapp anda",
+        en: "Your Phone/whatsapp number"
     },
     car_model: {
         id: "Model & Tahun Mobil",

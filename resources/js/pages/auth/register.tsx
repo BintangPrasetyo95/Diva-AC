@@ -55,17 +55,46 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
+                                <Label htmlFor="username">{t('auth_username')}</Label>
+                                <Input
+                                    id="username"
+                                    type="text"
+                                    required
+                                    tabIndex={2}
+                                    autoComplete="username"
+                                    name="username"
+                                    placeholder={t('auth_username_placeholder')}
+                                />
+                                <InputError
+                                    message={errors.username}
+                                />
+                            </div>
+
+                            <div className="grid gap-2">
                                 <Label htmlFor="email">{tEmail}</Label>
                                 <Input
                                     id="email"
                                     type="email"
                                     required
-                                    tabIndex={2}
+                                    tabIndex={3}
                                     autoComplete="email"
                                     name="email"
-                                    placeholder="email@example.com"
+                                    placeholder={t('auth_email_placeholder')}
                                 />
                                 <InputError message={errors.email} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="no_telp">{t('phone')}</Label>
+                                <Input
+                                    id="no_telp"
+                                    type="tel"
+                                    required
+                                    tabIndex={4}
+                                    name="no_telp"
+                                    placeholder={t('phone_placeholder')}
+                                />
+                                <InputError message={errors.no_telp} />
                             </div>
 
                             <div className="grid gap-2">
@@ -73,11 +102,11 @@ export default function Register() {
                                 <PasswordInput
                                     id="password"
                                     required
-                                    tabIndex={3}
+                                    tabIndex={5}
                                     autoComplete="new-password"
                                     name="password"
                                     placeholder={tPasswordPlaceholder}
-                                />
+                                 />
                                 <InputError message={errors.password} />
                             </div>
 
@@ -88,7 +117,7 @@ export default function Register() {
                                 <PasswordInput
                                     id="password_confirmation"
                                     required
-                                    tabIndex={4}
+                                    tabIndex={6}
                                     autoComplete="new-password"
                                     name="password_confirmation"
                                     placeholder={tConfirmPasswordPlaceholder}
@@ -101,7 +130,7 @@ export default function Register() {
                             <Button
                                 type="submit"
                                 className="mt-2 w-full"
-                                tabIndex={5}
+                                tabIndex={7}
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
@@ -111,7 +140,7 @@ export default function Register() {
 
                         <div className="text-center text-sm text-muted-foreground">
                             {tAlreadyAccount}{' '}
-                            <TextLink href={login()} tabIndex={6}>
+                            <TextLink href={login()} tabIndex={8}>
                                 {tLogIn}
                             </TextLink>
                         </div>
