@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { m, Variants, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 import {
     TrendingUp,
@@ -46,6 +46,7 @@ interface Props {
     customerDelta: number | null;
     recentServices: RecentService[];
     stockAlerts: StockAlert[];
+    isStoreOpen: boolean;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -76,11 +77,18 @@ export default function Dashboard({
     customerDelta,
     recentServices,
     stockAlerts,
+    isStoreOpen,
 }: Props) {
     const { t } = useLanguage();
     const { appearance, updateAppearance } = useAppearance();
-    const [isStoreOpen, setIsStoreOpen] = React.useState(true);
     const [showConfirm, setShowConfirm] = React.useState(false);
+
+    const toggleStoreStatus = () => {
+        router.post('/admin/store-status', { is_open: !isStoreOpen }, {
+            preserveScroll: true,
+            onSuccess: () => setShowConfirm(false),
+        });
+    };
 
     const stats = [
         {
@@ -187,7 +195,7 @@ export default function Dashboard({
                                     >
                                         <span className="px-3 text-[10px] font-bold text-white dark:text-black uppercase">{t('dash_confirm_q')}</span>
                                         <button
-                                            onClick={() => { setIsStoreOpen(!isStoreOpen); setShowConfirm(false); }}
+                                            onClick={toggleStoreStatus}
                                             className="rounded-full bg-red-600 px-4 py-1.5 text-[10px] font-black text-white hover:bg-red-700"
                                         >
                                             {t('dash_yes')}

@@ -7,6 +7,7 @@ import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TwoFactorRecoveryCodes from '@/components/two-factor-recovery-codes';
 import TwoFactorSetupModal from '@/components/two-factor-setup-modal';
+import DeleteUser from '@/components/delete-user';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
@@ -235,6 +236,8 @@ export default function Security({
                     />
                 </div>
             )}
+
+            <DeleteUser />
         </>
     );
 }

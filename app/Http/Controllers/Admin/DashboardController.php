@@ -89,6 +89,9 @@ class DashboardController extends Controller
                 'stock' => $sp->stock_sparepart,
             ]);
 
+        $storeSetting = \App\Models\StoreSetting::first();
+        $isStoreOpen = $storeSetting ? $storeSetting->isOpenNow() : false;
+
         return Inertia::render('dashboard', [
             'monthlyRevenue'  => (float) $monthlyRevenue,
             'revenueDelta'    => $revenueDelta,
@@ -100,6 +103,7 @@ class DashboardController extends Controller
             'customerDelta'   => $customerDelta,
             'recentServices'  => $recentServices,
             'stockAlerts'     => $stockAlerts,
+            'isStoreOpen'     => $isStoreOpen,
         ]);
     }
 }

@@ -20,6 +20,7 @@ Route::get('services/info/{slug}', function ($slug) {
 // Admin Pages
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::post('store-status', [App\Http\Controllers\Admin\StoreStatusController::class, 'toggle'])->name('store-status.toggle');
     
     // Inventory
     Route::get('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'index'])->name('inventory');
