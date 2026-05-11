@@ -202,7 +202,7 @@ function LandingPage({ canRegister, services = [], gallery = [], settings }: { c
             <div className="relative z-10">
                 <Hero />
                 <div className="bg-white/10 backdrop-blur-md dark:bg-black/20">
-                    {/* <Description /> */}
+                    <Description />
                     <Services services={services} />
                 </div>
                 <Brands />

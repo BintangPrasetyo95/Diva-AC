@@ -6,87 +6,80 @@ export default function Description() {
     const { t } = useLanguage();
 
     return (
-        <section className="py-12 px-4 sm:px-6">
-            <div className="mx-auto max-w-6xl">
+        <section className="py-12 px-8 sm:px-16 lg:px-24">
+            <div className="mx-auto max-w-7xl">
                 <m.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="relative overflow-hidden rounded-3xl"
+                    className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-black/60 backdrop-blur-3xl dark:border-white/5"
                 >
-                    {/* Gradient background — light mode */}
-                    <div
-                        className="absolute inset-0 dark:hidden"
-                        style={{
-                            background:
-                                'linear-gradient(to left, #121421 0%, #3F435E 15%, #f0eeeb 70%, #f0eeeb 100%)',
-                        }}
-                    />
-                    {/* Gradient background — dark mode */}
-                    <div
-                        className="absolute inset-0 hidden dark:block"
-                        style={{
-                            background:
-                                'linear-gradient(to left, #121421 0%, #3F435E 15%, #1f1f1c 70%, #1f1f1c 100%)',
-                        }}
-                    />
-
+                    {/* Decorative neutral glow for consistent glass effect */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] -translate-y-1/2 h-[120%] w-[120%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_70%)]" />
+                    
                     {/*
                      * Layout:
                      *   sm and below → column (image on top, text below)
                      *   md and above → row   (text left, image right, same height)
                      */}
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-stretch pt-16 pr-16">
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-stretch">
 
                         {/* ── Image ── */}
-                        {/* On small screens it appears first (top).
-                            On medium+ it moves to the right via order-last. */}
                         <m.div
                             initial={{ opacity: 0, scale: 1.05 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2, duration: 0.75, ease: 'easeOut' }}
                             className="
-                                relative flex justify-center overflow-hidden
-                                /* small: natural height, centered */
+                                relative flex justify-center
                                 w-full
-                                /* medium+: right column, fills card height */
                                 md:order-last md:w-2/5
+                                pt-12 sm:pt-16 md:pt-20
                             "
                         >
-                            <img
-                                // src="/img/actor.png"
-                                alt="Diva AC Owner"
-                                /*
-                                 * Small screens  → fixed reasonable height so it doesn't
-                                 *                   dominate the card
-                                 * Medium screens → h-full so it matches the text column;
-                                 *                   object-bottom keeps the figure grounded
-                                 */
-                                className="
-                                    h-48 sm:h-64
-                                    md:h-full
-                                    w-auto max-w-full object-contain object-bottom
-                                    drop-shadow-2xl
-                                "
-                            />
+                            <div className="relative h-full w-full flex justify-center">
+                                <img
+                                    src="/img/actor.png"
+                                    alt="Diva AC Owner"
+                                    className="
+                                        h-72 sm:h-96 
+                                        md:h-full
+                                        w-auto max-w-full object-contain object-bottom
+                                        brightness-110 contrast-110
+                                        scale-125 md:scale-135
+                                        md:-translate-x-20
+                                        md:-translate-y-12
+                                    "
+                                    style={{
+                                        maskImage: 'linear-gradient(to top, transparent 0%, black 30%)',
+                                        WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 30%)'
+                                    }}
+                                />
+                            </div>
                         </m.div>
 
                         {/* ── Text ── */}
                         <div className="
-                            flex flex-col justify-center
-                            px-8 py-10 sm:px-10 sm:py-12 lg:px-16
+                            relative flex flex-col justify-center
+                            px-8 py-14 sm:px-16 sm:py-24 lg:px-32
                             md:w-3/5
                         ">
+                            {/* Decorative Quote Mark */}
+                            <div className="absolute top-10 left-6 text-8xl font-serif text-white/5 select-none sm:top-16 sm:left-12 lg:left-20">
+                                &ldquo;
+                            </div>
+
                             <m.h2
                                 initial={{ opacity: 0, x: -18 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.15, duration: 0.6 }}
-                                className="mb-8 text-3xl font-black leading-tight tracking-tight text-[#1b1b18] dark:text-white sm:text-4xl lg:text-sm"
+                                className="relative mb-10 font-serif text-md italic leading-[1.3] tracking-tight text-white sm:text-xl lg:text-2xl xl:text-3xl"
                             >
-                                {t('desc_title')}
+                                <span className="bg-linear-to-br from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+                                    {t('desc_title')}
+                                </span>
                             </m.h2>
 
                             <m.div
@@ -94,12 +87,21 @@ export default function Description() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.3, duration: 0.5 }}
+                                className="flex flex-wrap gap-4"
                             >
                                 <Link
                                     href="/booking"
-                                    className="inline-flex items-center gap-2 rounded-full bg-red-600 px-7 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#1b1b18] hover:scale-105 active:scale-95 dark:hover:bg-white dark:hover:text-[#1b1b18]"
+                                    className="group relative inline-flex items-center gap-4 overflow-hidden rounded-2xl bg-red-600 px-10 py-5 text-sm font-black text-white shadow-xl shadow-red-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-red-700 hover:shadow-2xl hover:shadow-red-600/40 active:scale-95"
                                 >
-                                    {t('book_now')}
+                                    <span className="relative z-10">{t('book_now')}</span>
+                                    <m.span 
+                                        className="relative z-10 inline-block text-lg"
+                                        animate={{ x: [0, 5, 0] }}
+                                        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                                    >
+                                        →
+                                    </m.span>
+                                    <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
                                 </Link>
                             </m.div>
                         </div>

@@ -55,7 +55,7 @@ export default function WorkshopSettings({ settings }: Props) {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        patch(route('workshop.settings.update'), {
+        patch('/admin/workshop-settings', {
             onSuccess: () => toast.success('Workshop settings updated successfully'),
             onError: () => toast.error('Failed to update settings'),
         });
