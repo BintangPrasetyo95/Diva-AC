@@ -29,7 +29,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
     const [customerPhone, setCustomerPhone] = useState('');
     const [address, setAddress] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [rows, setRows] = useState([{ id: Date.now().toString(), partId: '' }]);
+    const [rows, setRows] = useState([{ id: Date.now().toString(), partId: '', jumlah: 1 }]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -52,7 +52,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                     customer_name: customerName,
                     customer_phone: customerPhone,
                     address: address,
-                    items: validRows.map(r => ({ partId: r.partId, jumlah: 1 }))
+                    items: validRows.map(r => ({ partId: r.partId, jumlah: Number(r.jumlah) || 1 }))
                 })
             });
 
@@ -72,7 +72,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
     };
 
     const addRow = () => {
-        setRows([...rows, { id: Date.now().toString(), partId: '' }]);
+        setRows([...rows, { id: Date.now().toString(), partId: '', jumlah: 1 }]);
     };
 
     const removeRow = (idToRemove: string) => {
@@ -83,6 +83,10 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
 
     const updateRow = (idToUpdate: string, newPartId: string) => {
         setRows(rows.map(row => row.id === idToUpdate ? { ...row, partId: newPartId } : row));
+    };
+
+    const updateRowQuantity = (idToUpdate: string, newJumlah: number) => {
+        setRows(rows.map(row => row.id === idToUpdate ? { ...row, jumlah: Math.max(1, newJumlah) } : row));
     };
 
     const handleImageClick = (partId: string) => {
@@ -104,7 +108,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
             if (emptyRow) {
                 updateRow(emptyRow.id, partId);
             } else {
-                setRows([...rows, { id: Date.now().toString(), partId }]);
+                setRows([...rows, { id: Date.now().toString(), partId, jumlah: 1 }]);
             }
         }
     };
@@ -377,6 +381,16 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                                         <option key={part.id} value={part.id}>{part.nama_sparepart}</option>
                                                     ))}
                                                 </select>
+
+                                                <input 
+                                                    type="number" 
+                                                    min="1" 
+                                                    required
+                                                    value={row.jumlah}
+                                                    onChange={(e) => updateRowQuantity(row.id, parseInt(e.target.value) || 1)}
+                                                    className="w-24 rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 dark:border-white/20 dark:text-white"
+                                                    title={t('quantity')}
+                                                />
                                                 
                                                 {rows.length > 1 && (
                                                     <button

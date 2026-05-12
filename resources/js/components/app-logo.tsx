@@ -1,53 +1,9 @@
-import { useState, useEffect } from 'react';
 import AppLogoIcon from '@/components/app-logo-icon';
-
-function useShopStatus() {
-    const [isOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        const checkStatus = () => {
-            const now = new Date();
-            const formatter = new Intl.DateTimeFormat('en-US', {
-                timeZone: 'Asia/Jakarta',
-                weekday: 'short',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: false
-            });
-            
-            const parts = formatter.formatToParts(now);
-            const weekday = parts.find(p => p.type === 'weekday')?.value;
-            // Handle cases where hour might be '24' instead of '0' depending on browser
-            let hourStr = parts.find(p => p.type === 'hour')?.value || '0';
-
-            if (hourStr === '24') {
-hourStr = '0';
-}
-
-            const hour = parseInt(hourStr, 10);
-            
-            if (weekday === 'Sun') {
-                setIsOpen(false);
-            } else {
-                if (hour >= 8 && hour < 17) {
-                    setIsOpen(true);
-                } else {
-                    setIsOpen(false);
-                }
-            }
-        };
-
-        checkStatus();
-        const interval = setInterval(checkStatus, 60000);
- 
-        return () => clearInterval(interval);
-    }, []);
-
-    return isOpen;
-}
+import { usePage } from '@inertiajs/react';
 
 export default function AppLogo() {
-    const isOpen = useShopStatus();
+    const { isStoreOpen } = usePage().props as any;
+    const isOpen = Boolean(isStoreOpen);
 
     return (
         <div className="flex items-center gap-3">
