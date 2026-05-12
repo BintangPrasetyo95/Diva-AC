@@ -10,6 +10,7 @@ Route::get('/', [WelcomeController::class, 'index'])->name('home');
 // Public Pages
 Route::inertia('booking', 'booking')->name('booking');
 Route::get('spareparts', [WelcomeController::class, 'spareparts'])->name('spareparts');
+Route::post('spareparts/order', [\App\Http\Controllers\SparepartOrderController::class, 'store'])->name('spareparts.order');
 
 Route::get('services/info/{slug}', function ($slug) {
     return Inertia::render('services/info', [
@@ -27,7 +28,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'store'])->name('inventory.store');
     Route::post('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'update'])->name('inventory.update');
     Route::delete('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'destroy'])->name('inventory.destroy');
-    Route::inertia('spareparts/sell', 'spareparts/sell')->name('spareparts.sell');
+    
+    // Sparepart Selling
+    Route::get('spareparts/sell', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'index'])->name('spareparts.sell');
+    Route::patch('spareparts/sell/{id}/verify', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'verify'])->name('spareparts.sell.verify');
+    Route::patch('spareparts/sell/{id}/cancel', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'cancel'])->name('spareparts.sell.cancel');
 
     // Customers
     Route::get('customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers');

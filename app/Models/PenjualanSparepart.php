@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[Fillable(['id_user', 'tanggal_penjualan', 'total_harga', 'bayar', 'kembali'])]
+#[Fillable(['id_user', 'customer_name', 'customer_phone', 'address', 'status', 'tanggal_penjualan', 'total_harga', 'bayar', 'kembali'])]
 class PenjualanSparepart extends Model
 {
     use HasFactory;

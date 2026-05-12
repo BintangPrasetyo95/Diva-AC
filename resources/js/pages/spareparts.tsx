@@ -25,7 +25,51 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
 
     // Form state
+    const [customerName, setCustomerName] = useState('');
+    const [customerPhone, setCustomerPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [rows, setRows] = useState([{ id: Date.now().toString(), partId: '' }]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        const validRows = rows.filter(r => r.partId !== '');
+        if (validRows.length === 0) {
+            alert('Please select at least one sparepart.');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const response = await fetch('/spareparts/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || ''
+                },
+                body: JSON.stringify({
+                    customer_name: customerName,
+                    customer_phone: customerPhone,
+                    address: address,
+                    items: validRows.map(r => ({ partId: r.partId, jumlah: 1 }))
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success && data.wa_url) {
+                window.location.href = data.wa_url;
+            } else {
+                alert('Failed to submit order. Please try again.');
+            }
+        } catch (error) {
+            console.error('Failed to submit order:', error);
+            alert('Failed to submit order. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     const addRow = () => {
         setRows([...rows, { id: Date.now().toString(), partId: '' }]);
@@ -278,7 +322,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                             transition={{ delay: 0.2 }}
                             className="rounded-3xl border border-[#1b1b18]/10 bg-white/50 p-6 backdrop-blur-xl dark:border-white/10 dark:bg-black/50 sm:p-10 shadow-2xl h-fit"
                         >
-                            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                            <form className="space-y-6" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                     <div className="space-y-2">
                                         <label className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#1b1b18]/70 dark:text-white/70">
@@ -290,6 +334,8 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                             required
                                             className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                             placeholder={t('booking_placeholder_name')}
+                                            value={customerName}
+                                            onChange={e => setCustomerName(e.target.value)}
                                         />
                                     </div>
                                     <div className="space-y-2">
@@ -302,6 +348,8 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                             required
                                             className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                             placeholder={t('booking_placeholder_phone')}
+                                            value={customerPhone}
+                                            onChange={e => setCustomerPhone(e.target.value)}
                                         />
                                     </div>
                                 </div>
@@ -364,6 +412,8 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                         rows={3}
                                         className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                         placeholder={t('address_placeholder')}
+                                        value={address}
+                                        onChange={e => setAddress(e.target.value)}
                                     ></textarea>
                                 </div>
 
@@ -371,9 +421,10 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                     whileHover={{ scale: 1.01 }}
                                     whileTap={{ scale: 0.99 }}
                                     type="submit"
-                                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-4 font-bold text-white transition-all hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+                                    disabled={isSubmitting}
+                                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-4 font-bold text-white transition-all hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)] disabled:opacity-50"
                                 >
-                                    {t('confirm_purchase')}
+                                    {isSubmitting ? 'Loading...' : t('confirm_purchase')}
                                 </m.button>
                             </form>
                         </m.div>
