@@ -42,12 +42,18 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::delete('customers/{customer}', [App\Http\Controllers\Admin\CustomerController::class, 'destroy'])->name('customers.destroy');
     Route::post('customers/{customer}/mobils', [App\Http\Controllers\Admin\CustomerController::class, 'storeMobil'])->name('customers.mobils.store');
     Route::get('cars', [App\Http\Controllers\Admin\CarController::class, 'index'])->name('cars');
+    Route::post('cars', [App\Http\Controllers\Admin\CarController::class, 'store'])->name('cars.store');
+    Route::post('cars/with-user', [App\Http\Controllers\Admin\CarController::class, 'storeWithNewUser'])->name('cars.store-with-user');
 
     // Services
     Route::get('services', [App\Http\Controllers\Admin\ServiceController::class, 'index'])->name('services');
     Route::post('services', [App\Http\Controllers\Admin\ServiceController::class, 'store'])->name('services.store');
+    Route::post('services/with-car', [App\Http\Controllers\Admin\ServiceController::class, 'storeWithNewCar'])->name('services.store-with-car');
     Route::put('services/{service}', [App\Http\Controllers\Admin\ServiceController::class, 'update'])->name('services.update');
     Route::delete('services/{service}', [App\Http\Controllers\Admin\ServiceController::class, 'destroy'])->name('services.destroy');
+    
+    // Invoices
+    Route::get('invoice', [App\Http\Controllers\Admin\InvoiceController::class, 'show'])->name('invoice.show');
     Route::get('services/{id}', [App\Http\Controllers\Admin\ServiceController::class, 'show'])->name('services.details');
     Route::get('gallery', [App\Http\Controllers\Admin\GalleryController::class, 'index'])->name('admin.gallery');
     Route::post('gallery', [App\Http\Controllers\Admin\GalleryController::class, 'store'])->name('admin.gallery.store');
@@ -64,6 +70,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     // Income
     Route::get('income', [App\Http\Controllers\Admin\IncomeController::class, 'index'])->name('admin.income');
+
+    // My Account
+    Route::get('my-account', [App\Http\Controllers\Admin\MyAccountController::class, 'index'])->name('admin.my-account');
 });
 
 Route::inertia('/three', 'ThreePage')->name('three');

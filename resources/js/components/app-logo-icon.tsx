@@ -1,6 +1,10 @@
 import type { ImgHTMLAttributes } from 'react';
 
-export default function AppLogoIcon({ className, style, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
+export default function AppLogoIcon({
+    className,
+    style,
+    ...props
+}: ImgHTMLAttributes<HTMLImageElement>) {
     return (
         <picture className={className} style={style}>
             <source srcSet="/logo.webp" type="image/webp" />
@@ -10,10 +14,9 @@ export default function AppLogoIcon({ className, style, ...props }: ImgHTMLAttri
                 alt="Diva AC Logo"
                 width={400}
                 height={400}
-                className="w-full h-full object-contain"
+                className="h-full w-full object-contain"
                 decoding="async"
             />
         </picture>
     );
 }
-

@@ -28,21 +28,22 @@ function Lightbox({
 }) {
     const [current, setCurrent] = useState(index);
 
-    const prev = () => setCurrent((c) => (c - 1 + images.length) % images.length);
+    const prev = () =>
+        setCurrent((c) => (c - 1 + images.length) % images.length);
     const next = () => setCurrent((c) => (c + 1) % images.length);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'ArrowLeft') {
-prev();
-}
+            prev();
+        }
 
         if (e.key === 'ArrowRight') {
-next();
-}
+            next();
+        }
 
         if (e.key === 'Escape') {
-onClose();
-}
+            onClose();
+        }
     };
 
     return (
@@ -67,8 +68,9 @@ onClose();
             <button
                 className="absolute left-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
                 onClick={(e) => {
- e.stopPropagation(); prev(); 
-}}
+                    e.stopPropagation();
+                    prev();
+                }}
             >
                 <ChevronLeft className="size-6" />
             </button>
@@ -90,8 +92,9 @@ onClose();
             <button
                 className="absolute right-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
                 onClick={(e) => {
- e.stopPropagation(); next(); 
-}}
+                    e.stopPropagation();
+                    next();
+                }}
             >
                 <ChevronRight className="size-6" />
             </button>
@@ -122,22 +125,30 @@ const MarqueeRow = ({
                 className="flex w-max"
                 style={{ willChange: 'transform' }}
                 animate={{
-                    x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%']
+                    x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
                 }}
                 transition={{
                     duration: 40,
                     ease: 'linear',
-                    repeat: Infinity
+                    repeat: Infinity,
                 }}
             >
                 {[0, 1].map((i) => (
                     <div key={i} className="flex flex-nowrap">
                         {images.map((src, idx) => (
-                            <div key={idx} className="px-2 shrink-0">
+                            <div key={idx} className="shrink-0 px-2">
                                 <m.div
-                                    whileHover={{ scale: 1.02, transition: { duration: 0.15, ease: "easeOut" } }}
-                                    className="relative aspect-square w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 cursor-zoom-in"
-                                    onClick={() => onImageClick(allImages.indexOf(src))}
+                                    whileHover={{
+                                        scale: 1.02,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: 'easeOut',
+                                        },
+                                    }}
+                                    className="relative aspect-square w-[200px] cursor-zoom-in overflow-hidden rounded-2xl bg-gray-100 sm:w-[250px] md:w-[300px] lg:w-[350px] dark:bg-zinc-900"
+                                    onClick={() =>
+                                        onImageClick(allImages.indexOf(src))
+                                    }
                                 >
                                     <img
                                         src={src}
@@ -146,9 +157,17 @@ const MarqueeRow = ({
                                         height={350}
                                         sizes="(max-width: 640px) 200px, (max-width: 768px) 250px, (max-width: 1024px) 300px, 350px"
                                         className="h-full w-full object-cover"
-                                        loading={isFirst && i === 0 && idx === 0 ? undefined : 'lazy'}
+                                        loading={
+                                            isFirst && i === 0 && idx === 0
+                                                ? undefined
+                                                : 'lazy'
+                                        }
                                         decoding="async"
-                                        fetchPriority={isFirst && i === 0 && idx === 0 ? 'high' : undefined}
+                                        fetchPriority={
+                                            isFirst && i === 0 && idx === 0
+                                                ? 'high'
+                                                : undefined
+                                        }
                                     />
                                 </m.div>
                             </div>
@@ -188,9 +207,8 @@ export default function Gallery({ items = [] }: { items?: GalleryItem[] }) {
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
     // Combine database images with static images if no dynamic images exist
-    const displayImages = items.length > 0 
-        ? items.map(item => item.image_url)
-        : STATIC_IMAGES;
+    const displayImages =
+        items.length > 0 ? items.map((item) => item.image_url) : STATIC_IMAGES;
 
     const row1Images = displayImages.slice(0, 5);
     const row2Images = displayImages.slice(5, 10);
@@ -198,25 +216,26 @@ export default function Gallery({ items = [] }: { items?: GalleryItem[] }) {
 
     return (
         <>
-            {lightboxIndex !== null && createPortal(
-                <AnimatePresence>
-                    <Lightbox
-                        images={displayImages}
-                        index={lightboxIndex}
-                        onClose={() => setLightboxIndex(null)}
-                    />
-                </AnimatePresence>,
-                document.body
-            )}
+            {lightboxIndex !== null &&
+                createPortal(
+                    <AnimatePresence>
+                        <Lightbox
+                            images={displayImages}
+                            index={lightboxIndex}
+                            onClose={() => setLightboxIndex(null)}
+                        />
+                    </AnimatePresence>,
+                    document.body,
+                )}
 
             <m.section
                 initial={{ opacity: 0.3 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ amount: 0.3, margin: "-100px" }}
+                viewport={{ amount: 0.3, margin: '-100px' }}
                 transition={{ duration: 0.8 }}
                 className="overflow-hidden"
             >
-                <div className="w-full flex flex-col gap-2">
+                <div className="flex w-full flex-col gap-2">
                     {row1Images.length > 0 && (
                         <MarqueeRow
                             images={row1Images}
@@ -260,11 +279,27 @@ export default function Gallery({ items = [] }: { items?: GalleryItem[] }) {
                                     <m.div
                                         key={src}
                                         initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1, transition: { duration: 0.3 } }}
-                                        exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.3 } }}
-                                        whileHover={{ scale: 1.02, transition: { duration: 0.15, ease: "easeOut" } }}
-                                        className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900 cursor-zoom-in"
-                                        onClick={() => setLightboxIndex(10 + index)}
+                                        animate={{
+                                            opacity: 1,
+                                            scale: 1,
+                                            transition: { duration: 0.3 },
+                                        }}
+                                        exit={{
+                                            opacity: 0,
+                                            scale: 0.9,
+                                            transition: { duration: 0.3 },
+                                        }}
+                                        whileHover={{
+                                            scale: 1.02,
+                                            transition: {
+                                                duration: 0.15,
+                                                ease: 'easeOut',
+                                            },
+                                        }}
+                                        className="relative aspect-square cursor-zoom-in overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
+                                        onClick={() =>
+                                            setLightboxIndex(10 + index)
+                                        }
                                     >
                                         <img
                                             src={src}

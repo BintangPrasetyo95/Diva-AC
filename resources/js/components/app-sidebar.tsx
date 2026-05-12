@@ -1,15 +1,16 @@
 import { Link } from '@inertiajs/react';
-import { 
-    LayoutGrid, 
-    Wrench, 
-    Package, 
-    Users, 
-    Settings, 
+import {
+    LayoutGrid,
+    Wrench,
+    Package,
+    Users,
+    Settings,
     HelpCircle,
     ShoppingBag,
     Image as ImageIcon,
     ShieldCheck,
-    Store
+    Store,
+    CircleUserRound,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
@@ -56,8 +57,8 @@ export function AppSidebar() {
                 {
                     title: t('dash_sparepart_sell'),
                     href: '/admin/spareparts/sell',
-                }
-            ]
+                },
+            ],
         },
         {
             title: t('dash_stat_customers'),
@@ -67,8 +68,8 @@ export function AppSidebar() {
                 {
                     title: t('dash_cars'),
                     href: '/admin/cars',
-                }
-            ]
+                },
+            ],
         },
     ];
 
@@ -96,6 +97,11 @@ export function AppSidebar() {
             href: '/admin/workshop-settings',
             icon: Store,
         },
+        {
+            title: 'Akun Saya',
+            href: '/admin/my-account',
+            icon: CircleUserRound,
+        },
     ];
 
     return (
@@ -114,23 +120,29 @@ export function AppSidebar() {
 
             <SidebarContent className="gap-4">
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_overview')}</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-[10px] font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase group-data-[collapsible=icon]:hidden dark:text-white/30">
+                        {t('dash_overview')}
+                    </SidebarGroupLabel>
                     <NavMain items={mainNavItems} />
                 </SidebarGroup>
 
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_website_content')}</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-[10px] font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase group-data-[collapsible=icon]:hidden dark:text-white/30">
+                        {t('dash_website_content')}
+                    </SidebarGroupLabel>
                     <NavMain items={websiteNavItems} />
                 </SidebarGroup>
 
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b1b18]/30 dark:text-white/30 group-data-[collapsible=icon]:hidden">{t('dash_system')}</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-[10px] font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase group-data-[collapsible=icon]:hidden dark:text-white/30">
+                        {t('dash_system')}
+                    </SidebarGroupLabel>
                     <NavMain items={secondaryNavItems} />
                 </SidebarGroup>
             </SidebarContent>
 
             <SidebarFooter className="p-2">
-                <div className="rounded-2xl bg-[#1b1b18]/5 p-2 dark:bg-white/5 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:p-0">
+                <div className="rounded-2xl bg-[#1b1b18]/5 p-2 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:p-0 dark:bg-white/5">
                     <NavUser />
                 </div>
             </SidebarFooter>

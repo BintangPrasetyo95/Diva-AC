@@ -1,5 +1,12 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { LazyMotion, domAnimation, m, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import {
+    LazyMotion,
+    domAnimation,
+    m,
+    useScroll,
+    useTransform,
+    AnimatePresence,
+} from 'framer-motion';
 import { Menu } from 'lucide-react';
 import React, { Suspense } from 'react';
 import AppLogo from '@/components/app-logo';
@@ -22,18 +29,28 @@ import { dashboard, login, register } from '@/routes';
 // preventing Three.js/fiber/drei from blocking the main thread on initial load.
 const ThreeScene = React.lazy(() => import('@/components/ThreeScene'));
 
-function LandingPage({ canRegister, services = [], gallery = [], settings }: { canRegister: boolean; services: any[]; gallery: any[]; settings: any }) {
+function LandingPage({
+    canRegister,
+    services = [],
+    gallery = [],
+    settings,
+}: {
+    canRegister: boolean;
+    services: any[];
+    gallery: any[];
+    settings: any;
+}) {
     const { auth } = usePage().props;
     const { scrollY } = useScroll();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = React.useState(false);
     const { language, setLanguage, t } = useLanguage();
     const [mounted, setMounted] = React.useState(false);
-    
+
     React.useEffect(() => {
         setMounted(true);
     }, []);
-    
+
     const opacityValue = useTransform(scrollY, [0, 500], [1, 0.3]);
 
     return (
@@ -42,9 +59,13 @@ function LandingPage({ canRegister, services = [], gallery = [], settings }: { c
             {mounted && (
                 <m.div
                     style={{ opacity: opacityValue }}
-                    className="fixed inset-0 z-0 pointer-events-none"
+                    className="pointer-events-none fixed inset-0 z-0"
                 >
-                    <Suspense fallback={<div className="w-full h-full bg-white dark:bg-[#080808]" />}>
+                    <Suspense
+                        fallback={
+                            <div className="h-full w-full bg-white dark:bg-[#080808]" />
+                        }
+                    >
                         <ThreeScene />
                     </Suspense>
                 </m.div>
@@ -59,7 +80,7 @@ function LandingPage({ canRegister, services = [], gallery = [], settings }: { c
 
             <nav className="fixed top-6 right-6 z-50 flex items-center gap-4">
                 {/* Desktop Navigation */}
-                <div className="hidden lg:flex items-center gap-4">
+                <div className="hidden items-center gap-4 lg:flex">
                     <AnimatePresence mode="wait">
                         {isDesktopMenuOpen && (
                             <m.div
@@ -69,27 +90,27 @@ function LandingPage({ canRegister, services = [], gallery = [], settings }: { c
                                 className="flex items-center gap-4"
                             >
                                 {/* Language Switcher */}
-                                <div className="flex items-center gap-1 rounded-full bg-[#1b1b18]/5 p-1 backdrop-blur-md border border-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20">
-                                    <button 
+                                <div className="flex items-center gap-1 rounded-full border border-[#1b1b18]/10 bg-[#1b1b18]/5 p-1 backdrop-blur-md dark:border-white/20 dark:bg-white/10">
+                                    <button
                                         onClick={() => setLanguage('id')}
-                                        className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
+                                        className={`rounded-full px-3 py-1 text-[10px] font-bold transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/60 hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white'}`}
                                     >
                                         ID
                                     </button>
-                                    <button 
+                                    <button
                                         onClick={() => setLanguage('en')}
-                                        className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
+                                        className={`rounded-full px-3 py-1 text-[10px] font-bold transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-lg' : 'text-[#1b1b18]/60 hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white'}`}
                                     >
                                         EN
                                     </button>
                                 </div>
 
                                 <AppearanceToggleTab />
-                                
+
                                 {auth.user ? (
                                     <Link
                                         href="/admin/dashboard"
-                                        className="inline-block rounded-full bg-[#1b1b18]/5 px-6 py-2 text-sm font-medium text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/10 border border-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+                                        className="inline-block rounded-full border border-[#1b1b18]/10 bg-[#1b1b18]/5 px-6 py-2 text-sm font-medium text-[#1b1b18] backdrop-blur-md transition-all hover:bg-[#1b1b18]/10 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                                     >
                                         {t('dashboard')}
                                     </Link>
@@ -115,43 +136,49 @@ function LandingPage({ canRegister, services = [], gallery = [], settings }: { c
                         )}
                     </AnimatePresence>
 
-                    <button 
+                    <button
                         onClick={() => setIsDesktopMenuOpen(!isDesktopMenuOpen)}
-                        className={`flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md border shadow-xl transition-all active:scale-95 ${isDesktopMenuOpen ? 'bg-red-600 text-white border-red-600' : 'bg-[#1b1b18]/5 border-[#1b1b18]/10 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20'}`}
+                        className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-xl backdrop-blur-md transition-all active:scale-95 ${isDesktopMenuOpen ? 'border-red-600 bg-red-600 text-white' : 'border-[#1b1b18]/10 bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20'}`}
                     >
-                        <Menu className={`size-6 transition-transform ${isDesktopMenuOpen ? 'rotate-90' : ''}`} />
+                        <Menu
+                            className={`size-6 transition-transform ${isDesktopMenuOpen ? 'rotate-90' : ''}`}
+                        />
                     </button>
                 </div>
 
                 {/* Mobile Menu Toggle */}
-                <div className="lg:hidden flex flex-col items-end gap-2">
-                    <button 
+                <div className="flex flex-col items-end gap-2 lg:hidden">
+                    <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className={`flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-md border shadow-xl transition-all active:scale-95 ${isMenuOpen ? 'bg-red-600 text-white border-red-600' : 'bg-[#1b1b18]/5 border-[#1b1b18]/10 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20'}`}
+                        className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-xl backdrop-blur-md transition-all active:scale-95 ${isMenuOpen ? 'border-red-600 bg-red-600 text-white' : 'border-[#1b1b18]/10 bg-[#1b1b18]/5 text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20'}`}
                     >
-                        <Menu className={`size-6 transition-transform ${isMenuOpen ? 'rotate-90' : ''}`} />
+                        <Menu
+                            className={`size-6 transition-transform ${isMenuOpen ? 'rotate-90' : ''}`}
+                        />
                     </button>
-                    
+
                     <AnimatePresence>
                         {isMenuOpen && (
                             <m.div
                                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                                className="flex flex-col gap-4 rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl dark:bg-black/40 min-w-[220px] shadow-2xl"
+                                className="flex min-w-[220px] flex-col gap-4 rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-xl dark:bg-black/40"
                             >
                                 <div className="flex flex-col gap-2">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-2">{t('language')}</span>
-                                    <div className="flex items-center gap-1 rounded-full bg-[#1b1b18]/5 p-1 border border-[#1b1b18]/10 dark:bg-white/5 dark:border-white/10">
-                                        <button 
+                                    <span className="mb-2 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                        {t('language')}
+                                    </span>
+                                    <div className="flex items-center gap-1 rounded-full border border-[#1b1b18]/10 bg-[#1b1b18]/5 p-1 dark:border-white/10 dark:bg-white/5">
+                                        <button
                                             onClick={() => setLanguage('id')}
-                                            className={`flex-1 px-3 py-2 text-xs font-bold rounded-xl transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-md' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
+                                            className={`flex-1 rounded-xl px-3 py-2 text-xs font-bold transition-all ${language === 'id' ? 'bg-red-600 text-white shadow-md' : 'text-[#1b1b18]/60 hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white'}`}
                                         >
                                             Indonesia
                                         </button>
-                                        <button 
+                                        <button
                                             onClick={() => setLanguage('en')}
-                                            className={`flex-1 px-3 py-2 text-xs font-bold rounded-xl transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-md' : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10'}`}
+                                            className={`flex-1 rounded-xl px-3 py-2 text-xs font-bold transition-all ${language === 'en' ? 'bg-red-600 text-white shadow-md' : 'text-[#1b1b18]/60 hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white'}`}
                                         >
                                             English
                                         </button>
@@ -159,14 +186,18 @@ function LandingPage({ canRegister, services = [], gallery = [], settings }: { c
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-2">{t('appearance')}</span>
+                                    <span className="mb-2 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                        {t('appearance')}
+                                    </span>
                                     <AppearanceToggleTab />
                                 </div>
-                                
+
                                 <div className="h-px w-full bg-[#1b1b18]/10 dark:bg-white/10" />
-                                
+
                                 <div className="flex flex-col gap-3">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40 mb-1">{t('account')}</span>
+                                    <span className="mb-1 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                        {t('account')}
+                                    </span>
                                     {auth.user ? (
                                         <Link
                                             href="/admin/dashboard"
@@ -236,20 +267,25 @@ export default function Welcome({
         <LazyMotion features={domAnimation}>
             <Head title="Welcome" />
             <Preloader onLoadingComplete={() => setIsLoaded(true)} />
-            
+
             <m.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                    opacity: isLoaded ? 1 : 0, 
-                    y: isLoaded ? 0 : 20 
+                animate={{
+                    opacity: isLoaded ? 1 : 0,
+                    y: isLoaded ? 0 : 20,
                 }}
-                transition={{ 
-                    duration: 1.5, 
+                transition={{
+                    duration: 1.5,
                     ease: [0.22, 1, 0.36, 1], // Custom easeOutExpo
-                    delay: 0.2 // Small delay to sync better with preloader exit
+                    delay: 0.2, // Small delay to sync better with preloader exit
                 }}
             >
-                <LandingPage canRegister={canRegister} services={services} gallery={gallery} settings={settings} />
+                <LandingPage
+                    canRegister={canRegister}
+                    services={services}
+                    gallery={gallery}
+                    settings={settings}
+                />
             </m.div>
         </LazyMotion>
     );

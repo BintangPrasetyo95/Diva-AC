@@ -27,7 +27,7 @@ export default function AppearanceToggleTab({
     return (
         <div
             className={cn(
-                'inline-flex gap-1 rounded-full bg-[#1b1b18]/5 p-1 backdrop-blur-md border border-[#1b1b18]/10 dark:bg-white/10 dark:border-white/20',
+                'inline-flex gap-1 rounded-full border border-[#1b1b18]/10 bg-[#1b1b18]/5 p-1 backdrop-blur-md dark:border-white/20 dark:bg-white/10',
                 className,
             )}
             {...props}
@@ -40,11 +40,13 @@ export default function AppearanceToggleTab({
                         'flex items-center rounded-full px-4 py-1.5 transition-all',
                         activeAppearance === value
                             ? 'bg-red-600 text-white shadow-lg'
-                            : 'text-[#1b1b18]/60 hover:text-[#1b1b18] hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:text-white dark:hover:bg-white/10',
+                            : 'text-[#1b1b18]/60 hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white',
                     )}
                 >
                     <Icon className="h-4 w-4" />
-                    <span className="ml-2 text-xs font-bold uppercase tracking-wider">{label}</span>
+                    <span className="ml-2 text-xs font-bold tracking-wider uppercase">
+                        {label}
+                    </span>
                 </button>
             ))}
         </div>

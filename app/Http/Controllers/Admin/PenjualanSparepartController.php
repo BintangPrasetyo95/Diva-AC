@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PenjualanSparepart;
+use App\Models\Sparepart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -28,6 +29,7 @@ class PenjualanSparepartController extends Controller
                     'created_at' => $order->created_at,
                     'items' => $order->spareparts->map(function ($sp) {
                         return [
+                            'id_sparepart' => $sp->id,
                             'nama_sparepart' => $sp->nama_sparepart,
                             'jumlah' => $sp->pivot->jumlah,
                             'harga_satuan' => $sp->pivot->harga_satuan,
@@ -37,7 +39,8 @@ class PenjualanSparepartController extends Controller
             });
 
         return Inertia::render('spareparts/sell', [
-            'orders' => $orders
+            'orders' => $orders,
+            'spareparts' => Sparepart::where('stock_sparepart', '>', 0)->orderBy('nama_sparepart')->get(),
         ]);
     }
 
@@ -81,11 +84,39 @@ class PenjualanSparepartController extends Controller
             'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|string|max:50',
             'address' => 'required|string',
+            'items' => 'required|array|min:1',
+            'items.*.id' => 'required|exists:sparepart,id',
+            'items.*.jumlah' => 'required|integer|min:1',
+            'items.*.harga_satuan' => 'required|numeric|min:0',
         ]);
 
-        $order = PenjualanSparepart::findOrFail($id);
-        $order->update($validated);
+        return DB::transaction(function () use ($validated, $id) {
+            $order = PenjualanSparepart::findOrFail($id);
+            
+            if ($order->status !== 'pending') {
+                return back()->with('error', 'Only pending orders can be updated.');
+            }
 
-        return back()->with('status', 'order-updated');
+            $order->update([
+                'customer_name' => $validated['customer_name'],
+                'customer_phone' => $validated['customer_phone'],
+                'address' => $validated['address'],
+            ]);
+
+            $syncData = [];
+            $totalHarga = 0;
+            foreach ($validated['items'] as $item) {
+                $syncData[$item['id']] = [
+                    'jumlah' => $item['jumlah'],
+                    'harga_satuan' => $item['harga_satuan'],
+                ];
+                $totalHarga += ($item['jumlah'] * $item['harga_satuan']);
+            }
+
+            $order->spareparts()->sync($syncData);
+            $order->update(['total_harga' => $totalHarga]);
+
+            return back()->with('status', 'order-updated');
+        });
     }
 }

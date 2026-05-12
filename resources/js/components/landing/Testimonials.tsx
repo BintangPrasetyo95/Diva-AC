@@ -7,23 +7,24 @@ export default function Testimonials() {
 
     const testimonials = [
         {
-            name: "Prayoga galih",
-            content: "Pelayanan baik,pemilik dan karyawan ramah.memberikan solusi terbaik bila konsultasi 👍",
-            image: "https://lh3.googleusercontent.com/a-/ALV-UjVX-rSUEnbuW7IwJPV1uwuW6JI0LE49HulexQWHN43cxbtR-Hqr=w90-h90-p-rp-mo-ba3-br100",
+            name: 'Prayoga galih',
+            content:
+                'Pelayanan baik,pemilik dan karyawan ramah.memberikan solusi terbaik bila konsultasi 👍',
+            image: 'https://lh3.googleusercontent.com/a-/ALV-UjVX-rSUEnbuW7IwJPV1uwuW6JI0LE49HulexQWHN43cxbtR-Hqr=w90-h90-p-rp-mo-ba3-br100',
             rating: 5,
             date: new Date('2024-01-10'),
         },
         {
-            name: "Oryza S",
-            content: "mantaplah cukup bintang yang berbicara",
-            image: "https://lh3.googleusercontent.com/a-/ALV-UjUZlspvtt2IieRBMRkuyvk4Uj87TrNnB-xNf87YXZmJG9qysznduQ=w90-h90-p-rp-mo-ba4-br100",
+            name: 'Oryza S',
+            content: 'mantaplah cukup bintang yang berbicara',
+            image: 'https://lh3.googleusercontent.com/a-/ALV-UjUZlspvtt2IieRBMRkuyvk4Uj87TrNnB-xNf87YXZmJG9qysznduQ=w90-h90-p-rp-mo-ba4-br100',
             rating: 5,
             date: new Date('2022-03-22'),
         },
         {
-            name: "07_Arya Putra Hartoto",
-            content: "Bagus karna jujur",
-            image: "https://lh3.googleusercontent.com/a/ACg8ocJxETSZgrVaKUS9p0xa9rmYsqPMX646wbnpXVbXK3o-SX6_WQ=w90-h90-p-rp-mo-br100",
+            name: '07_Arya Putra Hartoto',
+            content: 'Bagus karna jujur',
+            image: 'https://lh3.googleusercontent.com/a/ACg8ocJxETSZgrVaKUS9p0xa9rmYsqPMX646wbnpXVbXK3o-SX6_WQ=w90-h90-p-rp-mo-br100',
             rating: 5,
             date: new Date('2026-4-25'),
         },
@@ -35,24 +36,32 @@ export default function Testimonials() {
         const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
         if (diffDays < 7) {
-            return diffDays <= 1 ? '1 ' + t('testimonials_day_ago') : `${diffDays} ${t('testimonials_days_ago')}`;
+            return diffDays <= 1
+                ? '1 ' + t('testimonials_day_ago')
+                : `${diffDays} ${t('testimonials_days_ago')}`;
         } else if (diffDays < 30) {
             const weeks = Math.floor(diffDays / 7);
 
-            return weeks === 1 ? '1 ' + t('testimonials_week_ago') : `${weeks} ${t('testimonials_weeks_ago')}`;
+            return weeks === 1
+                ? '1 ' + t('testimonials_week_ago')
+                : `${weeks} ${t('testimonials_weeks_ago')}`;
         } else if (diffDays < 365) {
             const months = Math.floor(diffDays / 30);
 
-            return months === 1 ? '1 ' + t('testimonials_month_ago') : `${months} ${t('testimonials_months_ago')}`;
+            return months === 1
+                ? '1 ' + t('testimonials_month_ago')
+                : `${months} ${t('testimonials_months_ago')}`;
         } else {
             const years = Math.floor(diffDays / 365);
 
-            return years === 1 ? '1 ' + t('testimonials_year_ago') : `${years} ${t('testimonials_years_ago')}`;
+            return years === 1
+                ? '1 ' + t('testimonials_year_ago')
+                : `${years} ${t('testimonials_years_ago')}`;
         }
     };
 
     return (
-        <section className="py-24 px-6">
+        <section className="px-6 py-24">
             <div className="mx-auto max-w-6xl">
                 <div className="mb-16 text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-[#1b1b18] sm:text-4xl dark:text-white">
@@ -75,18 +84,27 @@ export default function Testimonials() {
                         >
                             <div className="mb-4 flex gap-1">
                                 {[...Array(testimonial.rating)].map((_, i) => (
-                                    <Star key={i} className="size-4 fill-yellow-400 text-yellow-400" />
+                                    <Star
+                                        key={i}
+                                        className="size-4 fill-yellow-400 text-yellow-400"
+                                    />
                                 ))}
                             </div>
-                            <p className="mb-8 flex-1 text-lg italic text-[#1b1b18]/80 dark:text-white/80">
+                            <p className="mb-8 flex-1 text-lg text-[#1b1b18]/80 italic dark:text-white/80">
                                 "{testimonial.content}"
                             </p>
                             <div className="flex items-center gap-5">
-                                <div className='size-10 shrink-0'>
-                                    <img src={testimonial.image} alt="" className='rounded-full' />
+                                <div className="size-10 shrink-0">
+                                    <img
+                                        src={testimonial.image}
+                                        alt=""
+                                        className="rounded-full"
+                                    />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-[#1b1b18] dark:text-white">{testimonial.name}</h4>
+                                    <h4 className="font-bold text-[#1b1b18] dark:text-white">
+                                        {testimonial.name}
+                                    </h4>
                                     <p className="mt-0.5 text-sm text-[#1b1b18]/40 dark:text-white/40">
                                         {getRelativeTime(testimonial.date)}
                                     </p>

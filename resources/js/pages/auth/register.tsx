@@ -55,7 +55,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="username">{t('auth_username')}</Label>
+                                <Label htmlFor="username">
+                                    {t('auth_username')}
+                                </Label>
                                 <Input
                                     id="username"
                                     type="text"
@@ -65,9 +67,7 @@ export default function Register() {
                                     name="username"
                                     placeholder={t('auth_username_placeholder')}
                                 />
-                                <InputError
-                                    message={errors.username}
-                                />
+                                <InputError message={errors.username} />
                             </div>
 
                             <div className="grid gap-2">
@@ -106,7 +106,7 @@ export default function Register() {
                                     autoComplete="new-password"
                                     name="password"
                                     placeholder={tPasswordPlaceholder}
-                                 />
+                                />
                                 <InputError message={errors.password} />
                             </div>
 
