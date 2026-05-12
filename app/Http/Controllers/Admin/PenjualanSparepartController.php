@@ -74,4 +74,18 @@ class PenjualanSparepartController extends Controller
 
         return back()->with('status', 'order-cancelled');
     }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_phone' => 'required|string|max:50',
+            'address' => 'required|string',
+        ]);
+
+        $order = PenjualanSparepart::findOrFail($id);
+        $order->update($validated);
+
+        return back()->with('status', 'order-updated');
+    }
 }

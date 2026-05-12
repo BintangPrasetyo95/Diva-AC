@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     
     // Sparepart Selling
     Route::get('spareparts/sell', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'index'])->name('spareparts.sell');
+    Route::put('spareparts/sell/{id}', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'update'])->name('spareparts.sell.update');
     Route::patch('spareparts/sell/{id}/verify', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'verify'])->name('spareparts.sell.verify');
     Route::patch('spareparts/sell/{id}/cancel', [App\Http\Controllers\Admin\PenjualanSparepartController::class, 'cancel'])->name('spareparts.sell.cancel');
 

@@ -1213,7 +1213,41 @@ export const translations: Translations = {
     dash_col_qty: {
         id: "Jumlah",
         en: "Qty"
-    }
+    },
+    // Sparepart Order - Public success modal
+    order_confirmed_title: { id: "Pesanan Dikonfirmasi", en: "Order Confirmed" },
+    order_confirmed_desc: { id: "Konfirmasi pembelian berhasil, data sudah dikirim ke admin. Apakah Anda ingin memberi tahu admin melalui WhatsApp?", en: "Order confirmed successfully, your data has been sent to the admin. Would you like to notify the admin on WhatsApp?" },
+    order_open_wa: { id: "Buka WhatsApp", en: "Open WhatsApp" },
+    order_close: { id: "Tutup", en: "Close" },
+    // Sparepart Sell Admin page
+    sell_page_title: { id: "Pesanan Sparepart", en: "Sparepart Orders" },
+    sell_page_subtitle: { id: "Kelola transaksi dan penjualan sparepart.", en: "Manage sparepart sales and transactions." },
+    sell_col_id_date: { id: "ID / Tanggal", en: "ID / Date" },
+    sell_col_customer: { id: "Pelanggan", en: "Customer" },
+    sell_col_items: { id: "Barang", en: "Items" },
+    sell_col_total: { id: "Total", en: "Total" },
+    sell_col_status: { id: "Status", en: "Status" },
+    sell_col_actions: { id: "Aksi", en: "Actions" },
+    sell_status_selesai: { id: "Selesai", en: "Done" },
+    sell_status_batal: { id: "Batal", en: "Cancelled" },
+    sell_status_pending: { id: "Menunggu", en: "Pending" },
+    sell_verify: { id: "Verifikasi", en: "Verify" },
+    sell_cancel: { id: "Batalkan", en: "Cancel" },
+    sell_no_orders: { id: "Tidak ada pesanan sparepart.", en: "No sparepart orders found." },
+    sell_view_title: { id: "Detail Pesanan", en: "Order Details" },
+    sell_view_desc: { id: "Lihat detail lengkap pesanan sparepart ini.", en: "Review the full details of this sparepart order." },
+    sell_customer_name: { id: "Nama Pelanggan", en: "Customer Name" },
+    sell_phone: { id: "Telepon", en: "Phone" },
+    sell_address: { id: "Alamat", en: "Address" },
+    sell_order_items: { id: "Barang Dipesan", en: "Order Items" },
+    sell_total_price: { id: "Total Harga", en: "Total Price" },
+    sell_edit_title: { id: "Edit Info Pelanggan", en: "Edit Customer Info" },
+    sell_edit_desc: { id: "Perbarui detail pengiriman untuk pesanan ini.", en: "Update the delivery details for this order." },
+    sell_name_label: { id: "Nama", en: "Name" },
+    sell_save_changes: { id: "Simpan Perubahan", en: "Save Changes" },
+    sell_verify_confirm: { id: "Yakin ingin memverifikasi pesanan ini? Stok sparepart akan dikurangi.", en: "Are you sure you want to verify this order? This will deduct the sparepart stock." },
+    sell_cancel_confirm: { id: "Yakin ingin membatalkan pesanan ini?", en: "Are you sure you want to cancel this order?" },
+    quantity: { id: "Jumlah", en: "Quantity" }
 };
 
 interface LanguageContextType {

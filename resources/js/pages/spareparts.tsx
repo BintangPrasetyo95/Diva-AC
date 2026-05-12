@@ -6,6 +6,13 @@ import AppLogo from '@/components/app-logo';
 import AppearanceToggleTab from '@/components/appearance-tabs';
 import { useLanguage } from '@/hooks/use-language';
 import { dashboard, login, register } from '@/routes';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from '@/components/ui/dialog';
 
 interface Sparepart {
     id: number;
@@ -29,6 +36,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
     const [customerPhone, setCustomerPhone] = useState('');
     const [address, setAddress] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [successUrl, setSuccessUrl] = useState<string | null>(null);
     const [rows, setRows] = useState([{ id: Date.now().toString(), partId: '', jumlah: 1 }]);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -59,7 +67,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
             const data = await response.json();
 
             if (data.success && data.wa_url) {
-                window.location.href = data.wa_url;
+                setSuccessUrl(data.wa_url);
             } else {
                 alert('Failed to submit order. Please try again.');
             }
@@ -443,8 +451,54 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                             </form>
                         </m.div>
                     </div>
+                {/* Footer Placeholder if needed */}
                 </main>
             </div>
+
+            <Dialog open={!!successUrl} onOpenChange={(open) => {
+                if (!open) {
+                    setSuccessUrl(null);
+                    setCustomerName('');
+                    setCustomerPhone('');
+                    setAddress('');
+                    setRows([{ id: Date.now().toString(), partId: '', jumlah: 1 }]);
+                }
+            }}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2 text-green-600">
+                            <CheckCircle2 className="size-5" />
+                            {t('order_confirmed_title')}
+                        </DialogTitle>
+                        <DialogDescription>
+                            {t('order_confirmed_desc')}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex justify-end gap-2 pt-4">
+                        <button 
+                            onClick={() => {
+                                setSuccessUrl(null);
+                                setCustomerName('');
+                                setCustomerPhone('');
+                                setAddress('');
+                                setRows([{ id: Date.now().toString(), partId: '', jumlah: 1 }]);
+                            }}
+                            className="rounded-xl px-4 py-2 text-sm font-bold text-[#1b1b18]/70 transition-colors hover:bg-[#1b1b18]/5 dark:text-white/70 dark:hover:bg-white/5"
+                        >
+                            {t('order_close')}
+                        </button>
+                        <a 
+                            href={successUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-xl bg-green-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-green-600 flex items-center gap-2"
+                        >
+                            <Phone className="size-4" />
+                            {t('order_open_wa')}
+                        </a>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </LazyMotion>
     );
 }
