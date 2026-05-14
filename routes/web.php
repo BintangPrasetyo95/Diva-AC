@@ -26,7 +26,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     // Inventory
     Route::get('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'index'])->name('inventory');
     Route::post('inventory', [App\Http\Controllers\Admin\SparepartController::class, 'store'])->name('inventory.store');
-    Route::post('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'update'])->name('inventory.update');
+    Route::put('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'update'])->name('inventory.update');
     Route::delete('inventory/{sparepart}', [App\Http\Controllers\Admin\SparepartController::class, 'destroy'])->name('inventory.destroy');
     
     // Sparepart Selling
