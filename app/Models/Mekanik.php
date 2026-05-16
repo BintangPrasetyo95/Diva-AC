@@ -15,6 +15,8 @@ class Mekanik extends Model
 
     protected $table = 'mekanik';
 
+    protected $appends = ['nama_mekanik'];
+
     protected function casts(): array
     {
         return [
@@ -25,6 +27,11 @@ class Mekanik extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getNamaMekanikAttribute()
+    {
+        return $this->user?->name ?? 'Unknown';
     }
 
     public function services(): HasMany

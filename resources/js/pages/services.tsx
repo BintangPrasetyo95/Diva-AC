@@ -37,6 +37,7 @@ import {
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { toast } from 'sonner';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 
 interface Customer {
     id: number;
@@ -948,30 +949,15 @@ export default function ServicesPage({
                                             <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
                                                 Pelanggan / Mobil
                                             </label>
-                                            <select
+                                            <SearchableSelect
                                                 value={data.id_mobil}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'id_mobil',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 w-full rounded-2xl border-transparent bg-[#1b1b18]/5 px-4 outline-none focus:ring-2 focus:ring-red-600/50 dark:bg-white/5"
-                                                required={activeTab === 'existing' || !!editingService}
-                                            >
-                                                <option value="" disabled>
-                                                    Pilih Mobil
-                                                </option>
-                                                {mobils.map((m) => (
-                                                    <option key={m.id} value={m.id} className="text-black">
-                                                        {
-                                                            m.pelanggan
-                                                                ?.nama_pelanggan
-                                                        }{' '}
-                                                        - {m.merk} ({m.no_polisi})
-                                                    </option>
-                                                ))}
-                                            </select>
+                                                onChange={(val) => setData('id_mobil', val)}
+                                                placeholder="Pilih Mobil"
+                                                options={mobils.map((m) => ({
+                                                    value: m.id,
+                                                    label: `${m.pelanggan?.nama_pelanggan} - ${m.merk} (${m.no_polisi})`
+                                                }))}
+                                            />
                                             {errors.id_mobil && (
                                                 <span className="text-xs text-red-600">
                                                     {errors.id_mobil}
@@ -983,17 +969,18 @@ export default function ServicesPage({
                                             <h3 className="text-sm font-bold text-red-600 uppercase">Input Kendaraan & Pelanggan Baru</h3>
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">Pelanggan</label>
-                                                <select
+                                                <SearchableSelect
                                                     value={data.id_pelanggan}
-                                                    onChange={(e) => setData('id_pelanggan', e.target.value)}
-                                                    className="h-12 w-full rounded-2xl border-transparent bg-white px-4 outline-none focus:ring-2 focus:ring-red-600/50 dark:bg-[#121212]"
-                                                    required={activeTab === 'new'}
-                                                >
-                                                    <option value="new" className="font-bold text-red-600">+ Pelanggan Baru</option>
-                                                    {users.map(u => (
-                                                        <option key={u.id} value={u.id} className="text-black">{u.name} ({u.email})</option>
-                                                    ))}
-                                                </select>
+                                                    onChange={(val) => setData('id_pelanggan', val)}
+                                                    placeholder="Pilih Pelanggan"
+                                                    options={[
+                                                        { value: 'new', label: '+ Pelanggan Baru' },
+                                                        ...users.map(u => ({
+                                                            value: u.id,
+                                                            label: `${u.name} (${u.email})`
+                                                        }))
+                                                    ]}
+                                                />
                                                 {errors.id_pelanggan && <span className="text-xs text-red-600">{errors.id_pelanggan}</span>}
                                             </div>
 
@@ -1061,26 +1048,15 @@ export default function ServicesPage({
                                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
                                             Mekanik
                                         </label>
-                                        <select
+                                        <SearchableSelect
                                             value={data.id_mekanik}
-                                            onChange={(e) =>
-                                                setData(
-                                                    'id_mekanik',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="h-12 w-full rounded-2xl border-transparent bg-[#1b1b18]/5 px-4 outline-none focus:ring-2 focus:ring-red-600/50 dark:bg-white/5"
-                                            required
-                                        >
-                                            <option value="" disabled>
-                                                Pilih Mekanik
-                                            </option>
-                                            {mekaniks.map((m) => (
-                                                <option key={m.id} value={m.id}>
-                                                    {m.nama_mekanik}
-                                                </option>
-                                            ))}
-                                        </select>
+                                            onChange={(val) => setData('id_mekanik', val)}
+                                            placeholder="Pilih Mekanik"
+                                            options={mekaniks.map((m) => ({
+                                                value: m.id,
+                                                label: m.nama_mekanik
+                                            }))}
+                                        />
                                         {errors.id_mekanik && (
                                             <span className="text-xs text-red-600">
                                                 {errors.id_mekanik}
@@ -1161,30 +1137,16 @@ export default function ServicesPage({
                                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
                                             Status
                                         </label>
-                                        <select
+                                        <SearchableSelect
                                             value={data.status_service}
-                                            onChange={(e) =>
-                                                setData(
-                                                    'status_service',
-                                                    e.target.value as any,
-                                                )
-                                            }
-                                            className="h-12 w-full rounded-2xl border-transparent bg-[#1b1b18]/5 px-4 outline-none focus:ring-2 focus:ring-red-600/50 dark:bg-white/5"
-                                            required
-                                        >
-                                            <option value="antri">
-                                                {t('dash_service_queue')}
-                                            </option>
-                                            <option value="proses">
-                                                {t('dash_service_process')}
-                                            </option>
-                                            <option value="selesai">
-                                                {t('dash_service_done')}
-                                            </option>
-                                            <option value="batal">
-                                                {t('dash_service_cancel')}
-                                            </option>
-                                        </select>
+                                            onChange={(val) => setData('status_service', val)}
+                                            options={[
+                                                { value: 'antri', label: t('dash_service_queue') },
+                                                { value: 'proses', label: t('dash_service_process') },
+                                                { value: 'selesai', label: t('dash_service_done') },
+                                                { value: 'batal', label: t('dash_service_cancel') },
+                                            ]}
+                                        />
                                         {errors.status_service && (
                                             <span className="text-xs text-red-600">
                                                 {errors.status_service}
@@ -1231,17 +1193,17 @@ export default function ServicesPage({
 
                                     {data.spareparts.map((sp, idx) => (
                                         <div key={idx} className="flex items-center gap-2">
-                                            <select
-                                                value={sp.id}
-                                                onChange={(e) => updateSparepart(idx, 'id', e.target.value)}
-                                                className="h-10 w-full rounded-xl border-transparent bg-[#1b1b18]/5 px-3 text-sm outline-none focus:ring-2 focus:ring-red-600/50 dark:bg-white/5"
-                                            >
-                                                {spareparts.map((part) => (
-                                                    <option key={part.id} value={part.id} className="text-black">
-                                                        {part.nama_sparepart} - Rp {Number(part.harga_sparepart).toLocaleString('id-ID')}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                            <div className="flex-1">
+                                                <SearchableSelect
+                                                    value={sp.id}
+                                                    onChange={(val) => updateSparepart(idx, 'id', val)}
+                                                    placeholder="Pilih Sparepart"
+                                                    options={spareparts.map((part) => ({
+                                                        value: part.id,
+                                                        label: `${part.nama_sparepart} - Rp ${Number(part.harga_sparepart).toLocaleString('id-ID')}`
+                                                    }))}
+                                                />
+                                            </div>
                                             <Input
                                                 type="number"
                                                 min="1"

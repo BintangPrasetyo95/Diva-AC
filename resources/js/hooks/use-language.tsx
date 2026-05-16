@@ -723,6 +723,10 @@ export const translations: Translations = {
         id: 'Dashboard',
         en: 'Dashboard',
     },
+    dash_booking_queue: {
+        id: 'Antrean Booking',
+        en: 'Booking Queue',
+    },
     dash_overview: {
         id: 'Ringkasan',
         en: 'Overview',

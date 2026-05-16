@@ -17,6 +17,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from '@/components/ui/dialog';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 
 interface OrderItem {
     id_sparepart: number;
@@ -521,15 +522,18 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
                             <div className="space-y-2">
                                 {editData.items.map((item, idx) => (
                                     <div key={idx} className="flex items-center gap-2">
-                                        <select
-                                            value={item.id}
-                                            onChange={(e) => updateItem(idx, 'id', e.target.value)}
-                                            className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-3 py-2 text-sm text-[#1b1b18] focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white"
-                                        >
-                                            {spareparts.map(sp => (
-                                                <option key={sp.id} value={sp.id} className="text-black">{sp.nama_sparepart}</option>
-                                            ))}
-                                        </select>
+                                        <div className="flex-1 w-full">
+                                            <SearchableSelect
+                                                value={item.id}
+                                                onChange={(val) => updateItem(idx, 'id', val)}
+                                                placeholder="Select a sparepart..."
+                                                options={spareparts.map(sp => ({
+                                                    value: sp.id,
+                                                    label: sp.nama_sparepart,
+                                                }))}
+                                                className="w-full!"
+                                            />
+                                        </div>
                                         <input
                                             type="number"
                                             min="1"

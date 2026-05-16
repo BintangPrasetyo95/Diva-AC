@@ -191,3 +191,5 @@ export default function InvoicePage({ type, data }: Props) {
 }
 
 InvoicePage.layout = (page: any) => page;
+
+

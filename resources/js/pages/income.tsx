@@ -10,6 +10,7 @@ import {
     ArrowDownRight,
 } from 'lucide-react';
 import React from 'react';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface Transaction {
@@ -150,8 +151,7 @@ export default function IncomePage({
         );
     };
 
-    const handleYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const y = Number(e.target.value);
+    const handleYear = (y: number) => {
         setYear(y);
         navigate(y, month);
     };
@@ -232,17 +232,15 @@ export default function IncomePage({
 
                     {/* Year & Month selector */}
                     <div className="flex flex-wrap items-center gap-3">
-                        <select
+                        <SearchableSelect
                             value={year}
                             onChange={handleYear}
-                            className="h-10 rounded-2xl border border-[#1b1b18]/10 bg-white px-4 text-sm font-bold text-[#1b1b18] shadow-sm focus:outline-none dark:border-white/10 dark:bg-[#1a1a1a] dark:text-white"
-                        >
-                            {availableYears.map((y) => (
-                                <option key={y} value={y}>
-                                    {y}
-                                </option>
-                            ))}
-                        </select>
+                            options={availableYears.map((y) => ({
+                                value: y,
+                                label: String(y),
+                            }))}
+                            className="h-10 rounded-2xl border-[#1b1b18]/10 bg-white font-bold text-[#1b1b18] shadow-sm dark:border-white/10 dark:bg-[#1a1a1a] dark:text-white"
+                        />
                     </div>
                 </m.div>
 

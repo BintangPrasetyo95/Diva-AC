@@ -11,6 +11,7 @@ import {
     ShieldCheck,
     Store,
     CircleUserRound,
+    Calendar,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
@@ -43,6 +44,11 @@ export function AppSidebar() {
                     href: '/admin/income',
                 },
             ],
+        },
+        {
+            title: t('dash_booking_queue'),
+            href: '/admin/booking-queue',
+            icon: Calendar,
         },
         {
             title: t('dash_stat_active'),

@@ -22,6 +22,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from '@/components/ui/dialog';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 
 interface Sparepart {
     id: number;
@@ -479,31 +480,17 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                                 exit={{ opacity: 0, height: 0 }}
                                                 className="flex items-center gap-3"
                                             >
-                                                <select
-                                                    value={row.partId}
-                                                    onChange={(e) =>
-                                                        updateRow(
-                                                            row.id,
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    required
-                                                    className="flex-1 rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white [&>option]:dark:bg-zinc-900"
-                                                >
-                                                    <option value="" disabled>
-                                                        {t('select_sparepart')}
-                                                    </option>
-                                                    {spareparts.map((part) => (
-                                                        <option
-                                                            key={part.id}
-                                                            value={part.id}
-                                                        >
-                                                            {
-                                                                part.nama_sparepart
-                                                            }
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                                <div className="flex-1">
+                                                    <SearchableSelect
+                                                        value={row.partId}
+                                                        onChange={(val) => updateRow(row.id, val)}
+                                                        placeholder={t('select_sparepart')}
+                                                        options={spareparts.map((part) => ({
+                                                            value: part.id,
+                                                            label: part.nama_sparepart,
+                                                        }))}
+                                                    />
+                                                </div>
 
                                                 <input
                                                     type="number"

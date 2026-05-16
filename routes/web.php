@@ -8,7 +8,8 @@ use Inertia\Inertia;
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 // Public Pages
-Route::inertia('booking', 'booking')->name('booking');
+Route::get('booking', [App\Http\Controllers\BookingController::class, 'index'])->name('booking');
+Route::post('booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store');
 Route::get('spareparts', [WelcomeController::class, 'spareparts'])->name('spareparts');
 Route::post('spareparts/order', [\App\Http\Controllers\SparepartOrderController::class, 'store'])->name('spareparts.order');
 
@@ -70,6 +71,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     // Income
     Route::get('income', [App\Http\Controllers\Admin\IncomeController::class, 'index'])->name('admin.income');
+
+    // Booking Queue
+    Route::get('booking-queue', [App\Http\Controllers\Admin\BookingQueueController::class, 'index'])->name('admin.booking-queue');
+    Route::patch('booking-queue/{booking}/status', [App\Http\Controllers\Admin\BookingQueueController::class, 'updateStatus'])->name('admin.booking-queue.status');
+    Route::patch('booking-queue/{booking}/reschedule', [App\Http\Controllers\Admin\BookingQueueController::class, 'reschedule'])->name('admin.booking-queue.reschedule');
 
     // My Account
     Route::get('my-account', [App\Http\Controllers\Admin\MyAccountController::class, 'index'])->name('admin.my-account');

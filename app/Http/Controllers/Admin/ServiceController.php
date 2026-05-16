@@ -24,7 +24,7 @@ class ServiceController extends Controller
                 ->orderBy('tanggal_service', 'desc')
                 ->get(),
             'mobils' => Mobil::with('pelanggan')->get(),
-            'mekaniks' => Mekanik::where('aktif', true)->get(),
+            'mekaniks' => Mekanik::with('user')->where('aktif', true)->get(),
             'spareparts' => Sparepart::where('stock_sparepart', '>', 0)->orderBy('nama_sparepart')->get(),
             'users' => User::where('role', 'customer')->get(),
         ]);

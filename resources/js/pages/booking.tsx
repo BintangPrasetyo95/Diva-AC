@@ -1,4 +1,4 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage, useForm } from '@inertiajs/react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import {
     ArrowLeft,
@@ -9,18 +9,42 @@ import {
     User,
     PenTool,
     Menu,
+    Loader2,
+    CheckCircle2
 } from 'lucide-react';
 import React, { useState } from 'react';
 import AppLogo from '@/components/app-logo';
 import AppearanceToggleTab from '@/components/appearance-tabs';
 import { useLanguage } from '@/hooks/use-language';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import { dashboard, login, register } from '@/routes';
+import { toast } from 'sonner';
 
 export default function Booking() {
     const { t, language, setLanguage } = useLanguage();
     const { auth } = usePage().props;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
+    
+    const { data, setData, post, processing, errors, reset } = useForm({
+        customer_name: '',
+        customer_phone: '',
+        car_model: '',
+        booking_date: '',
+        booking_time: '',
+        service_type: 'inspection',
+        notes: '',
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        post('/booking', {
+            onSuccess: () => {
+                reset();
+                toast.success(t('booking_success') || 'Booking submitted successfully!');
+            },
+        });
+    };
 
     return (
         <LazyMotion features={domAnimation}>
@@ -231,7 +255,7 @@ export default function Booking() {
                         transition={{ delay: 0.1 }}
                         className="rounded-3xl border border-[#1b1b18]/10 bg-white/50 p-6 shadow-2xl backdrop-blur-xl sm:p-10 dark:border-white/10 dark:bg-black/50"
                     >
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                 {/* Name */}
                                 <div className="space-y-2">
@@ -241,6 +265,8 @@ export default function Booking() {
                                     </label>
                                     <input
                                         type="text"
+                                        value={data.customer_name}
+                                        onChange={(e) => setData('customer_name', e.target.value)}
                                         required
                                         className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                         placeholder={
@@ -248,6 +274,7 @@ export default function Booking() {
                                             'Your Name'
                                         }
                                     />
+                                    {errors.customer_name && <p className="text-xs text-red-600">{errors.customer_name}</p>}
                                 </div>
 
                                 {/* Phone */}
@@ -260,6 +287,8 @@ export default function Booking() {
                                     </label>
                                     <input
                                         type="tel"
+                                        value={data.customer_phone}
+                                        onChange={(e) => setData('customer_phone', e.target.value)}
                                         required
                                         className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                         placeholder={
@@ -267,6 +296,7 @@ export default function Booking() {
                                             'Your Phone / WhatsApp'
                                         }
                                     />
+                                    {errors.customer_phone && <p className="text-xs text-red-600">{errors.customer_phone}</p>}
                                 </div>
                             </div>
 
@@ -280,6 +310,8 @@ export default function Booking() {
                                 </label>
                                 <input
                                     type="text"
+                                    value={data.car_model}
+                                    onChange={(e) => setData('car_model', e.target.value)}
                                     required
                                     className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                     placeholder={
@@ -287,6 +319,7 @@ export default function Booking() {
                                         'e.g. Daihatsu Ayla 2022'
                                     }
                                 />
+                                {errors.car_model && <p className="text-xs text-red-600">{errors.car_model}</p>}
                             </div>
 
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -300,9 +333,12 @@ export default function Booking() {
                                     </label>
                                     <input
                                         type="date"
+                                        value={data.booking_date}
+                                        onChange={(e) => setData('booking_date', e.target.value)}
                                         required
                                         className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white [&::-webkit-calendar-picker-indicator]:dark:invert"
                                     />
+                                    {errors.booking_date && <p className="text-xs text-red-600">{errors.booking_date}</p>}
                                 </div>
 
                                 {/* Time */}
@@ -315,9 +351,12 @@ export default function Booking() {
                                     </label>
                                     <input
                                         type="time"
+                                        value={data.booking_time}
+                                        onChange={(e) => setData('booking_time', e.target.value)}
                                         required
                                         className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white [&::-webkit-calendar-picker-indicator]:dark:invert"
                                     />
+                                    {errors.booking_time && <p className="text-xs text-red-600">{errors.booking_time}</p>}
                                 </div>
                             </div>
 
@@ -329,23 +368,18 @@ export default function Booking() {
                                         {t('service_type') || 'Service Needed'}
                                     </span>
                                 </label>
-                                <select className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white [&>option]:dark:bg-zinc-900">
-                                    <option value="inspection">
-                                        {t('service_opt_inspection')}
-                                    </option>
-                                    <option value="cleaning">
-                                        {t('service_opt_cleaning')}
-                                    </option>
-                                    <option value="freon">
-                                        {t('service_opt_freon')}
-                                    </option>
-                                    <option value="repair">
-                                        {t('service_opt_repair')}
-                                    </option>
-                                    <option value="other">
-                                        {t('service_opt_other')}
-                                    </option>
-                                </select>
+                                <SearchableSelect
+                                    value={data.service_type}
+                                    onChange={(val) => setData('service_type', val)}
+                                    options={[
+                                        { value: 'inspection', label: t('service_opt_inspection') || 'Inspection' },
+                                        { value: 'cleaning', label: t('service_opt_cleaning') || 'AC Cleaning' },
+                                        { value: 'freon', label: t('service_opt_freon') || 'Freon Refill' },
+                                        { value: 'repair', label: t('service_opt_repair') || 'Major Repair' },
+                                        { value: 'other', label: t('service_opt_other') || 'Other' },
+                                    ]}
+                                />
+                                {errors.service_type && <p className="text-xs text-red-600">{errors.service_type}</p>}
                             </div>
 
                             {/* Notes */}
@@ -357,21 +391,32 @@ export default function Booking() {
                                 </label>
                                 <textarea
                                     rows={4}
+                                    value={data.notes}
+                                    onChange={(e) => setData('notes', e.target.value)}
                                     className="w-full rounded-xl border border-[#1b1b18]/20 bg-transparent px-4 py-3 text-[#1b1b18] placeholder:text-[#1b1b18]/30 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none dark:border-white/20 dark:text-white dark:placeholder:text-white/30"
                                     placeholder={
                                         t('booking_placeholder_notes') ||
                                         'Additional Notes'
                                     }
                                 ></textarea>
+                                {errors.notes && <p className="text-xs text-red-600">{errors.notes}</p>}
                             </div>
 
                             <m.button
                                 whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.99 }}
                                 type="submit"
-                                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-4 font-bold text-white shadow-[0_0_20px_rgba(220,38,38,0.2)] transition-all hover:bg-red-700 hover:shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+                                disabled={processing}
+                                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-4 font-bold text-white shadow-[0_0_20px_rgba(220,38,38,0.2)] transition-all hover:bg-red-700 hover:shadow-[0_0_25px_rgba(220,38,38,0.4)] disabled:opacity-50"
                             >
-                                {t('submit_booking') || 'Confirm Booking'}
+                                {processing ? (
+                                    <Loader2 className="size-5 animate-spin" />
+                                ) : (
+                                    <>
+                                        <CheckCircle2 className="size-5" />
+                                        {t('submit_booking') || 'Confirm Booking'}
+                                    </>
+                                )}
                             </m.button>
                         </form>
                     </m.div>

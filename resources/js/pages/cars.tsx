@@ -38,6 +38,7 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 
 interface Sparepart {
     id: number;
@@ -351,26 +352,15 @@ export default function CarsPage({
                                     {!isNewUser ? (
                                         <div className="space-y-2">
                                             <Label>Select Customer</Label>
-                                            <Select
+                                            <SearchableSelect
                                                 value={data.id_pelanggan}
-                                                onValueChange={(val) =>
-                                                    setData('id_pelanggan', val)
-                                                }
-                                            >
-                                                <SelectTrigger className="h-12 rounded-xl">
-                                                    <SelectValue placeholder="Select an existing customer" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {customers?.map((c) => (
-                                                        <SelectItem
-                                                            key={c.id}
-                                                            value={c.id.toString()}
-                                                        >
-                                                            {c.name} ({c.telp})
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
+                                                onChange={(val) => setData('id_pelanggan', val)}
+                                                placeholder="Select an existing customer"
+                                                options={customers?.map((c) => ({
+                                                    value: c.id.toString(),
+                                                    label: `${c.name} (${c.telp})`
+                                                }))}
+                                            />
                                             {errors.id_pelanggan && (
                                                 <p className="text-xs text-red-500">
                                                     {errors.id_pelanggan}
@@ -436,27 +426,14 @@ export default function CarsPage({
                                             </div>
                                             <div className="col-span-2 space-y-2 md:col-span-1">
                                                 <Label>Gender</Label>
-                                                <Select
+                                                <SearchableSelect
                                                     value={data.jenis_kelamin}
-                                                    onValueChange={(val) =>
-                                                        setData(
-                                                            'jenis_kelamin',
-                                                            val,
-                                                        )
-                                                    }
-                                                >
-                                                    <SelectTrigger className="h-12 rounded-xl">
-                                                        <SelectValue />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="L">
-                                                            Male (Laki-laki)
-                                                        </SelectItem>
-                                                        <SelectItem value="P">
-                                                            Female (Perempuan)
-                                                        </SelectItem>
-                                                    </SelectContent>
-                                                </Select>
+                                                    onChange={(val) => setData('jenis_kelamin', val)}
+                                                    options={[
+                                                        { value: 'L', label: 'Male (Laki-laki)' },
+                                                        { value: 'P', label: 'Female (Perempuan)' },
+                                                    ]}
+                                                />
                                                 {errors.jenis_kelamin && (
                                                     <p className="text-xs text-red-500">
                                                         {errors.jenis_kelamin}

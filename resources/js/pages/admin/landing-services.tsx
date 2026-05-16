@@ -31,6 +31,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { useLanguage } from '@/hooks/use-language';
+import { SearchableSelect } from '@/components/ui/searchable-select';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogFooter,
+} from '@/components/ui/dialog';
+
 
 interface ServiceItem {
     id: number | string;
@@ -175,21 +185,14 @@ const ServiceCard = ({
                                 <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
                                     {t('dash_display_icon')}
                                 </Label>
-                                <select
+                                <SearchableSelect
                                     value={service.icon}
-                                    onChange={(
-                                        e: React.ChangeEvent<HTMLSelectElement>,
-                                    ) =>
-                                        onChange(index, 'icon', e.target.value)
-                                    }
-                                    className="h-14 w-full rounded-2xl border-none bg-[#1b1b18]/5 px-4 text-sm font-bold focus:ring-2 focus:ring-red-600/20 dark:bg-white/5"
-                                >
-                                    {Object.keys(ICON_OPTIONS).map((icon) => (
-                                        <option key={icon} value={icon}>
-                                            {icon}
-                                        </option>
-                                    ))}
-                                </select>
+                                    onChange={(val) => onChange(index, 'icon', val)}
+                                    options={Object.keys(ICON_OPTIONS).map((icon) => ({
+                                        value: icon,
+                                        label: icon
+                                    }))}
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
@@ -437,6 +440,7 @@ const ServiceCard = ({
 export default function ServicesSettings({ services: initialServices }: Props) {
     const { t } = useLanguage();
     const [expandedId, setExpandedId] = useState<number | string | null>(null);
+    const [confirmRemoveId, setConfirmRemoveId] = useState<number | string | null>(null);
     const { data, setData, patch, processing, recentlySuccessful } = useForm({
         services: initialServices,
     });
@@ -467,6 +471,7 @@ export default function ServicesSettings({ services: initialServices }: Props) {
             benefits_en: [],
             icon: 'Wind',
             image: null,
+            image_url: null,
             order: data.services.length,
             is_active: true,
         };
@@ -475,10 +480,16 @@ export default function ServicesSettings({ services: initialServices }: Props) {
     };
 
     const removeService = (id: number | string) => {
+        if (confirmRemoveId !== id) {
+            setConfirmRemoveId(id);
+            return;
+        }
+
         setData(
             'services',
             data.services.filter((s) => s.id !== id),
         );
+        setConfirmRemoveId(null);
     };
 
     const handleReorder = (newOrder: ServiceItem[]) => {
@@ -582,6 +593,40 @@ export default function ServicesSettings({ services: initialServices }: Props) {
                     </Button>
                 </div>
             </form>
+
+            <Dialog open={confirmRemoveId !== null} onOpenChange={() => setConfirmRemoveId(null)}>
+                <DialogContent className="rounded-4xl border-none p-8 dark:bg-[#121212]">
+                    <DialogHeader className="space-y-4">
+                        <div className="mx-auto flex size-20 items-center justify-center rounded-full bg-red-500/10 text-red-600">
+                            <Trash2 className="size-10" />
+                        </div>
+                        <div className="space-y-2 text-center">
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight">
+                                {t('dash_confirm_delete') || 'Hapus Layanan?'}
+                            </DialogTitle>
+                            <DialogDescription className="text-sm font-medium text-[#1b1b18]/50 dark:text-white/50">
+                                Apakah Anda yakin ingin menghapus layanan ini? Tindakan ini hanya akan menghapus dari daftar sementara sebelum Anda menekan "Simpan Semua Perubahan".
+                            </DialogDescription>
+                        </div>
+                    </DialogHeader>
+                    <DialogFooter className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                        <Button
+                            variant="ghost"
+                            onClick={() => setConfirmRemoveId(null)}
+                            className="h-12 flex-1 rounded-2xl font-bold uppercase tracking-widest"
+                        >
+                            {t('dash_cancel') || 'Batal'}
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            onClick={() => confirmRemoveId && removeService(confirmRemoveId)}
+                            className="h-12 flex-1 rounded-2xl bg-red-600 font-black uppercase tracking-widest shadow-lg shadow-red-600/20 hover:bg-red-700"
+                        >
+                            {t('dash_confirm_delete') ? 'Ya, Hapus' : 'Ya, Hapus'}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
