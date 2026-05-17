@@ -62,7 +62,7 @@ export function SearchableSelect({
 
                 <ComboboxOptions 
                     transition
-                    className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl border border-[#1b1b18]/10 bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none data-[closed]:data-[leave]:opacity-0 data-[leave]:transition data-[leave]:duration-100 data-[leave]:ease-in dark:border-white/10 dark:bg-[#121212] sm:text-sm"
+                    className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl border border-[#1b1b18]/10 bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none data-closed:data-leave:opacity-0 data-leave-transition data-leave-duration-100 data-leave-ease-in dark:border-white/10 dark:bg-[#121212] sm:text-sm"
                 >
                     {filteredOptions.length === 0 && query !== '' ? (
                         <div className="relative cursor-default select-none px-4 py-2 text-[#1b1b18]/70 dark:text-white/70">

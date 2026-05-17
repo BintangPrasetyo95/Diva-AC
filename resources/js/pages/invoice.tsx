@@ -68,128 +68,415 @@ export default function InvoicePage({ type, data }: Props) {
         total = Number(data.total_harga);
     }
 
+    const maxRows = 10;
+    const populatedItems = items.map((item, index) => ({
+        no: index + 1,
+        name: item.name,
+        qty: item.qty,
+        price: formatCurrency(item.price),
+        total: formatCurrency(item.qty * item.price)
+    }));
+    
+    const emptyRowCount = Math.max(0, maxRows - populatedItems.length);
+    const rows = [
+        ...populatedItems,
+        ...Array(emptyRowCount).fill(null).map(() => ({
+            no: '',
+            name: '',
+            qty: '',
+            price: '',
+            total: '-'
+        }))
+    ];
+
+    const invoiceNo = `${type === 'service' ? 'SRV' : 'INV'}-${String(data.id).padStart(4, '0')}`;
+
     return (
-        <div className="bg-white min-h-screen text-black flex justify-center p-8">
-            <Head title="Invoice - DIVA AC" />
+        <div>
+            <Head title="DIVA AC – Invoice" />
             
             <style>{`
+                /* ── Reset & Base ───────────────────────────────────────────── */
+                body {
+                  font-family: Arial, Helvetica, sans-serif !important;
+                  background: #d0d0d0 !important;
+                  display: flex !important;
+                  justify-content: center !important;
+                  align-items: flex-start !important;
+                  padding: 30px 10px !important;
+                  min-height: 100vh !important;
+                  margin: 0 !important;
+                  color: #000 !important;
+                }
+
+                /* ── A4 Page ────────────────────────────────────────────────── */
+                .invoice-page-container {
+                  width: 800px;
+                  background: #ffffff;
+                  padding: 24px 28px 20px;
+                  box-shadow: 0 4px 24px rgba(0,0,0,.25);
+                  box-sizing: border-box;
+                }
+
+                /* ── HEADER ─────────────────────────────────────────────────── */
+                .header {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 10px;
+                  border-bottom: 2px solid #000;
+                  padding-bottom: 10px;
+                  margin-bottom: 0;
+                }
+
+                /* LEFT */
+                .header-left { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+
+                .logo-combined {
+                  height: 135px;
+                  width: auto;
+                  display: block;
+                  margin: 0;
+                }
+
+                .biz-details {
+                  font-size: 13px;
+                  color: #111;
+                  line-height: 1.55;
+                  text-align: left;
+                }
+
+                .biz-details p { margin: 0; }
+                .biz-bold { font-weight: 700; }
+
+                /* RIGHT */
+                .header-right {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-end;
+                  gap: 4px;
+                }
+
+                .invoice-title {
+                  font-size: 40px;
+                  font-weight: 900;
+                  color: #a8c4e0;
+                  letter-spacing: 3px;
+                  text-transform: uppercase;
+                  line-height: 1;
+                }
+
+                .hp-line {
+                  font-size: 11.5px;
+                  font-weight: 700;
+                  color: #000;
+                  text-align: right;
+                }
+
+                .info-fields {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  border: 1.5px solid #8aabcf;
+                  margin-top: 6px;
+                  border-radius: 2px;
+                  overflow: hidden;
+                }
+
+                .info-row {
+                  display: grid;
+                  grid-template-columns: 90px 1fr;
+                  border-bottom: 1px solid #8aabcf;
+                }
+
+                .info-row:last-child { border-bottom: none; }
+
+                .info-label {
+                  background: #cddcee;
+                  font-size: 11px;
+                  font-weight: 700;
+                  padding: 5px 8px;
+                  white-space: nowrap;
+                  border-right: 1px solid #8aabcf;
+                  display: flex;
+                  align-items: center;
+                  text-align: left;
+                }
+
+                .info-value {
+                  background: #fff;
+                  font-size: 11px;
+                  padding: 5px 8px;
+                  min-width: 140px;
+                  text-align: left;
+                  color: #000;
+                  font-weight: bold;
+                }
+
+                /* ── MAIN TABLE ─────────────────────────────────────────────── */
+                .table-wrap { margin-top: 0; }
+
+                .invoice-table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  font-size: 11.5px;
+                }
+
+                .invoice-table thead tr th {
+                  background: #b4c6e7;
+                  color: #000;
+                  font-weight: 700;
+                  font-size: 12px;
+                  border: 1px solid #8aabcf;
+                  padding: 6px 6px;
+                  text-align: center;
+                }
+
+                .invoice-table thead tr th.col-desc { text-align: left; padding-left: 10px; }
+
+                .invoice-table tbody tr td {
+                  border: 1px solid #ccc;
+                  padding: 4px 6px;
+                  height: 22px;
+                  text-align: center;
+                  color: #000;
+                }
+
+                .invoice-table tbody tr td.col-desc { text-align: left; padding-left: 10px; }
+
+                /* Alternating stripes */
+                .invoice-table tbody tr:nth-child(odd)  td { background: #ffffff; }
+                .invoice-table tbody tr:nth-child(even) td { background: #e8eef5; }
+
+                /* ── TOTALS ROW ─────────────────────────────────────────────── */
+                .totals-section {
+                  display: grid;
+                  grid-template-columns: 1fr auto;
+                  gap: 0;
+                  border-top: 1px solid #bbb;
+                }
+
+                .totals-right {
+                  min-width: 260px;
+                  display: flex;
+                  flex-direction: column;
+                }
+
+                .total-row {
+                  display: grid;
+                  grid-template-columns: 1fr 90px;
+                  border-bottom: 1px solid #bbb;
+                }
+
+                .total-row:last-child { border-bottom: none; }
+
+                .total-label {
+                  font-size: 11.5px;
+                  font-weight: 700;
+                  font-style: italic;
+                  text-align: right;
+                  padding: 5px 8px;
+                  background: #dce9f7;
+                  border-right: 1px solid #bbb;
+                  border-left: 1px solid #bbb;
+                  color: #000;
+                }
+
+                .total-value {
+                  font-size: 11.5px;
+                  text-align: center;
+                  padding: 5px 6px;
+                  background: #fff;
+                  border-right: 1px solid #bbb;
+                  color: #000;
+                  font-weight: bold;
+                }
+
+                .total-row.discount .total-value {
+                  background: #e8eef5;
+                }
+
+                /* ── FOOTER / NOTES + SIGNATURES ────────────────────────────── */
+                .footer-section {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 10px;
+                  margin-top: 6px;
+                  padding-top: 6px;
+                  border-top: 1px solid #ccc;
+                }
+
+                .notes-area { font-size: 10.5px; color: #222; text-align: left; }
+
+                .notes-label {
+                  font-weight: 700;
+                  font-size: 10.5px;
+                  margin-bottom: 2px;
+                }
+
+                .notes-text { font-size: 10px; color: #444; line-height: 1.6; }
+
+                .signatures {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 10px;
+                }
+
+                .sig-block {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  font-size: 10.5px;
+                  color: #222;
+                }
+
+                .sig-block .sig-label {
+                  align-self: flex-start;
+                  margin-bottom: 40px;
+                }
+
+                .sig-line {
+                  width: 100%;
+                  border-bottom: 1px solid #000;
+                  margin-bottom: 4px;
+                }
+
+                .sig-name {
+                  font-weight: 700;
+                  font-size: 11px;
+                  text-align: center;
+                }
+
+                /* ── PRINT ──────────────────────────────────────────────────── */
                 @media print {
-                    @page {
-                        margin: 0;
-                    }
-                    body {
-                        margin: 0;
-                        padding: 20px;
-                    }
+                  body {
+                    background: none !important;
+                    padding: 0 !important;
+                  }
+                  .invoice-page-container {
+                    box-shadow: none !important;
+                    width: 100% !important;
+                    padding: 0 !important;
+                  }
+                  @page {
+                    margin: 20px;
+                  }
                 }
             `}</style>
-            
-            <div className="w-full max-w-4xl bg-white text-sm font-sans">
-                {/* Header section */}
-                <div className="flex justify-between items-start mb-12">
-                    <div className="text-left w-1/2">
-                        {/* Empty space on the left top */}
-                    </div>
-                    <div className="text-right w-1/2">
-                        <h1 className="text-3xl font-bold tracking-widest text-blue-900 mb-2 uppercase">INVOICE</h1>
-                        <p className="font-bold text-gray-700">Hp : 0811 - 799 - 8851</p>
-                    </div>
+
+            <div className="invoice-page-container">
+
+              {/* ════════════════════ HEADER ════════════════════ */}
+              <div className="header">
+
+                {/* LEFT */}
+                <div className="header-left">
+                  <img className="logo-combined" src="/logostruct.svg" alt="DIVA AC logo" />
+                  <div className="biz-details">
+                    <p className="biz-bold">Isi freon, Pasang Baru, Alarm, Central Lock</p>
+                    <p className="biz-bold">Perempatan bedeng 20, Jl.Brigjen Katamso, Metro</p>
+                    <p>Rek. BCA - 117 107 8321 / Mandiri - 1140 0077 24571 an.SUHENDRO</p>
+                  </div>
                 </div>
 
-                {/* Details Section */}
-                <div className="flex justify-between items-end mb-6">
-                    <div className="space-y-2">
-                        <div className="flex">
-                            <span className="w-24 font-bold text-gray-700">No Pol</span>
-                            <span className="font-bold">: {noPolisi || '-'}</span>
-                        </div>
-                        <div className="flex">
-                            <span className="w-24 font-bold text-gray-700">Tanggal</span>
-                            <span className="font-bold">: {formatDate(date)}</span>
-                        </div>
+                {/* RIGHT */}
+                <div className="header-right">
+                  <div className="invoice-title">INVOICE</div>
+                  <div className="hp-line">Hp : 0811 - 799 - 8851</div>
+                  <div className="info-fields">
+                    <div className="info-row">
+                      <span className="info-label">INVOICE #</span>
+                      <span className="info-value">{invoiceNo}</span>
                     </div>
-                    <div>
-                        <div className="flex items-center gap-4">
-                            <span className="font-bold text-gray-700 text-lg">INVOICE #</span>
-                            <span className="text-lg font-bold">
-                                {type === 'service' ? 'SRV' : 'INV'}-{String(data.id).padStart(4, '0')}
-                            </span>
-                        </div>
+                    <div className="info-row">
+                      <span className="info-label">No Pol :</span>
+                      <span className="info-value">{noPolisi || '-'}</span>
                     </div>
+                    <div className="info-row">
+                      <span className="info-label">Tanggal :</span>
+                      <span className="info-value">{formatDate(date)}</span>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Table */}
-                <table className="w-full mb-4 border-collapse">
-                    <thead>
-                        <tr className="border-b-2 border-gray-800">
-                            <th className="py-2 text-left w-12 text-gray-800 uppercase text-xs tracking-wider">NO.</th>
-                            <th className="py-2 text-left text-gray-800 uppercase text-xs tracking-wider">Spare Part/Servis</th>
-                            <th className="py-2 text-center w-24 text-gray-800 uppercase text-xs tracking-wider">Quantity</th>
-                            <th className="py-2 text-right w-32 text-gray-800 uppercase text-xs tracking-wider">Unit Price</th>
-                            <th className="py-2 text-right w-32 text-gray-800 uppercase text-xs tracking-wider">Line Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.map((item, index) => (
-                            <tr key={index} className="border-b border-gray-200">
-                                <td className="py-3 text-left font-medium">{index + 1}</td>
-                                <td className="py-3 text-left">{item.name}</td>
-                                <td className="py-3 text-center">{item.qty}</td>
-                                <td className="py-3 text-right">{formatCurrency(item.price)}</td>
-                                <td className="py-3 text-right font-medium">{formatCurrency(item.qty * item.price)}</td>
-                            </tr>
-                        ))}
-                    </tbody>
+              </div>
+
+              {/* ════════════════════ TABLE ════════════════════ */}
+              <div className="table-wrap">
+                <table className="invoice-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: '42px' }}>NO.</th>
+                      <th className="col-desc">Spare Part/Servis</th>
+                      <th style={{ width: '80px' }}>Quantity</th>
+                      <th style={{ width: '90px' }}>Unit Price</th>
+                      <th style={{ width: '90px' }}>Line Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row, idx) => (
+                      <tr key={idx}>
+                        <td>{row.no}</td>
+                        <td className="col-desc">{row.name}</td>
+                        <td>{row.qty}</td>
+                        <td>{row.price}</td>
+                        <td>{row.total}</td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
+              </div>
 
-                {/* Totals Section */}
-                <div className="flex justify-end mb-12">
-                    <div className="w-64 space-y-2">
-                        <div className="flex justify-between items-center py-1">
-                            <span className="font-bold text-gray-700">SUBTOTAL</span>
-                            <span>{formatCurrency(total)}</span>
-                        </div>
-                        <div className="flex justify-between items-center py-1">
-                            <span className="font-bold text-gray-700">DISCOUNT %</span>
-                            <span>-</span>
-                        </div>
-                        <div className="flex justify-between items-center py-2 border-t-2 border-gray-800">
-                            <span className="font-bold text-lg text-gray-900">TOTAL</span>
-                            <span className="font-bold text-lg text-gray-900">{formatCurrency(total)}</span>
-                        </div>
-                    </div>
+              {/* ════════════════════ TOTALS ════════════════════ */}
+              <div className="totals-section">
+                <div>{/* spacer left */}</div>
+                <div className="totals-right">
+                  <div className="total-row">
+                    <div className="total-label">SUBTOTAL</div>
+                    <div className="total-value">{formatCurrency(total)}</div>
+                  </div>
+                  <div className="total-row discount">
+                    <div className="total-label">DISCOUNT %</div>
+                    <div className="total-value">-</div>
+                  </div>
+                  <div className="total-row">
+                    <div className="total-label">TOTAL</div>
+                    <div className="total-value">{formatCurrency(total)}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ════════════════════ FOOTER ════════════════════ */}
+              <div className="footer-section">
+
+                {/* Notes */}
+                <div className="notes-area">
+                  <p className="notes-label">* Keterangan :</p>
+                  <p className="notes-text">
+                    garansi........bulan<br />
+                    hanya untuk spare part<br />
+                    yang di ganti *
+                  </p>
                 </div>
 
-                {/* Signatures & Footer info */}
-                <div className="flex justify-between items-start mt-12">
-                    <div className="w-1/3">
-                        <div className="mb-1 text-xs">
-                            <span className="font-bold">* Keterangan :</span> garansi........bulan
-                        </div>
-                        <div className="text-xs mb-8">
-                            hanya untuk spare part yang di ganti *
-                        </div>
-                        <div className="text-center w-32">
-                            <p className="mb-16">Penerima,</p>
-                            <div className="border-b border-gray-400 w-full"></div>
-                        </div>
-                    </div>
-
-                    <div className="w-1/3 flex flex-col items-center">
-                        <p className="mb-16">Hormat Kami,</p>
-                        <p className="font-bold text-lg mb-8">DIVA AC</p>
-                    </div>
+                {/* Signatures */}
+                <div className="signatures">
+                  <div className="sig-block">
+                    <span className="sig-label">Penerima,</span>
+                    <div className="sig-line"></div>
+                    <span className="sig-name"></span>
+                  </div>
+                  <div className="sig-block">
+                    <span className="sig-label">Hormat Kami,</span>
+                    <div className="sig-line"></div>
+                    <span className="sig-name">DIVA AC</span>
+                  </div>
                 </div>
 
-                {/* Bottom message */}
-                <div className="mt-8 text-center text-gray-500 font-bold italic tracking-widest text-xs">
-                    TERIMA KASIH ATAS KEPERCAYAAN ANDA...!
-                </div>
+              </div>
+
             </div>
         </div>
     );
 }
 
 InvoicePage.layout = (page: any) => page;
-
-

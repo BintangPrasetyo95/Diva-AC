@@ -166,7 +166,7 @@ export default function BookingQueue({ bookings }: Props) {
                                     </p>
                                 </div>
 
-                                <div className="flex-1 space-y-4 overflow-y-auto rounded-[2rem] bg-[#1b1b18]/2 p-3 dark:bg-white/2 custom-scrollbar border border-transparent hover:border-[#1b1b18]/5 dark:hover:border-white/5 transition-colors">
+                                <div className="flex-1 space-y-4 overflow-y-auto rounded-4xl bg-[#1b1b18]/2 p-3 dark:bg-white/2 custom-scrollbar border border-transparent hover:border-[#1b1b18]/5 dark:hover:border-white/5 transition-colors">
                                     <AnimatePresence mode="popLayout">
                                         {dayBookings.length === 0 ? (
                                             <m.div
@@ -186,7 +186,7 @@ export default function BookingQueue({ bookings }: Props) {
                                                     initial="hidden"
                                                     animate="visible"
                                                     exit="exit"
-                                                    className="group relative flex flex-col gap-4 rounded-[1.5rem] border border-[#1b1b18]/5 bg-white p-5 shadow-sm transition-all hover:border-red-600/30 hover:shadow-xl dark:border-white/5 dark:bg-[#1b1b1b]"
+                                                    className="group relative flex flex-col gap-4 rounded-3xl border border-[#1b1b18]/5 bg-white p-5 shadow-sm transition-all hover:border-red-600/30 hover:shadow-xl dark:border-white/5 dark:bg-[#1b1b1b]"
                                                 >
                                                     <div className="flex items-start justify-between">
                                                         <div className="flex flex-col gap-0.5">
