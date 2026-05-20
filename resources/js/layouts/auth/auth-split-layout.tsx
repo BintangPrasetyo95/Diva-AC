@@ -64,10 +64,13 @@ export default function AuthSplitLayout({
                 className="relative"
             >
                 <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
-                    <div className="relative hidden h-full flex-col bg-muted p-10 text-[#1b1b18] lg:flex dark:border-r dark:text-white">
-                        <div className="absolute inset-0 z-0 bg-zinc-900">
-                            <FluidBubblesScene />
-                        </div>
+                    {/* 3D bubbles background - covers full screen on mobile, left 50% on desktop */}
+                    <div className="absolute inset-0 z-0 lg:w-1/2">
+                        <FluidBubblesScene />
+                    </div>
+
+                    {/* Left Column (hidden on mobile, shown on desktop) */}
+                    <div className="relative hidden h-full flex-col p-10 text-[#1b1b18] lg:flex lg:border-r lg:border-[#1b1b18]/10 dark:lg:border-white/10 dark:text-white">
                         <Link
                             href={home()}
                             className="relative z-20 flex items-center text-lg font-medium"
@@ -76,7 +79,9 @@ export default function AuthSplitLayout({
                             {name}
                         </Link>
                     </div>
-                    <div className="relative flex h-full w-full items-center justify-center lg:p-8">
+
+                    {/* Right Column / Main Content */}
+                    <div className="relative z-10 flex h-full w-full items-center justify-center lg:p-8">
                         {/* Top Left: Back Button */}
                         <Link
                             href={home()}
@@ -147,22 +152,26 @@ export default function AuthSplitLayout({
                             </AnimatePresence>
                         </div>
 
-                        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                        {/* Outer Form Container */}
+                        <div className="z-10 mx-auto flex w-full flex-col justify-center px-4 sm:px-6 sm:max-w-[440px] lg:w-[350px] lg:max-w-none lg:p-0">
                             {/* Logo at the top of the form */}
-                            <div className="mb-2 flex justify-center">
+                            <div className="mb-4 flex justify-center">
                                 <Link
                                     href={home()}
                                     className="flex items-center"
                                 >
-                                    <AppLogoIcon className="h-20 w-20" />
+                                    <AppLogoIcon className="h-16 w-16 lg:h-20 lg:w-20" />
                                 </Link>
                             </div>
 
-                            <AuthPageHeading
-                                titleKey={title}
-                                descKey={description}
-                            />
-                            {children}
+                            {/* Glassmorphic card for mobile/small screens, flat/simple layout for desktop */}
+                            <div className="flex flex-col space-y-6 rounded-3xl border border-zinc-200/50 bg-white/40 p-6 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black/35 sm:p-8 lg:border-none lg:bg-transparent lg:p-0 lg:backdrop-blur-none lg:shadow-none">
+                                <AuthPageHeading
+                                    titleKey={title}
+                                    descKey={description}
+                                />
+                                {children}
+                            </div>
                         </div>
                     </div>
                 </div>
