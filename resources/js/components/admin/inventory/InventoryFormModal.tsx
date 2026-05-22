@@ -283,7 +283,7 @@ export function InventoryFormModal({
                                             className="font-bold text-[#1b1b18] dark:text-white"
                                         >
                                             Make Public
-                                        </label>
+                                        </Label>
                                         <p className="text-xs text-[#1b1b18]/60 dark:text-white/60">
                                             Allow customers to view this item on the public catalog.
                                         </p>

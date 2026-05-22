@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import type { Variants} from 'framer-motion';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
@@ -12,17 +12,8 @@ import {
     Plus,
 } from 'lucide-react';
 import React from 'react';
-import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -30,8 +21,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { SearchableSelect } from '@/components/ui/searchable-select';
 import {
     Select,
     SelectContent,
@@ -39,6 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { CarCreateModal } from '@/components/admin/cars/CarCreateModal';
 import { useLanguage } from '@/hooks/use-language';
 
 interface Sparepart {
@@ -116,48 +106,6 @@ export default function CarsPage({
         direction: 'asc' | 'desc';
     }>({ key: 'date', direction: 'desc' });
     const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-    const [isNewUser, setIsNewUser] = React.useState(false);
-
-    const { data, setData, post, processing, errors, reset, clearErrors } =
-        useForm({
-            id_pelanggan: '',
-            nama_pelanggan: '',
-            no_telp: '',
-            email: '',
-            jenis_kelamin: 'L',
-            alamat: '',
-            merk: '',
-            model: '',
-            tahun: '',
-            no_polisi: '',
-            warna: '',
-            keterangan: '',
-        });
-
-    React.useEffect(() => {
-        if (!isDialogOpen) {
-             
-            reset();
-             
-            clearErrors();
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setIsNewUser(false);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDialogOpen]);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const routeName = isNewUser ? '/admin/cars/with-user' : '/admin/cars';
-
-        post(routeName, {
-            onSuccess: () => {
-                setIsDialogOpen(false);
-                reset();
-                toast.success('Car successfully created');
-            },
-        });
-    };
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('id-ID', {
@@ -316,305 +264,13 @@ return (
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Dialog
-                            open={isDialogOpen}
-                            onOpenChange={setIsDialogOpen}
+                        <Button
+                            onClick={() => setIsDialogOpen(true)}
+                            className="h-12 rounded-2xl bg-red-600 px-5 text-[10px] font-bold tracking-widest text-white uppercase hover:bg-red-700"
                         >
-                            <DialogTrigger asChild>
-                                <Button className="h-12 rounded-2xl bg-red-600 px-5 text-[10px] font-bold tracking-widest text-white uppercase hover:bg-red-700">
-                                    <Plus className="mr-2 size-4" />
-                                    Create Mobil
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
-                                <DialogHeader>
-                                    <DialogTitle>Create New Car</DialogTitle>
-                                    <DialogDescription>
-                                        Add a new car to the database. You can
-                                        assign it to an existing customer or
-                                        create a new one.
-                                    </DialogDescription>
-                                </DialogHeader>
-
-                                <div className="mt-2 mb-4 flex items-center gap-4">
-                                    <Button
-                                        type="button"
-                                        variant={
-                                            !isNewUser ? 'default' : 'outline'
-                                        }
-                                        onClick={() => setIsNewUser(false)}
-                                        className={`flex-1 rounded-xl text-xs font-bold tracking-widest uppercase ${!isNewUser ? 'bg-[#1b1b18] text-white dark:bg-white dark:text-[#1b1b18]' : ''}`}
-                                    >
-                                        Existing Customer
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        variant={
-                                            isNewUser ? 'default' : 'outline'
-                                        }
-                                        onClick={() => setIsNewUser(true)}
-                                        className={`flex-1 rounded-xl text-xs font-bold tracking-widest uppercase ${isNewUser ? 'bg-[#1b1b18] text-white dark:bg-white dark:text-[#1b1b18]' : ''}`}
-                                    >
-                                        New Customer
-                                    </Button>
-                                </div>
-
-                                <form
-                                    onSubmit={handleSubmit}
-                                    className="space-y-4"
-                                >
-                                    {!isNewUser ? (
-                                        <div className="space-y-2">
-                                            <Label>Select Customer</Label>
-                                            <SearchableSelect
-                                                value={data.id_pelanggan}
-                                                onChange={(val) => setData('id_pelanggan', val)}
-                                                placeholder="Select an existing customer"
-                                                options={customers?.map((c) => ({
-                                                    value: c.id.toString(),
-                                                    label: `${c.name} (${c.telp})`
-                                                }))}
-                                            />
-                                            {errors.id_pelanggan && (
-                                                <p className="text-xs text-red-500">
-                                                    {errors.id_pelanggan}
-                                                </p>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="col-span-2 space-y-2 md:col-span-1">
-                                                <Label>Customer Name</Label>
-                                                <Input
-                                                    value={data.nama_pelanggan}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'nama_pelanggan',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.nama_pelanggan && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.nama_pelanggan}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="col-span-2 space-y-2 md:col-span-1">
-                                                <Label>Phone Number</Label>
-                                                <Input
-                                                    value={data.no_telp}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'no_telp',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.no_telp && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.no_telp}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="col-span-2 space-y-2 md:col-span-1">
-                                                <Label>Email</Label>
-                                                <Input
-                                                    type="email"
-                                                    value={data.email}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'email',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.email && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.email}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="col-span-2 space-y-2 md:col-span-1">
-                                                <Label>Gender</Label>
-                                                <SearchableSelect
-                                                    value={data.jenis_kelamin}
-                                                    onChange={(val) => setData('jenis_kelamin', val)}
-                                                    options={[
-                                                        { value: 'L', label: 'Male (Laki-laki)' },
-                                                        { value: 'P', label: 'Female (Perempuan)' },
-                                                    ]}
-                                                />
-                                                {errors.jenis_kelamin && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.jenis_kelamin}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="col-span-2 space-y-2">
-                                                <Label>Address</Label>
-                                                <Input
-                                                    value={data.alamat}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'alamat',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.alamat && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.alamat}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <div className="mt-4 border-t border-[#1b1b18]/10 pt-4 dark:border-white/10">
-                                        <h3 className="mb-4 text-sm font-bold uppercase">
-                                            Car Details
-                                        </h3>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <Label>Brand (Merk)</Label>
-                                                <Input
-                                                    value={data.merk}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'merk',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder="e.g. Toyota"
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.merk && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.merk}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>Model</Label>
-                                                <Input
-                                                    value={data.model}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'model',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder="e.g. Avanza"
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.model && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.model}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>
-                                                    License Plate (No Polisi)
-                                                </Label>
-                                                <Input
-                                                    value={data.no_polisi}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'no_polisi',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder="e.g. B 1234 CD"
-                                                    className="h-12 rounded-xl uppercase"
-                                                />
-                                                {errors.no_polisi && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.no_polisi}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>Year (Tahun)</Label>
-                                                <Input
-                                                    type="number"
-                                                    value={data.tahun}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'tahun',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder="e.g. 2020"
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.tahun && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.tahun}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>Color (Warna)</Label>
-                                                <Input
-                                                    value={data.warna}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'warna',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    placeholder="e.g. Black"
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.warna && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.warna}
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>
-                                                    Notes (Keterangan)
-                                                </Label>
-                                                <Input
-                                                    value={data.keterangan}
-                                                    onChange={(e) =>
-                                                        setData(
-                                                            'keterangan',
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                    className="h-12 rounded-xl"
-                                                />
-                                                {errors.keterangan && (
-                                                    <p className="text-xs text-red-500">
-                                                        {errors.keterangan}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex justify-end pt-4">
-                                        <Button
-                                            type="submit"
-                                            disabled={processing}
-                                            className="h-12 rounded-xl bg-[#1b1b18] px-8 font-bold tracking-widest text-white uppercase hover:bg-[#1b1b18]/80 dark:bg-white dark:text-[#1b1b18] dark:hover:bg-white/80"
-                                        >
-                                            {processing
-                                                ? 'Saving...'
-                                                : 'Save Car'}
-                                        </Button>
-                                    </div>
-                                </form>
-                            </DialogContent>
-                        </Dialog>
+                            <Plus className="mr-2 size-4" />
+                            Create Mobil
+                        </Button>
 
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -840,6 +496,11 @@ return (
                         </table>
                     </div>
                 </m.div>
+                <CarCreateModal
+                    isOpen={isDialogOpen}
+                    onClose={() => setIsDialogOpen(false)}
+                    customers={customers}
+                />
             </m.div>
         </LazyMotion>
     );

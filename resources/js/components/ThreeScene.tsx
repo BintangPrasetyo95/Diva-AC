@@ -149,9 +149,8 @@ export default function ThreeScene() {
     if (!mounted) {
         return (
             <div
+                className="w-full h-full"
                 style={{
-                    width: '100%',
-                    height: '100%',
                     background: activeBgColor,
                 }}
             />
@@ -160,7 +159,8 @@ export default function ThreeScene() {
 
     return (
         <div
-            style={{ width: '100%', height: '100%', background: activeBgColor }}
+            className="w-full h-full"
+            style={{ background: activeBgColor }}
         >
             <Canvas
                 shadows="percentage"
