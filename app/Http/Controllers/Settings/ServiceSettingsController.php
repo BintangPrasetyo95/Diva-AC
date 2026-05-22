@@ -7,6 +7,7 @@ use App\Models\ServiceItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -42,7 +43,7 @@ class ServiceSettingsController extends Controller
         ]);
 
         $submittedIds = collect($validated['services'])
-            ->filter(fn($s) => is_numeric($s['id']))
+            ->filter(fn ($s) => is_numeric($s['id']))
             ->pluck('id')
             ->toArray();
 
@@ -56,27 +57,27 @@ class ServiceSettingsController extends Controller
 
         foreach ($validated['services'] as $index => $serviceData) {
             $id = $serviceData['id'];
-            $isNew = !is_numeric($id);
-            
+            $isNew = ! is_numeric($id);
+
             // Handle file upload
             if ($request->hasFile("services.{$index}.image_file")) {
                 $path = $request->file("services.{$index}.image_file")->store('services', 'public');
                 $serviceData['image'] = $path;
             }
-            
+
             // Remove helper fields
             unset($serviceData['image_file']);
-            
+
             // Set order based on array index
             $serviceData['order'] = $index;
 
             if ($isNew) {
                 // Generate slug
-                $slug = \Illuminate\Support\Str::slug($serviceData['title_en'], '-', 'en');
+                $slug = Str::slug($serviceData['title_en'], '-', 'en');
                 $originalSlug = $slug;
                 $count = 1;
                 while (ServiceItem::where('slug', $slug)->exists()) {
-                    $slug = $originalSlug . '-' . $count++;
+                    $slug = $originalSlug.'-'.$count++;
                 }
                 $serviceData['slug'] = $slug;
                 unset($serviceData['id']); // Remove temp ID

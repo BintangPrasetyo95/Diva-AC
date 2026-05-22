@@ -1,5 +1,6 @@
 import { Head, useForm } from '@inertiajs/react';
-import { m, Variants, LazyMotion, domAnimation } from 'framer-motion';
+import type { Variants} from 'framer-motion';
+import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
     Car,
     Search,
@@ -11,16 +12,9 @@ import {
     Plus,
 } from 'lucide-react';
 import React from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
     Dialog,
     DialogContent,
@@ -30,15 +24,22 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { SearchableSelect } from '@/components/ui/searchable-select';
+import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Label } from '@/components/ui/label';
-import { toast } from 'sonner';
-import { SearchableSelect } from '@/components/ui/searchable-select';
+import { useLanguage } from '@/hooks/use-language';
 
 interface Sparepart {
     id: number;
@@ -135,10 +136,14 @@ export default function CarsPage({
 
     React.useEffect(() => {
         if (!isDialogOpen) {
+             
             reset();
+             
             clearErrors();
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsNewUser(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDialogOpen]);
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -165,6 +170,7 @@ export default function CarsPage({
     const filteredCars = cars
         .filter((c) => {
             const searchLower = searchQuery.toLowerCase();
+
             return (
                 c.no_polisi.toLowerCase().includes(searchLower) ||
                 c.merk.toLowerCase().includes(searchLower) ||
@@ -177,17 +183,22 @@ export default function CarsPage({
         })
         .sort((a, b) => {
             const direction = sortConfig.direction === 'asc' ? 1 : -1;
+
             if (sortConfig.key === 'date') {
                 const dateA = new Date(a.created_at || 0).getTime();
                 const dateB = new Date(b.created_at || 0).getTime();
+
                 return (dateA - dateB) * direction;
             }
+
             if (sortConfig.key === 'plate') {
                 return a.no_polisi.localeCompare(b.no_polisi) * direction;
             }
+
             if (sortConfig.key === 'merk') {
                 return a.merk.localeCompare(b.merk) * direction;
             }
+
             if (sortConfig.key === 'customer') {
                 return (
                     a.pelanggan.nama_pelanggan.localeCompare(
@@ -195,6 +206,7 @@ export default function CarsPage({
                     ) * direction
                 );
             }
+
             return 0;
         });
 
@@ -209,10 +221,12 @@ export default function CarsPage({
     };
 
     const getSortIcon = (key: string) => {
-        if (sortConfig.key !== key)
-            return (
+        if (sortConfig.key !== key) {
+return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
+}
+
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
         ) : (

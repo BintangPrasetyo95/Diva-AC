@@ -11,7 +11,7 @@ class StoreStatusController extends Controller
     public function toggle(Request $request)
     {
         $validated = $request->validate([
-            'is_open' => 'required|boolean'
+            'is_open' => 'required|boolean',
         ]);
 
         $status = $validated['is_open'] ? 'open' : 'closed';

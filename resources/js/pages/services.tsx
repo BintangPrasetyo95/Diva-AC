@@ -1,7 +1,8 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
+import type {
+    Variants} from 'framer-motion';
 import {
     m,
-    Variants,
     LazyMotion,
     domAnimation,
     AnimatePresence,
@@ -25,10 +26,9 @@ import {
     Trash,
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -36,8 +36,9 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
 import { SearchableSelect } from '@/components/ui/searchable-select';
+import { useLanguage } from '@/hooks/use-language';
 
 interface Customer {
     id: number;
@@ -199,7 +200,10 @@ export default function ServicesPage({
     };
 
     const addSparepart = () => {
-        if (spareparts.length === 0) return;
+        if (spareparts.length === 0) {
+return;
+}
+
         const sp = spareparts[0];
         setData('spareparts', [...data.spareparts, { id: sp.id, jumlah: 1, harga_satuan: Number(sp.harga_sparepart), nama_sparepart: sp.nama_sparepart }]);
     };
@@ -213,8 +217,10 @@ export default function ServicesPage({
     const updateSparepart = (index: number, field: string, value: any) => {
         const newItems = [...data.spareparts];
         const item = newItems[index];
+
         if (field === 'id') {
             const sp = spareparts.find(s => s.id === Number(value));
+
             if (sp) {
                 item.id = sp.id;
                 item.harga_satuan = Number(sp.harga_sparepart);
@@ -223,6 +229,7 @@ export default function ServicesPage({
         } else {
             item[field] = Number(value);
         }
+
         setData('spareparts', newItems);
     };
 
@@ -257,7 +264,10 @@ export default function ServicesPage({
     };
 
     const handleDelete = () => {
-        if (!deletingService) return;
+        if (!deletingService) {
+return;
+}
+
         router.delete(`/admin/services/${deletingService.id}`, {
             preserveScroll: true,
             onSuccess: () => {
@@ -340,10 +350,12 @@ export default function ServicesPage({
                     .includes(searchQuery.toLowerCase());
             const matchesStatus =
                 statusFilter === 'All' || s.status_service === statusFilter;
+
             return matchesSearch && matchesStatus;
         })
         .sort((a, b) => {
             const direction = sortConfig.direction === 'asc' ? 1 : -1;
+
             if (sortConfig.key === 'date') {
                 return (
                     (new Date(a.tanggal_service).getTime() -
@@ -351,34 +363,45 @@ export default function ServicesPage({
                     direction
                 );
             }
+
             if (sortConfig.key === 'customer') {
                 const nameA = a.mobil?.pelanggan?.nama_pelanggan || '';
                 const nameB = b.mobil?.pelanggan?.nama_pelanggan || '';
+
                 return nameA.localeCompare(nameB) * direction;
             }
+
             if (sortConfig.key === 'id') {
                 return (a.id - b.id) * direction;
             }
+
             if (sortConfig.key === 'car') {
                 const carA = a.mobil?.no_polisi || '';
                 const carB = b.mobil?.no_polisi || '';
+
                 return carA.localeCompare(carB) * direction;
             }
+
             if (sortConfig.key === 'mechanic') {
                 const mekA = a.mekanik?.nama_mekanik || '';
                 const mekB = b.mekanik?.nama_mekanik || '';
+
                 return mekA.localeCompare(mekB) * direction;
             }
+
             if (sortConfig.key === 'status') {
                 return (
                     a.status_service.localeCompare(b.status_service) * direction
                 );
             }
+
             if (sortConfig.key === 'total') {
                 const totalA = Number(a.total_service);
                 const totalB = Number(b.total_service);
+
                 return (totalA - totalB) * direction;
             }
+
             return 0;
         });
 
@@ -393,10 +416,12 @@ export default function ServicesPage({
     };
 
     const getSortIcon = (key: string) => {
-        if (sortConfig.key !== key)
-            return (
+        if (sortConfig.key !== key) {
+return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
+}
+
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
         ) : (

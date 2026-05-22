@@ -22,6 +22,7 @@ export default function InvoicePage({ type, data }: Props) {
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
+
         return date.toLocaleDateString('id-ID', {
             day: '2-digit',
             month: 'long',
@@ -29,7 +30,7 @@ export default function InvoicePage({ type, data }: Props) {
         });
     };
 
-    let items: any[] = [];
+    const items: any[] = [];
     let date = data.created_at || data.tanggal_service || new Date().toISOString();
     let total = 0;
     let noPolisi = '';

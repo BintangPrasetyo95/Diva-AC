@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PenjualanSparepart;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Service;
-use App\Models\PenjualanSparepart;
 
 class InvoiceController extends Controller
 {
@@ -17,7 +17,7 @@ class InvoiceController extends Controller
 
         if ($type === 'service') {
             $data = Service::with(['mobil.pelanggan', 'mekanik', 'spareparts'])->findOrFail($id);
-        } else if ($type === 'sparepart') {
+        } elseif ($type === 'sparepart') {
             $data = PenjualanSparepart::with(['spareparts'])->findOrFail($id);
         } else {
             abort(404);
@@ -25,7 +25,7 @@ class InvoiceController extends Controller
 
         return Inertia::render('invoice', [
             'type' => $type,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 }

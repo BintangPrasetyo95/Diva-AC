@@ -35,7 +35,7 @@ class WorkshopSettingsController extends Controller
                 'Friday' => ['open' => '08:00', 'close' => '17:00', 'is_closed' => false],
                 'Saturday' => ['open' => '08:00', 'close' => '17:00', 'is_closed' => false],
                 'Sunday' => ['open' => '08:00', 'close' => '17:00', 'is_closed' => true],
-            ]
+            ],
         ]);
 
         return Inertia::render('admin/workshop-settings', [

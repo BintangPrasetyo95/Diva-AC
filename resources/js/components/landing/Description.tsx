@@ -1,5 +1,5 @@
-import { m } from 'framer-motion';
 import { Link } from '@inertiajs/react';
+import { m } from 'framer-motion';
 import { useLanguage } from '@/hooks/use-language';
 
 export default function Description() {

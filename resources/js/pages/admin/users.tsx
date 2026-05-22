@@ -15,8 +15,8 @@ import {
     User as UserIcon,
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useLanguage } from '@/hooks/use-language';
 import { toast } from 'sonner';
+import { useLanguage } from '@/hooks/use-language';
 
 interface User {
     id: number;
@@ -100,6 +100,7 @@ export default function UserManagement({ users }: Props) {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (editingUser) {
             put(`/admin/users/${editingUser.id}`, {
                 onSuccess: () => {

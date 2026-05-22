@@ -29,6 +29,7 @@ function CarModel() {
                 if ((child as THREE.Mesh).material) {
                     const mat = (child as THREE.Mesh)
                         .material as THREE.MeshStandardMaterial;
+
                     if (
                         mat.color &&
                         mat.color.r === 0 &&

@@ -1,5 +1,6 @@
 import { Head, router } from '@inertiajs/react';
-import { m, LazyMotion, domAnimation, Variants } from 'framer-motion';
+import type { Variants } from 'framer-motion';
+import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
     TrendingUp,
     Wrench,
@@ -90,6 +91,7 @@ function BarChart({
                 const isActive = d.month === activeMonth;
                 const svcH = (d.service / max) * 100;
                 const sprH = (d.sparepart / max) * 100;
+
                 return (
                     <div
                         key={d.month}
@@ -334,6 +336,7 @@ export default function IncomePage({
                         {MONTH_LABELS.map((label, idx) => {
                             const m = idx + 1;
                             const active = m === month;
+
                             return (
                                 <button
                                     key={m}

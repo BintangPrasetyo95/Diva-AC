@@ -1,7 +1,8 @@
 import { Head, useForm, router } from '@inertiajs/react';
+import type {
+    Variants} from 'framer-motion';
 import {
     m,
-    Variants,
     LazyMotion,
     domAnimation,
     AnimatePresence,
@@ -26,10 +27,10 @@ import {
     Loader2,
 } from 'lucide-react';
 import React, { useRef } from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -37,9 +38,9 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { toast } from 'sonner';
+import { useLanguage } from '@/hooks/use-language';
 
 interface Sparepart {
     id: number;
@@ -163,7 +164,7 @@ export default function InventoryPage({
                     toast.success('Sparepart updated successfully');
                     reset();
                 },
-                onError: (err) => {
+                onError: () => {
                     toast.error('Failed to update sparepart');
                 },
             });
@@ -175,7 +176,7 @@ export default function InventoryPage({
                     toast.success('Sparepart added successfully');
                     reset();
                 },
-                onError: (err) => {
+                onError: () => {
                     toast.error('Failed to add sparepart');
                 },
             });
@@ -183,7 +184,9 @@ export default function InventoryPage({
     };
 
     const handleDelete = () => {
-        if (!deletingPart) return;
+        if (!deletingPart) {
+return;
+}
 
         router.delete(`/admin/inventory/${deletingPart.id}`, {
             preserveScroll: true,
@@ -199,8 +202,14 @@ export default function InventoryPage({
     };
 
     const getStockStatus = (stock: number) => {
-        if (stock === 0) return 'Out of Stock';
-        if (stock < 5) return 'Low';
+        if (stock === 0) {
+return 'Out of Stock';
+}
+
+        if (stock < 5) {
+return 'Low';
+}
+
         return 'Normal';
     };
 
@@ -216,6 +225,7 @@ export default function InventoryPage({
                 </Badge>
             );
         }
+
         if (stock < 5) {
             return (
                 <Badge
@@ -227,6 +237,7 @@ export default function InventoryPage({
                 </Badge>
             );
         }
+
         return (
             <Badge
                 variant="outline"
@@ -252,31 +263,39 @@ export default function InventoryPage({
             const status = getStockStatus(item.stock_sparepart);
             const matchesStatus =
                 statusFilter === 'All' || status === statusFilter;
+
             return matchesSearch && matchesStatus;
         })
         .sort((a, b) => {
             const direction = sortConfig.direction === 'asc' ? 1 : -1;
+
             if (sortConfig.key === 'stock') {
                 return (a.stock_sparepart - b.stock_sparepart) * direction;
             }
+
             if (sortConfig.key === 'price') {
                 const priceA = Number(a.harga_sparepart);
                 const priceB = Number(b.harga_sparepart);
+
                 return (priceA - priceB) * direction;
             }
+
             if (sortConfig.key === 'name') {
                 return (
                     a.nama_sparepart.localeCompare(b.nama_sparepart) * direction
                 );
             }
+
             if (sortConfig.key === 'id') {
                 return (a.id - b.id) * direction;
             }
+
             if (sortConfig.key === 'category') {
                 return (
                     a.tipe_sparepart.localeCompare(b.tipe_sparepart) * direction
                 );
             }
+
             return 0;
         });
 
@@ -291,10 +310,12 @@ export default function InventoryPage({
     };
 
     const getSortIcon = (key: string) => {
-        if (sortConfig.key !== key)
-            return (
+        if (sortConfig.key !== key) {
+return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
+}
+
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
         ) : (

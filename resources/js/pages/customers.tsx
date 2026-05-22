@@ -1,7 +1,8 @@
 import { Head, useForm, router } from '@inertiajs/react';
+import type {
+    Variants} from 'framer-motion';
 import {
     m,
-    Variants,
     LazyMotion,
     domAnimation,
     AnimatePresence,
@@ -13,7 +14,6 @@ import {
     MoreHorizontal,
     Phone,
     Mail,
-    MapPin,
     Car,
     Edit3,
     Trash2,
@@ -27,10 +27,9 @@ import {
     AlertTriangle,
 } from 'lucide-react';
 import React from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -38,8 +37,8 @@ import {
     DropdownMenuTrigger,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { toast } from 'sonner';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/hooks/use-language';
 
 interface Mobil {
     id: number;
@@ -183,6 +182,7 @@ export default function CustomersPage({
     // Submits
     const handleCustomerSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (editingCustomer) {
             putCustomer(`/admin/customers/${editingCustomer.id}`, {
                 preserveScroll: true,
@@ -206,7 +206,11 @@ export default function CustomersPage({
 
     const handleCarSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!targetCustomerForCar) return;
+
+        if (!targetCustomerForCar) {
+return;
+}
+
         postCar(`/admin/customers/${targetCustomerForCar.id}/mobils`, {
             preserveScroll: true,
             onSuccess: () => {
@@ -218,7 +222,10 @@ export default function CustomersPage({
     };
 
     const handleDelete = () => {
-        if (!deletingCustomer) return;
+        if (!deletingCustomer) {
+return;
+}
+
         router.delete(`/admin/customers/${deletingCustomer.id}`, {
             preserveScroll: true,
             onSuccess: () => {
@@ -247,10 +254,12 @@ export default function CustomersPage({
                     .includes(searchQuery.toLowerCase());
             const matchesGender =
                 genderFilter === 'All' || c.jenis_kelamin === genderFilter;
+
             return matchesSearch && matchesGender;
         })
         .sort((a, b) => {
             const direction = sortConfig.direction === 'asc' ? 1 : -1;
+
             if (sortConfig.key === 'joined') {
                 const dateA = new Date(
                     a.created_at || a.tanggal_daftar,
@@ -258,19 +267,24 @@ export default function CustomersPage({
                 const dateB = new Date(
                     b.created_at || b.tanggal_daftar,
                 ).getTime();
+
                 return (dateA - dateB) * direction;
             }
+
             if (sortConfig.key === 'name') {
                 return (
                     a.nama_pelanggan.localeCompare(b.nama_pelanggan) * direction
                 );
             }
+
             if (sortConfig.key === 'id') {
                 return (a.id - b.id) * direction;
             }
+
             if (sortConfig.key === 'cars') {
                 return (a.mobils.length - b.mobils.length) * direction;
             }
+
             return 0;
         });
 
@@ -285,10 +299,12 @@ export default function CustomersPage({
     };
 
     const getSortIcon = (key: string) => {
-        if (sortConfig.key !== key)
-            return (
+        if (sortConfig.key !== key) {
+return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
+}
+
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
         ) : (
@@ -305,6 +321,7 @@ export default function CustomersPage({
     const newThisMonth = customers.filter((c) => {
         const d = new Date(c.created_at || c.tanggal_daftar);
         const now = new Date();
+
         return (
             d.getMonth() === now.getMonth() &&
             d.getFullYear() === now.getFullYear()

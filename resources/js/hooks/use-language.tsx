@@ -1318,9 +1318,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         // Sync with localStorage after mount
         if (typeof window !== 'undefined') {
             const saved = window.localStorage.getItem('language');
+
             if (saved && (saved === 'id' || saved === 'en')) {
                 setLanguage(saved as Language);
             }
+
             setIsHydrated(true);
         }
     }, []);

@@ -1,15 +1,14 @@
 import { Head, router } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
+import type {
+    Variants} from 'framer-motion';
 import {
     m,
-    Variants,
     LazyMotion,
     domAnimation,
-    AnimatePresence,
 } from 'framer-motion';
 import { CheckCircle2, XCircle, Clock, Eye, Edit, Plus, Trash, Printer } from 'lucide-react';
 import React, { useState } from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { useForm } from '@inertiajs/react';
 import {
     Dialog,
     DialogContent,
@@ -18,6 +17,7 @@ import {
     DialogDescription,
 } from '@/components/ui/dialog';
 import { SearchableSelect } from '@/components/ui/searchable-select';
+import { useLanguage } from '@/hooks/use-language';
 
 interface OrderItem {
     id_sparepart: number;
@@ -97,6 +97,7 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
 
     const submitEdit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (editOrder) {
             put(`/admin/spareparts/sell/${editOrder.id}`, {
                 onSuccess: () => {
@@ -108,7 +109,10 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
     };
 
     const addItem = () => {
-        if (spareparts.length === 0) return;
+        if (spareparts.length === 0) {
+return;
+}
+
         const defaultSp = spareparts[0];
         setEditData('items', [...editData.items, { id: defaultSp.id, jumlah: 1, harga_satuan: Number(defaultSp.harga_sparepart), nama_sparepart: defaultSp.nama_sparepart }]);
     };
@@ -125,6 +129,7 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
         
         if (field === 'id') {
             const sp = spareparts.find(s => s.id === Number(value));
+
             if (sp) {
                 item.id = sp.id;
                 item.harga_satuan = Number(sp.harga_sparepart);
@@ -133,6 +138,7 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
         } else if (field === 'jumlah') {
             item.jumlah = Number(value);
         }
+
         setEditData('items', newItems);
     };
 

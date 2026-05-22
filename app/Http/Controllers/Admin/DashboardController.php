@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Service;
-use App\Models\Sparepart;
 use App\Models\Pelanggan;
 use App\Models\PenjualanSparepart;
+use App\Models\Service;
+use App\Models\Sparepart;
+use App\Models\StoreSetting;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -49,7 +50,7 @@ class DashboardController extends Controller
         $urgentServices = Service::where('status_service', 'antri')->count();
 
         // ── Low Stock Parts ───────────────────────────────────────────────
-        $lowStockParts   = Sparepart::where('stock_sparepart', '<', 5)->count();
+        $lowStockParts = Sparepart::where('stock_sparepart', '<', 5)->count();
         $outOfStockParts = Sparepart::where('stock_sparepart', 0)->count();
 
         // ── New Customers (this month) ────────────────────────────────────
@@ -70,13 +71,13 @@ class DashboardController extends Controller
             ->orderByDesc('tanggal_service')
             ->limit(6)
             ->get()
-            ->map(fn($s) => [
-                'id'       => $s->id,
+            ->map(fn ($s) => [
+                'id' => $s->id,
                 'customer' => optional(optional($s->mobil)->pelanggan)->nama_pelanggan ?? '-',
-                'car'      => optional($s->mobil)->nama_mobil ?? '-',
-                'type'     => $s->tipe_service,
-                'status'   => $s->status_service,
-                'date'     => $s->tanggal_service,
+                'car' => optional($s->mobil)->nama_mobil ?? '-',
+                'type' => $s->tipe_service,
+                'status' => $s->status_service,
+                'date' => $s->tanggal_service,
             ]);
 
         // ── Low-stock items list ──────────────────────────────────────────
@@ -84,26 +85,26 @@ class DashboardController extends Controller
             ->orderBy('stock_sparepart')
             ->limit(5)
             ->get()
-            ->map(fn($sp) => [
-                'name'  => $sp->nama_sparepart,
+            ->map(fn ($sp) => [
+                'name' => $sp->nama_sparepart,
                 'stock' => $sp->stock_sparepart,
             ]);
 
-        $storeSetting = \App\Models\StoreSetting::first();
+        $storeSetting = StoreSetting::first();
         $isStoreOpen = $storeSetting ? $storeSetting->isOpenNow() : false;
 
         return Inertia::render('dashboard', [
-            'monthlyRevenue'  => (float) $monthlyRevenue,
-            'revenueDelta'    => $revenueDelta,
-            'activeServices'  => $activeServices,
-            'urgentServices'  => $urgentServices,
-            'lowStockParts'   => $lowStockParts,
+            'monthlyRevenue' => (float) $monthlyRevenue,
+            'revenueDelta' => $revenueDelta,
+            'activeServices' => $activeServices,
+            'urgentServices' => $urgentServices,
+            'lowStockParts' => $lowStockParts,
             'outOfStockParts' => $outOfStockParts,
-            'newCustomers'    => $newCustomers,
-            'customerDelta'   => $customerDelta,
-            'recentServices'  => $recentServices,
-            'stockAlerts'     => $stockAlerts,
-            'isStoreOpen'     => $isStoreOpen,
+            'newCustomers' => $newCustomers,
+            'customerDelta' => $customerDelta,
+            'recentServices' => $recentServices,
+            'stockAlerts' => $stockAlerts,
+            'isStoreOpen' => $isStoreOpen,
         ]);
     }
 }

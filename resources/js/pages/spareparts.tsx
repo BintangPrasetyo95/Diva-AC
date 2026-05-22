@@ -1,4 +1,4 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import {
     ArrowLeft,
@@ -13,8 +13,6 @@ import {
 import React, { useState } from 'react';
 import AppLogo from '@/components/app-logo';
 import AppearanceToggleTab from '@/components/appearance-tabs';
-import { useLanguage } from '@/hooks/use-language';
-import { dashboard, login, register } from '@/routes';
 import {
     Dialog,
     DialogContent,
@@ -23,6 +21,8 @@ import {
     DialogDescription,
 } from '@/components/ui/dialog';
 import { SearchableSelect } from '@/components/ui/searchable-select';
+import { useLanguage } from '@/hooks/use-language';
+import { login, register } from '@/routes';
 
 interface Sparepart {
     id: number;
@@ -47,20 +47,23 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
     const [address, setAddress] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successUrl, setSuccessUrl] = useState<string | null>(null);
-    const [rows, setRows] = useState([
-        { id: Date.now().toString(), partId: '', jumlah: 1 },
+    const [rows, setRows] = useState(() => [
+        { id: '1', partId: '', jumlah: 1 },
     ]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const validRows = rows.filter((r) => r.partId !== '');
+
         if (validRows.length === 0) {
             alert('Please select at least one sparepart.');
+
             return;
         }
 
         setIsSubmitting(true);
+
         try {
             const response = await fetch('/spareparts/order', {
                 method: 'POST',
@@ -136,6 +139,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
         if (isSelected) {
             // Remove the part if it's currently selected
             const rowWithPart = rows.find((r) => r.partId === partId);
+
             if (rowWithPart) {
                 if (rows.length > 1) {
                     removeRow(rowWithPart.id);
@@ -146,6 +150,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
         } else {
             // Check if there's an empty row
             const emptyRow = rows.find((row) => row.partId === '');
+
             if (emptyRow) {
                 updateRow(emptyRow.id, partId);
             } else {
@@ -375,6 +380,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                     const isSelected = rows.some(
                                         (r) => r.partId === String(part.id),
                                     );
+
                                     return (
                                         <button
                                             key={part.id}
@@ -580,7 +586,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                         setAddress('');
                         setRows([
                             {
-                                id: Date.now().toString(),
+                                id: '1',
                                 partId: '',
                                 jumlah: 1,
                             },
@@ -607,7 +613,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                 setAddress('');
                                 setRows([
                                     {
-                                        id: Date.now().toString(),
+                                        id: '1',
                                         partId: '',
                                         jumlah: 1,
                                     },

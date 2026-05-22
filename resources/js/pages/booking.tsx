@@ -13,12 +13,12 @@ import {
     CheckCircle2
 } from 'lucide-react';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import AppLogo from '@/components/app-logo';
 import AppearanceToggleTab from '@/components/appearance-tabs';
-import { useLanguage } from '@/hooks/use-language';
 import { SearchableSelect } from '@/components/ui/searchable-select';
+import { useLanguage } from '@/hooks/use-language';
 import { dashboard, login, register } from '@/routes';
-import { toast } from 'sonner';
 
 export default function Booking() {
     const { t, language, setLanguage } = useLanguage();

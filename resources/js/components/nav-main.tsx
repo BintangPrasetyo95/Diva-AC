@@ -52,6 +52,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                                     const subActive = isCurrentUrl(
                                         subItem.href,
                                     );
+
                                     return (
                                         <SidebarMenuSubItem key={subItem.title}>
                                             <SidebarMenuSubButton

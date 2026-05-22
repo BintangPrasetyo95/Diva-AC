@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Service;
-use App\Models\Mobil;
 use App\Models\Mekanik;
+use App\Models\Mobil;
+use App\Models\Service;
 use App\Models\Sparepart;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -51,7 +51,7 @@ class ServiceController extends Controller
 
             $syncData = [];
             $totalSparepart = 0;
-            if (!empty($validated['spareparts'])) {
+            if (! empty($validated['spareparts'])) {
                 foreach ($validated['spareparts'] as $item) {
                     $syncData[$item['id']] = [
                         'jumlah' => $item['jumlah'],
@@ -127,7 +127,7 @@ class ServiceController extends Controller
 
             $syncData = [];
             $totalSparepart = 0;
-            if (!empty($validated['spareparts'])) {
+            if (! empty($validated['spareparts'])) {
                 foreach ($validated['spareparts'] as $item) {
                     $syncData[$item['id']] = [
                         'jumlah' => $item['jumlah'],
@@ -181,7 +181,7 @@ class ServiceController extends Controller
 
             $syncData = [];
             $totalSparepart = 0;
-            if (!empty($validated['spareparts'])) {
+            if (! empty($validated['spareparts'])) {
                 foreach ($validated['spareparts'] as $item) {
                     $syncData[$item['id']] = [
                         'jumlah' => $item['jumlah'],
@@ -190,7 +190,7 @@ class ServiceController extends Controller
                     $totalSparepart += ($item['jumlah'] * $item['harga_satuan']);
                 }
             }
-            
+
             $service->spareparts()->sync($syncData);
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 

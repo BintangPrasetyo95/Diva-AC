@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class StoreSetting extends Model
 {
@@ -27,7 +28,7 @@ class StoreSetting extends Model
 
     public function isOpenNow()
     {
-        $override = \Illuminate\Support\Facades\Cache::get('store_status_override');
+        $override = Cache::get('store_status_override');
         if ($override) {
             return $override === 'open';
         }
@@ -39,11 +40,12 @@ class StoreSetting extends Model
         $day = now()->englishDayOfWeek; // e.g., 'Monday'
         $schedule = $this->opening_hours[$day] ?? null;
 
-        if (!$schedule || !empty($schedule['is_closed'])) {
+        if (! $schedule || ! empty($schedule['is_closed'])) {
             return false;
         }
 
         $now = now()->format('H:i');
+
         return $now >= $schedule['open'] && $now <= $schedule['close'];
     }
 }

@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\PenjualanSparepart;
-use App\Models\User;
 use App\Models\Sparepart;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PenjualanSparepartSeeder extends Seeder

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Service;
-use App\Models\Mobil;
 use App\Models\Mekanik;
+use App\Models\Mobil;
+use App\Models\Service;
 use App\Models\Sparepart;
 use Illuminate\Database\Seeder;
 

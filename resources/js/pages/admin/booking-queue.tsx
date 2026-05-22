@@ -1,4 +1,6 @@
 import { Head, router } from '@inertiajs/react';
+import { format, addDays, startOfDay, isSameDay } from 'date-fns';
+import { id } from 'date-fns/locale';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import {
     Calendar,
@@ -16,12 +18,9 @@ import {
     Wrench,
 } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
-import { format, addDays, startOfDay, isSameDay } from 'date-fns';
-import { id } from 'date-fns/locale';
-import AppLayout from '@/layouts/app-layout';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -30,6 +29,7 @@ import {
     DialogDescription,
     DialogFooter,
 } from '@/components/ui/dialog';
+import AppLayout from '@/layouts/app-layout';
 
 
 interface Booking {
@@ -66,12 +66,14 @@ export default function BookingQueue({ bookings }: Props) {
                 .filter((b) => b.booking_date === dateStr)
                 .sort((a, b) => a.queue_order - b.queue_order);
         });
+
         return grouped;
     }, [bookings, dates]);
 
     const handleStatusUpdate = (id: number, status: string) => {
         if (status === 'cancelled' && confirmCancelId !== id) {
             setConfirmCancelId(id);
+
             return;
         }
 

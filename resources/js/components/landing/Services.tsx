@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { m, AnimatePresence } from 'framer-motion';
 import {
     Wind,
@@ -10,10 +11,9 @@ import {
     ChevronDown,
     ChevronUp,
 } from 'lucide-react';
-import { useLanguage } from '@/hooks/use-language';
-import { Link } from '@inertiajs/react';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/hooks/use-language';
 
 interface ServiceItem {
     id: number;

@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
-import { m, Variants, LazyMotion, domAnimation } from 'framer-motion';
+import type { Variants} from 'framer-motion';
+import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
     Wrench,
     ArrowLeft,
@@ -18,9 +19,9 @@ import {
     CreditCard,
 } from 'lucide-react';
 import React from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/hooks/use-language';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },

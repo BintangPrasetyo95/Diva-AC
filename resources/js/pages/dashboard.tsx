@@ -1,7 +1,8 @@
 import { Head, Link, router } from '@inertiajs/react';
+import type {
+    Variants} from 'framer-motion';
 import {
     m,
-    Variants,
     LazyMotion,
     domAnimation,
     AnimatePresence,
@@ -17,14 +18,9 @@ import {
     CheckCircle2,
     AlertCircle,
     Plus,
-    Globe,
-    Moon,
-    Sun,
-    MoreHorizontal,
 } from 'lucide-react';
 import React from 'react';
 import { useLanguage } from '@/hooks/use-language';
-import { useAppearance } from '@/hooks/use-appearance';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface RecentService {
@@ -57,9 +53,14 @@ interface Props {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function formatRp(value: number): string {
-    if (value >= 1_000_000)
-        return 'Rp ' + (value / 1_000_000).toFixed(1).replace('.', ',') + ' Jt';
-    if (value >= 1_000) return 'Rp ' + (value / 1_000).toFixed(0) + ' Rb';
+    if (value >= 1_000_000) {
+return 'Rp ' + (value / 1_000_000).toFixed(1).replace('.', ',') + ' Jt';
+}
+
+    if (value >= 1_000) {
+return 'Rp ' + (value / 1_000).toFixed(0) + ' Rb';
+}
+
     return 'Rp ' + value.toLocaleString('id-ID');
 }
 
@@ -91,7 +92,6 @@ export default function Dashboard({
     isStoreOpen,
 }: Props) {
     const { t } = useLanguage();
-    const { appearance, updateAppearance } = useAppearance();
     const [showConfirm, setShowConfirm] = React.useState(false);
 
     const toggleStoreStatus = () => {
@@ -141,23 +141,50 @@ export default function Dashboard({
     ];
 
     const statusColor = (s: string) => {
-        if (s === 'selesai') return 'bg-green-500/10 text-green-600';
-        if (s === 'antri') return 'bg-amber-500/10 text-amber-600';
-        if (s === 'batal') return 'bg-red-500/10 text-red-600';
+        if (s === 'selesai') {
+return 'bg-green-500/10 text-green-600';
+}
+
+        if (s === 'antri') {
+return 'bg-amber-500/10 text-amber-600';
+}
+
+        if (s === 'batal') {
+return 'bg-red-500/10 text-red-600';
+}
+
         return 'bg-blue-500/10 text-blue-600'; // proses
     };
 
     const statusIcon = (s: string) => {
-        if (s === 'selesai') return <CheckCircle2 className="size-3" />;
-        if (s === 'antri') return <Clock className="size-3" />;
-        if (s === 'batal') return <AlertCircle className="size-3" />;
+        if (s === 'selesai') {
+return <CheckCircle2 className="size-3" />;
+}
+
+        if (s === 'antri') {
+return <Clock className="size-3" />;
+}
+
+        if (s === 'batal') {
+return <AlertCircle className="size-3" />;
+}
+
         return <Wrench className="size-3" />;
     };
 
     const statusLabel = (s: string) => {
-        if (s === 'selesai') return t('dash_status_completed');
-        if (s === 'antri') return t('dash_status_pending');
-        if (s === 'proses') return t('dash_status_in_progress');
+        if (s === 'selesai') {
+return t('dash_status_completed');
+}
+
+        if (s === 'antri') {
+return t('dash_status_pending');
+}
+
+        if (s === 'proses') {
+return t('dash_status_in_progress');
+}
+
         return s;
     };
 

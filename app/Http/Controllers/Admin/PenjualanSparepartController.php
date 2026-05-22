@@ -48,7 +48,7 @@ class PenjualanSparepartController extends Controller
     {
         return DB::transaction(function () use ($id) {
             $order = PenjualanSparepart::with('spareparts')->findOrFail($id);
-            
+
             if ($order->status !== 'pending') {
                 return back()->with('error', 'Only pending orders can be verified.');
             }
@@ -68,7 +68,7 @@ class PenjualanSparepartController extends Controller
     public function cancel(Request $request, $id)
     {
         $order = PenjualanSparepart::findOrFail($id);
-        
+
         if ($order->status !== 'pending') {
             return back()->with('error', 'Only pending orders can be cancelled.');
         }
@@ -92,7 +92,7 @@ class PenjualanSparepartController extends Controller
 
         return DB::transaction(function () use ($validated, $id) {
             $order = PenjualanSparepart::findOrFail($id);
-            
+
             if ($order->status !== 'pending') {
                 return back()->with('error', 'Only pending orders can be updated.');
             }

@@ -23,7 +23,7 @@ import Services from '@/components/landing/Services';
 import Sparepart from '@/components/landing/Sparepart';
 import Testimonials from '@/components/landing/Testimonials';
 import { useLanguage } from '@/hooks/use-language';
-import { dashboard, login, register } from '@/routes';
+import { login, register } from '@/routes';
 
 // Lazy-load the heavy Three.js scene — deferred to a separate chunk,
 // preventing Three.js/fiber/drei from blocking the main thread on initial load.
@@ -48,6 +48,7 @@ function LandingPage({
     const [mounted, setMounted] = React.useState(false);
 
     React.useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 

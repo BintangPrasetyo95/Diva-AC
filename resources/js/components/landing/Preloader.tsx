@@ -1,6 +1,6 @@
+import { useProgress } from '@react-three/drei';
 import { m, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useProgress } from '@react-three/drei';
 import AppLogoIcon from '@/components/app-logo-icon';
 
 const MIN_PRELOAD_DURATION = 1000; // ms
@@ -19,6 +19,7 @@ export default function Preloader({
 
         const checkProgress = setInterval(() => {
             const elapsed = Date.now() - startTime;
+
             if (progress === 100 && elapsed >= MIN_PRELOAD_DURATION) {
                 setIsFinished(true);
                 onLoadingComplete?.();
@@ -41,6 +42,7 @@ export default function Preloader({
     useEffect(() => {
         if (isFinished) {
             const timeout = setTimeout(() => setShow(false), 800);
+
             return () => clearTimeout(timeout);
         }
     }, [isFinished]);

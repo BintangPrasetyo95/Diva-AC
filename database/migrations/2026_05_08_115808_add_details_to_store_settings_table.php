@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('store_settings', function (Blueprint $table) {
-            if (!Schema::hasColumn('store_settings', 'name')) {
+            if (! Schema::hasColumn('store_settings', 'name')) {
                 $table->string('name')->default('Diva AC');
                 $table->string('email')->nullable();
                 $table->string('phone')->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->dropColumn([
                 'name', 'email', 'phone', 'whatsapp', 'address', 'maps_link',
                 'instagram_link', 'facebook_link', 'tiktok_link', 'opening_hours',
-                'logo_path', 'favicon_path'
+                'logo_path', 'favicon_path',
             ]);
         });
     }

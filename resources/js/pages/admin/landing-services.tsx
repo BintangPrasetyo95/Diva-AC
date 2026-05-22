@@ -1,4 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
+import { Reorder, useDragControls } from 'framer-motion';
 import {
     Image as ImageIcon,
     Plus,
@@ -24,14 +25,8 @@ import {
     Trash,
 } from 'lucide-react';
 import React, { useState, useCallback } from 'react';
-import { Reorder, useDragControls } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { useLanguage } from '@/hooks/use-language';
-import { SearchableSelect } from '@/components/ui/searchable-select';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -40,6 +35,11 @@ import {
     DialogDescription,
     DialogFooter,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { SearchableSelect } from '@/components/ui/searchable-select';
+import { Textarea } from '@/components/ui/textarea';
+import { useLanguage } from '@/hooks/use-language';
 
 
 interface ServiceItem {
@@ -378,12 +378,14 @@ const ServiceCard = ({
                                             e: React.ChangeEvent<HTMLInputElement>,
                                         ) => {
                                             const file = e.target.files?.[0];
-                                            if (file)
-                                                onChange(
+
+                                            if (file) {
+onChange(
                                                     index,
                                                     'image_file',
                                                     file,
                                                 );
+}
                                         }}
                                     />
                                     <div className="flex size-12 items-center justify-center rounded-2xl bg-white text-[#1b1b18]/40 shadow-sm transition-transform group-hover:scale-110 dark:bg-white/5">
@@ -482,6 +484,7 @@ export default function ServicesSettings({ services: initialServices }: Props) {
     const removeService = (id: number | string) => {
         if (confirmRemoveId !== id) {
             setConfirmRemoveId(id);
+
             return;
         }
 
@@ -498,7 +501,10 @@ export default function ServicesSettings({ services: initialServices }: Props) {
     };
 
     const submit = (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
+        if (e) {
+e.preventDefault();
+}
+
         patch('/admin/landing-services', {
             onSuccess: () =>
                 toast.success(t('dash_services_settings') + ' updated'),

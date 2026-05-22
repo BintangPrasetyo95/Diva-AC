@@ -75,10 +75,10 @@ class SparepartController extends Controller
         if ($sparepart->image) {
             Storage::disk('public')->delete($sparepart->image);
         }
-        
+
         // Check if used in services or sales
         if ($sparepart->services()->exists() || $sparepart->penjualanSpareparts()->exists()) {
-             return back()->withErrors(['error' => 'Cannot delete sparepart that has history of sales or services.']);
+            return back()->withErrors(['error' => 'Cannot delete sparepart that has history of sales or services.']);
         }
 
         $sparepart->delete();

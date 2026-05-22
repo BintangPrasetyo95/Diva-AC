@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GalleryItem;
 use App\Models\ServiceItem;
 use App\Models\Sparepart;
+use App\Models\StoreSetting;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,8 +24,8 @@ class WelcomeController extends Controller
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'services' => ServiceItem::where('is_active', true)->orderBy('order')->get(),
-            'gallery' => \App\Models\GalleryItem::where('is_active', true)->orderBy('order')->get(),
-            'settings' => \App\Models\StoreSetting::first(),
+            'gallery' => GalleryItem::where('is_active', true)->orderBy('order')->get(),
+            'settings' => StoreSetting::first(),
         ]);
     }
 

@@ -1,9 +1,9 @@
+import { Sun, Moon, Search } from 'lucide-react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
-import { useLanguage } from '@/hooks/use-language';
 import { useAppearance } from '@/hooks/use-appearance';
-import { Sun, Moon, Search } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
+import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
 
 export function AppSidebarHeader({
     breadcrumbs = [],

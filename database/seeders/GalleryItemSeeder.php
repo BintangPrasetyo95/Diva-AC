@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\GalleryItem;
+use Illuminate\Database\Seeder;
 
 class GalleryItemSeeder extends Seeder
 {
@@ -24,8 +24,8 @@ class GalleryItemSeeder extends Seeder
 
         foreach ($images as $index => $image) {
             GalleryItem::create([
-                'image_path' => '/img/gallery/' . $image,
-                'title' => 'Diva AC Gallery ' . ($index + 1),
+                'image_path' => '/img/gallery/'.$image,
+                'title' => 'Diva AC Gallery '.($index + 1),
                 'description' => 'Our professional AC service work in action.',
                 'order' => $index,
                 'is_active' => true,

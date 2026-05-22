@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pelanggan;
 use App\Models\Mobil;
+use App\Models\Pelanggan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -39,7 +39,7 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'nama_pelanggan' => 'required|string|max:100',
             'no_telp' => 'required|string|max:20',
-            'email' => 'required|email|max:100|unique:users,email,' . $customer->id,
+            'email' => 'required|email|max:100|unique:users,email,'.$customer->id,
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string|max:255',
         ]);
@@ -69,7 +69,7 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'merk' => 'required|string|max:50',
             'model' => 'nullable|string|max:50',
-            'tahun' => 'nullable|integer|min:1900|max:' . (date('Y') + 1),
+            'tahun' => 'nullable|integer|min:1900|max:'.(date('Y') + 1),
             'no_polisi' => 'required|string|max:20|unique:mobil,no_polisi',
             'warna' => 'nullable|string|max:30',
             'keterangan' => 'nullable|string',

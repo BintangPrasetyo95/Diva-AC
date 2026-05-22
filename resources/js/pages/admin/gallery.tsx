@@ -72,7 +72,10 @@ export default function GalleryManager({ images }: Props) {
 
     const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!editingImage) return;
+
+        if (!editingImage) {
+return;
+}
 
         patch(`/admin/gallery/${editingImage.id}`, {
             onSuccess: () => {

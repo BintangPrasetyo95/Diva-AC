@@ -27,8 +27,8 @@ import {
     SidebarGroup,
     SidebarGroupLabel,
 } from '@/components/ui/sidebar';
-import type { NavItem } from '@/types';
 import { useLanguage } from '@/hooks/use-language';
+import type { NavItem } from '@/types';
 
 export function AppSidebar() {
     const { t } = useLanguage();

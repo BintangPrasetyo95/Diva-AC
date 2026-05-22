@@ -1,7 +1,8 @@
 import { Head, Link, usePage } from '@inertiajs/react';
+import type {
+    Variants} from 'framer-motion';
 import {
     m,
-    Variants,
     LazyMotion,
     domAnimation,
     AnimatePresence,
@@ -23,11 +24,10 @@ import {
     Wrench,
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useLanguage } from '@/hooks/use-language';
-import { Button } from '@/components/ui/button';
-import Footer from '@/components/landing/Footer';
 import AppLogo from '@/components/app-logo';
 import AppearanceToggleTab from '@/components/appearance-tabs';
+import Footer from '@/components/landing/Footer';
+import { useLanguage } from '@/hooks/use-language';
 import { login, register } from '@/routes';
 
 const containerVariants: Variants = {
@@ -84,7 +84,6 @@ interface ServiceItem {
 export default function ServiceInfo({ service }: { service: ServiceItem }) {
     const { t, language, setLanguage } = useLanguage();
     const { auth } = usePage().props;
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
 
     const title = language === 'id' ? service.title_id : service.title_en;

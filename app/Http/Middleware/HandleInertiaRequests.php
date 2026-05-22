@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\StoreSetting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -43,7 +44,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'isStoreOpen' => function () {
-                $storeSetting = \App\Models\StoreSetting::query()->first();
+                $storeSetting = StoreSetting::query()->first();
+
                 return $storeSetting ? $storeSetting->isOpenNow() : false;
             },
         ];
