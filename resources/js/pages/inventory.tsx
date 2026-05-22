@@ -56,6 +56,9 @@ interface Sparepart {
     updated_at?: string;
 }
 
+import { InventoryFormModal } from '@/components/admin/inventory/InventoryFormModal';
+import { InventoryDeleteModal } from '@/components/admin/inventory/InventoryDeleteModal';
+
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -101,104 +104,19 @@ export default function InventoryPage({
     const [deletingPart, setDeletingPart] = React.useState<Sparepart | null>(
         null,
     );
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const { data, setData, post, processing, errors, reset, clearErrors } =
-        useForm({
-            nama_sparepart: '',
-            tipe_sparepart: '',
-            harga_sparepart: '',
-            stock_sparepart: '',
-            is_public: true,
-            keterangan: '',
-            image_file: null as File | null,
-            _method: 'post',
-        });
-
     const openAddModal = () => {
-        clearErrors();
-        reset();
         setEditingPart(null);
-        setData({
-            nama_sparepart: '',
-            tipe_sparepart: '',
-            harga_sparepart: '',
-            stock_sparepart: '',
-            is_public: true,
-            keterangan: '',
-            image_file: null,
-            _method: 'post',
-        });
         setIsAddEditModalOpen(true);
     };
 
     const openEditModal = (part: Sparepart) => {
-        clearErrors();
         setEditingPart(part);
-        setData({
-            nama_sparepart: part.nama_sparepart,
-            tipe_sparepart: part.tipe_sparepart,
-            harga_sparepart: part.harga_sparepart.toString(),
-            stock_sparepart: part.stock_sparepart.toString(),
-            is_public: part.is_public,
-            keterangan: part.keterangan || '',
-            image_file: null,
-            _method: 'put',
-        });
         setIsAddEditModalOpen(true);
     };
 
     const openDeleteModal = (part: Sparepart) => {
         setDeletingPart(part);
         setIsDeleteModalOpen(true);
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (editingPart) {
-            post(`/admin/inventory/${editingPart.id}`, {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setIsAddEditModalOpen(false);
-                    toast.success('Sparepart updated successfully');
-                    reset();
-                },
-                onError: () => {
-                    toast.error('Failed to update sparepart');
-                },
-            });
-        } else {
-            post('/admin/inventory', {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setIsAddEditModalOpen(false);
-                    toast.success('Sparepart added successfully');
-                    reset();
-                },
-                onError: () => {
-                    toast.error('Failed to add sparepart');
-                },
-            });
-        }
-    };
-
-    const handleDelete = () => {
-        if (!deletingPart) {
-return;
-}
-
-        router.delete(`/admin/inventory/${deletingPart.id}`, {
-            preserveScroll: true,
-            onSuccess: () => {
-                setIsDeleteModalOpen(false);
-                setDeletingPart(null);
-                toast.success('Sparepart deleted successfully');
-            },
-            onError: (err) => {
-                toast.error(err.error || 'Failed to delete sparepart');
-            },
-        });
     };
 
     const getStockStatus = (stock: number) => {
@@ -776,302 +694,23 @@ return (
                 </m.div>
             </m.div>
 
-            {/* Add/Edit Modal */}
-            <AnimatePresence>
-                {isAddEditModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsAddEditModalOpen(false)}
-                            className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                        />
-                        <m.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="custom-scrollbar relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212]"
-                        >
-                            <div className="mb-6 flex items-center justify-between">
-                                <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                    {editingPart
-                                        ? t('dash_edit_info')
-                                        : t('dash_add_part')}
-                                </h2>
-                                <button
-                                    onClick={() => setIsAddEditModalOpen(false)}
-                                    className="rounded-full p-2 text-[#1b1b18]/40 hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:bg-white/5"
-                                >
-                                    <X className="size-6" />
-                                </button>
-                            </div>
+            <InventoryFormModal
+                isOpen={isAddEditModalOpen}
+                onClose={() => {
+                    setIsAddEditModalOpen(false);
+                    setEditingPart(null);
+                }}
+                editingPart={editingPart}
+            />
 
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                        Image (Optional)
-                                    </label>
-                                    <div
-                                        onClick={() =>
-                                            fileInputRef.current?.click()
-                                        }
-                                        className="group relative flex h-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-dashed border-[#1b1b18]/10 bg-[#1b1b18]/5 transition-all hover:border-red-600 hover:bg-red-600/5 dark:border-white/10 dark:bg-white/5 dark:hover:border-red-600 dark:hover:bg-red-600/5"
-                                    >
-                                        <input
-                                            type="file"
-                                            ref={fileInputRef}
-                                            className="hidden"
-                                            accept="image/*"
-                                            onChange={(e) =>
-                                                setData(
-                                                    'image_file',
-                                                    e.target.files?.[0] || null,
-                                                )
-                                            }
-                                        />
-                                        {data.image_file ? (
-                                            <div className="flex h-full flex-col items-center justify-center gap-2">
-                                                <CheckCircle2 className="size-10 text-green-500" />
-                                                <p className="text-xs font-bold text-green-600">
-                                                    {data.image_file.name}
-                                                </p>
-                                            </div>
-                                        ) : editingPart &&
-                                          editingPart.image_url ? (
-                                            <div className="relative h-full w-full">
-                                                <img
-                                                    src={editingPart.image_url}
-                                                    className="h-full w-full object-cover opacity-50"
-                                                />
-                                                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/20 font-bold text-[#1b1b18] opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 dark:bg-black/20 dark:text-white">
-                                                    <Upload className="mb-2 size-8" />
-                                                    Change Image
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="flex h-full flex-col items-center justify-center gap-2 text-[#1b1b18]/40">
-                                                <Upload className="size-10" />
-                                                <p className="text-xs font-bold tracking-widest uppercase">
-                                                    Click to browse
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-                                    {errors.image_file && (
-                                        <span className="text-xs text-red-600">
-                                            {errors.image_file}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                {t('dash_part_name')}
-                                            </label>
-                                            <Input
-                                                value={data.nama_sparepart}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'nama_sparepart',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                            />
-                                            {errors.nama_sparepart && (
-                                                <span className="text-xs text-red-600">
-                                                    {errors.nama_sparepart}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                {t('dash_part_type')}
-                                            </label>
-                                            <Input
-                                                value={data.tipe_sparepart}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'tipe_sparepart',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                            />
-                                            {errors.tipe_sparepart && (
-                                                <span className="text-xs text-red-600">
-                                                    {errors.tipe_sparepart}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                {t('dash_col_price')}
-                                            </label>
-                                            <Input
-                                                type="number"
-                                                value={data.harga_sparepart}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'harga_sparepart',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                            />
-                                            {errors.harga_sparepart && (
-                                                <span className="text-xs text-red-600">
-                                                    {errors.harga_sparepart}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                {t('dash_stock_amount')}
-                                            </label>
-                                            <Input
-                                                type="number"
-                                                value={data.stock_sparepart}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'stock_sparepart',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                            />
-                                            {errors.stock_sparepart && (
-                                                <span className="text-xs text-red-600">
-                                                    {errors.stock_sparepart}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                            {t('dash_description')}
-                                        </label>
-                                        <Input
-                                            value={data.keterangan}
-                                            onChange={(e) =>
-                                                setData(
-                                                    'keterangan',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                        />
-                                        {errors.keterangan && (
-                                            <span className="text-xs text-red-600">
-                                                {errors.keterangan}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div className="flex items-center space-x-2 rounded-2xl border border-[#1b1b18]/5 bg-[#1b1b18]/2 p-4 dark:border-white/5 dark:bg-white/2">
-                                        <Checkbox
-                                            id="is_public"
-                                            checked={data.is_public}
-                                            onCheckedChange={(checked) =>
-                                                setData(
-                                                    'is_public',
-                                                    checked as boolean,
-                                                )
-                                            }
-                                        />
-                                        <Label
-                                            htmlFor="is_public"
-                                            className="cursor-pointer text-sm font-bold"
-                                        >
-                                            {t('dash_show_in_public')}
-                                        </Label>
-                                    </div>
-                                    {errors.is_public && (
-                                        <span className="text-xs text-red-600">
-                                            {errors.is_public}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <button
-                                    disabled={processing}
-                                    className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#1b1b18] text-sm font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-black disabled:opacity-50 dark:bg-white dark:text-[#1b1b18]"
-                                >
-                                    {processing ? (
-                                        <Loader2 className="size-5 animate-spin" />
-                                    ) : (
-                                        <>
-                                            <PackagePlus className="size-5" />
-                                            {t('dash_save_changes')}
-                                        </>
-                                    )}
-                                </button>
-                            </form>
-                        </m.div>
-                    </div>
-                )}
-            </AnimatePresence>
-
-            {/* Delete Confirmation Modal */}
-            <AnimatePresence>
-                {isDeleteModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsDeleteModalOpen(false)}
-                            className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                        />
-                        <m.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="relative w-full max-w-md overflow-hidden rounded-4xl bg-white p-8 text-center shadow-2xl dark:bg-[#121212]"
-                        >
-                            <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-red-600/10">
-                                <AlertTriangle className="size-8 text-red-600" />
-                            </div>
-                            <h2 className="mb-2 text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                {t('dash_confirm_q')}
-                            </h2>
-                            <p className="mb-8 text-sm text-[#1b1b18]/60 dark:text-white/60">
-                                You are about to delete{' '}
-                                <span className="font-bold text-[#1b1b18] dark:text-white">
-                                    {deletingPart?.nama_sparepart}
-                                </span>
-                                . This action cannot be undone.
-                            </p>
-                            <div className="flex gap-4">
-                                <Button
-                                    variant="outline"
-                                    className="h-12 flex-1 rounded-2xl text-[10px] font-bold tracking-widest uppercase"
-                                    onClick={() => setIsDeleteModalOpen(false)}
-                                >
-                                    {t('dash_no')}
-                                </Button>
-                                <Button
-                                    className="h-12 flex-1 rounded-2xl bg-red-600 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg shadow-red-600/20 hover:bg-red-700"
-                                    onClick={handleDelete}
-                                >
-                                    {t('dash_yes')}
-                                </Button>
-                            </div>
-                        </m.div>
-                    </div>
-                )}
-            </AnimatePresence>
+            <InventoryDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false);
+                    setDeletingPart(null);
+                }}
+                deletingPart={deletingPart}
+            />
         </LazyMotion>
     );
 }

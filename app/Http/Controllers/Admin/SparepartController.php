@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Actions\UploadImageAction;
 
 class SparepartController extends Controller
 {
@@ -32,7 +33,8 @@ class SparepartController extends Controller
         ]);
 
         if ($request->hasFile('image_file')) {
-            $path = $request->file('image_file')->store('spareparts', 'public');
+            $action = new UploadImageAction();
+            $path = $action->execute($request->file('image_file'), 'spareparts');
             $validated['image'] = $path;
         }
 
@@ -56,10 +58,8 @@ class SparepartController extends Controller
         ]);
 
         if ($request->hasFile('image_file')) {
-            if ($sparepart->image) {
-                Storage::disk('public')->delete($sparepart->image);
-            }
-            $path = $request->file('image_file')->store('spareparts', 'public');
+            $action = new UploadImageAction();
+            $path = $action->execute($request->file('image_file'), 'spareparts', $sparepart->image);
             $validated['image'] = $path;
         }
 

@@ -63,6 +63,10 @@ interface Customer {
     created_at?: string;
 }
 
+import { CustomerFormModal } from '@/components/admin/customers/CustomerFormModal';
+import { CarFormModal } from '@/components/admin/customers/CarFormModal';
+import { CustomerDeleteModal } from '@/components/admin/customers/CustomerDeleteModal';
+
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -110,60 +114,13 @@ export default function CustomersPage({
     const [targetCustomerForCar, setTargetCustomerForCar] =
         React.useState<Customer | null>(null);
 
-    // Customer Form
-    const {
-        data: customerData,
-        setData: setCustomerData,
-        post: postCustomer,
-        put: putCustomer,
-        processing: processingCustomer,
-        errors: customerErrors,
-        reset: resetCustomer,
-        clearErrors: clearCustomerErrors,
-    } = useForm({
-        nama_pelanggan: '',
-        no_telp: '',
-        email: '',
-        jenis_kelamin: 'L' as 'L' | 'P',
-        alamat: '',
-    });
-
-    // Car Form
-    const {
-        data: carData,
-        setData: setCarData,
-        post: postCar,
-        processing: processingCar,
-        errors: carErrors,
-        reset: resetCar,
-        clearErrors: clearCarErrors,
-    } = useForm({
-        merk: '',
-        model: '',
-        tahun: '',
-        no_polisi: '',
-        warna: '',
-        keterangan: '',
-    });
-
-    // Helpers
     const openAddCustomerModal = () => {
-        clearCustomerErrors();
-        resetCustomer();
         setEditingCustomer(null);
         setIsCustomerModalOpen(true);
     };
 
     const openEditCustomerModal = (customer: Customer) => {
-        clearCustomerErrors();
         setEditingCustomer(customer);
-        setCustomerData({
-            nama_pelanggan: customer.nama_pelanggan,
-            no_telp: customer.no_telp,
-            email: customer.email,
-            jenis_kelamin: customer.jenis_kelamin,
-            alamat: customer.alamat,
-        });
         setIsCustomerModalOpen(true);
     };
 
@@ -173,70 +130,8 @@ export default function CustomersPage({
     };
 
     const openAddCarModal = (customer: Customer) => {
-        clearCarErrors();
-        resetCar();
         setTargetCustomerForCar(customer);
         setIsCarModalOpen(true);
-    };
-
-    // Submits
-    const handleCustomerSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (editingCustomer) {
-            putCustomer(`/admin/customers/${editingCustomer.id}`, {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setIsCustomerModalOpen(false);
-                    toast.success('Customer updated successfully');
-                    resetCustomer();
-                },
-            });
-        } else {
-            postCustomer('/admin/customers', {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setIsCustomerModalOpen(false);
-                    toast.success('Customer added successfully');
-                    resetCustomer();
-                },
-            });
-        }
-    };
-
-    const handleCarSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!targetCustomerForCar) {
-return;
-}
-
-        postCar(`/admin/customers/${targetCustomerForCar.id}/mobils`, {
-            preserveScroll: true,
-            onSuccess: () => {
-                setIsCarModalOpen(false);
-                toast.success('Car added successfully');
-                resetCar();
-            },
-        });
-    };
-
-    const handleDelete = () => {
-        if (!deletingCustomer) {
-return;
-}
-
-        router.delete(`/admin/customers/${deletingCustomer.id}`, {
-            preserveScroll: true,
-            onSuccess: () => {
-                setIsDeleteModalOpen(false);
-                setDeletingCustomer(null);
-                toast.success('Customer deleted successfully');
-            },
-            onError: (err) => {
-                toast.error(err.error || 'Failed to delete customer');
-            },
-        });
     };
 
     const filteredCustomers = customers
@@ -759,451 +654,32 @@ return (
                 </m.div>
             </m.div>
 
-            {/* Customer Add/Edit Modal */}
-            <AnimatePresence>
-                {isCustomerModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsCustomerModalOpen(false)}
-                            className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                        />
-                        <m.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="custom-scrollbar relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212]"
-                        >
-                            <div className="mb-6 flex items-center justify-between">
-                                <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                    {editingCustomer
-                                        ? t('dash_edit_profile')
-                                        : t('dash_add_customer')}
-                                </h2>
-                                <button
-                                    onClick={() =>
-                                        setIsCustomerModalOpen(false)
-                                    }
-                                    className="rounded-full p-2 text-[#1b1b18]/40 hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:bg-white/5"
-                                >
-                                    <X className="size-6" />
-                                </button>
-                            </div>
+            <CustomerFormModal
+                isOpen={isCustomerModalOpen}
+                onClose={() => {
+                    setIsCustomerModalOpen(false);
+                    setEditingCustomer(null);
+                }}
+                editingCustomer={editingCustomer}
+            />
 
-                            <form
-                                onSubmit={handleCustomerSubmit}
-                                className="space-y-6"
-                            >
-                                <div className="space-y-4">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                            Nama Pelanggan
-                                        </label>
-                                        <Input
-                                            value={customerData.nama_pelanggan}
-                                            onChange={(e) =>
-                                                setCustomerData(
-                                                    'nama_pelanggan',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                            required
-                                        />
-                                        {customerErrors.nama_pelanggan && (
-                                            <span className="text-xs text-red-600">
-                                                {customerErrors.nama_pelanggan}
-                                            </span>
-                                        )}
-                                    </div>
+            <CarFormModal
+                isOpen={isCarModalOpen}
+                onClose={() => {
+                    setIsCarModalOpen(false);
+                    setTargetCustomerForCar(null);
+                }}
+                targetCustomerForCar={targetCustomerForCar}
+            />
 
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                No Telepon
-                                            </label>
-                                            <Input
-                                                value={customerData.no_telp}
-                                                onChange={(e) =>
-                                                    setCustomerData(
-                                                        'no_telp',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                            />
-                                            {customerErrors.no_telp && (
-                                                <span className="text-xs text-red-600">
-                                                    {customerErrors.no_telp}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                Email
-                                            </label>
-                                            <Input
-                                                type="email"
-                                                value={customerData.email}
-                                                onChange={(e) =>
-                                                    setCustomerData(
-                                                        'email',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                            />
-                                            {customerErrors.email && (
-                                                <span className="text-xs text-red-600">
-                                                    {customerErrors.email}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                            Jenis Kelamin
-                                        </label>
-                                        <div className="flex h-12 items-center gap-4 px-2">
-                                            <label className="flex cursor-pointer items-center gap-2 text-sm font-bold">
-                                                <input
-                                                    type="radio"
-                                                    name="jenis_kelamin"
-                                                    value="L"
-                                                    checked={
-                                                        customerData.jenis_kelamin ===
-                                                        'L'
-                                                    }
-                                                    onChange={() =>
-                                                        setCustomerData(
-                                                            'jenis_kelamin',
-                                                            'L',
-                                                        )
-                                                    }
-                                                    className="accent-red-600"
-                                                />
-                                                Laki-laki
-                                            </label>
-                                            <label className="flex cursor-pointer items-center gap-2 text-sm font-bold">
-                                                <input
-                                                    type="radio"
-                                                    name="jenis_kelamin"
-                                                    value="P"
-                                                    checked={
-                                                        customerData.jenis_kelamin ===
-                                                        'P'
-                                                    }
-                                                    onChange={() =>
-                                                        setCustomerData(
-                                                            'jenis_kelamin',
-                                                            'P',
-                                                        )
-                                                    }
-                                                    className="accent-red-600"
-                                                />
-                                                Perempuan
-                                            </label>
-                                        </div>
-                                        {customerErrors.jenis_kelamin && (
-                                            <span className="text-xs text-red-600">
-                                                {customerErrors.jenis_kelamin}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                            Alamat
-                                        </label>
-                                        <Input
-                                            value={customerData.alamat}
-                                            onChange={(e) =>
-                                                setCustomerData(
-                                                    'alamat',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                            required
-                                        />
-                                        {customerErrors.alamat && (
-                                            <span className="text-xs text-red-600">
-                                                {customerErrors.alamat}
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <button
-                                    disabled={processingCustomer}
-                                    className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#1b1b18] text-sm font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-black disabled:opacity-50 dark:bg-white dark:text-[#1b1b18]"
-                                >
-                                    {processingCustomer ? (
-                                        <Loader2 className="size-5 animate-spin" />
-                                    ) : (
-                                        <>
-                                            <UserPlus className="size-5" />
-                                            {t('dash_save_changes')}
-                                        </>
-                                    )}
-                                </button>
-                            </form>
-                        </m.div>
-                    </div>
-                )}
-            </AnimatePresence>
-
-            {/* Add Car Modal */}
-            <AnimatePresence>
-                {isCarModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsCarModalOpen(false)}
-                            className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                        />
-                        <m.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="custom-scrollbar relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212]"
-                        >
-                            <div className="mb-6 flex items-center justify-between">
-                                <div>
-                                    <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                        Add Car
-                                    </h2>
-                                    <p className="text-sm font-medium text-[#1b1b18]/50 dark:text-white/50">
-                                        For{' '}
-                                        {targetCustomerForCar?.nama_pelanggan}
-                                    </p>
-                                </div>
-                                <button
-                                    onClick={() => setIsCarModalOpen(false)}
-                                    className="rounded-full p-2 text-[#1b1b18]/40 hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:bg-white/5"
-                                >
-                                    <X className="size-6" />
-                                </button>
-                            </div>
-
-                            <form
-                                onSubmit={handleCarSubmit}
-                                className="space-y-6"
-                            >
-                                <div className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                Merk
-                                            </label>
-                                            <Input
-                                                value={carData.merk}
-                                                onChange={(e) =>
-                                                    setCarData(
-                                                        'merk',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                required
-                                                placeholder="e.g. Toyota"
-                                            />
-                                            {carErrors.merk && (
-                                                <span className="text-xs text-red-600">
-                                                    {carErrors.merk}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                Model
-                                            </label>
-                                            <Input
-                                                value={carData.model}
-                                                onChange={(e) =>
-                                                    setCarData(
-                                                        'model',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                placeholder="e.g. Avanza"
-                                            />
-                                            {carErrors.model && (
-                                                <span className="text-xs text-red-600">
-                                                    {carErrors.model}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                Tahun
-                                            </label>
-                                            <Input
-                                                type="number"
-                                                value={carData.tahun}
-                                                onChange={(e) =>
-                                                    setCarData(
-                                                        'tahun',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                                placeholder="e.g. 2021"
-                                            />
-                                            {carErrors.tahun && (
-                                                <span className="text-xs text-red-600">
-                                                    {carErrors.tahun}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                                No Polisi
-                                            </label>
-                                            <Input
-                                                value={carData.no_polisi}
-                                                onChange={(e) =>
-                                                    setCarData(
-                                                        'no_polisi',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 uppercase dark:bg-white/5"
-                                                required
-                                                placeholder="B 1234 ABC"
-                                            />
-                                            {carErrors.no_polisi && (
-                                                <span className="text-xs text-red-600">
-                                                    {carErrors.no_polisi}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                            Warna
-                                        </label>
-                                        <Input
-                                            value={carData.warna}
-                                            onChange={(e) =>
-                                                setCarData(
-                                                    'warna',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                            placeholder="e.g. Hitam"
-                                        />
-                                        {carErrors.warna && (
-                                            <span className="text-xs text-red-600">
-                                                {carErrors.warna}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                            Keterangan
-                                        </label>
-                                        <Input
-                                            value={carData.keterangan}
-                                            onChange={(e) =>
-                                                setCarData(
-                                                    'keterangan',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                        />
-                                        {carErrors.keterangan && (
-                                            <span className="text-xs text-red-600">
-                                                {carErrors.keterangan}
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <button
-                                    disabled={processingCar}
-                                    className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#1b1b18] text-sm font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-black disabled:opacity-50 dark:bg-white dark:text-[#1b1b18]"
-                                >
-                                    {processingCar ? (
-                                        <Loader2 className="size-5 animate-spin" />
-                                    ) : (
-                                        <>
-                                            <Car className="size-5" />
-                                            {t('dash_save_changes')}
-                                        </>
-                                    )}
-                                </button>
-                            </form>
-                        </m.div>
-                    </div>
-                )}
-            </AnimatePresence>
-
-            {/* Delete Confirmation Modal */}
-            <AnimatePresence>
-                {isDeleteModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsDeleteModalOpen(false)}
-                            className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                        />
-                        <m.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="relative w-full max-w-md overflow-hidden rounded-4xl bg-white p-8 text-center shadow-2xl dark:bg-[#121212]"
-                        >
-                            <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-red-600/10">
-                                <AlertTriangle className="size-8 text-red-600" />
-                            </div>
-                            <h2 className="mb-2 text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                {t('dash_confirm_q')}
-                            </h2>
-                            <p className="mb-8 text-sm text-[#1b1b18]/60 dark:text-white/60">
-                                You are about to delete customer{' '}
-                                <span className="font-bold text-[#1b1b18] dark:text-white">
-                                    {deletingCustomer?.nama_pelanggan}
-                                </span>{' '}
-                                and all their associated cars. This action
-                                cannot be undone.
-                            </p>
-                            <div className="flex gap-4">
-                                <Button
-                                    variant="outline"
-                                    className="h-12 flex-1 rounded-2xl text-[10px] font-bold tracking-widest uppercase"
-                                    onClick={() => setIsDeleteModalOpen(false)}
-                                >
-                                    {t('dash_no')}
-                                </Button>
-                                <Button
-                                    className="h-12 flex-1 rounded-2xl bg-red-600 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg shadow-red-600/20 hover:bg-red-700"
-                                    onClick={handleDelete}
-                                >
-                                    {t('dash_yes')}
-                                </Button>
-                            </div>
-                        </m.div>
-                    </div>
-                )}
-            </AnimatePresence>
+            <CustomerDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false);
+                    setDeletingCustomer(null);
+                }}
+                deletingCustomer={deletingCustomer}
+            />
         </LazyMotion>
     );
 }

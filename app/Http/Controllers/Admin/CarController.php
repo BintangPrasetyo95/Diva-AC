@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Actions\CreateCustomerAndCarAction;
 
 class CarController extends Controller
 {
@@ -66,24 +67,8 @@ class CarController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        $customer = Pelanggan::create([
-            'nama_pelanggan' => $validated['nama_pelanggan'],
-            'no_telp' => $validated['no_telp'],
-            'email' => $validated['email'],
-            'jenis_kelamin' => $validated['jenis_kelamin'],
-            'alamat' => $validated['alamat'],
-            'tanggal_daftar' => now()->toDateString(),
-            'password' => Hash::make('password123'),
-        ]);
-
-        $customer->mobils()->create([
-            'merk' => $validated['merk'],
-            'model' => $validated['model'] ?? null,
-            'tahun' => $validated['tahun'] ?? null,
-            'no_polisi' => $validated['no_polisi'],
-            'warna' => $validated['warna'] ?? null,
-            'keterangan' => $validated['keterangan'] ?? null,
-        ]);
+        $action = new CreateCustomerAndCarAction();
+        $action->execute($validated);
 
         return back()->with('success', 'Pelanggan dan kendaraan berhasil ditambahkan.');
     }

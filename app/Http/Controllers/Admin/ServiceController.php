@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Actions\SyncSparepartsAction;
+use App\Actions\CreateCustomerAndCarAction;
 
 class ServiceController extends Controller
 {
@@ -49,18 +51,8 @@ class ServiceController extends Controller
         return DB::transaction(function () use ($validated) {
             $service = Service::create($validated);
 
-            $syncData = [];
-            $totalSparepart = 0;
-            if (! empty($validated['spareparts'])) {
-                foreach ($validated['spareparts'] as $item) {
-                    $syncData[$item['id']] = [
-                        'jumlah' => $item['jumlah'],
-                        'harga_satuan' => $item['harga_satuan'],
-                    ];
-                    $totalSparepart += ($item['jumlah'] * $item['harga_satuan']);
-                }
-                $service->spareparts()->sync($syncData);
-            }
+            $action = new SyncSparepartsAction();
+            $totalSparepart = $action->execute($service, $validated['spareparts'] ?? []);
 
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 
@@ -92,27 +84,9 @@ class ServiceController extends Controller
         ]);
 
         return DB::transaction(function () use ($validated) {
-            $userId = $validated['id_pelanggan'];
-
-            if ($userId === 'new') {
-                $user = User::create([
-                    'name' => $validated['customer_name'],
-                    'email' => $validated['customer_email'],
-                    'phone' => $validated['customer_phone'],
-                    'password' => Hash::make('password123'),
-                    'role' => 'customer',
-                ]);
-                $userId = $user->id;
-            }
-
-            $mobil = Mobil::create([
-                'id_pelanggan' => $userId,
-                'no_polisi' => $validated['no_polisi'],
-                'merk' => $validated['merk'],
-                'tipe' => $validated['tipe'],
-                'warna' => $validated['warna'],
-            ]);
-
+            $action = new CreateCustomerAndCarAction();
+            $mobil = $action->execute($validated);
+            
             $serviceData = [
                 'id_mobil' => $mobil->id,
                 'id_mekanik' => $validated['id_mekanik'],
@@ -125,18 +99,8 @@ class ServiceController extends Controller
 
             $service = Service::create($serviceData);
 
-            $syncData = [];
-            $totalSparepart = 0;
-            if (! empty($validated['spareparts'])) {
-                foreach ($validated['spareparts'] as $item) {
-                    $syncData[$item['id']] = [
-                        'jumlah' => $item['jumlah'],
-                        'harga_satuan' => $item['harga_satuan'],
-                    ];
-                    $totalSparepart += ($item['jumlah'] * $item['harga_satuan']);
-                }
-                $service->spareparts()->sync($syncData);
-            }
+            $action = new SyncSparepartsAction();
+            $totalSparepart = $action->execute($service, $validated['spareparts'] ?? []);
 
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 
@@ -179,19 +143,9 @@ class ServiceController extends Controller
                 'catatan' => $validated['catatan'] ?? null,
             ]);
 
-            $syncData = [];
-            $totalSparepart = 0;
-            if (! empty($validated['spareparts'])) {
-                foreach ($validated['spareparts'] as $item) {
-                    $syncData[$item['id']] = [
-                        'jumlah' => $item['jumlah'],
-                        'harga_satuan' => $item['harga_satuan'],
-                    ];
-                    $totalSparepart += ($item['jumlah'] * $item['harga_satuan']);
-                }
-            }
+            $action = new SyncSparepartsAction();
+            $totalSparepart = $action->execute($service, $validated['spareparts'] ?? []);
 
-            $service->spareparts()->sync($syncData);
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 
             return back()->with('success', 'Service record updated successfully');

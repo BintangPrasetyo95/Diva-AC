@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Actions\UploadImageAction;
 
 class WorkshopSettingsController extends Controller
 {
@@ -65,10 +66,8 @@ class WorkshopSettingsController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            if ($settings->logo_path) {
-                Storage::disk('public')->delete($settings->logo_path);
-            }
-            $path = $request->file('logo')->store('branding', 'public');
+            $action = new UploadImageAction();
+            $path = $action->execute($request->file('logo'), 'branding', $settings->logo_path);
             $validated['logo_path'] = $path;
         }
 

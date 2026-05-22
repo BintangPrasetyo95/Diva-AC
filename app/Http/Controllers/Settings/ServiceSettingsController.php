@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Actions\UploadImageAction;
 
 class ServiceSettingsController extends Controller
 {
@@ -61,7 +62,8 @@ class ServiceSettingsController extends Controller
 
             // Handle file upload
             if ($request->hasFile("services.{$index}.image_file")) {
-                $path = $request->file("services.{$index}.image_file")->store('services', 'public');
+                $action = new UploadImageAction();
+                $path = $action->execute($request->file("services.{$index}.image_file"), 'services');
                 $serviceData['image'] = $path;
             }
 
@@ -85,9 +87,11 @@ class ServiceSettingsController extends Controller
             } else {
                 $service = ServiceItem::find($id, ['*']);
                 if ($service) {
-                    // Delete old image if new one is uploaded
-                    if ($request->hasFile("services.{$index}.image_file") && $service->image && str_starts_with($service->image, 'services/')) {
-                        Storage::disk('public')->delete($service->image);
+                    // Handle file upload and deletion of old image
+                    if ($request->hasFile("services.{$index}.image_file")) {
+                        $action = new UploadImageAction();
+                        $path = $action->execute($request->file("services.{$index}.image_file"), 'services', $service->image);
+                        $serviceData['image'] = $path;
                     }
                     $service->update($serviceData);
                 }

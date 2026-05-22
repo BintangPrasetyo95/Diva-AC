@@ -7,6 +7,7 @@ use App\Models\GalleryItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use App\Actions\UploadImageAction;
 
 class GalleryController extends Controller
 {
@@ -25,7 +26,8 @@ class GalleryController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $path = $request->file('image')->store('gallery', 'public');
+        $action = new UploadImageAction();
+        $path = $action->execute($request->file('image'), 'gallery');
 
         GalleryItem::create([
             'image_path' => $path,

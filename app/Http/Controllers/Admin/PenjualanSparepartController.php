@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Actions\SyncSparepartsAction;
 
 class PenjualanSparepartController extends Controller
 {
@@ -103,17 +104,9 @@ class PenjualanSparepartController extends Controller
                 'address' => $validated['address'],
             ]);
 
-            $syncData = [];
-            $totalHarga = 0;
-            foreach ($validated['items'] as $item) {
-                $syncData[$item['id']] = [
-                    'jumlah' => $item['jumlah'],
-                    'harga_satuan' => $item['harga_satuan'],
-                ];
-                $totalHarga += ($item['jumlah'] * $item['harga_satuan']);
-            }
+            $action = new SyncSparepartsAction();
+            $totalHarga = $action->execute($order, $validated['items'] ?? []);
 
-            $order->spareparts()->sync($syncData);
             $order->update(['total_harga' => $totalHarga]);
 
             return back()->with('status', 'order-updated');

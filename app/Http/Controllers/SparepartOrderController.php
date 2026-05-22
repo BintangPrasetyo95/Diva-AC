@@ -7,6 +7,7 @@ use App\Models\Sparepart;
 use App\Models\StoreSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Actions\SyncSparepartsAction;
 
 class SparepartOrderController extends Controller
 {
@@ -22,35 +23,20 @@ class SparepartOrderController extends Controller
         ]);
 
         return DB::transaction(function () use ($validated) {
-            $totalHarga = 0;
-            $orderItems = [];
-
-            // Calculate total price and prepare items
-            foreach ($validated['items'] as $item) {
-                $sparepart = Sparepart::findOrFail($item['partId']);
-                $jumlah = $item['jumlah'] ?? 1;
-                $harga = $sparepart->harga_sparepart;
-                $subtotal = $harga * $jumlah;
-
-                $totalHarga += $subtotal;
-
-                $orderItems[$sparepart->id] = [
-                    'jumlah' => $jumlah,
-                    'harga_satuan' => $harga,
-                ];
-            }
-
             // Create Order
             $order = PenjualanSparepart::create([
                 'customer_name' => $validated['customer_name'],
                 'customer_phone' => $validated['customer_phone'],
                 'address' => $validated['address'],
                 'tanggal_penjualan' => now()->toDateString(),
-                'total_harga' => $totalHarga,
+                'total_harga' => 0, // Temporarily 0, will be updated by action
                 'status' => 'pending',
             ]);
 
-            $order->spareparts()->attach($orderItems);
+            $action = new SyncSparepartsAction();
+            $totalHarga = $action->execute($order, $validated['items'] ?? []);
+            
+            $order->update(['total_harga' => $totalHarga]);
 
             // Generate WhatsApp Link
             $storeSettings = StoreSetting::query()->first();
