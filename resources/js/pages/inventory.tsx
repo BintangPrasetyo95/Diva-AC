@@ -1,6 +1,7 @@
 import { Head, useForm, router } from '@inertiajs/react';
 import type {
-    Variants} from 'framer-motion';
+    Variants
+} from 'framer-motion';
 import {
     m,
     LazyMotion,
@@ -129,12 +130,12 @@ export default function InventoryPage({
 
     const getStockStatus = (stock: number) => {
         if (stock === 0) {
-return 'Out of Stock';
-}
+            return 'Out of Stock';
+        }
 
         if (stock < 5) {
-return 'Low';
-}
+            return 'Low';
+        }
 
         return 'Normal';
     };
@@ -237,10 +238,10 @@ return 'Low';
 
     const getSortIcon = (key: string) => {
         if (sortConfig.key !== key) {
-return (
+            return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
-}
+        }
 
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
@@ -510,193 +511,193 @@ return (
                         <DataTableInner>
                             <table className="w-full text-left">
                                 <DataTableHead>
-                                <tr>
-                                    <th
-                                        onClick={() => handleSort('id')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_id')}
-                                            {getSortIcon('id')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('name')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_item_name')}
-                                            {getSortIcon('name')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('category')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_part_type')}
-                                            {getSortIcon('category')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('stock')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_stock_status')}
-                                            {getSortIcon('stock')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('price')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_price')}
-                                            {getSortIcon('price')}
-                                        </div>
-                                    </th>
-                                    <th className="px-6 py-5 text-center text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('dash_public_visibility')}
-                                    </th>
-                                    <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
-                                </tr>
-                            </DataTableHead>
-                            <DataTableBody>
-                                {filteredInventory.length > 0 ? (
-                                    filteredInventory.map((item) => (
-                                        <tr
-                                            key={item.id}
-                                            className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                    <tr>
+                                        <th
+                                            onClick={() => handleSort('id')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
                                         >
-                                            <td className="px-6 py-5">
-                                                <span className="font-mono text-xs font-bold text-[#1b1b18]/40 dark:text-white/40">
-                                                    SP-{item.id}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    {item.image_url ? (
-                                                        <img
-                                                            src={item.image_url}
-                                                            alt={
-                                                                item.nama_sparepart
-                                                            }
-                                                            className="h-10 w-10 rounded-lg object-cover"
-                                                        />
-                                                    ) : (
-                                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1b1b18]/5 dark:bg-white/5">
-                                                            <Package className="size-5 text-[#1b1b18]/30 dark:text-white/30" />
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_id')}
+                                                {getSortIcon('id')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('name')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_item_name')}
+                                                {getSortIcon('name')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('category')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_part_type')}
+                                                {getSortIcon('category')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('stock')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_stock_status')}
+                                                {getSortIcon('stock')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('price')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_price')}
+                                                {getSortIcon('price')}
+                                            </div>
+                                        </th>
+                                        <th className="px-6 py-5 text-center text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('dash_public_visibility')}
+                                        </th>
+                                        <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
+                                    </tr>
+                                </DataTableHead>
+                                <DataTableBody>
+                                    {filteredInventory.length > 0 ? (
+                                        filteredInventory.map((item) => (
+                                            <tr
+                                                key={item.id}
+                                                className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                            >
+                                                <td className="px-6 py-5">
+                                                    <span className="font-mono text-xs font-bold text-[#1b1b18]/40 dark:text-white/40">
+                                                        SP-{item.id}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-3">
+                                                        {item.image_url ? (
+                                                            <img
+                                                                src={item.image_url}
+                                                                alt={
+                                                                    item.nama_sparepart
+                                                                }
+                                                                className="h-10 w-10 rounded-lg object-cover"
+                                                            />
+                                                        ) : (
+                                                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1b1b18]/5 dark:bg-white/5">
+                                                                <Package className="size-5 text-[#1b1b18]/30 dark:text-white/30" />
+                                                            </div>
+                                                        )}
+                                                        <div className="flex flex-col">
+                                                            <span className="text-sm leading-tight font-bold text-[#1b1b18] dark:text-white">
+                                                                {
+                                                                    item.nama_sparepart
+                                                                }
+                                                            </span>
+                                                            <span className="text-[10px] tracking-wider text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                                                {
+                                                                    item.tipe_sparepart
+                                                                }
+                                                            </span>
                                                         </div>
-                                                    )}
-                                                    <div className="flex flex-col">
-                                                        <span className="text-sm leading-tight font-bold text-[#1b1b18] dark:text-white">
-                                                            {
-                                                                item.nama_sparepart
-                                                            }
-                                                        </span>
-                                                        <span className="text-[10px] tracking-wider text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                            {
-                                                                item.tipe_sparepart
-                                                            }
-                                                        </span>
                                                     </div>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <span className="text-sm text-[#1b1b18]/70 dark:text-white/70">
+                                                        {item.tipe_sparepart}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    {getStockBadge(
+                                                        item.stock_sparepart,
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <span className="text-sm font-black text-[#1b1b18] dark:text-white">
+                                                        {formatCurrency(
+                                                            item.harga_sparepart,
+                                                        )}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-5 text-center">
+                                                    <Badge
+                                                        variant="outline"
+                                                        className={`gap-1 px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase ${item.is_public ? 'border-green-500/20 bg-green-500/10 text-green-600' : 'border-transparent bg-[#1b1b18]/10 text-[#1b1b18]/50 dark:bg-white/10 dark:text-white/50'}`}
+                                                    >
+                                                        {item.is_public
+                                                            ? t(
+                                                                'dash_show_in_public',
+                                                            )
+                                                            : t(
+                                                                'dash_hide_from_public',
+                                                            )}
+                                                    </Badge>
+                                                </td>
+                                                <td className="px-6 py-5 text-right">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger
+                                                            asChild
+                                                        >
+                                                            <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
+                                                                <MoreHorizontal className="size-4" />
+                                                            </button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent
+                                                            align="end"
+                                                            className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
+                                                        >
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openEditModal(
+                                                                        item,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                <Edit3 className="mr-2 size-3" />
+                                                                {t(
+                                                                    'dash_edit_details',
+                                                                )}
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator />
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openDeleteModal(
+                                                                        item,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest text-red-600 uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                <Trash2 className="mr-2 size-3" />
+                                                                {t(
+                                                                    'dash_delete_item',
+                                                                )}
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan={7}
+                                                className="px-6 py-20 text-center"
+                                            >
+                                                <div className="flex flex-col items-center gap-2 opacity-20">
+                                                    <Package className="size-12" />
+                                                    <p className="text-lg font-black tracking-tighter uppercase">
+                                                        {t('dash_no_items')}
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <span className="text-sm text-[#1b1b18]/70 dark:text-white/70">
-                                                    {item.tipe_sparepart}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                {getStockBadge(
-                                                    item.stock_sparepart,
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="text-sm font-black text-[#1b1b18] dark:text-white">
-                                                    {formatCurrency(
-                                                        item.harga_sparepart,
-                                                    )}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5 text-center">
-                                                <Badge
-                                                    variant="outline"
-                                                    className={`gap-1 px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase ${item.is_public ? 'border-green-500/20 bg-green-500/10 text-green-600' : 'border-transparent bg-[#1b1b18]/10 text-[#1b1b18]/50 dark:bg-white/10 dark:text-white/50'}`}
-                                                >
-                                                    {item.is_public
-                                                        ? t(
-                                                              'dash_show_in_public',
-                                                          )
-                                                        : t(
-                                                              'dash_hide_from_public',
-                                                          )}
-                                                </Badge>
-                                            </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger
-                                                        asChild
-                                                    >
-                                                        <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
-                                                            <MoreHorizontal className="size-4" />
-                                                        </button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent
-                                                        align="end"
-                                                        className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
-                                                    >
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openEditModal(
-                                                                    item,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            <Edit3 className="mr-2 size-3" />
-                                                            {t(
-                                                                'dash_edit_details',
-                                                            )}
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuSeparator />
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openDeleteModal(
-                                                                    item,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest text-red-600 uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            <Trash2 className="mr-2 size-3" />
-                                                            {t(
-                                                                'dash_delete_item',
-                                                            )}
-                                                        </DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td
-                                            colSpan={7}
-                                            className="px-6 py-20 text-center"
-                                        >
-                                            <div className="flex flex-col items-center gap-2 opacity-20">
-                                                <Package className="size-12" />
-                                                <p className="text-lg font-black tracking-tighter uppercase">
-                                                    {t('dash_no_items')}
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
-                            </DataTableBody>
-                        </table>
-                    </DataTableInner>
+                                    )}
+                                </DataTableBody>
+                            </table>
+                        </DataTableInner>
                     </DataTable>
                 </m.div>
             </m.div>

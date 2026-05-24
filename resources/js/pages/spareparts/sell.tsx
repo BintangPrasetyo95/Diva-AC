@@ -1,6 +1,7 @@
 import { Head, router } from '@inertiajs/react';
 import type {
-    Variants} from 'framer-motion';
+    Variants
+} from 'framer-motion';
 import {
     m,
     LazyMotion,
@@ -73,7 +74,7 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
 
     const [viewOrder, setViewOrder] = useState<Order | null>(null);
     const [editOrder, setEditOrder] = useState<Order | null>(null);
-    
+
     const openEdit = (order: Order) => {
         setEditOrder(order);
     };
@@ -153,144 +154,144 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
                         <DataTableInner>
                             <table className="w-full text-left text-sm">
                                 <DataTableHead className="bg-[#1b1b18]/2 dark:bg-white/2">
-                                <tr>
-                                    <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('sell_col_id_date')}
-                                    </th>
-                                    <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('sell_col_customer')}
-                                    </th>
-                                    <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('sell_col_items')}
-                                    </th>
-                                    <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('sell_col_total')}
-                                    </th>
-                                    <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('sell_col_status')}
-                                    </th>
-                                    <th className="px-6 py-4 text-right font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        {t('sell_col_actions')}
-                                    </th>
-                                </tr>
-                            </DataTableHead>
-                            <DataTableBody>
-                                {orders.map((order) => (
-                                    <tr
-                                        key={order.id}
-                                        className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
-                                    >
-                                        <td className="px-6 py-4">
-                                            <div className="font-bold">
-                                                #{order.id}
-                                            </div>
-                                            <div className="text-xs text-[#1b1b18]/50 dark:text-white/50">
-                                                {new Date(
-                                                    order.created_at,
-                                                ).toLocaleString('id-ID')}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="font-bold">
-                                                {order.customer_name}
-                                            </div>
-                                            <div className="text-xs text-[#1b1b18]/50 dark:text-white/50">
-                                                {order.customer_phone}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <ul className="space-y-1 text-xs">
-                                                {order.items.map(
-                                                    (item, idx) => (
-                                                        <li key={idx}>
-                                                            -{' '}
-                                                            {
-                                                                item.nama_sparepart
-                                                            }{' '}
-                                                            ({item.jumlah}x)
-                                                        </li>
-                                                    ),
-                                                )}
-                                            </ul>
-                                        </td>
-                                        <td className="px-6 py-4 font-bold">
-                                            Rp{' '}
-                                            {Number(
-                                                order.total_harga,
-                                            ).toLocaleString('id-ID')}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {statusBadge(order.status)}
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
-                                            <div className="flex justify-end gap-2">
-                                                <button
-                                                    onClick={() =>
-                                                        setViewOrder(order)
-                                                    }
-                                                    className="rounded-xl border border-[#1b1b18]/10 px-2 py-1.5 text-xs font-bold text-[#1b1b18]/70 transition-colors hover:bg-[#1b1b18]/5 dark:border-white/10 dark:text-white/70 dark:hover:bg-white/5"
-                                                    title={t(
-                                                        'dash_view_details',
-                                                    )}
-                                                >
-                                                    <Eye className="size-4" />
-                                                </button>
-                                                {order.status === 'pending' && (
-                                                    <>
-                                                        <button
-                                                            onClick={() =>
-                                                                openEdit(order)
-                                                            }
-                                                            className="rounded-xl border border-blue-500/20 px-2 py-1.5 text-xs font-bold text-blue-500 transition-colors hover:bg-blue-500/10"
-                                                            title={t(
-                                                                'sell_edit_title',
-                                                            )}
-                                                        >
-                                                            <Edit className="size-4" />
-                                                        </button>
-                                                        <button
-                                                            onClick={() =>
-                                                                verifyOrder(
-                                                                    order.id,
-                                                                )
-                                                            }
-                                                            className="rounded-xl bg-green-500 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-green-600"
-                                                        >
-                                                            {t('sell_verify')}
-                                                        </button>
-                                                        <button
-                                                            onClick={() => cancelOrder(order.id)}
-                                                            className="rounded-xl border border-red-500/20 px-3 py-1.5 text-xs font-bold text-red-500 transition-colors hover:bg-red-500/10"
-                                                        >
-                                                            {t('sell_cancel')}
-                                                        </button>
-                                                    </>
-                                                )}
-                                                <a
-                                                    href={`/admin/invoice?type=sparepart&id=${order.id}`}
-                                                    target="_blank"
-                                                    className="flex items-center gap-1 rounded-xl border border-gray-500/20 px-2 py-1.5 text-xs font-bold text-gray-500 transition-colors hover:bg-gray-500/10"
-                                                    title="Print Invoice"
-                                                >
-                                                    <Printer className="size-4" />
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                                {orders.length === 0 && (
                                     <tr>
-                                        <td
-                                            colSpan={6}
-                                            className="px-6 py-12 text-center text-[#1b1b18]/40 dark:text-white/40"
-                                        >
-                                            {t('sell_no_orders')}
-                                        </td>
+                                        <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('sell_col_id_date')}
+                                        </th>
+                                        <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('sell_col_customer')}
+                                        </th>
+                                        <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('sell_col_items')}
+                                        </th>
+                                        <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('sell_col_total')}
+                                        </th>
+                                        <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('sell_col_status')}
+                                        </th>
+                                        <th className="px-6 py-4 text-right font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            {t('sell_col_actions')}
+                                        </th>
                                     </tr>
-                                )}
-                            </DataTableBody>
-                        </table>
-                    </DataTableInner>
+                                </DataTableHead>
+                                <DataTableBody>
+                                    {orders.map((order) => (
+                                        <tr
+                                            key={order.id}
+                                            className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                        >
+                                            <td className="px-6 py-4">
+                                                <div className="font-bold">
+                                                    #{order.id}
+                                                </div>
+                                                <div className="text-xs text-[#1b1b18]/50 dark:text-white/50">
+                                                    {new Date(
+                                                        order.created_at,
+                                                    ).toLocaleString('id-ID')}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="font-bold">
+                                                    {order.customer_name}
+                                                </div>
+                                                <div className="text-xs text-[#1b1b18]/50 dark:text-white/50">
+                                                    {order.customer_phone}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <ul className="space-y-1 text-xs">
+                                                    {order.items.map(
+                                                        (item, idx) => (
+                                                            <li key={idx}>
+                                                                -{' '}
+                                                                {
+                                                                    item.nama_sparepart
+                                                                }{' '}
+                                                                ({item.jumlah}x)
+                                                            </li>
+                                                        ),
+                                                    )}
+                                                </ul>
+                                            </td>
+                                            <td className="px-6 py-4 font-bold">
+                                                Rp{' '}
+                                                {Number(
+                                                    order.total_harga,
+                                                ).toLocaleString('id-ID')}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {statusBadge(order.status)}
+                                            </td>
+                                            <td className="px-6 py-4 text-right">
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() =>
+                                                            setViewOrder(order)
+                                                        }
+                                                        className="rounded-xl border border-[#1b1b18]/10 px-2 py-1.5 text-xs font-bold text-[#1b1b18]/70 transition-colors hover:bg-[#1b1b18]/5 dark:border-white/10 dark:text-white/70 dark:hover:bg-white/5"
+                                                        title={t(
+                                                            'dash_view_details',
+                                                        )}
+                                                    >
+                                                        <Eye className="size-4" />
+                                                    </button>
+                                                    {order.status === 'pending' && (
+                                                        <>
+                                                            <button
+                                                                onClick={() =>
+                                                                    openEdit(order)
+                                                                }
+                                                                className="rounded-xl border border-blue-500/20 px-2 py-1.5 text-xs font-bold text-blue-500 transition-colors hover:bg-blue-500/10"
+                                                                title={t(
+                                                                    'sell_edit_title',
+                                                                )}
+                                                            >
+                                                                <Edit className="size-4" />
+                                                            </button>
+                                                            <button
+                                                                onClick={() =>
+                                                                    verifyOrder(
+                                                                        order.id,
+                                                                    )
+                                                                }
+                                                                className="rounded-xl bg-green-500 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-green-600"
+                                                            >
+                                                                {t('sell_verify')}
+                                                            </button>
+                                                            <button
+                                                                onClick={() => cancelOrder(order.id)}
+                                                                className="rounded-xl border border-red-500/20 px-3 py-1.5 text-xs font-bold text-red-500 transition-colors hover:bg-red-500/10"
+                                                            >
+                                                                {t('sell_cancel')}
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                    <a
+                                                        href={`/admin/invoice?type=sparepart&id=${order.id}`}
+                                                        target="_blank"
+                                                        className="flex items-center gap-1 rounded-xl border border-gray-500/20 px-2 py-1.5 text-xs font-bold text-gray-500 transition-colors hover:bg-gray-500/10"
+                                                        title="Print Invoice"
+                                                    >
+                                                        <Printer className="size-4" />
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {orders.length === 0 && (
+                                        <tr>
+                                            <td
+                                                colSpan={6}
+                                                className="px-6 py-12 text-center text-[#1b1b18]/40 dark:text-white/40"
+                                            >
+                                                {t('sell_no_orders')}
+                                            </td>
+                                        </tr>
+                                    )}
+                                </DataTableBody>
+                            </table>
+                        </DataTableInner>
                     </DataTable>
                 </m.div>
             </m.div>            <OrderViewModal

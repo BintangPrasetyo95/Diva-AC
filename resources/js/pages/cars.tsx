@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import type { Variants} from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
     Car,
@@ -178,10 +178,10 @@ export default function CarsPage({
 
     const getSortIcon = (key: string) => {
         if (sortConfig.key !== key) {
-return (
+            return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
-}
+        }
 
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
@@ -338,169 +338,169 @@ return (
                         <DataTableInner>
                             <table className="w-full text-left">
                                 <DataTableHead>
-                                <tr>
-                                    <th
-                                        onClick={() => handleSort('plate')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            Vehicle Info {getSortIcon('plate')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('customer')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            Owner {getSortIcon('customer')}
-                                        </div>
-                                    </th>
-                                    <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                        Service History
-                                    </th>
-                                </tr>
-                            </DataTableHead>
-                            <DataTableBody>
-                                {filteredCars.length > 0 ? (
-                                    filteredCars.map((car) => (
-                                        <tr
-                                            key={car.id}
-                                            className="group align-top transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                    <tr>
+                                        <th
+                                            onClick={() => handleSort('plate')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
                                         >
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="flex size-10 items-center justify-center rounded-full bg-red-600/10 dark:bg-red-600/20">
-                                                        <Car className="size-5 text-red-600" />
-                                                    </div>
-                                                    <div className="flex flex-col">
-                                                        <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                                            {car.merk}{' '}
-                                                            {car.model}
-                                                        </span>
-                                                        <div className="mt-1 flex items-center gap-2">
-                                                            <Badge
-                                                                variant="outline"
-                                                                className="border-red-600/20 font-mono text-[10px] text-red-600 uppercase"
-                                                            >
-                                                                {car.no_polisi}
-                                                            </Badge>
-                                                            {car.tahun && (
-                                                                <span className="text-[10px] text-[#1b1b18]/40 dark:text-white/40">
-                                                                    {car.tahun}
-                                                                </span>
-                                                            )}
+                                            <div className="flex items-center gap-2">
+                                                Vehicle Info {getSortIcon('plate')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('customer')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                Owner {getSortIcon('customer')}
+                                            </div>
+                                        </th>
+                                        <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                            Service History
+                                        </th>
+                                    </tr>
+                                </DataTableHead>
+                                <DataTableBody>
+                                    {filteredCars.length > 0 ? (
+                                        filteredCars.map((car) => (
+                                            <tr
+                                                key={car.id}
+                                                className="group align-top transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                            >
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="flex size-10 items-center justify-center rounded-full bg-red-600/10 dark:bg-red-600/20">
+                                                            <Car className="size-5 text-red-600" />
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
+                                                                {car.merk}{' '}
+                                                                {car.model}
+                                                            </span>
+                                                            <div className="mt-1 flex items-center gap-2">
+                                                                <Badge
+                                                                    variant="outline"
+                                                                    className="border-red-600/20 font-mono text-[10px] text-red-600 uppercase"
+                                                                >
+                                                                    {car.no_polisi}
+                                                                </Badge>
+                                                                {car.tahun && (
+                                                                    <span className="text-[10px] text-[#1b1b18]/40 dark:text-white/40">
+                                                                        {car.tahun}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                                        {
-                                                            car.pelanggan
-                                                                .nama_pelanggan
-                                                        }
-                                                    </span>
-                                                    <span className="mt-1 text-[10px] text-[#1b1b18]/40 dark:text-white/40">
-                                                        {car.pelanggan.no_telp}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                {car.services &&
-                                                car.services.length > 0 ? (
-                                                    <div className="flex flex-col gap-3">
-                                                        {car.services.map(
-                                                            (service) => (
-                                                                <div
-                                                                    key={
-                                                                        service.id
-                                                                    }
-                                                                    className="rounded-xl border border-[#1b1b18]/5 bg-[#1b1b18]/2 p-3 dark:border-white/5 dark:bg-white/2"
-                                                                >
-                                                                    <div className="mb-2 flex items-center justify-between">
-                                                                        <span className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#1b1b18]/60 uppercase dark:text-white/60">
-                                                                            <Calendar className="size-3" />
-                                                                            {new Date(
-                                                                                service.tanggal_service,
-                                                                            ).toLocaleDateString(
-                                                                                'id-ID',
-                                                                            )}
-                                                                        </span>
-                                                                        <Badge
-                                                                            className={
-                                                                                service.status_service ===
-                                                                                'selesai'
-                                                                                    ? 'bg-green-500'
-                                                                                    : service.status_service ===
-                                                                                        'proses'
-                                                                                      ? 'bg-blue-500'
-                                                                                      : 'bg-orange-500'
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                service.status_service
-                                                                            }
-                                                                        </Badge>
-                                                                    </div>
-                                                                    <p className="mb-1 text-[11px] font-medium text-[#1b1b18] dark:text-white">
-                                                                        Type:{' '}
-                                                                        {service.tipe_service
-                                                                            .replace(
-                                                                                /_/g,
-                                                                                ' ',
-                                                                            )
-                                                                            .toUpperCase()}
-                                                                    </p>
-                                                                    {service.catatan && (
-                                                                        <p className="mb-2 text-[10px] text-[#1b1b18]/60 italic dark:text-white/60">
-                                                                            "
-                                                                            {
-                                                                                service.catatan
-                                                                            }
-                                                                            "
-                                                                        </p>
-                                                                    )}
-                                                                    <div className="mt-2 flex items-center justify-between border-t border-[#1b1b18]/5 pt-2 dark:border-white/5">
-                                                                        <span className="text-[10px] font-bold text-[#1b1b18]/40 uppercase">
-                                                                            Total
-                                                                        </span>
-                                                                        <span className="text-xs font-black text-red-600">
-                                                                            {formatCurrency(
-                                                                                service.total_service,
-                                                                            )}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            ),
-                                                        )}
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
+                                                            {
+                                                                car.pelanggan
+                                                                    .nama_pelanggan
+                                                            }
+                                                        </span>
+                                                        <span className="mt-1 text-[10px] text-[#1b1b18]/40 dark:text-white/40">
+                                                            {car.pelanggan.no_telp}
+                                                        </span>
                                                     </div>
-                                                ) : (
-                                                    <span className="text-[11px] font-medium text-[#1b1b18]/40 italic dark:text-white/40">
-                                                        No service history found
-                                                    </span>
-                                                )}
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    {car.services &&
+                                                        car.services.length > 0 ? (
+                                                        <div className="flex flex-col gap-3">
+                                                            {car.services.map(
+                                                                (service) => (
+                                                                    <div
+                                                                        key={
+                                                                            service.id
+                                                                        }
+                                                                        className="rounded-xl border border-[#1b1b18]/5 bg-[#1b1b18]/2 p-3 dark:border-white/5 dark:bg-white/2"
+                                                                    >
+                                                                        <div className="mb-2 flex items-center justify-between">
+                                                                            <span className="flex items-center gap-1 text-xs font-bold tracking-widest text-[#1b1b18]/60 uppercase dark:text-white/60">
+                                                                                <Calendar className="size-3" />
+                                                                                {new Date(
+                                                                                    service.tanggal_service,
+                                                                                ).toLocaleDateString(
+                                                                                    'id-ID',
+                                                                                )}
+                                                                            </span>
+                                                                            <Badge
+                                                                                className={
+                                                                                    service.status_service ===
+                                                                                        'selesai'
+                                                                                        ? 'bg-green-500'
+                                                                                        : service.status_service ===
+                                                                                            'proses'
+                                                                                            ? 'bg-blue-500'
+                                                                                            : 'bg-orange-500'
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    service.status_service
+                                                                                }
+                                                                            </Badge>
+                                                                        </div>
+                                                                        <p className="mb-1 text-[11px] font-medium text-[#1b1b18] dark:text-white">
+                                                                            Type:{' '}
+                                                                            {service.tipe_service
+                                                                                .replace(
+                                                                                    /_/g,
+                                                                                    ' ',
+                                                                                )
+                                                                                .toUpperCase()}
+                                                                        </p>
+                                                                        {service.catatan && (
+                                                                            <p className="mb-2 text-[10px] text-[#1b1b18]/60 italic dark:text-white/60">
+                                                                                "
+                                                                                {
+                                                                                    service.catatan
+                                                                                }
+                                                                                "
+                                                                            </p>
+                                                                        )}
+                                                                        <div className="mt-2 flex items-center justify-between border-t border-[#1b1b18]/5 pt-2 dark:border-white/5">
+                                                                            <span className="text-[10px] font-bold text-[#1b1b18]/40 uppercase">
+                                                                                Total
+                                                                            </span>
+                                                                            <span className="text-xs font-black text-red-600">
+                                                                                {formatCurrency(
+                                                                                    service.total_service,
+                                                                                )}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                ),
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-[11px] font-medium text-[#1b1b18]/40 italic dark:text-white/40">
+                                                            No service history found
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan={3}
+                                                className="px-6 py-20 text-center"
+                                            >
+                                                <div className="flex flex-col items-center gap-2 opacity-20">
+                                                    <Car className="size-12" />
+                                                    <p className="text-lg font-black tracking-tighter uppercase">
+                                                        No cars found
+                                                    </p>
+                                                </div>
                                             </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td
-                                            colSpan={3}
-                                            className="px-6 py-20 text-center"
-                                        >
-                                            <div className="flex flex-col items-center gap-2 opacity-20">
-                                                <Car className="size-12" />
-                                                <p className="text-lg font-black tracking-tighter uppercase">
-                                                    No cars found
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
-                            </DataTableBody>
-                        </table>
-                    </DataTableInner>
+                                    )}
+                                </DataTableBody>
+                            </table>
+                        </DataTableInner>
                     </DataTable>
                 </m.div>
                 <CarCreateModal

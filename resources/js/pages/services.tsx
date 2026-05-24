@@ -1,6 +1,7 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
 import type {
-    Variants} from 'framer-motion';
+    Variants
+} from 'framer-motion';
 import {
     m,
     LazyMotion,
@@ -301,10 +302,10 @@ export default function ServicesPage({
 
     const getSortIcon = (key: string) => {
         if (sortConfig.key !== key) {
-return (
+            return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
-}
+        }
 
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
@@ -442,8 +443,8 @@ return (
                                     {statusFilter === 'All'
                                         ? t('dash_filter_all')
                                         : t(
-                                              `dash_service_${statusFilter === 'antri' ? 'queue' : statusFilter === 'proses' ? 'process' : statusFilter === 'selesai' ? 'done' : 'cancel'}`,
-                                          )}
+                                            `dash_service_${statusFilter === 'antri' ? 'queue' : statusFilter === 'proses' ? 'process' : statusFilter === 'selesai' ? 'done' : 'cancel'}`,
+                                        )}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
@@ -563,239 +564,239 @@ return (
                         <DataTableInner>
                             <table className="w-full text-left">
                                 <DataTableHead>
-                                <tr>
-                                    <th
-                                        onClick={() => handleSort('id')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_id')}
-                                            {getSortIcon('id')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('customer')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_customer')}
-                                            {getSortIcon('customer')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('car')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_car')}
-                                            {getSortIcon('car')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('mechanic')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_mechanic')}
-                                            {getSortIcon('mechanic')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('status')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_status')}
-                                            {getSortIcon('status')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('date')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_date')}
-                                            {getSortIcon('date')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('total')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_total')}
-                                            {getSortIcon('total')}
-                                        </div>
-                                    </th>
-                                    <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
-                                </tr>
-                            </DataTableHead>
-                            <DataTableBody>
-                                {filteredServices.length > 0 ? (
-                                    filteredServices.map((service) => (
-                                        <tr
-                                            key={service.id}
-                                            className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                    <tr>
+                                        <th
+                                            onClick={() => handleSort('id')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
                                         >
-                                            <td className="px-6 py-5">
-                                                <span className="font-mono text-xs font-bold text-[#1b1b18]/40 transition-colors group-hover:text-red-600 dark:text-white/40">
-                                                    SRV-{service.id}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="flex size-8 items-center justify-center rounded-full bg-[#1b1b18]/5 dark:bg-white/5">
-                                                        <User className="size-4 text-[#1b1b18]/50 dark:text-white/50" />
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_id')}
+                                                {getSortIcon('id')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('customer')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_customer')}
+                                                {getSortIcon('customer')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('car')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_car')}
+                                                {getSortIcon('car')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('mechanic')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_mechanic')}
+                                                {getSortIcon('mechanic')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('status')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_status')}
+                                                {getSortIcon('status')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('date')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_date')}
+                                                {getSortIcon('date')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('total')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_total')}
+                                                {getSortIcon('total')}
+                                            </div>
+                                        </th>
+                                        <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
+                                    </tr>
+                                </DataTableHead>
+                                <DataTableBody>
+                                    {filteredServices.length > 0 ? (
+                                        filteredServices.map((service) => (
+                                            <tr
+                                                key={service.id}
+                                                className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                            >
+                                                <td className="px-6 py-5">
+                                                    <span className="font-mono text-xs font-bold text-[#1b1b18]/40 transition-colors group-hover:text-red-600 dark:text-white/40">
+                                                        SRV-{service.id}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="flex size-8 items-center justify-center rounded-full bg-[#1b1b18]/5 dark:bg-white/5">
+                                                            <User className="size-4 text-[#1b1b18]/50 dark:text-white/50" />
+                                                        </div>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-sm leading-tight font-bold text-[#1b1b18] dark:text-white">
+                                                                {
+                                                                    service.mobil
+                                                                        ?.pelanggan
+                                                                        ?.nama_pelanggan
+                                                                }
+                                                            </span>
+                                                            <span className="text-[10px] tracking-wider text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                                                {
+                                                                    service.tipe_service
+                                                                }
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                    <div className="flex flex-col">
-                                                        <span className="text-sm leading-tight font-bold text-[#1b1b18] dark:text-white">
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70">
+                                                        <Car className="size-3" />
+                                                        <span className="text-sm">
+                                                            {service.mobil?.merk} (
                                                             {
                                                                 service.mobil
-                                                                    ?.pelanggan
-                                                                    ?.nama_pelanggan
+                                                                    ?.no_polisi
                                                             }
-                                                        </span>
-                                                        <span className="text-[10px] tracking-wider text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                            {
-                                                                service.tipe_service
-                                                            }
+                                                            )
                                                         </span>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70">
-                                                    <Car className="size-3" />
-                                                    <span className="text-sm">
-                                                        {service.mobil?.merk} (
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <span className="text-sm font-medium text-[#1b1b18]/60 italic dark:text-white/60">
                                                         {
-                                                            service.mobil
-                                                                ?.no_polisi
+                                                            service.mekanik
+                                                                ?.nama_mekanik
                                                         }
-                                                        )
                                                     </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="text-sm font-medium text-[#1b1b18]/60 italic dark:text-white/60">
-                                                    {
-                                                        service.mekanik
-                                                            ?.nama_mekanik
-                                                    }
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                {getStatusBadge(
-                                                    service.status_service,
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70">
-                                                    <Calendar className="size-3" />
-                                                    <span className="text-sm whitespace-nowrap">
-                                                        {new Date(
-                                                            service.tanggal_service,
-                                                        ).toLocaleDateString(
-                                                            'id-ID',
-                                                            {
-                                                                day: 'numeric',
-                                                                month: 'short',
-                                                                year: 'numeric',
-                                                            },
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    {getStatusBadge(
+                                                        service.status_service,
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70">
+                                                        <Calendar className="size-3" />
+                                                        <span className="text-sm whitespace-nowrap">
+                                                            {new Date(
+                                                                service.tanggal_service,
+                                                            ).toLocaleDateString(
+                                                                'id-ID',
+                                                                {
+                                                                    day: 'numeric',
+                                                                    month: 'short',
+                                                                    year: 'numeric',
+                                                                },
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <span className="text-sm font-black text-[#1b1b18] dark:text-white">
+                                                        {formatCurrency(
+                                                            service.total_service ||
+                                                            0,
                                                         )}
                                                     </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="text-sm font-black text-[#1b1b18] dark:text-white">
-                                                    {formatCurrency(
-                                                        service.total_service ||
-                                                            0,
-                                                    )}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger
-                                                        asChild
-                                                    >
-                                                        <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
-                                                            <MoreHorizontal className="size-4" />
-                                                        </button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent
-                                                        align="end"
-                                                        className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
-                                                    >
-                                                        <DropdownMenuItem
+                                                </td>
+                                                <td className="px-6 py-5 text-right">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger
                                                             asChild
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
                                                         >
-                                                            <Link
-                                                                href={`/admin/services/${service.id}`}
+                                                            <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
+                                                                <MoreHorizontal className="size-4" />
+                                                            </button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent
+                                                            align="end"
+                                                            className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
+                                                        >
+                                                            <DropdownMenuItem
+                                                                asChild
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                <Link
+                                                                    href={`/admin/services/${service.id}`}
+                                                                >
+                                                                    {t(
+                                                                        'dash_view_details',
+                                                                    )}
+                                                                </Link>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openEditModal(
+                                                                        service,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
                                                             >
                                                                 {t(
-                                                                    'dash_view_details',
+                                                                    'dash_edit_order',
                                                                 )}
-                                                            </Link>
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openEditModal(
-                                                                    service,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            {t(
-                                                                'dash_edit_order',
-                                                            )}
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuSeparator />
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openDeleteModal(
-                                                                    service,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest text-red-600 uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            {t(
-                                                                'dash_cancel_service',
-                                                            )}
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuSeparator />
-                                                        <DropdownMenuItem
-                                                            asChild
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-gray-600 focus:text-white"
-                                                        >
-                                                            <a href={`/admin/invoice?type=service&id=${service.id}`} target="_blank">
-                                                                Print Invoice
-                                                            </a>
-                                                        </DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator />
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openDeleteModal(
+                                                                        service,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest text-red-600 uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                {t(
+                                                                    'dash_cancel_service',
+                                                                )}
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator />
+                                                            <DropdownMenuItem
+                                                                asChild
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-gray-600 focus:text-white"
+                                                            >
+                                                                <a href={`/admin/invoice?type=service&id=${service.id}`} target="_blank">
+                                                                    Print Invoice
+                                                                </a>
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan={8}
+                                                className="px-6 py-20 text-center"
+                                            >
+                                                <div className="flex flex-col items-center gap-2 opacity-20">
+                                                    <Wrench className="size-12" />
+                                                    <p className="text-lg font-black tracking-tighter uppercase">
+                                                        {t('dash_no_services')}
+                                                    </p>
+                                                </div>
                                             </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td
-                                            colSpan={8}
-                                            className="px-6 py-20 text-center"
-                                        >
-                                            <div className="flex flex-col items-center gap-2 opacity-20">
-                                                <Wrench className="size-12" />
-                                                <p className="text-lg font-black tracking-tighter uppercase">
-                                                    {t('dash_no_services')}
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
-                            </DataTableBody>
-                        </table>
-                    </DataTableInner>
+                                    )}
+                                </DataTableBody>
+                            </table>
+                        </DataTableInner>
                     </DataTable>
                 </m.div>
             </m.div>

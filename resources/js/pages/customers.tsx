@@ -1,6 +1,7 @@
 import { Head, useForm, router } from '@inertiajs/react';
 import type {
-    Variants} from 'framer-motion';
+    Variants
+} from 'framer-motion';
 import {
     m,
     LazyMotion,
@@ -203,10 +204,10 @@ export default function CustomersPage({
 
     const getSortIcon = (key: string) => {
         if (sortConfig.key !== key) {
-return (
+            return (
                 <ArrowUpDown className="size-3 opacity-20 transition-opacity group-hover:opacity-50" />
             );
-}
+        }
 
         return sortConfig.direction === 'asc' ? (
             <ArrowUpDown className="size-3 text-red-600" />
@@ -341,8 +342,8 @@ return (
                                     {genderFilter === 'All'
                                         ? t('dash_filter_all')
                                         : genderFilter === 'L'
-                                          ? t('dash_male')
-                                          : t('dash_female')}
+                                            ? t('dash_male')
+                                            : t('dash_female')}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
@@ -439,224 +440,224 @@ return (
                         <DataTableInner>
                             <table className="w-full text-left">
                                 <DataTableHead>
-                                <tr>
-                                    <th
-                                        onClick={() => handleSort('id')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_id')}
-                                            {getSortIcon('id')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('name')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_customer')} Info
-                                            {getSortIcon('name')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('cars')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_car')}
-                                            {getSortIcon('cars')}
-                                        </div>
-                                    </th>
-                                    <th
-                                        onClick={() => handleSort('joined')}
-                                        className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            {t('dash_col_joined_date')}
-                                            {getSortIcon('joined')}
-                                        </div>
-                                    </th>
-                                    <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
-                                </tr>
-                            </DataTableHead>
-                            <DataTableBody>
-                                {filteredCustomers.length > 0 ? (
-                                    filteredCustomers.map((customer) => (
-                                        <tr
-                                            key={customer.id}
-                                            className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                    <tr>
+                                        <th
+                                            onClick={() => handleSort('id')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
                                         >
-                                            <td className="px-6 py-5">
-                                                <span className="font-mono text-xs font-bold text-[#1b1b18]/40 dark:text-white/40">
-                                                    CUS-{customer.id}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 dark:bg-white/5">
-                                                        <User className="size-5 text-[#1b1b18]/50 dark:text-white/50" />
-                                                    </div>
-                                                    <div className="flex flex-col">
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-sm leading-tight font-bold text-[#1b1b18] dark:text-white">
-                                                                {
-                                                                    customer.nama_pelanggan
-                                                                }
-                                                            </span>
-                                                            <Badge
-                                                                variant="outline"
-                                                                className="border-[#1b1b18]/10 px-1 py-0 text-[8px] tracking-tighter uppercase dark:border-white/10"
-                                                            >
-                                                                {customer.jenis_kelamin ===
-                                                                'L'
-                                                                    ? t(
-                                                                          'dash_male',
-                                                                      )
-                                                                    : t(
-                                                                          'dash_female',
-                                                                      )}
-                                                            </Badge>
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_id')}
+                                                {getSortIcon('id')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('name')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_customer')} Info
+                                                {getSortIcon('name')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('cars')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_car')}
+                                                {getSortIcon('cars')}
+                                            </div>
+                                        </th>
+                                        <th
+                                            onClick={() => handleSort('joined')}
+                                            className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {t('dash_col_joined_date')}
+                                                {getSortIcon('joined')}
+                                            </div>
+                                        </th>
+                                        <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
+                                    </tr>
+                                </DataTableHead>
+                                <DataTableBody>
+                                    {filteredCustomers.length > 0 ? (
+                                        filteredCustomers.map((customer) => (
+                                            <tr
+                                                key={customer.id}
+                                                className="group transition-colors hover:bg-[#1b1b18]/1 dark:hover:bg-white/1"
+                                            >
+                                                <td className="px-6 py-5">
+                                                    <span className="font-mono text-xs font-bold text-[#1b1b18]/40 dark:text-white/40">
+                                                        CUS-{customer.id}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="flex size-10 items-center justify-center rounded-full bg-[#1b1b18]/5 dark:bg-white/5">
+                                                            <User className="size-5 text-[#1b1b18]/50 dark:text-white/50" />
                                                         </div>
-                                                        <div className="mt-1 flex items-center gap-3">
-                                                            <span className="flex items-center gap-1 text-[10px] text-[#1b1b18]/40 dark:text-white/40">
-                                                                <Phone className="size-3" />
-                                                                {
-                                                                    customer.no_telp
-                                                                }
-                                                            </span>
-                                                            <span className="flex items-center gap-1 text-[10px] text-[#1b1b18]/40 dark:text-white/40">
-                                                                <Mail className="size-3" />
-                                                                {customer.email}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col gap-1">
-                                                    {customer.mobils &&
-                                                    customer.mobils.length >
-                                                        0 ? (
-                                                        customer.mobils.map(
-                                                            (car, idx) => (
-                                                                <div
-                                                                    key={idx}
-                                                                    className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70"
+                                                        <div className="flex flex-col">
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="text-sm leading-tight font-bold text-[#1b1b18] dark:text-white">
+                                                                    {
+                                                                        customer.nama_pelanggan
+                                                                    }
+                                                                </span>
+                                                                <Badge
+                                                                    variant="outline"
+                                                                    className="border-[#1b1b18]/10 px-1 py-0 text-[8px] tracking-tighter uppercase dark:border-white/10"
                                                                 >
-                                                                    <Car className="size-3" />
-                                                                    <span className="text-[11px] font-medium">
-                                                                        {
-                                                                            car.merk
-                                                                        }{' '}
-                                                                        {
-                                                                            car.model
-                                                                        }{' '}
-                                                                        (
-                                                                        {
-                                                                            car.no_polisi
-                                                                        }
+                                                                    {customer.jenis_kelamin ===
+                                                                        'L'
+                                                                        ? t(
+                                                                            'dash_male',
                                                                         )
-                                                                    </span>
-                                                                </div>
-                                                            ),
-                                                        )
-                                                    ) : (
-                                                        <span className="text-[11px] font-medium text-[#1b1b18]/40 italic dark:text-white/40">
-                                                            No cars assigned
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm text-[#1b1b18]/70 dark:text-white/70">
-                                                        {new Date(
-                                                            customer.created_at ||
+                                                                        : t(
+                                                                            'dash_female',
+                                                                        )}
+                                                                </Badge>
+                                                            </div>
+                                                            <div className="mt-1 flex items-center gap-3">
+                                                                <span className="flex items-center gap-1 text-[10px] text-[#1b1b18]/40 dark:text-white/40">
+                                                                    <Phone className="size-3" />
+                                                                    {
+                                                                        customer.no_telp
+                                                                    }
+                                                                </span>
+                                                                <span className="flex items-center gap-1 text-[10px] text-[#1b1b18]/40 dark:text-white/40">
+                                                                    <Mail className="size-3" />
+                                                                    {customer.email}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex flex-col gap-1">
+                                                        {customer.mobils &&
+                                                            customer.mobils.length >
+                                                            0 ? (
+                                                            customer.mobils.map(
+                                                                (car, idx) => (
+                                                                    <div
+                                                                        key={idx}
+                                                                        className="flex items-center gap-2 text-[#1b1b18]/70 dark:text-white/70"
+                                                                    >
+                                                                        <Car className="size-3" />
+                                                                        <span className="text-[11px] font-medium">
+                                                                            {
+                                                                                car.merk
+                                                                            }{' '}
+                                                                            {
+                                                                                car.model
+                                                                            }{' '}
+                                                                            (
+                                                                            {
+                                                                                car.no_polisi
+                                                                            }
+                                                                            )
+                                                                        </span>
+                                                                    </div>
+                                                                ),
+                                                            )
+                                                        ) : (
+                                                            <span className="text-[11px] font-medium text-[#1b1b18]/40 italic dark:text-white/40">
+                                                                No cars assigned
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm text-[#1b1b18]/70 dark:text-white/70">
+                                                            {new Date(
+                                                                customer.created_at ||
                                                                 customer.tanggal_daftar ||
                                                                 '',
-                                                        ).toLocaleDateString(
-                                                            'id-ID',
-                                                        )}
-                                                    </span>
-                                                    <span className="text-[10px] font-bold tracking-widest text-[#1b1b18]/30 uppercase dark:text-white/30">
-                                                        {t('dash_registration')}
-                                                    </span>
+                                                            ).toLocaleDateString(
+                                                                'id-ID',
+                                                            )}
+                                                        </span>
+                                                        <span className="text-[10px] font-bold tracking-widest text-[#1b1b18]/30 uppercase dark:text-white/30">
+                                                            {t('dash_registration')}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-5 text-right">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger
+                                                            asChild
+                                                        >
+                                                            <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
+                                                                <MoreHorizontal className="size-4" />
+                                                            </button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent
+                                                            align="end"
+                                                            className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
+                                                        >
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openEditCustomerModal(
+                                                                        customer,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                <Edit3 className="mr-2 size-3" />
+                                                                {t(
+                                                                    'dash_edit_profile',
+                                                                )}
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openAddCarModal(
+                                                                        customer,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                <Plus className="mr-2 size-3" />
+                                                                Add Car
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuSeparator />
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openDeleteModal(
+                                                                        customer,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest text-red-600 uppercase focus:bg-red-600 focus:text-white"
+                                                            >
+                                                                <Trash2 className="mr-2 size-3" />
+                                                                {t(
+                                                                    'dash_delete_customer',
+                                                                )}
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan={5}
+                                                className="px-6 py-20 text-center"
+                                            >
+                                                <div className="flex flex-col items-center gap-2 opacity-20">
+                                                    <Users className="size-12" />
+                                                    <p className="text-lg font-black tracking-tighter uppercase">
+                                                        {t('dash_no_customers')}
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger
-                                                        asChild
-                                                    >
-                                                        <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
-                                                            <MoreHorizontal className="size-4" />
-                                                        </button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent
-                                                        align="end"
-                                                        className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
-                                                    >
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openEditCustomerModal(
-                                                                    customer,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            <Edit3 className="mr-2 size-3" />
-                                                            {t(
-                                                                'dash_edit_profile',
-                                                            )}
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openAddCarModal(
-                                                                    customer,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            <Plus className="mr-2 size-3" />
-                                                            Add Car
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuSeparator />
-                                                        <DropdownMenuItem
-                                                            onClick={() =>
-                                                                openDeleteModal(
-                                                                    customer,
-                                                                )
-                                                            }
-                                                            className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest text-red-600 uppercase focus:bg-red-600 focus:text-white"
-                                                        >
-                                                            <Trash2 className="mr-2 size-3" />
-                                                            {t(
-                                                                'dash_delete_customer',
-                                                            )}
-                                                        </DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td
-                                            colSpan={5}
-                                            className="px-6 py-20 text-center"
-                                        >
-                                            <div className="flex flex-col items-center gap-2 opacity-20">
-                                                <Users className="size-12" />
-                                                <p className="text-lg font-black tracking-tighter uppercase">
-                                                    {t('dash_no_customers')}
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
-                            </DataTableBody>
-                        </table>
-                    </DataTableInner>
+                                    )}
+                                </DataTableBody>
+                            </table>
+                        </DataTableInner>
                     </DataTable>
                 </m.div>
             </m.div>
