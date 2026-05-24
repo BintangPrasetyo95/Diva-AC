@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
-import { m, AnimatePresence } from 'framer-motion';
 import { X, Loader2, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
+import { ModalShell } from '@/components/ui/ModalShell';
 import { useLanguage } from '@/hooks/use-language';
 import { Customer } from '@/types/admin'; // assume we'll move types to a shared file or we can define here
 
@@ -79,22 +79,7 @@ export function CustomerFormModal({
     };
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <m.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                    />
-                    <m.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="relative w-full max-w-md overflow-hidden rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212]"
-                    >
+        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
                         <div className="mb-6 flex items-center justify-between">
                             <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                                 {editingCustomer
@@ -222,9 +207,6 @@ export function CustomerFormModal({
                                 )}
                             </button>
                         </form>
-                    </m.div>
-                </div>
-            )}
-        </AnimatePresence>
+        </ModalShell>
     );
 }

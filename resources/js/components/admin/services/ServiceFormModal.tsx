@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
-import { m, AnimatePresence } from 'framer-motion';
 import { X, Loader2, Wrench, PlusCircle, Trash } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { SearchableSelect } from '@/components/ui/searchable-select';
 import { useLanguage } from '@/hooks/use-language';
+import { ModalShell } from '@/components/ui/ModalShell';
 import { Service, Mobil, Mekanik, Sparepart, User } from '@/types/admin';
 
 interface ServiceFormModalProps {
@@ -150,22 +150,7 @@ export function ServiceFormModal({
     };
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <m.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                    />
-                    <m.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="custom-scrollbar relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212]"
-                    >
+        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
                         <div className="mb-6 flex items-center justify-between">
                             <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                                 {editingService ? t('dash_edit_order') : t('dash_new_service')}
@@ -510,9 +495,6 @@ export function ServiceFormModal({
                                 )}
                             </button>
                         </form>
-                    </m.div>
-                </div>
-            )}
-        </AnimatePresence>
+        </ModalShell>
     );
 }

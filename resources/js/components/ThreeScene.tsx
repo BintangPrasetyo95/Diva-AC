@@ -127,7 +127,6 @@ function Lighting({ isDark }: { isDark: boolean }) {
 export default function ThreeScene() {
     const { resolvedAppearance } = useAppearance();
     const isDark = resolvedAppearance === 'dark';
-    const bgColor = isDark ? '#080808' : '#ffffff';
 
     const [isMobile, setIsMobile] = React.useState(false);
     const [mounted, setMounted] = React.useState(false);
@@ -142,26 +141,19 @@ export default function ThreeScene() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const activeBgColor = mounted ? bgColor : '#ffffff';
     const activeIsDark = mounted ? isDark : false;
 
     // SSR Guard: Never render Three.js content on the server to avoid Suspense/Canvas errors
     if (!mounted) {
         return (
             <div
-                className="w-full h-full"
-                style={{
-                    background: activeBgColor,
-                }}
+                className={`w-full h-full ${activeIsDark ? 'bg-[#080808]' : 'bg-white'}`}
             />
         );
     }
 
     return (
-        <div
-            className="w-full h-full"
-            style={{ background: activeBgColor }}
-        >
+        <div className={`w-full h-full ${activeIsDark ? 'bg-[#080808]' : 'bg-white'}`}>
             <Canvas
                 shadows="percentage"
                 dpr={[1, 2]}
@@ -174,7 +166,7 @@ export default function ThreeScene() {
                     fov: isMobile ? 65 : 45,
                 }}
             >
-                <color attach="background" args={[activeBgColor]} />
+                <color attach="background" args={[activeIsDark ? '#080808' : '#ffffff']} />
                 {activeIsDark && (
                     <fogExp2 attach="fog" args={['#080808', 0.05]} />
                 )}

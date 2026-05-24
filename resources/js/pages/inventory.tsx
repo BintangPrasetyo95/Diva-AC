@@ -39,6 +39,14 @@ import {
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import {
+    DataTable,
+    DataTableBody,
+    DataTableCell,
+    DataTableHead,
+    DataTableHeaderCell,
+    DataTableInner,
+} from '@/components/ui/DataTable';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/hooks/use-language';
 
@@ -497,13 +505,11 @@ return (
                 </m.div>
 
                 {/* Inventory Table */}
-                <m.div
-                    variants={itemVariants}
-                    className="overflow-hidden rounded-3xl border border-[#1b1b18]/5 bg-white shadow-sm dark:border-white/5 dark:bg-[#121212]"
-                >
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left">
-                            <thead className="border-b border-[#1b1b18]/5 bg-[#1b1b18]/2 dark:border-white/5 dark:bg-white/2">
+                <m.div variants={itemVariants}>
+                    <DataTable>
+                        <DataTableInner>
+                            <table className="w-full text-left">
+                                <DataTableHead>
                                 <tr>
                                     <th
                                         onClick={() => handleSort('id')}
@@ -555,8 +561,8 @@ return (
                                     </th>
                                     <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40"></th>
                                 </tr>
-                            </thead>
-                            <tbody className="divide-y divide-[#1b1b18]/5 dark:divide-white/5">
+                            </DataTableHead>
+                            <DataTableBody>
                                 {filteredInventory.length > 0 ? (
                                     filteredInventory.map((item) => (
                                         <tr
@@ -688,9 +694,10 @@ return (
                                         </td>
                                     </tr>
                                 )}
-                            </tbody>
+                            </DataTableBody>
                         </table>
-                    </div>
+                    </DataTableInner>
+                    </DataTable>
                 </m.div>
             </m.div>
 

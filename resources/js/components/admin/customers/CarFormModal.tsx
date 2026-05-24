@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
-import { m, AnimatePresence } from 'framer-motion';
 import { X, Loader2, Car } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/hooks/use-language';
+import { ModalShell } from '@/components/ui/ModalShell';
 import { Customer } from '@/types/admin';
 
 interface CarFormModalProps {
@@ -60,22 +60,7 @@ export function CarFormModal({
     };
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <m.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
-                    />
-                    <m.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="custom-scrollbar relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212]"
-                    >
+        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
                         <div className="mb-6 flex items-center justify-between">
                             <div>
                                 <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
@@ -225,9 +210,6 @@ export function CarFormModal({
                                 )}
                             </button>
                         </form>
-                    </m.div>
-                </div>
-            )}
-        </AnimatePresence>
+        </ModalShell>
     );
 }

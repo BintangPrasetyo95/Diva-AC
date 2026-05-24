@@ -9,6 +9,14 @@ import {
 import { CheckCircle2, XCircle, Clock, Eye, Edit, Printer } from 'lucide-react';
 import React, { useState } from 'react';
 import { useLanguage } from '@/hooks/use-language';
+import {
+    DataTable,
+    DataTableBody,
+    DataTableCell,
+    DataTableHead,
+    DataTableHeaderCell,
+    DataTableInner,
+} from '@/components/ui/DataTable';
 import { OrderViewModal } from '@/components/admin/spareparts/OrderViewModal';
 import { OrderEditModal } from '@/components/admin/spareparts/OrderEditModal';
 
@@ -140,13 +148,11 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
                 </m.div>
 
                 {/* Orders Table */}
-                <m.div
-                    variants={itemVariants}
-                    className="overflow-hidden rounded-3xl border border-[#1b1b18]/5 bg-white shadow-sm dark:border-white/5 dark:bg-[#121212]"
-                >
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left text-sm">
-                            <thead className="bg-[#1b1b18]/2 dark:bg-white/2">
+                <m.div variants={itemVariants}>
+                    <DataTable>
+                        <DataTableInner>
+                            <table className="w-full text-left text-sm">
+                                <DataTableHead className="bg-[#1b1b18]/2 dark:bg-white/2">
                                 <tr>
                                     <th className="px-6 py-4 font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
                                         {t('sell_col_id_date')}
@@ -167,8 +173,8 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
                                         {t('sell_col_actions')}
                                     </th>
                                 </tr>
-                            </thead>
-                            <tbody className="divide-y divide-[#1b1b18]/5 dark:divide-white/5">
+                            </DataTableHead>
+                            <DataTableBody>
                                 {orders.map((order) => (
                                     <tr
                                         key={order.id}
@@ -282,9 +288,10 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
                                         </td>
                                     </tr>
                                 )}
-                            </tbody>
+                            </DataTableBody>
                         </table>
-                    </div>
+                    </DataTableInner>
+                    </DataTable>
                 </m.div>
             </m.div>            <OrderViewModal
                 isOpen={!!viewOrder}

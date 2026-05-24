@@ -218,7 +218,6 @@ function Bubbles({ isDark }: { isDark: boolean }) {
 export default function FluidBubblesScene() {
     const { resolvedAppearance } = useAppearance();
     const isDark = resolvedAppearance === 'dark';
-    const bgColor = isDark ? '#050505' : '#f8f9fa';
 
     const [mounted, setMounted] = React.useState(false);
 
@@ -227,21 +226,16 @@ export default function FluidBubblesScene() {
     }, []);
 
     const activeIsDark = mounted ? isDark : false;
-    const activeBgColor = mounted ? bgColor : '#f8f9fa';
 
     return (
         <div
-            className="w-full h-full absolute inset-0"
-            style={{
-                background: activeBgColor,
-            }}
+            className={`absolute inset-0 w-full h-full ${activeIsDark ? 'bg-[#050505]' : 'bg-[#f8f9fa]'}`}
         >
             <Canvas camera={{ position: [0, 0, 18], fov: 45 }}>
-                <color attach="background" args={[activeBgColor]} />
-                {activeIsDark && (
+                <color attach="background" args={[activeIsDark ? '#050505' : '#f8f9fa']} />
+                {activeIsDark ? (
                     <fog attach="fog" args={['#050505', 10, 30]} />
-                )}
-                {!activeIsDark && (
+                ) : (
                     <fog attach="fog" args={['#f8f9fa', 10, 30]} />
                 )}
 

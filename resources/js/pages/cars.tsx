@@ -28,6 +28,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import {
+    DataTable,
+    DataTableBody,
+    DataTableCell,
+    DataTableHead,
+    DataTableHeaderCell,
+    DataTableInner,
+} from '@/components/ui/DataTable';
 import { CarCreateModal } from '@/components/admin/cars/CarCreateModal';
 import { useLanguage } from '@/hooks/use-language';
 
@@ -325,13 +333,11 @@ return (
                 </m.div>
 
                 {/* Cars Table */}
-                <m.div
-                    variants={itemVariants}
-                    className="overflow-hidden rounded-3xl border border-[#1b1b18]/5 bg-white shadow-sm dark:border-white/5 dark:bg-[#121212]"
-                >
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left">
-                            <thead className="border-b border-[#1b1b18]/5 bg-[#1b1b18]/2 dark:border-white/5 dark:bg-white/2">
+                <m.div variants={itemVariants}>
+                    <DataTable>
+                        <DataTableInner>
+                            <table className="w-full text-left">
+                                <DataTableHead>
                                 <tr>
                                     <th
                                         onClick={() => handleSort('plate')}
@@ -353,8 +359,8 @@ return (
                                         Service History
                                     </th>
                                 </tr>
-                            </thead>
-                            <tbody className="divide-y divide-[#1b1b18]/5 dark:divide-white/5">
+                            </DataTableHead>
+                            <DataTableBody>
                                 {filteredCars.length > 0 ? (
                                     filteredCars.map((car) => (
                                         <tr
@@ -492,9 +498,10 @@ return (
                                         </td>
                                     </tr>
                                 )}
-                            </tbody>
+                            </DataTableBody>
                         </table>
-                    </div>
+                    </DataTableInner>
+                    </DataTable>
                 </m.div>
                 <CarCreateModal
                     isOpen={isDialogOpen}
