@@ -1297,6 +1297,142 @@ export const translations: Translations = {
         en: 'Are you sure you want to cancel this order?',
     },
     quantity: { id: 'Jumlah', en: 'Quantity' },
+    dash_select_existing: {
+        id: 'Pilih Mobil',
+        en: 'Select Registered Car',
+    },
+    dash_new_car: {
+        id: '+ Mobil Baru',
+        en: '+ New Car',
+    },
+    income_title: {
+        id: 'Laporan Pendapatan',
+        en: 'Income Report',
+    },
+    income_subtitle: {
+        id: 'Ringkasan pemasukan dari servis dan penjualan suku cadang.',
+        en: 'Summary of income from services and sparepart sales.',
+    },
+    income_total: {
+        id: 'Total Pendapatan',
+        en: 'Total Revenue',
+    },
+    income_service: {
+        id: 'Pendapatan Servis',
+        en: 'Service Revenue',
+    },
+    income_parts: {
+        id: 'Penjualan Suku Cadang',
+        en: 'Sparepart Sales',
+    },
+    income_transactions_count: {
+        id: 'Jumlah Transaksi',
+        en: 'Number of Transactions',
+    },
+    income_monthly_chart: {
+        id: 'Grafik Bulanan',
+        en: 'Monthly Chart',
+    },
+    income_chart_click_hint: {
+        id: 'Klik bulan untuk melihat detailnya',
+        en: 'Click month to see details',
+    },
+    income_transactions_title: {
+        id: 'Transaksi',
+        en: 'Transactions',
+    },
+    income_transactions_suffix: {
+        id: 'transaksi',
+        en: 'transactions',
+    },
+    income_empty: {
+        id: 'Belum ada transaksi di bulan ini.',
+        en: 'No transactions found this month.',
+    },
+    income_col_date: {
+        id: 'Tanggal',
+        en: 'Date',
+    },
+    income_col_desc: {
+        id: 'Keterangan',
+        en: 'Description',
+    },
+    income_col_customer: {
+        id: 'Pelanggan',
+        en: 'Customer',
+    },
+    income_col_category: {
+        id: 'Kategori',
+        en: 'Category',
+    },
+    income_col_amount: {
+        id: 'Jumlah',
+        en: 'Amount',
+    },
+    income_col_total: {
+        id: 'Total',
+        en: 'Total',
+    },
+    category_service: {
+        id: 'Servis',
+        en: 'Service',
+    },
+    category_sparepart: {
+        id: 'Suku Cadang',
+        en: 'Sparepart',
+    },
+    month_1: { id: 'Jan', en: 'Jan' },
+    month_2: { id: 'Feb', en: 'Feb' },
+    month_3: { id: 'Mar', en: 'Mar' },
+    month_4: { id: 'Apr', en: 'Apr' },
+    month_5: { id: 'Mei', en: 'May' },
+    month_6: { id: 'Jun', en: 'Jun' },
+    month_7: { id: 'Jul', en: 'Jul' },
+    month_8: { id: 'Agt', en: 'Aug' },
+    month_9: { id: 'Sep', en: 'Sep' },
+    month_10: { id: 'Okt', en: 'Oct' },
+    month_11: { id: 'Nov', en: 'Nov' },
+    month_12: { id: 'Des', en: 'Dec' },
+    dash_create_booking: {
+        id: 'Buat Booking Baru',
+        en: 'Create New Booking',
+    },
+    booking_form_customer_name: {
+        id: 'Nama Pelanggan',
+        en: 'Customer Name',
+    },
+    booking_form_customer_phone: {
+        id: 'Nomor WhatsApp / Telepon',
+        en: 'WhatsApp / Phone Number',
+    },
+    booking_form_car_model: {
+        id: 'Model & Tahun Mobil',
+        en: 'Car Model & Year',
+    },
+    booking_form_date: {
+        id: 'Tanggal Booking',
+        en: 'Booking Date',
+    },
+    booking_form_time: {
+        id: 'Jam Booking',
+        en: 'Booking Time',
+    },
+    booking_form_service_type: {
+        id: 'Jenis Layanan',
+        en: 'Service Type',
+    },
+    booking_form_notes: {
+        id: 'Catatan (Opsional)',
+        en: 'Notes (Optional)',
+    },
+    booking_form_submit: {
+        id: 'Buat Booking',
+        en: 'Create Booking',
+    },
+    booking_form_saving: {
+        id: 'Menyimpan...',
+        en: 'Saving...',
+    },
 };
 
 interface LanguageContextType {

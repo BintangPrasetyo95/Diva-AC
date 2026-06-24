@@ -82,7 +82,7 @@ export function CarFormModal({
                 <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                 Brand/Merk *
                             </label>
                             <Input
@@ -101,7 +101,7 @@ export function CarFormModal({
                             )}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                 Model
                             </label>
                             <Input
@@ -121,7 +121,7 @@ export function CarFormModal({
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                 Plate Number *
                             </label>
                             <Input
@@ -140,7 +140,7 @@ export function CarFormModal({
                             )}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                 Year
                             </label>
                             <Input
@@ -160,7 +160,7 @@ export function CarFormModal({
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Color
                         </label>
                         <Input
@@ -178,7 +178,7 @@ export function CarFormModal({
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Notes
                         </label>
                         <textarea

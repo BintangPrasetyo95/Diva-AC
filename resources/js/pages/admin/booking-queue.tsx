@@ -1,26 +1,25 @@
-import { Head, router } from '@inertiajs/react';
-import { format, addDays, startOfDay, isSameDay } from 'date-fns';
+import { Head, router, useForm } from '@inertiajs/react';
+import { format, addDays, startOfDay } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import {
     Calendar,
     Clock,
-    User,
     Car,
-    MoreHorizontal,
     ChevronLeft,
     ChevronRight,
     CheckCircle2,
     XCircle,
-    ArrowRightLeft,
-    Search,
-    Filter,
     Wrench,
+    Plus,
+    Loader2,
 } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import {
     Dialog,
     DialogContent,
@@ -30,7 +29,7 @@ import {
     DialogFooter,
 } from '@/components/ui/dialog';
 import AppLayout from '@/layouts/app-layout';
-
+import { useLanguage } from '@/hooks/use-language';
 
 interface Booking {
     id: number;
@@ -50,8 +49,10 @@ interface Props {
 }
 
 export default function BookingQueue({ bookings }: Props) {
+    const { t } = useLanguage();
     const [startDate, setStartDate] = useState(startOfDay(new Date()));
     const [confirmCancelId, setConfirmCancelId] = useState<number | null>(null);
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
     const daysToShow = 7;
 
     const dates = useMemo(() => {
@@ -98,26 +99,49 @@ export default function BookingQueue({ bookings }: Props) {
         });
     };
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 },
-        exit: { opacity: 0, scale: 0.95 }
+    const { data, setData, post, processing, errors, reset } = useForm({
+        customer_name: '',
+        customer_phone: '',
+        car_model: '',
+        booking_date: new Date().toISOString().split('T')[0],
+        booking_time: '09:00',
+        service_type: 'inspection',
+        notes: '',
+    });
+
+    const handleCreateBooking = (e: React.FormEvent) => {
+        e.preventDefault();
+        post('/booking', {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                setIsCreateOpen(false);
+                toast.success('Booking created successfully');
+            },
+        });
     };
 
     return (
         <LazyMotion features={domAnimation}>
-            <Head title="Booking Queue" />
-            <div className="flex flex-col gap-6 p-6 h-screen overflow-hidden">
+            <Head title={t('dash_booking_queue')} />
+            <div className="flex flex-col gap-6 p-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between shrink-0">
                     <div>
                         <h1 className="text-3xl font-black tracking-tight uppercase text-[#1b1b18] dark:text-white">
-                            Booking Queue
+                            {t('dash_booking_queue')}
                         </h1>
                         <p className="text-sm text-[#1b1b18]/60 dark:text-white/60">
                             Monitor antrean booking dan atur jadwal pelanggan secara visual.
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
+                        <Button
+                            className="h-9 rounded-xl bg-red-600 text-white font-black uppercase tracking-widest px-4 text-[10px] shadow-lg shadow-red-600/20 hover:bg-red-700 flex items-center gap-1.5"
+                            onClick={() => setIsCreateOpen(true)}
+                        >
+                            <Plus className="size-4" />
+                            {t('dash_create_booking')}
+                        </Button>
                         <div className="flex items-center gap-1 rounded-2xl bg-[#1b1b18]/5 p-1 dark:bg-white/5">
                             <Button 
                                 variant="ghost" 
@@ -146,49 +170,46 @@ export default function BookingQueue({ bookings }: Props) {
                     </div>
                 </div>
 
-                <div className="flex flex-1 gap-6 overflow-x-auto pb-6 custom-scrollbar snap-x">
-                    {dates.map((date) => {
-                        const dateStr = format(date, 'yyyy-MM-dd');
-                        const dayBookings = bookingsByDate[dateStr] || [];
-                        const isToday = isSameDay(date, new Date());
+                <div className="overflow-x-auto pb-4" style={{ height: 'calc(100vh - 200px)' }}>
+                    <div className="flex gap-4 min-w-[1200px] h-full items-stretch">
+                        {dates.map((date) => {
+                            const dateStr = format(date, 'yyyy-MM-dd');
+                            const dayBookings = bookingsByDate[dateStr] || [];
+                            const isToday = format(new Date(), 'yyyy-MM-dd') === dateStr;
 
-                        return (
-                            <div key={dateStr} className="flex min-w-[320px] w-[320px] flex-col gap-4 snap-start">
-                                <div className={`flex flex-col gap-1 rounded-3xl p-5 transition-all ${isToday ? 'bg-red-600 text-white shadow-[0_10px_30px_rgba(220,38,38,0.3)]' : 'bg-white border border-[#1b1b18]/5 dark:bg-[#121212] dark:border-white/5'}`}>
-                                    <div className="flex items-center justify-between">
-                                        <h3 className="text-xs font-black uppercase tracking-[0.2em] opacity-70">
-                                            {format(date, 'EEEE', { locale: id })}
-                                        </h3>
-                                        <Badge variant={isToday ? 'secondary' : 'outline'} className="rounded-full px-2 py-0 h-5 text-[10px] font-black">
+                            return (
+                                <div 
+                                    key={dateStr}
+                                    className={`flex-1 min-w-[280px] max-w-[320px] rounded-3xl p-4 flex flex-col overflow-hidden bg-[#1b1b18]/2 border border-[#1b1b18]/5 dark:bg-white/2 dark:border-white/5 shrink-0 ${
+                                        isToday ? 'ring-2 ring-red-600 ring-offset-2 ring-offset-white dark:ring-offset-black' : ''
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between border-b border-[#1b1b18]/5 pb-3 mb-4 dark:border-white/5">
+                                        <div className="flex flex-col">
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">
+                                                {format(date, 'EEEE', { locale: id })}
+                                            </span>
+                                            <span className="text-sm font-black text-[#1b1b18] dark:text-white mt-0.5">
+                                                {format(date, 'dd MMM yyyy')}
+                                            </span>
+                                        </div>
+                                        <Badge className="bg-red-500 text-white border-transparent text-[10px] font-black rounded-full px-2 py-0.5">
                                             {dayBookings.length}
                                         </Badge>
                                     </div>
-                                    <p className="text-lg font-black tracking-tight">
-                                        {format(date, 'd MMMM yyyy', { locale: id })}
-                                    </p>
-                                </div>
 
-                                <div className="flex-1 space-y-4 overflow-y-auto rounded-4xl bg-[#1b1b18]/2 p-3 dark:bg-white/2 custom-scrollbar border border-transparent hover:border-[#1b1b18]/5 dark:hover:border-white/5 transition-colors">
-                                    <AnimatePresence mode="popLayout">
+                                    <div className="flex-1 overflow-y-auto space-y-3 pr-1">
                                         {dayBookings.length === 0 ? (
-                                            <m.div
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                className="flex h-40 flex-col items-center justify-center text-[#1b1b18]/20 dark:text-white/20"
-                                            >
-                                                <Calendar className="size-12 mb-3 opacity-10" />
-                                                <p className="text-[10px] font-black uppercase tracking-[0.3em]">Antrean Kosong</p>
-                                            </m.div>
+                                            <div className="flex flex-col items-center justify-center py-20 text-[#1b1b18]/20 dark:text-white/20">
+                                                <Calendar className="size-8" />
+                                                <span className="text-[10px] font-black uppercase tracking-wider mt-2">No Bookings</span>
+                                            </div>
                                         ) : (
                                             dayBookings.map((booking) => (
                                                 <m.div
-                                                    layout
                                                     key={booking.id}
-                                                    variants={itemVariants}
-                                                    initial="hidden"
-                                                    animate="visible"
-                                                    exit="exit"
-                                                    className="group relative flex flex-col gap-4 rounded-3xl border border-[#1b1b18]/5 bg-white p-5 shadow-sm transition-all hover:border-red-600/30 hover:shadow-xl dark:border-white/5 dark:bg-[#1b1b1b]"
+                                                    layoutId={`booking-${booking.id}`}
+                                                    className="rounded-2xl border border-[#1b1b18]/5 bg-white p-4 shadow-sm space-y-4 hover:shadow-md transition-all dark:border-white/5 dark:bg-[#121212]"
                                                 >
                                                     <div className="flex items-start justify-between">
                                                         <div className="flex flex-col gap-0.5">
@@ -233,7 +254,7 @@ export default function BookingQueue({ bookings }: Props) {
 
                                                     {booking.notes && (
                                                         <p className="text-[10px] text-[#1b1b18]/50 dark:text-white/50 bg-[#1b1b18]/5 dark:bg-white/5 p-2 rounded-lg line-clamp-2 italic">
-                                                            "{booking.notes}"
+                                                            {booking.notes}
                                                         </p>
                                                     )}
 
@@ -274,13 +295,153 @@ export default function BookingQueue({ bookings }: Props) {
                                                 </m.div>
                                             ))
                                         )}
-                                    </AnimatePresence>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
+
+            {/* Create Booking Dialog */}
+            <Dialog open={isCreateOpen} onOpenChange={(open) => {
+                setIsCreateOpen(open);
+                if (!open) reset();
+            }}>
+                <DialogContent className="max-w-md rounded-4xl border-none p-8 bg-white dark:bg-[#121212]">
+                    <DialogHeader>
+                        <DialogTitle className="text-xl font-black uppercase tracking-tight text-[#1b1b18] dark:text-white">
+                            {t('dash_create_booking')}
+                        </DialogTitle>
+                        <DialogDescription className="text-xs text-[#1b1b18]/50 dark:text-white/50">
+                            Isi formulir di bawah untuk menambahkan pesanan booking ke antrean.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleCreateBooking} className="mt-4 space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                {t('booking_form_customer_name')}
+                            </label>
+                            <Input
+                                value={data.customer_name}
+                                onChange={(e) => setData('customer_name', e.target.value)}
+                                className="h-11 rounded-xl bg-[#1b1b18]/5 dark:bg-white/5"
+                                required
+                            />
+                            {errors.customer_name && <span className="text-xs text-red-600">{errors.customer_name}</span>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                {t('booking_form_customer_phone')}
+                            </label>
+                            <Input
+                                value={data.customer_phone}
+                                onChange={(e) => setData('customer_phone', e.target.value)}
+                                className="h-11 rounded-xl bg-[#1b1b18]/5 dark:bg-white/5"
+                                required
+                            />
+                            {errors.customer_phone && <span className="text-xs text-red-600">{errors.customer_phone}</span>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                {t('booking_form_car_model')}
+                            </label>
+                            <Input
+                                value={data.car_model}
+                                onChange={(e) => setData('car_model', e.target.value)}
+                                className="h-11 rounded-xl bg-[#1b1b18]/5 dark:bg-white/5"
+                                placeholder="Contoh: Daihatsu Ayla 2022"
+                                required
+                            />
+                            {errors.car_model && <span className="text-xs text-red-600">{errors.car_model}</span>}
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    {t('booking_form_date')}
+                                </label>
+                                <Input
+                                    type="date"
+                                    value={data.booking_date}
+                                    onChange={(e) => setData('booking_date', e.target.value)}
+                                    className="h-11 rounded-xl bg-[#1b1b18]/5 dark:bg-white/5"
+                                    required
+                                />
+                                {errors.booking_date && <span className="text-xs text-red-600">{errors.booking_date}</span>}
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    {t('booking_form_time')}
+                                </label>
+                                <Input
+                                    type="time"
+                                    value={data.booking_time}
+                                    onChange={(e) => setData('booking_time', e.target.value)}
+                                    className="h-11 rounded-xl bg-[#1b1b18]/5 dark:bg-white/5"
+                                    required
+                                />
+                                {errors.booking_time && <span className="text-xs text-red-600">{errors.booking_time}</span>}
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                {t('booking_form_service_type')}
+                            </label>
+                            <SearchableSelect
+                                value={data.service_type}
+                                onChange={(val) => setData('service_type', val)}
+                                options={[
+                                    { value: 'inspection', label: t('service_opt_inspection') || 'Inspection' },
+                                    { value: 'cleaning', label: t('service_opt_cleaning') || 'AC Cleaning' },
+                                    { value: 'freon', label: t('service_opt_freon') || 'Freon Refill' },
+                                    { value: 'repair', label: t('service_opt_repair') || 'Major Repair' },
+                                    { value: 'other', label: t('service_opt_other') || 'Other' },
+                                ]}
+                            />
+                            {errors.service_type && <span className="text-xs text-red-600">{errors.service_type}</span>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                {t('booking_form_notes')}
+                            </label>
+                            <textarea
+                                value={data.notes}
+                                onChange={(e) => setData('notes', e.target.value)}
+                                className="flex min-h-[60px] w-full rounded-xl border border-transparent bg-[#1b1b18]/5 px-3 py-2 text-sm text-[#1b1b18] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b1b18] dark:bg-white/5 dark:text-white"
+                                placeholder="Opsional"
+                            />
+                            {errors.notes && <span className="text-xs text-red-600">{errors.notes}</span>}
+                        </div>
+
+                        <DialogFooter className="pt-4 flex gap-2">
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                onClick={() => setIsCreateOpen(false)}
+                                className="h-12 flex-1 rounded-xl font-bold uppercase tracking-widest"
+                            >
+                                {t('dash_cancel')}
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={processing}
+                                className="h-12 flex-1 rounded-xl bg-red-600 text-white font-black uppercase tracking-widest hover:bg-red-700 disabled:opacity-50"
+                            >
+                                {processing ? (
+                                    <Loader2 className="size-4 animate-spin" />
+                                ) : (
+                                    t('booking_form_submit')
+                                )}
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
 
             <Dialog open={confirmCancelId !== null} onOpenChange={() => setConfirmCancelId(null)}>
                 <DialogContent className="rounded-4xl border-none p-8 dark:bg-[#121212]">

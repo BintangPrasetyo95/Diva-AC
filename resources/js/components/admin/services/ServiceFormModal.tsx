@@ -150,7 +150,7 @@ export function ServiceFormModal({
     };
 
     return (
-        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
+        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth={activeTab === 'new' && !editingService ? 'max-w-4xl' : 'max-w-lg'}>
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                     {editingService ? t('dash_edit_order') : t('dash_new_service')}
@@ -164,59 +164,40 @@ export function ServiceFormModal({
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-4">
-                    {!editingService && (
-                        <div className="flex w-full gap-2 rounded-2xl bg-[#1b1b18]/5 p-1 dark:bg-white/5 mb-4">
-                            <button
-                                type="button"
-                                onClick={() => setActiveTab('existing')}
-                                className={`flex-1 rounded-xl py-2 text-xs font-bold tracking-widest uppercase transition-all ${activeTab === 'existing'
-                                        ? 'bg-white text-[#1b1b18] shadow-sm dark:bg-[#121212] dark:text-white'
-                                        : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white'
-                                    }`}
-                            >
-                                Pilih Existing
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setActiveTab('new')}
-                                className={`flex-1 rounded-xl py-2 text-xs font-bold tracking-widest uppercase transition-all ${activeTab === 'new'
-                                        ? 'bg-white text-[#1b1b18] shadow-sm dark:bg-[#121212] dark:text-white'
-                                        : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white'
-                                    }`}
-                            >
-                                + Mobil Baru
-                            </button>
-                        </div>
-                    )}
+                {!editingService && (
+                    <div className="flex w-full gap-2 rounded-2xl bg-[#1b1b18]/5 p-1 dark:bg-white/5 mb-4">
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('existing')}
+                            className={`flex-1 rounded-xl py-2 text-xs font-bold tracking-widest uppercase transition-all ${activeTab === 'existing'
+                                    ? 'bg-white text-[#1b1b18] shadow-sm dark:bg-[#121212] dark:text-white'
+                                    : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white'
+                                }`}
+                        >
+                            {t('dash_select_existing')}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('new')}
+                            className={`flex-1 rounded-xl py-2 text-xs font-bold tracking-widest uppercase transition-all ${activeTab === 'new'
+                                    ? 'bg-white text-[#1b1b18] shadow-sm dark:bg-[#121212] dark:text-white'
+                                    : 'text-[#1b1b18]/40 hover:text-[#1b1b18] dark:text-white/40 dark:hover:text-white'
+                                }`}
+                        >
+                            {t('dash_new_car')}
+                        </button>
+                    </div>
+                )}
 
-                    {activeTab === 'existing' || editingService ? (
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                Pelanggan / Mobil
-                            </label>
-                            <SearchableSelect
-                                value={data.id_mobil}
-                                onChange={(val) => setData('id_mobil', val)}
-                                placeholder="Pilih Mobil"
-                                options={mobils.map((m) => ({
-                                    value: m.id,
-                                    label: `${m.pelanggan?.nama_pelanggan} - ${m.merk} (${m.no_polisi})`,
-                                }))}
-                            />
-                            {errors.id_mobil && (
-                                <span className="text-xs text-red-600">
-                                    {errors.id_mobil}
-                                </span>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="space-y-4 rounded-2xl border border-red-600/20 bg-red-600/5 p-4">
-                            <h3 className="text-sm font-bold text-red-600 uppercase">
+                {activeTab === 'new' && !editingService ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        {/* Left Column: Car & Customer Form */}
+                        <div className="space-y-4 rounded-2xl border border-red-600/20 bg-red-600/5 p-4 dark:border-red-500/20 dark:bg-red-500/5 h-fit">
+                            <h3 className="text-sm font-bold text-red-600 uppercase dark:text-red-400">
                                 Input Kendaraan & Pelanggan Baru
                             </h3>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                     Pelanggan
                                 </label>
                                 <SearchableSelect
@@ -278,7 +259,7 @@ export function ServiceFormModal({
                                 </>
                             )}
 
-                            <div className="grid grid-cols-2 gap-4 border-t border-red-600/20 pt-4">
+                            <div className="grid grid-cols-2 gap-4 border-t border-red-600/20 pt-4 dark:border-red-500/20">
                                 <Input
                                     placeholder="No Polisi (Mis. B 1234 CD)"
                                     value={data.no_polisi}
@@ -308,190 +289,399 @@ export function ServiceFormModal({
                                 />
                             </div>
                         </div>
-                    )}
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                            Mekanik
-                        </label>
-                        <SearchableSelect
-                            value={data.id_mekanik}
-                            onChange={(val) => setData('id_mekanik', val)}
-                            placeholder="Pilih Mekanik"
-                            options={mekaniks.map((m) => ({
-                                value: m.id,
-                                label: m.nama_mekanik,
-                            }))}
-                        />
-                        {errors.id_mekanik && (
-                            <span className="text-xs text-red-600">
-                                {errors.id_mekanik}
-                            </span>
-                        )}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                Tipe Service
-                            </label>
-                            <Input
-                                value={data.tipe_service}
-                                onChange={(e) => setData('tipe_service', e.target.value)}
-                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                required
-                            />
-                            {errors.tipe_service && (
-                                <span className="text-xs text-red-600">
-                                    {errors.tipe_service}
-                                </span>
-                            )}
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                Harga Jasa Service
-                            </label>
-                            <Input
-                                type="number"
-                                min="0"
-                                value={data.harga_service}
-                                onChange={(e) => setData('harga_service', e.target.value)}
-                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                required
-                            />
-                            {errors.harga_service && (
-                                <span className="text-xs text-red-600">
-                                    {errors.harga_service}
-                                </span>
-                            )}
-                        </div>
-                        <div className="space-y-2 col-span-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                Tanggal Service
-                            </label>
-                            <Input
-                                type="date"
-                                value={data.tanggal_service}
-                                onChange={(e) =>
-                                    setData('tanggal_service', e.target.value)
-                                }
-                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                required
-                            />
-                            {errors.tanggal_service && (
-                                <span className="text-xs text-red-600">
-                                    {errors.tanggal_service}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                            Status
-                        </label>
-                        <SearchableSelect
-                            value={data.status_service}
-                            onChange={(val) => setData('status_service', val)}
-                            options={[
-                                { value: 'antri', label: t('dash_service_queue') },
-                                { value: 'proses', label: t('dash_service_process') },
-                                { value: 'selesai', label: t('dash_service_done') },
-                                { value: 'batal', label: t('dash_service_cancel') },
-                            ]}
-                        />
-                        {errors.status_service && (
-                            <span className="text-xs text-red-600">
-                                {errors.status_service}
-                            </span>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                            Catatan Tambahan
-                        </label>
-                        <Input
-                            value={data.catatan}
-                            onChange={(e) => setData('catatan', e.target.value)}
-                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                            placeholder="Opsional"
-                        />
-                        {errors.catatan && (
-                            <span className="text-xs text-red-600">
-                                {errors.catatan}
-                            </span>
-                        )}
-                    </div>
-                </div>
-
-                <div className="space-y-4 rounded-2xl border border-[#1b1b18]/10 p-4 dark:border-white/10">
-                    <div className="flex items-center justify-between">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                            Penggunaan Sparepart
-                        </label>
-                        <button
-                            type="button"
-                            onClick={addSparepart}
-                            className="flex items-center gap-1 rounded-lg bg-[#1b1b18]/5 px-2 py-1 text-xs font-bold text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
-                        >
-                            <PlusCircle className="size-3" /> Tambah Part
-                        </button>
-                    </div>
-
-                    {data.spareparts.map((sp, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                            <div className="flex-1">
+                        {/* Right Column: Service details */}
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Mekanik
+                                </label>
                                 <SearchableSelect
-                                    value={sp.id}
-                                    onChange={(val) => updateSparepart(idx, 'id', val)}
-                                    placeholder="Pilih Sparepart"
-                                    options={spareparts.map((part) => ({
-                                        value: part.id,
-                                        label: `${part.nama_sparepart} - Rp ${Number(
-                                            part.harga_sparepart
-                                        ).toLocaleString('id-ID')}`,
+                                    value={data.id_mekanik}
+                                    onChange={(val) => setData('id_mekanik', val)}
+                                    placeholder="Pilih Mekanik"
+                                    options={mekaniks.map((m) => ({
+                                        value: m.id,
+                                        label: m.nama_mekanik,
                                     }))}
                                 />
+                                {errors.id_mekanik && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.id_mekanik}
+                                    </span>
+                                )}
                             </div>
-                            <Input
-                                type="number"
-                                min="1"
-                                value={sp.jumlah}
-                                onChange={(e) =>
-                                    updateSparepart(idx, 'jumlah', e.target.value)
-                                }
-                                className="h-10 w-20 rounded-xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                            />
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                        Tipe Service
+                                    </label>
+                                    <Input
+                                        value={data.tipe_service}
+                                        onChange={(e) => setData('tipe_service', e.target.value)}
+                                        className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                        required
+                                    />
+                                    {errors.tipe_service && (
+                                        <span className="text-xs text-red-600">
+                                            {errors.tipe_service}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                        Harga Jasa Service
+                                    </label>
+                                    <Input
+                                        type="number"
+                                        min="0"
+                                        value={data.harga_service}
+                                        onChange={(e) => setData('harga_service', e.target.value)}
+                                        className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                        required
+                                    />
+                                    {errors.harga_service && (
+                                        <span className="text-xs text-red-600">
+                                            {errors.harga_service}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="space-y-2 col-span-2">
+                                    <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                        Tanggal Service
+                                    </label>
+                                    <Input
+                                        type="date"
+                                        value={data.tanggal_service}
+                                        onChange={(e) =>
+                                            setData('tanggal_service', e.target.value)
+                                        }
+                                        className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                        required
+                                    />
+                                    {errors.tanggal_service && (
+                                        <span className="text-xs text-red-600">
+                                            {errors.tanggal_service}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Status
+                                </label>
+                                <SearchableSelect
+                                    value={data.status_service}
+                                    onChange={(val) => setData('status_service', val)}
+                                    options={[
+                                        { value: 'antri', label: t('dash_service_queue') },
+                                        { value: 'proses', label: t('dash_service_process') },
+                                        { value: 'selesai', label: t('dash_service_done') },
+                                        { value: 'batal', label: t('dash_service_cancel') },
+                                    ]}
+                                />
+                                {errors.status_service && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.status_service}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Catatan Tambahan
+                                </label>
+                                <Input
+                                    value={data.catatan}
+                                    onChange={(e) => setData('catatan', e.target.value)}
+                                    className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                    placeholder="Opsional"
+                                />
+                                {errors.catatan && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.catatan}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="space-y-4 rounded-2xl border border-[#1b1b18]/10 p-4 dark:border-white/10">
+                                <div className="flex items-center justify-between">
+                                    <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                        Penggunaan Sparepart
+                                    </label>
+                                    <button
+                                        type="button"
+                                        onClick={addSparepart}
+                                        className="flex items-center gap-1 rounded-lg bg-[#1b1b18]/5 px-2 py-1 text-xs font-bold text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                                    >
+                                        <PlusCircle className="size-3" /> Tambah Part
+                                    </button>
+                                </div>
+
+                                {data.spareparts.map((sp, idx) => (
+                                    <div key={idx} className="flex items-center gap-2">
+                                        <div className="flex-1">
+                                            <SearchableSelect
+                                                value={sp.id}
+                                                onChange={(val) => updateSparepart(idx, 'id', val)}
+                                                placeholder="Pilih Sparepart"
+                                                options={spareparts.map((part) => ({
+                                                    value: part.id,
+                                                    label: `${part.nama_sparepart} - Rp ${Number(
+                                                        part.harga_sparepart
+                                                    ).toLocaleString('id-ID')}`,
+                                                }))}
+                                            />
+                                        </div>
+                                        <Input
+                                            type="number"
+                                            min="1"
+                                            value={sp.jumlah}
+                                            onChange={(e) =>
+                                                updateSparepart(idx, 'jumlah', e.target.value)
+                                            }
+                                            className="h-10 w-20 rounded-xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => removeSparepart(idx)}
+                                            className="rounded-lg p-2 text-red-500 hover:bg-red-500/10"
+                                        >
+                                            <Trash className="size-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                                {data.spareparts.length === 0 && (
+                                    <div className="text-center text-xs text-[#1b1b18]/40 dark:text-white/40">
+                                        Belum ada sparepart yang ditambahkan
+                                    </div>
+                                )}
+                            </div>
+
                             <button
-                                type="button"
-                                onClick={() => removeSparepart(idx)}
-                                className="rounded-lg p-2 text-red-500 hover:bg-red-500/10"
+                                disabled={processing}
+                                className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#1b1b18] text-sm font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-black disabled:opacity-50 dark:bg-white dark:text-[#1b1b18]"
                             >
-                                <Trash className="size-4" />
+                                {processing ? (
+                                    <Loader2 className="size-5 animate-spin" />
+                                ) : (
+                                    <>
+                                        <Wrench className="size-5" />
+                                        {t('dash_save_changes')}
+                                    </>
+                                )}
                             </button>
                         </div>
-                    ))}
-                    {data.spareparts.length === 0 && (
-                        <div className="text-center text-xs text-[#1b1b18]/40 dark:text-white/40">
-                            Belum ada sparepart yang ditambahkan
-                        </div>
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {activeTab === 'existing' || editingService ? (
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Pelanggan / Mobil
+                                </label>
+                                <SearchableSelect
+                                    value={data.id_mobil}
+                                    onChange={(val) => setData('id_mobil', val)}
+                                    placeholder="Pilih Mobil"
+                                    options={mobils.map((m) => ({
+                                        value: m.id,
+                                        label: `${m.pelanggan?.nama_pelanggan} - ${m.merk} (${m.no_polisi})`,
+                                    }))}
+                                />
+                                {errors.id_mobil && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.id_mobil}
+                                    </span>
+                                )}
+                            </div>
+                        ) : null}
 
-                <button
-                    disabled={processing}
-                    className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#1b1b18] text-sm font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-black disabled:opacity-50 dark:bg-white dark:text-[#1b1b18]"
-                >
-                    {processing ? (
-                        <Loader2 className="size-5 animate-spin" />
-                    ) : (
-                        <>
-                            <Wrench className="size-5" />
-                            {t('dash_save_changes')}
-                        </>
-                    )}
-                </button>
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                Mekanik
+                            </label>
+                            <SearchableSelect
+                                value={data.id_mekanik}
+                                onChange={(val) => setData('id_mekanik', val)}
+                                placeholder="Pilih Mekanik"
+                                options={mekaniks.map((m) => ({
+                                    value: m.id,
+                                    label: m.nama_mekanik,
+                                }))}
+                            />
+                            {errors.id_mekanik && (
+                                <span className="text-xs text-red-600">
+                                    {errors.id_mekanik}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Tipe Service
+                                </label>
+                                <Input
+                                    value={data.tipe_service}
+                                    onChange={(e) => setData('tipe_service', e.target.value)}
+                                    className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                    required
+                                />
+                                {errors.tipe_service && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.tipe_service}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Harga Jasa Service
+                                </label>
+                                <Input
+                                    type="number"
+                                    min="0"
+                                    value={data.harga_service}
+                                    onChange={(e) => setData('harga_service', e.target.value)}
+                                    className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                    required
+                                />
+                                {errors.harga_service && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.harga_service}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="space-y-2 col-span-2">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Tanggal Service
+                                </label>
+                                <Input
+                                    type="date"
+                                    value={data.tanggal_service}
+                                    onChange={(e) =>
+                                        setData('tanggal_service', e.target.value)
+                                    }
+                                    className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                    required
+                                />
+                                {errors.tanggal_service && (
+                                    <span className="text-xs text-red-600">
+                                        {errors.tanggal_service}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                Status
+                            </label>
+                            <SearchableSelect
+                                value={data.status_service}
+                                onChange={(val) => setData('status_service', val)}
+                                options={[
+                                    { value: 'antri', label: t('dash_service_queue') },
+                                    { value: 'proses', label: t('dash_service_process') },
+                                    { value: 'selesai', label: t('dash_service_done') },
+                                    { value: 'batal', label: t('dash_service_cancel') },
+                                ]}
+                            />
+                            {errors.status_service && (
+                                <span className="text-xs text-red-600">
+                                    {errors.status_service}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                Catatan Tambahan
+                            </label>
+                            <Input
+                                value={data.catatan}
+                                onChange={(e) => setData('catatan', e.target.value)}
+                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                placeholder="Opsional"
+                            />
+                            {errors.catatan && (
+                                <span className="text-xs text-red-600">
+                                    {errors.catatan}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="space-y-4 rounded-2xl border border-[#1b1b18]/10 p-4 dark:border-white/10">
+                            <div className="flex items-center justify-between">
+                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                    Penggunaan Sparepart
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={addSparepart}
+                                    className="flex items-center gap-1 rounded-lg bg-[#1b1b18]/5 px-2 py-1 text-xs font-bold text-[#1b1b18] hover:bg-[#1b1b18]/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                                >
+                                    <PlusCircle className="size-3" /> Tambah Part
+                                </button>
+                            </div>
+
+                            {data.spareparts.map((sp, idx) => (
+                                <div key={idx} className="flex items-center gap-2">
+                                    <div className="flex-1">
+                                        <SearchableSelect
+                                            value={sp.id}
+                                            onChange={(val) => updateSparepart(idx, 'id', val)}
+                                            placeholder="Pilih Sparepart"
+                                            options={spareparts.map((part) => ({
+                                                value: part.id,
+                                                label: `${part.nama_sparepart} - Rp ${Number(
+                                                    part.harga_sparepart
+                                                ).toLocaleString('id-ID')}`,
+                                            }))}
+                                        />
+                                    </div>
+                                    <Input
+                                        type="number"
+                                        min="1"
+                                        value={sp.jumlah}
+                                        onChange={(e) =>
+                                            updateSparepart(idx, 'jumlah', e.target.value)
+                                        }
+                                        className="h-10 w-20 rounded-xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => removeSparepart(idx)}
+                                        className="rounded-lg p-2 text-red-500 hover:bg-red-500/10"
+                                    >
+                                        <Trash className="size-4" />
+                                    </button>
+                                </div>
+                            ))}
+                            {data.spareparts.length === 0 && (
+                                <div className="text-center text-xs text-[#1b1b18]/40 dark:text-white/40">
+                                    Belum ada sparepart yang ditambahkan
+                                </div>
+                            )}
+                        </div>
+
+                        <button
+                            disabled={processing}
+                            className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#1b1b18] text-sm font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-black disabled:opacity-50 dark:bg-white dark:text-[#1b1b18]"
+                        >
+                            {processing ? (
+                                <Loader2 className="size-5 animate-spin" />
+                            ) : (
+                                <>
+                                    <Wrench className="size-5" />
+                                    {t('dash_save_changes')}
+                                </>
+                            )}
+                        </button>
+                    </div>
+                )}
             </form>
         </ModalShell>
     );

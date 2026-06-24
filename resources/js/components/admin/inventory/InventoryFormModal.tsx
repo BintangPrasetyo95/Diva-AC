@@ -114,7 +114,7 @@ export function InventoryFormModal({
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Item Name *
                         </label>
                         <Input
@@ -133,7 +133,7 @@ export function InventoryFormModal({
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Category/Type *
                         </label>
                         <Input
@@ -153,7 +153,7 @@ export function InventoryFormModal({
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                 Price *
                             </label>
                             <Input
@@ -173,7 +173,7 @@ export function InventoryFormModal({
                             )}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                                 Stock *
                             </label>
                             <Input
@@ -194,7 +194,7 @@ export function InventoryFormModal({
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Notes
                         </label>
                         <textarea
@@ -208,7 +208,7 @@ export function InventoryFormModal({
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Item Image (Optional)
                         </label>
                         <div className="flex flex-col gap-2">

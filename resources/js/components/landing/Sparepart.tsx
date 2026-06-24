@@ -14,14 +14,15 @@ export default function Sparepart() {
 
             <div className="relative z-10 container mx-auto max-w-7xl px-4 md:px-8">
                 <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-24">
-                    {/* Left Side: 3 Rows of Images in a Masonry-like Grid */}
-                    <div className="order-2 grid h-[400px] grid-cols-2 grid-rows-3 gap-4 sm:h-[500px] lg:order-1 lg:h-[600px]">
+                    {/* Left Side: Masonry-like Image Grid */}
+                    <div className="order-2 grid h-[400px] grid-cols-2 gap-4 sm:h-[500px] lg:order-1 lg:h-[600px]" style={{ gridTemplateRows: '2fr 1fr' }}>
+                        {/* sp1 — tall, left column */}
                         <m.div
                             initial={{ opacity: 0, y: 20, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true, margin: '-100px' }}
                             transition={{ duration: 0.6, ease: 'easeOut' }}
-                            className="col-start-1 row-span-2 row-start-1 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
+                            className="col-start-1 row-span-2 min-h-0 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
                         >
                             <img
                                 src="/img/spareparts/sp1.png"
@@ -29,16 +30,13 @@ export default function Sparepart() {
                                 className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </m.div>
+                        {/* sp2 — short, right top */}
                         <m.div
                             initial={{ opacity: 0, y: 20, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true, margin: '-100px' }}
-                            transition={{
-                                duration: 0.6,
-                                delay: 0.1,
-                                ease: 'easeOut',
-                            }}
-                            className="col-start-2 row-span-1 row-start-1 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
+                            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                            className="col-start-2 row-start-1 min-h-0 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
                         >
                             <img
                                 src="/img/spareparts/sp2.png"
@@ -46,33 +44,13 @@ export default function Sparepart() {
                                 className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </m.div>
+                        {/* sp4 — short, right bottom */}
                         <m.div
                             initial={{ opacity: 0, y: 20, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true, margin: '-100px' }}
-                            transition={{
-                                duration: 0.6,
-                                delay: 0.2,
-                                ease: 'easeOut',
-                            }}
-                            className="col-start-1 row-span-1 row-start-3 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
-                        >
-                            <img
-                                src="/img/spareparts/sp3.png"
-                                alt="Sparepart 3"
-                                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                            />
-                        </m.div>
-                        <m.div
-                            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                            viewport={{ once: true, margin: '-100px' }}
-                            transition={{
-                                duration: 0.6,
-                                delay: 0.3,
-                                ease: 'easeOut',
-                            }}
-                            className="col-start-2 row-span-2 row-start-2 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
+                            transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                            className="col-start-2 row-start-2 min-h-0 overflow-hidden rounded-3xl border border-[#1b1b18]/10 bg-white/50 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-black/50"
                         >
                             <img
                                 src="/img/spareparts/sp4.png"

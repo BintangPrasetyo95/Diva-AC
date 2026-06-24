@@ -97,7 +97,7 @@ export function CustomerFormModal({
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Full Name
                         </label>
                         <Input
@@ -115,7 +115,7 @@ export function CustomerFormModal({
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Phone Number
                         </label>
                         <Input
@@ -133,7 +133,7 @@ export function CustomerFormModal({
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Email Address
                         </label>
                         <Input
@@ -152,7 +152,7 @@ export function CustomerFormModal({
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Gender
                         </label>
                         <select
@@ -175,7 +175,7 @@ export function CustomerFormModal({
                         )}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
                             Address
                         </label>
                         <textarea

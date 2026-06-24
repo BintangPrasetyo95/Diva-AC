@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import { SearchableSelect } from '@/components/ui/searchable-select';
+import { useLanguage } from '@/hooks/use-language';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface Transaction {
@@ -41,22 +42,6 @@ interface Props {
     availableYears: number[];
 }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-const MONTH_LABELS = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-];
-
 function formatRp(value: number): string {
     return 'Rp ' + value.toLocaleString('id-ID');
 }
@@ -79,9 +64,11 @@ const item: Variants = {
 function BarChart({
     data,
     activeMonth,
+    months,
 }: {
     data: MonthData[];
     activeMonth: number;
+    months: string[];
 }) {
     const max = Math.max(...data.map((d) => d.total), 1);
 
@@ -96,7 +83,7 @@ function BarChart({
                     <div
                         key={d.month}
                         className="group flex flex-1 cursor-default flex-col items-center gap-1"
-                        title={`${MONTH_LABELS[d.month - 1]}: ${formatRp(d.total)}`}
+                        title={`${months[d.month - 1]}: ${formatRp(d.total)}`}
                     >
                         <div
                             className="relative flex w-full flex-col justify-end"
@@ -122,7 +109,7 @@ function BarChart({
                         <span
                             className={`text-[9px] font-bold uppercase ${isActive ? 'text-red-600 dark:text-red-400' : 'text-[#1b1b18]/30 dark:text-white/30'}`}
                         >
-                            {MONTH_LABELS[d.month - 1]}
+                            {months[d.month - 1]}
                         </span>
                     </div>
                 );
@@ -142,8 +129,13 @@ export default function IncomePage({
     currentMonth,
     availableYears,
 }: Props) {
+    const { t } = useLanguage();
     const [year, setYear] = React.useState(currentYear);
     const [month, setMonth] = React.useState(currentMonth);
+
+    const months = React.useMemo(() => {
+        return Array.from({ length: 12 }, (_, i) => t(`month_${i + 1}`));
+    }, [t]);
 
     const navigate = (y: number, m: number) => {
         router.get(
@@ -173,7 +165,7 @@ export default function IncomePage({
 
     const stats = [
         {
-            label: 'Total Pendapatan',
+            label: t('income_total'),
             value: formatRp(grandTotal),
             icon: DollarSign,
             color: 'text-green-600',
@@ -181,7 +173,7 @@ export default function IncomePage({
             delta,
         },
         {
-            label: 'Pendapatan Service',
+            label: t('income_service'),
             value: formatRp(serviceTotal),
             icon: Wrench,
             color: 'text-red-600',
@@ -189,7 +181,7 @@ export default function IncomePage({
             delta: null,
         },
         {
-            label: 'Penjualan Sparepart',
+            label: t('income_parts'),
             value: formatRp(spareTotal),
             icon: Package,
             color: 'text-amber-600',
@@ -197,7 +189,7 @@ export default function IncomePage({
             delta: null,
         },
         {
-            label: 'Jumlah Transaksi',
+            label: t('income_transactions_count'),
             value: `${transactions.length}`,
             icon: CalendarDays,
             color: 'text-blue-600',
@@ -208,7 +200,7 @@ export default function IncomePage({
 
     return (
         <LazyMotion features={domAnimation}>
-            <Head title="Laporan Pendapatan" />
+            <Head title={t('income_title')} />
 
             <m.div
                 initial="hidden"
@@ -223,12 +215,15 @@ export default function IncomePage({
                 >
                     <div>
                         <h1 className="text-3xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                            Laporan{' '}
-                            <span className="text-red-600">Pendapatan</span>
+                            {t('income_title').split(' ').map((word, idx) => (
+                                <React.Fragment key={idx}>
+                                    {idx > 0 && ' '}
+                                    <span className={idx === 1 ? 'text-red-600' : ''}>{word}</span>
+                                </React.Fragment>
+                            ))}
                         </h1>
                         <p className="mt-1 text-sm text-[#1b1b18]/50 dark:text-white/50">
-                            Ringkasan pemasukan dari service dan penjualan
-                            sparepart.
+                            {t('income_subtitle')}
                         </p>
                     </div>
 
@@ -309,31 +304,31 @@ export default function IncomePage({
                     <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
                         <div>
                             <h2 className="text-lg font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                Grafik Bulanan{' '}
+                                {t('income_monthly_chart')}{' '}
                                 <span className="text-red-600">{year}</span>
                             </h2>
                             <p className="mt-0.5 text-xs text-[#1b1b18]/40 dark:text-white/40">
-                                Klik bulan untuk melihat detailnya
+                                {t('income_chart_click_hint')}
                             </p>
                         </div>
                         {/* Legend */}
                         <div className="flex items-center gap-4 text-xs font-bold">
                             <span className="flex items-center gap-1.5">
                                 <span className="inline-block size-3 rounded-sm bg-red-500" />
-                                Service
+                                {t('category_service')}
                             </span>
                             <span className="flex items-center gap-1.5">
                                 <span className="inline-block size-3 rounded-sm bg-amber-400" />
-                                Sparepart
+                                {t('category_sparepart')}
                             </span>
                         </div>
                     </div>
 
-                    <BarChart data={monthlyChart} activeMonth={month} />
+                    <BarChart data={monthlyChart} activeMonth={month} months={months} />
 
                     {/* Month pill buttons */}
                     <div className="mt-4 flex flex-wrap gap-2">
-                        {MONTH_LABELS.map((label, idx) => {
+                        {months.map((label, idx) => {
                             const m = idx + 1;
                             const active = m === month;
 
@@ -361,10 +356,10 @@ export default function IncomePage({
                 >
                     <div className="flex items-center justify-between border-b border-[#1b1b18]/5 px-6 py-4 dark:border-white/5">
                         <h2 className="text-lg font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                            Transaksi — {MONTH_LABELS[month - 1]} {year}
+                            {t('income_transactions_title')} — {months[month - 1]} {year}
                         </h2>
                         <span className="rounded-full bg-[#1b1b18]/5 px-3 py-1 text-xs font-bold text-[#1b1b18]/60 dark:bg-white/5 dark:text-white/50">
-                            {transactions.length} transaksi
+                            {transactions.length} {t('income_transactions_suffix')}
                         </span>
                     </div>
 
@@ -372,7 +367,7 @@ export default function IncomePage({
                         <div className="flex flex-col items-center justify-center gap-3 py-20 text-[#1b1b18]/30 dark:text-white/30">
                             <TrendingUp className="size-12" />
                             <p className="font-bold">
-                                Belum ada transaksi di bulan ini.
+                                {t('income_empty')}
                             </p>
                         </div>
                     ) : (
@@ -381,19 +376,19 @@ export default function IncomePage({
                                 <thead>
                                     <tr className="border-b border-[#1b1b18]/5 dark:border-white/5">
                                         <th className="px-6 py-3 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                            Tanggal
+                                            {t('income_col_date')}
                                         </th>
                                         <th className="px-6 py-3 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                            Keterangan
+                                            {t('income_col_desc')}
                                         </th>
                                         <th className="px-6 py-3 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                            Pelanggan
+                                            {t('income_col_customer')}
                                         </th>
                                         <th className="px-6 py-3 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                            Kategori
+                                            {t('income_col_category')}
                                         </th>
                                         <th className="px-6 py-3 text-right text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                            Jumlah
+                                            {t('income_col_amount')}
                                         </th>
                                     </tr>
                                 </thead>
@@ -434,8 +429,8 @@ export default function IncomePage({
                                                         <Package className="size-3" />
                                                     )}
                                                     {tx.type === 'service'
-                                                        ? 'Service'
-                                                        : 'Sparepart'}
+                                                        ? t('category_service')
+                                                        : t('category_sparepart')}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-right">
@@ -452,7 +447,7 @@ export default function IncomePage({
                                             colSpan={4}
                                             className="px-6 py-4 text-sm font-black tracking-wide text-[#1b1b18]/50 uppercase dark:text-white/50"
                                         >
-                                            Total
+                                            {t('income_col_total')}
                                         </td>
                                         <td className="px-6 py-4 text-right text-base font-black text-green-600">
                                             {formatRp(grandTotal)}
