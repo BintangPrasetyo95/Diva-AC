@@ -52,7 +52,7 @@ export function OrderEditModal({
         put,
         reset,
         processing,
-        clearErrors,
+        clearErrors, isDirty
     } = useForm({
         customer_name: '',
         customer_phone: '',
@@ -140,7 +140,7 @@ export function OrderEditModal({
     };
 
     return (
-        <Modal
+        <Modal isDirty={isDirty}
             isOpen={isOpen}
             onClose={onClose}
             title={t('sell_edit_title')}

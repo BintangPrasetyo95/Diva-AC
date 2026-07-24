@@ -1,6 +1,7 @@
 import React from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
 
 interface ModalProps {
     isOpen: boolean;
@@ -9,6 +10,7 @@ interface ModalProps {
     subtitle?: React.ReactNode;
     children: React.ReactNode;
     maxWidthClassName?: string; // defaults to 'max-w-md'
+    isDirty?: boolean;
 }
 
 export function Modal({
@@ -18,7 +20,20 @@ export function Modal({
     subtitle,
     children,
     maxWidthClassName = 'max-w-md',
+    isDirty = false,
 }: ModalProps) {
+    const { t } = useLanguage();
+
+    const handleClose = () => {
+        if (isDirty) {
+            if (window.confirm(t('confirm_unsaved_changes') || 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?')) {
+                onClose();
+            }
+        } else {
+            onClose();
+        }
+    };
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -28,7 +43,7 @@ export function Modal({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
                     />
 
@@ -53,7 +68,7 @@ export function Modal({
                                 )}
                             </div>
                             <button
-                                onClick={onClose}
+                                onClick={handleClose}
                                 className="rounded-full p-2 text-[#1b1b18]/40 hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:bg-white/5 transition-colors focus:outline-none"
                             >
                                 <X className="size-6" />

@@ -23,7 +23,7 @@ export function InventoryFormModal({
     const { t } = useLanguage();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const { data, setData, post, processing, errors, reset, clearErrors } =
+    const { data, setData, post, processing, errors, reset, clearErrors, isDirty } =
         useForm({
             nama_sparepart: '',
             tipe_sparepart: '',
@@ -96,7 +96,7 @@ export function InventoryFormModal({
     };
 
     return (
-        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
+        <ModalShell isDirty={isDirty} isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                     {editingPart

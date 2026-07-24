@@ -30,7 +30,7 @@ export function ServiceFormModal({
     const { t } = useLanguage();
     const [activeTab, setActiveTab] = useState<'existing' | 'new'>('existing');
 
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
+    const { data, setData, post, put, processing, errors, reset, clearErrors, isDirty } = useForm({
         id_mobil: '',
         id_pelanggan: 'new',
         customer_name: '',
@@ -44,7 +44,7 @@ export function ServiceFormModal({
         tanggal_service: new Date().toISOString().split('T')[0],
         tipe_service: '',
         harga_service: '',
-        status_service: 'antri' as 'antri' | 'proses' | 'selesai' | 'batal',
+        status_service: '',
         catatan: '',
         spareparts: [] as any[],
     });
@@ -149,13 +149,22 @@ export function ServiceFormModal({
         }
     };
 
+
+    const totalHarga =
+        Number(data.harga_service || 0) +
+        data.spareparts.reduce(
+            (sum, sp) => sum + Number(sp.jumlah) * Number(sp.harga_satuan),
+            0
+        );
+
     return (
-        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth={activeTab === 'new' && !editingService ? 'max-w-4xl' : 'max-w-lg'}>
+        <ModalShell isDirty={isDirty} isOpen={isOpen} onClose={onClose} maxWidth="max-w-6xl">
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                     {editingService ? t('dash_edit_order') : t('dash_new_service')}
                 </h2>
                 <button
+                    type="button"
                     onClick={onClose}
                     className="rounded-full p-2 text-[#1b1b18]/40 hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:bg-white/5"
                 >
@@ -163,8 +172,10 @@ export function ServiceFormModal({
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                {!editingService && (
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                    <div className="lg:col-span-2 space-y-6">
+{!editingService && (
                     <div className="flex w-full gap-2 rounded-2xl bg-[#1b1b18]/5 p-1 dark:bg-white/5 mb-4">
                         <button
                             type="button"
@@ -682,6 +693,55 @@ export function ServiceFormModal({
                         </button>
                     </div>
                 )}
+                    </div>
+
+                    <div className="lg:col-span-1 sticky top-6">
+                        <div className="rounded-3xl bg-[#1b1b18]/5 p-6 dark:bg-white/5 border border-[#1b1b18]/10 dark:border-white/10">
+                            <h3 className="text-lg font-black tracking-widest uppercase mb-6 text-[#1b1b18] dark:text-white">
+                                Estimasi Invoice
+                            </h3>
+                            <div className="space-y-4 text-sm">
+                                <div className="space-y-2">
+                                    <div className="font-bold text-[#1b1b18]/70 dark:text-white/70 uppercase text-xs tracking-wider">
+                                        Jasa Service
+                                    </div>
+                                    <div className="flex justify-between text-[#1b1b18] dark:text-white">
+                                        <span className="truncate pr-4">{data.tipe_service || 'Jasa'}</span>
+                                        <span className="font-medium whitespace-nowrap">Rp {Number(data.harga_service || 0).toLocaleString('id-ID')}</span>
+                                    </div>
+                                </div>
+                                
+                                {data.spareparts.length > 0 && (
+                                    <div className="space-y-2 pt-4 border-t border-[#1b1b18]/10 dark:border-white/10">
+                                        <div className="font-bold text-[#1b1b18]/70 dark:text-white/70 uppercase text-xs tracking-wider">
+                                            Spareparts
+                                        </div>
+                                        {data.spareparts.map((sp, idx) => (
+                                            <div key={idx} className="flex justify-between items-start text-[#1b1b18] dark:text-white text-sm">
+                                                <div className="flex flex-col truncate pr-4">
+                                                    <span className="truncate">{sp.jumlah}x {sp.nama_sparepart || 'Part'}</span>
+                                                    <span className="text-xs text-[#1b1b18]/50 dark:text-white/50">
+                                                        @ Rp {Number(sp.harga_satuan).toLocaleString('id-ID')}
+                                                    </span>
+                                                </div>
+                                                <span className="font-medium whitespace-nowrap mt-0.5">Rp {(Number(sp.jumlah) * Number(sp.harga_satuan)).toLocaleString('id-ID')}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <div className="mt-6 pt-4 border-t-2 border-dashed border-[#1b1b18]/20 dark:border-white/20">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm font-black tracking-widest uppercase text-[#1b1b18]/70 dark:text-white/70">Total</span>
+                                    <span className="text-xl font-black text-red-600 dark:text-red-400">
+                                        Rp {totalHarga.toLocaleString('id-ID')}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </ModalShell>
     );

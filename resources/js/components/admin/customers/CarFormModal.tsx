@@ -27,7 +27,7 @@ export function CarFormModal({
         processing,
         errors,
         reset,
-        clearErrors,
+        clearErrors, isDirty
     } = useForm({
         merk: '',
         model: '',
@@ -60,7 +60,7 @@ export function CarFormModal({
     };
 
     return (
-        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
+        <ModalShell isDirty={isDirty} isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
             <div className="mb-6 flex items-center justify-between">
                 <div>
                     <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">

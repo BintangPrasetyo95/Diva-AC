@@ -28,7 +28,7 @@ export function CustomerFormModal({
         processing,
         errors,
         reset,
-        clearErrors,
+        clearErrors, isDirty
     } = useForm({
         nama_pelanggan: '',
         no_telp: '',
@@ -79,7 +79,7 @@ export function CustomerFormModal({
     };
 
     return (
-        <ModalShell isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
+        <ModalShell isDirty={isDirty} isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                     {editingCustomer

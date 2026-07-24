@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnimatePresence, m } from 'framer-motion';
+import { useLanguage } from '@/hooks/use-language';
 
 interface ModalShellProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface ModalShellProps {
   maxWidth?: string;
   children: React.ReactNode;
   className?: string;
+  isDirty?: boolean;
 }
 
 export function ModalShell({
@@ -15,7 +17,20 @@ export function ModalShell({
   maxWidth = 'max-w-lg',
   children,
   className = '',
+  isDirty = false,
 }: ModalShellProps) {
+  const { t } = useLanguage();
+
+  const handleClose = () => {
+    if (isDirty) {
+      if (window.confirm(t('confirm_unsaved_changes') || 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?')) {
+        onClose();
+      }
+    } else {
+      onClose();
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -24,7 +39,7 @@ export function ModalShell({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute inset-0 bg-[#1b1b18]/80 backdrop-blur-sm"
           />
           <m.div

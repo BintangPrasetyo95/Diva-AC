@@ -24,7 +24,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
     const { t } = useLanguage();
     const [isNewUser, setIsNewUser] = useState(false);
 
-    const { data, setData, post, processing, errors, reset, clearErrors } =
+    const { data, setData, post, processing, errors, reset, clearErrors, isDirty } =
         useForm({
             id_pelanggan: '',
             nama_pelanggan: '',
@@ -62,7 +62,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
     };
 
     return (
-        <Modal
+        <Modal isDirty={isDirty}
             isOpen={isOpen}
             onClose={onClose}
             title="Create New Car"
