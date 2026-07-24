@@ -158,7 +158,7 @@ export function ServiceFormModal({
         );
 
     return (
-        <ModalShell isDirty={isDirty} isOpen={isOpen} onClose={onClose} maxWidth="max-w-6xl">
+        <ModalShell isDirty={isDirty} isOpen={isOpen} onClose={onClose} maxWidth="max-w-7xl">
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-2xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
                     {editingService ? t('dash_edit_order') : t('dash_new_service')}
@@ -700,44 +700,57 @@ export function ServiceFormModal({
                             <h3 className="text-lg font-black tracking-widest uppercase mb-6 text-[#1b1b18] dark:text-white">
                                 Estimasi Invoice
                             </h3>
-                            <div className="space-y-4 text-sm">
-                                <div className="space-y-2">
-                                    <div className="font-bold text-[#1b1b18]/70 dark:text-white/70 uppercase text-xs tracking-wider">
-                                        Jasa Service
-                                    </div>
-                                    <div className="flex justify-between text-[#1b1b18] dark:text-white">
-                                        <span className="truncate pr-4">{data.tipe_service || 'Jasa'}</span>
-                                        <span className="font-medium whitespace-nowrap">Rp {Number(data.harga_service || 0).toLocaleString('id-ID')}</span>
-                                    </div>
-                                </div>
-                                
-                                {data.spareparts.length > 0 && (
-                                    <div className="space-y-2 pt-4 border-t border-[#1b1b18]/10 dark:border-white/10">
-                                        <div className="font-bold text-[#1b1b18]/70 dark:text-white/70 uppercase text-xs tracking-wider">
-                                            Spareparts
-                                        </div>
-                                        {data.spareparts.map((sp, idx) => (
-                                            <div key={idx} className="flex justify-between items-start text-[#1b1b18] dark:text-white text-sm">
-                                                <div className="flex flex-col truncate pr-4">
-                                                    <span className="truncate">{sp.jumlah}x {sp.nama_sparepart || 'Part'}</span>
-                                                    <span className="text-xs text-[#1b1b18]/50 dark:text-white/50">
-                                                        @ Rp {Number(sp.harga_satuan).toLocaleString('id-ID')}
-                                                    </span>
-                                                </div>
-                                                <span className="font-medium whitespace-nowrap mt-0.5">Rp {(Number(sp.jumlah) * Number(sp.harga_satuan)).toLocaleString('id-ID')}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
                             
-                            <div className="mt-6 pt-4 border-t-2 border-dashed border-[#1b1b18]/20 dark:border-white/20">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-sm font-black tracking-widest uppercase text-[#1b1b18]/70 dark:text-white/70">Total</span>
-                                    <span className="text-xl font-black text-red-600 dark:text-red-400">
-                                        Rp {totalHarga.toLocaleString('id-ID')}
-                                    </span>
-                                </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm text-[#1b1b18] dark:text-white border-collapse">
+                                    <thead>
+                                        <tr className="border-b border-[#1b1b18]/10 dark:border-white/10 text-[10px] font-black uppercase tracking-wider text-[#1b1b18]/50 dark:text-white/50">
+                                            <th className="pb-3 w-5/12">Item</th>
+                                            <th className="pb-3 text-right w-1/3">Harga</th>
+                                            <th className="pb-3 text-right w-1/4">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-[#1b1b18]/5 dark:divide-white/5">
+                                        <tr>
+                                            <td className="py-4 pr-2">
+                                                <div className="font-bold truncate max-w-[140px]" title={data.tipe_service || 'Jasa'}>{data.tipe_service || 'Jasa'}</div>
+                                                <div className="text-[10px] text-[#1b1b18]/50 dark:text-white/50 mt-0.5">1x</div>
+                                            </td>
+                                            <td className="py-4 px-2 text-right font-medium text-[#1b1b18]/70 dark:text-white/70">
+                                                Rp {Number(data.harga_service || 0).toLocaleString('id-ID')}
+                                            </td>
+                                            <td className="py-4 pl-2 text-right font-bold whitespace-nowrap">
+                                                Rp {Number(data.harga_service || 0).toLocaleString('id-ID')}
+                                            </td>
+                                        </tr>
+                                        {data.spareparts.map((sp, idx) => (
+                                            <tr key={idx}>
+                                                <td className="py-4 pr-2">
+                                                    <div className="font-bold truncate max-w-[140px]" title={sp.nama_sparepart || 'Part'}>{sp.nama_sparepart || 'Part'}</div>
+                                                    <div className="text-[10px] text-[#1b1b18]/50 dark:text-white/50 mt-0.5">
+                                                        {sp.jumlah}x
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-2 text-right font-medium text-[#1b1b18]/70 dark:text-white/70">
+                                                    Rp {Number(sp.harga_satuan).toLocaleString('id-ID')}
+                                                </td>
+                                                <td className="py-4 pl-2 text-right font-bold whitespace-nowrap">
+                                                    Rp {(Number(sp.jumlah) * Number(sp.harga_satuan)).toLocaleString('id-ID')}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr className="border-t-2 border-dashed border-[#1b1b18]/20 dark:border-white/20">
+                                            <td colSpan={2} className="pt-6 pb-2 text-xs font-black tracking-widest uppercase text-[#1b1b18]/70 dark:text-white/70">
+                                                Total
+                                            </td>
+                                            <td className="pt-6 pb-2 text-right text-lg font-black text-red-600 dark:text-red-400 whitespace-nowrap">
+                                                Rp {totalHarga.toLocaleString('id-ID')}
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>

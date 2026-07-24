@@ -46,7 +46,7 @@ export function ModalShell({
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className={`relative w-full ${maxWidth} overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212] ${className}`}
+            className={`custom-scrollbar relative w-full ${maxWidth} max-h-[90vh] overflow-y-auto rounded-4xl bg-white p-8 shadow-2xl dark:bg-[#121212] ${className}`}
           >
             {children}
           </m.div>
