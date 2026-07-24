@@ -46,67 +46,56 @@ const itemVariants: Variants = {
     },
 };
 
-export default function ServiceDetails({ id }: { id: string }) {
+export default function ServiceDetails({ id, service }: { id: string, service: any }) {
     const { t } = useLanguage();
 
-    // Mock Detail Data
-    const service = {
-        id: id || 'SRV-001',
-        customer: {
-            name: 'Budi Santoso',
-            phone: '+62 812-3456-7890',
-            address: 'Jl. Ahmad Yani No. 123, Jakarta',
-            avatar: null,
-        },
-        vehicle: {
-            model: 'Toyota Alphard',
-            plate: 'B 1234 ABC',
-            year: '2022',
-            color: 'Black',
-        },
-        details: {
-            type: 'Complete AC Service',
-            status: 'In Progress',
-            date: '2026-05-01',
-            mechanic: 'Agus',
-            notes: 'Customer complaints about weak cooling and unusual noise from compressor.',
-        },
-        items: [
-            {
-                name: 'Freon R134a',
-                qty: 1,
-                price: 'Rp 350.000',
-                total: 'Rp 350.000',
-            },
-            {
-                name: 'Compressor Oil',
-                qty: 1,
-                price: 'Rp 150.000',
-                total: 'Rp 150.000',
-            },
-            {
-                name: 'Cabin Filter',
-                qty: 1,
-                price: 'Rp 200.000',
-                total: 'Rp 200.000',
-            },
-            {
-                name: 'Service Fee',
-                qty: 1,
-                price: 'Rp 500.000',
-                total: 'Rp 500.000',
-            },
-        ],
-        summary: {
-            subtotal: 'Rp 1.200.000',
-            tax: 'Rp 0',
-            total: 'Rp 1.200.000',
-        },
+    const formatCurrency = (amount: number | string) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            maximumFractionDigits: 0,
+        }).format(Number(amount));
     };
 
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+        });
+    };
+
+    const invoiceItems: any[] = [];
+    if (service.jasas && service.jasas.length > 0) {
+        service.jasas.forEach((jasa: any) => {
+            invoiceItems.push({
+                name: `Jasa: ${jasa.nama_jasa}`,
+                qty: 1,
+                price: formatCurrency(jasa.harga_jasa),
+                total: formatCurrency(jasa.harga_jasa),
+            });
+        });
+    } else {
+        invoiceItems.push({
+            name: `Jasa Service (${service.tipe_service})`,
+            qty: 1,
+            price: formatCurrency(service.harga_service),
+            total: formatCurrency(service.harga_service),
+        });
+    }
+
+    service.spareparts?.forEach((sp: any) => {
+        invoiceItems.push({
+            name: sp.nama_sparepart,
+            qty: sp.pivot.jumlah,
+            price: formatCurrency(sp.pivot.harga_satuan),
+            total: formatCurrency(sp.pivot.jumlah * sp.pivot.harga_satuan),
+        });
+    });
     const getStatusBadge = (status: string) => {
         switch (status) {
-            case 'Completed':
+            case 'selesai':
                 return (
                     <Badge
                         variant="outline"
@@ -116,7 +105,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                         {t('dash_status_completed')}
                     </Badge>
                 );
-            case 'Pending':
+            case 'antri':
                 return (
                     <Badge
                         variant="outline"
@@ -126,7 +115,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                         {t('dash_status_pending')}
                     </Badge>
                 );
-            case 'In Progress':
+            case 'proses':
             default:
                 return (
                     <Badge
@@ -165,20 +154,21 @@ export default function ServiceDetails({ id }: { id: string }) {
                         </Link>
                         <div className="flex items-center gap-4">
                             <h1 className="text-3xl font-black tracking-tight text-[#1b1b18] uppercase dark:text-white">
-                                {service.id}
+                                SRV-{String(service.id).padStart(4, '0')}
                             </h1>
-                            {getStatusBadge(service.details.status)}
+                            {getStatusBadge(service.status_service)}
                         </div>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <Button
-                            variant="outline"
-                            className="h-12 gap-2 rounded-2xl border-[#1b1b18]/10 px-6 text-[10px] font-bold tracking-widest uppercase dark:border-white/10"
+                        <a
+                            href={`/admin/invoice/service/${service.id}`}
+                            target="_blank"
+                            className="flex h-12 items-center gap-2 rounded-2xl border border-[#1b1b18]/10 px-6 text-[10px] font-bold tracking-widest uppercase hover:bg-[#1b1b18]/5 transition-colors dark:border-white/10 dark:hover:bg-white/5"
                         >
                             <Printer className="size-4" />
                             {t('dash_print_invoice')}
-                        </Button>
+                        </a>
                         <Button className="h-12 gap-2 rounded-2xl bg-red-600 px-8 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg shadow-red-600/20 transition-all hover:scale-105 hover:bg-red-700 active:scale-95">
                             <CheckCircle2 className="size-4" />
                             {t('dash_complete_service')}
@@ -208,7 +198,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                         {t('dash_col_customer')}
                                     </span>
                                     <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                        {service.customer.name}
+                                        {service.mobil?.pelanggan?.nama_pelanggan || '-'}
                                     </span>
                                 </div>
                                 <div className="flex flex-col">
@@ -218,7 +208,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                     <div className="flex items-center gap-2">
                                         <Phone className="size-3 text-red-600" />
                                         <span className="text-sm font-medium text-[#1b1b18]/70 dark:text-white/70">
-                                            {service.customer.phone}
+                                            {service.mobil?.pelanggan?.no_telp || '-'}
                                         </span>
                                     </div>
                                 </div>
@@ -229,7 +219,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                     <div className="flex items-start gap-2">
                                         <MapPin className="mt-1 size-3 text-red-600" />
                                         <span className="text-sm font-medium text-[#1b1b18]/70 dark:text-white/70">
-                                            {service.customer.address}
+                                            {service.mobil?.pelanggan?.alamat || '-'}
                                         </span>
                                     </div>
                                 </div>
@@ -255,7 +245,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                         {t('dash_col_car')}
                                     </span>
                                     <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                        {service.vehicle.model}
+                                        {service.mobil?.merk} {service.mobil?.model}
                                     </span>
                                 </div>
                                 <div className="flex flex-col">
@@ -263,7 +253,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                         Plate
                                     </span>
                                     <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                        {service.vehicle.plate}
+                                        {service.mobil?.no_polisi}
                                     </span>
                                 </div>
                                 <div className="flex flex-col">
@@ -271,7 +261,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                         Year
                                     </span>
                                     <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                        {service.vehicle.year}
+                                        {'-'}
                                     </span>
                                 </div>
                                 <div className="flex flex-col">
@@ -279,7 +269,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                         Color
                                     </span>
                                     <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                        {service.vehicle.color}
+                                        {service.mobil?.warna || '-'}
                                     </span>
                                 </div>
                             </div>
@@ -309,7 +299,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                     <div className="flex items-center gap-2">
                                         <ShieldCheck className="size-4 text-red-600" />
                                         <span className="text-sm font-black text-[#1b1b18] dark:text-white">
-                                            {service.details.type}
+                                            {service.tipe_service}
                                         </span>
                                     </div>
                                 </div>
@@ -320,7 +310,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                     <div className="flex items-center gap-2">
                                         <Wrench className="size-4 text-[#1b1b18]/40 dark:text-white/40" />
                                         <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                            {service.details.mechanic}
+                                            {service.mekanik?.nama_mekanik || '-'}
                                         </span>
                                     </div>
                                 </div>
@@ -331,7 +321,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                     <div className="flex items-center gap-2">
                                         <Calendar className="size-4 text-[#1b1b18]/40 dark:text-white/40" />
                                         <span className="text-sm font-bold text-[#1b1b18] dark:text-white">
-                                            {service.details.date}
+                                            {formatDate(service.tanggal_service)}
                                         </span>
                                     </div>
                                 </div>
@@ -341,7 +331,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                     {t('notes')}
                                 </span>
                                 <p className="text-sm text-[#1b1b18]/70 italic dark:text-white/70">
-                                    "{service.details.notes}"
+                                    {service.catatan || '-'}
                                 </p>
                             </div>
                         </m.div>
@@ -387,7 +377,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-[#1b1b18]/5 dark:divide-white/5">
-                                        {service.items.map((item, index) => (
+                                        {invoiceItems.map((item, index) => (
                                             <tr key={index} className="group">
                                                 <td className="px-8 py-5 text-sm font-bold text-[#1b1b18] dark:text-white">
                                                     {item.name}
@@ -415,7 +405,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                             {t('dash_subtotal')}
                                         </span>
                                         <span className="font-bold text-[#1b1b18] dark:text-white">
-                                            {service.summary.subtotal}
+                                            {formatCurrency(service.total_service)}
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between text-sm">
@@ -423,7 +413,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                             {t('dash_tax')} (0%)
                                         </span>
                                         <span className="font-bold text-[#1b1b18] dark:text-white">
-                                            {service.summary.tax}
+                                            Rp 0
                                         </span>
                                     </div>
                                     <div className="my-1 h-px bg-[#1b1b18]/10 dark:bg-white/10" />
@@ -433,7 +423,7 @@ export default function ServiceDetails({ id }: { id: string }) {
                                             {t('dash_grand_total')}
                                         </span>
                                         <span className="text-xl font-black tracking-tighter text-[#1b1b18] dark:text-white">
-                                            {service.summary.total}
+                                            {formatCurrency(service.total_service)}
                                         </span>
                                     </div>
                                 </div>

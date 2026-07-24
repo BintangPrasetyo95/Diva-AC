@@ -22,7 +22,7 @@ class ServiceController extends Controller
     public function index(): Response
     {
         return Inertia::render('services', [
-            'services' => Service::with(['mobil.pelanggan', 'mekanik', 'spareparts'])
+            'services' => Service::with(['mobil.pelanggan', 'mekanik', 'spareparts', 'jasas'])
                 ->orderBy('tanggal_service', 'desc')
                 ->get(),
             'mobils' => Mobil::with('pelanggan')->get(),
@@ -46,6 +46,9 @@ class ServiceController extends Controller
             'spareparts.*.id' => 'required|exists:sparepart,id',
             'spareparts.*.jumlah' => 'required|integer|min:1',
             'spareparts.*.harga_satuan' => 'required|numeric|min:0',
+            'jasas' => 'nullable|array',
+            'jasas.*.nama_jasa' => 'required|string|max:255',
+            'jasas.*.harga_jasa' => 'required|numeric|min:0',
         ]);
 
         return DB::transaction(function () use ($validated) {
@@ -53,6 +56,9 @@ class ServiceController extends Controller
 
             $action = new SyncSparepartsAction();
             $totalSparepart = $action->execute($service, $validated['spareparts'] ?? []);
+
+            $jasaAction = new \App\Actions\SyncJasasAction();
+            $jasaAction->execute($service, $validated['jasas'] ?? []);
 
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 
@@ -81,11 +87,34 @@ class ServiceController extends Controller
             'spareparts.*.id' => 'required|exists:sparepart,id',
             'spareparts.*.jumlah' => 'required|integer|min:1',
             'spareparts.*.harga_satuan' => 'required|numeric|min:0',
+            'jasas' => 'nullable|array',
+            'jasas.*.nama_jasa' => 'required|string|max:255',
+            'jasas.*.harga_jasa' => 'required|numeric|min:0',
         ]);
 
         return DB::transaction(function () use ($validated) {
-            $action = new CreateCustomerAndCarAction();
-            $mobil = $action->execute($validated);
+            if ($validated['id_pelanggan'] === 'new') {
+                $mappedData = [
+                    'nama_pelanggan' => $validated['customer_name'],
+                    'email' => $validated['customer_email'] ?? null,
+                    'no_telp' => $validated['customer_phone'] ?? '-',
+                    'merk' => $validated['merk'],
+                    'model' => $validated['tipe'],
+                    'no_polisi' => $validated['no_polisi'],
+                    'warna' => $validated['warna'] ?? null,
+                ];
+
+                $action = new CreateCustomerAndCarAction();
+                $mobil = $action->execute($mappedData);
+            } else {
+                $mobil = Mobil::create([
+                    'id_pelanggan' => $validated['id_pelanggan'],
+                    'merk' => $validated['merk'],
+                    'model' => $validated['tipe'],
+                    'no_polisi' => $validated['no_polisi'],
+                    'warna' => $validated['warna'] ?? null,
+                ]);
+            }
             
             $serviceData = [
                 'id_mobil' => $mobil->id,
@@ -102,6 +131,9 @@ class ServiceController extends Controller
             $action = new SyncSparepartsAction();
             $totalSparepart = $action->execute($service, $validated['spareparts'] ?? []);
 
+            $jasaAction = new \App\Actions\SyncJasasAction();
+            $jasaAction->execute($service, $validated['jasas'] ?? []);
+
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 
             return back()->with('success', 'Service and vehicle created successfully');
@@ -112,7 +144,7 @@ class ServiceController extends Controller
     {
         return Inertia::render('services/details', [
             'id' => $id,
-            'service' => Service::with(['mobil.pelanggan', 'mekanik', 'spareparts'])->findOrFail($id),
+            'service' => Service::with(['mobil.pelanggan', 'mekanik', 'spareparts', 'jasas'])->findOrFail($id),
         ]);
     }
 
@@ -130,6 +162,9 @@ class ServiceController extends Controller
             'spareparts.*.id' => 'required|exists:sparepart,id',
             'spareparts.*.jumlah' => 'required|integer|min:1',
             'spareparts.*.harga_satuan' => 'required|numeric|min:0',
+            'jasas' => 'nullable|array',
+            'jasas.*.nama_jasa' => 'required|string|max:255',
+            'jasas.*.harga_jasa' => 'required|numeric|min:0',
         ]);
 
         return DB::transaction(function () use ($validated, $service) {
@@ -145,6 +180,9 @@ class ServiceController extends Controller
 
             $action = new SyncSparepartsAction();
             $totalSparepart = $action->execute($service, $validated['spareparts'] ?? []);
+
+            $jasaAction = new \App\Actions\SyncJasasAction();
+            $jasaAction->execute($service, $validated['jasas'] ?? []);
 
             $service->update(['total_service' => $validated['harga_service'] + $totalSparepart]);
 

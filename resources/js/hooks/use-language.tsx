@@ -10,6 +10,10 @@ interface Translations {
 }
 
 export const translations: Translations = {
+    confirm_unsaved_changes: {
+        id: 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?',
+        en: 'You have unsaved changes. Are you sure you want to close?',
+    },
     // Hero
     hero_tagline: {
         id: 'Layanan AC Mobil Premium & Suku Cadang Berkualitas Tinggi. Perawatan ahli untuk kenyamanan kendaraan Anda.',

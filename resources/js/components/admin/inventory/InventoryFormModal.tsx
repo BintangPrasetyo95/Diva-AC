@@ -65,6 +65,16 @@ export function InventoryFormModal({
         }
     }, [isOpen, editingPart]);
 
+    const handleClose = () => {
+        if (isDirty) {
+            if (window.confirm(t('confirm_unsaved_changes') || 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?')) {
+                onClose();
+            }
+        } else {
+            onClose();
+        }
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -104,7 +114,7 @@ export function InventoryFormModal({
                         : t('dash_add_new_item')}
                 </h2>
                 <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="rounded-full p-2 text-[#1b1b18]/40 hover:bg-[#1b1b18]/5 dark:text-white/40 dark:hover:bg-white/5"
                 >
                     <X className="size-6" />

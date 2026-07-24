@@ -30,4 +30,9 @@ class Service extends Model
         return $this->belongsToMany(Sparepart::class, 'service_sparepart', 'id_service', 'id_sparepart')
             ->withPivot('jumlah', 'harga_satuan');
     }
+
+    public function jasas()
+    {
+        return $this->hasMany(ServiceJasa::class, 'id_service');
+    }
 }

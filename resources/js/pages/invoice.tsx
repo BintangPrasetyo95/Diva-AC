@@ -40,11 +40,21 @@ export default function InvoicePage({ type, data }: Props) {
         date = data.tanggal_service;
         
         // Items in service
-        items.push({
-            name: `Jasa Service (${data.tipe_service})`,
-            qty: 1,
-            price: Number(data.harga_service) || (Number(data.total_service) - data.spareparts.reduce((acc: number, curr: any) => acc + (curr.pivot.jumlah * curr.pivot.harga_satuan), 0)),
-        });
+        if (data.jasas && data.jasas.length > 0) {
+            data.jasas.forEach((jasa: any) => {
+                items.push({
+                    name: jasa.nama_jasa,
+                    qty: 1,
+                    price: Number(jasa.harga_jasa),
+                });
+            });
+        } else {
+            items.push({
+                name: `Jasa Service (${data.tipe_service})`,
+                qty: 1,
+                price: Number(data.harga_service) || (Number(data.total_service) - data.spareparts.reduce((acc: number, curr: any) => acc + (curr.pivot.jumlah * curr.pivot.harga_satuan), 0)),
+            });
+        }
 
         data.spareparts?.forEach((sp: any) => {
             items.push({

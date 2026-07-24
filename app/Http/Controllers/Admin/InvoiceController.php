@@ -16,7 +16,7 @@ class InvoiceController extends Controller
         $id = $request->query('id');
 
         if ($type === 'service') {
-            $data = Service::with(['mobil.pelanggan', 'mekanik', 'spareparts'])->findOrFail($id);
+            $data = Service::with(['mobil.pelanggan', 'mekanik', 'spareparts', 'jasas'])->findOrFail($id);
         } elseif ($type === 'sparepart') {
             $data = PenjualanSparepart::with(['spareparts'])->findOrFail($id);
         } else {

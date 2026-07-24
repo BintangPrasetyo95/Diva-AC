@@ -57,6 +57,7 @@ export function ServiceFormModal({
         status_service: '',
         catatan: '',
         spareparts: [] as any[],
+        jasas: [] as any[],
     });
 
     useEffect(() => {
@@ -66,7 +67,16 @@ export function ServiceFormModal({
                 setActiveTab('existing');
                 
                 const initialLines: LineItem[] = [];
-                if (editingService.tipe_service) {
+                if (editingService.jasas && editingService.jasas.length > 0) {
+                    editingService.jasas.forEach((j: any) => {
+                        initialLines.push({
+                            type: 'jasa',
+                            name: j.nama_jasa,
+                            qty: 1,
+                            price: Number(j.harga_jasa)
+                        });
+                    });
+                } else if (editingService.tipe_service) {
                     const parts = editingService.tipe_service.split(',').map(s => s.trim()).filter(Boolean);
                     if (parts.length > 0) {
                         initialLines.push({
@@ -126,7 +136,8 @@ export function ServiceFormModal({
                     harga_service: editingService.harga_service.toString(),
                     status_service: editingService.status_service,
                     catatan: editingService.catatan || '',
-                    spareparts: []
+                    spareparts: [],
+                    jasas: []
                 });
             } else {
                 setActiveTab('existing');
@@ -135,6 +146,16 @@ export function ServiceFormModal({
             }
         }
     }, [isOpen, editingService]);
+
+    const handleClose = () => {
+        if (isDirty) {
+            if (window.confirm(t('confirm_unsaved_changes') || 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?')) {
+                onClose();
+            }
+        } else {
+            onClose();
+        }
+    };
 
     useEffect(() => {
         const jasas = lineItems.filter(li => li.type === 'jasa');
@@ -150,11 +171,17 @@ export function ServiceFormModal({
             nama_sparepart: sp.name
         }));
 
+        const mappedJasas = jasas.map(j => ({
+            nama_jasa: j.name,
+            harga_jasa: Number(j.price)
+        }));
+
         setData(prev => ({
             ...prev,
             tipe_service: combinedTipeService,
             harga_service: totalHargaService.toString(),
-            spareparts: mappedSpareparts
+            spareparts: mappedSpareparts,
+            jasas: mappedJasas
         }));
     }, [lineItems]);
 
@@ -242,7 +269,7 @@ export function ServiceFormModal({
                 </h2>
                 <button
                     type="button"
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="rounded-full p-2 transition-colors hover:bg-[#1b1b18]/10 dark:hover:bg-white/10 text-[#1b1b18] dark:text-white"
                 >
                     <X className="size-6" />

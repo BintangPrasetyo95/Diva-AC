@@ -84,6 +84,16 @@ export function OrderEditModal({
         }
     }, [isOpen, order]);
 
+    const handleClose = () => {
+        if (isDirty) {
+            if (window.confirm(t('confirm_unsaved_changes') || 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?')) {
+                onClose();
+            }
+        } else {
+            onClose();
+        }
+    };
+
     const submitEdit = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -270,7 +280,7 @@ export function OrderEditModal({
                 <div className="flex justify-end gap-2 pt-4 border-t border-[#1b1b18]/10 dark:border-white/10">
                     <button
                         type="button"
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="rounded-xl px-4 py-2 text-sm font-bold text-[#1b1b18]/70 transition-colors hover:bg-[#1b1b18]/5 dark:text-white/70 dark:hover:bg-white/5"
                     >
                         {t('dash_cancel')}
