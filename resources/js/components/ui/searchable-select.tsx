@@ -43,6 +43,7 @@ export function SearchableSelect({
                 setQuery('');
             }}
             onClose={() => setQuery('')}
+            immediate
         >
             <div className="relative w-full">
                 <div className="relative w-full">
