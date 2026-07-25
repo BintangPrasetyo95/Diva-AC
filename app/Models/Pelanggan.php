@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['nama_pelanggan', 'no_telp', 'email', 'jenis_kelamin', 'alamat', 'tanggal_daftar'])]
+#[Fillable(['name', 'username', 'password', 'role', 'nama_pelanggan', 'no_telp', 'email', 'jenis_kelamin', 'alamat', 'tanggal_daftar'])]
 class Pelanggan extends User
 {
+    use SoftDeletes;
+
     use HasFactory;
 
     protected $table = 'users';

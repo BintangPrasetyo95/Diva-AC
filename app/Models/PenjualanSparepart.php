@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[Fillable(['id_user', 'customer_name', 'customer_phone', 'address', 'status', 'tanggal_penjualan', 'total_harga', 'bayar', 'kembali'])]
 class PenjualanSparepart extends Model
 {
+    use SoftDeletes;
+
     use HasFactory;
 
     protected $table = 'penjualan_sparepart';

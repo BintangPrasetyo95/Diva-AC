@@ -51,10 +51,6 @@ class CustomerController extends Controller
 
     public function destroy(Pelanggan $customer): RedirectResponse
     {
-        // Check if has associated cars with services
-        if ($customer->mobils()->whereHas('services')->exists()) {
-            return back()->withErrors(['error' => 'Cannot delete customer with active service history.']);
-        }
 
         // Delete cars first (or let cascade if configured, but here we restrict)
         $customer->mobils()->delete();

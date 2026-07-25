@@ -114,10 +114,6 @@ export function ServiceFormModal({
                     });
                 }
                 
-                if (initialLines.length === 0) {
-                    initialLines.push({ type: 'jasa', name: '', qty: 1, price: 0 });
-                }
-                
                 setLineItems(initialLines);
 
                 setData({
@@ -141,7 +137,7 @@ export function ServiceFormModal({
                 });
             } else {
                 setActiveTab('existing');
-                setLineItems([{ type: 'jasa', name: '', qty: 1, price: 0 }]);
+                setLineItems([]);
                 reset();
             }
         }
@@ -505,7 +501,7 @@ export function ServiceFormModal({
                                 <table className="w-full text-left text-sm text-[#1b1b18] dark:text-white border-collapse min-w-[500px]">
                                     <thead>
                                         <tr className="border-b border-[#1b1b18]/10 dark:border-white/10 text-[10px] font-black uppercase tracking-wider text-[#1b1b18]/50 dark:text-white/50">
-                                            <th className="pb-3 w-5/12">Item</th>
+                                            <th className="pb-3 w-5/12 pl-2">Item</th>
                                             <th className="pb-3 text-right w-1/3">Harga Satuan</th>
                                             <th className="pb-3 text-right w-1/4">Total</th>
                                             <th className="pb-3 text-center w-10"></th>
@@ -514,7 +510,7 @@ export function ServiceFormModal({
                                     <tbody className="divide-y divide-[#1b1b18]/5 dark:divide-white/5">
                                         {lineItems.map((item, idx) => (
                                             <tr key={idx} className="group hover:bg-[#1b1b18]/5 dark:hover:bg-white/5 transition-colors">
-                                                <td className="py-3 pr-2">
+                                                <td className="py-3 px-2">
                                                     {item.type === 'jasa' ? (
                                                         <div className="flex flex-col gap-1">
                                                             <Input 

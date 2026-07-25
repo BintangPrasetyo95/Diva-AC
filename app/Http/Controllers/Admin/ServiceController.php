@@ -192,10 +192,6 @@ class ServiceController extends Controller
 
     public function destroy(Service $service): RedirectResponse
     {
-        // Check if has associated spareparts
-        if ($service->spareparts()->exists()) {
-            return back()->withErrors(['error' => 'Cannot delete service that has used spareparts. Cancel it instead.']);
-        }
 
         $service->delete();
 
