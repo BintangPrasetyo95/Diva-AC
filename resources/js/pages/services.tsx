@@ -48,6 +48,7 @@ import {
     DataTableInner,
 } from '@/components/ui/DataTable';
 import { useLanguage } from '@/hooks/use-language';
+import { downloadInvoicePdf } from '@/lib/downloadInvoice';
 
 interface Customer {
     id: number;
@@ -773,6 +774,38 @@ export default function ServicesPage({
                                                                 <a href={`/admin/invoice?type=service&id=${service.id}`} target="_blank">
                                                                     Print Invoice
                                                                 </a>
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-gray-600 focus:text-white"
+                                                                onSelect={(e) => {
+                                                                    e.preventDefault();
+                                                                    toast.loading('Generating PDF...', { id: `pdf-${service.id}` });
+                                                                    downloadInvoicePdf('service', service).then(() => {
+                                                                        toast.success('Invoice downloaded successfully!', { id: `pdf-${service.id}` });
+                                                                    }).catch((err) => {
+                                                                        console.error("PDF Error:", err);
+                                                                        toast.error('Failed to generate PDF', { id: `pdf-${service.id}` });
+                                                                    });
+                                                                }}
+                                                            >
+                                                                Download Invoice
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-gray-600 focus:text-white"
+                                                                onSelect={(e) => {
+                                                                    e.preventDefault();
+                                                                    toast.loading('Preparing PDF for sharing...', { id: `share-${service.id}` });
+                                                                    import('@/lib/downloadInvoice').then(({ shareInvoicePdf }) => {
+                                                                        shareInvoicePdf('service', service).then(() => {
+                                                                            toast.success('Ready to share!', { id: `share-${service.id}` });
+                                                                        }).catch((err) => {
+                                                                            console.error("Share Error:", err);
+                                                                            toast.error(err.message || 'Failed to share PDF', { id: `share-${service.id}` });
+                                                                        });
+                                                                    });
+                                                                }}
+                                                            >
+                                                                Share Invoice
                                                             </DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>

@@ -1,18 +1,23 @@
 import { Head } from '@inertiajs/react';
+import { scale } from 'framer-motion';
 import React, { useEffect } from 'react';
 
 interface Props {
     type: 'service' | 'sparepart';
     data: any;
+    autoPrint?: boolean;
 }
 
-export default function InvoicePage({ type, data }: Props) {
+export function InvoiceTemplate({ type, data, autoPrint = true }: Props) {
     useEffect(() => {
-        // Automatically open print dialog when page loads
-        window.print();
-    }, []);
+        if (autoPrint) {
+            // Automatically open print dialog when page loads
+            window.print();
+        }
+    }, [autoPrint]);
 
     const formatCurrency = (amount: number | string) => {
+        if (amount === null || amount === undefined || isNaN(Number(amount))) return '-';
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
@@ -21,8 +26,9 @@ export default function InvoicePage({ type, data }: Props) {
     };
 
     const formatDate = (dateString: string) => {
+        if (!dateString) return '-';
         const date = new Date(dateString);
-
+        if (isNaN(date.getTime())) return '-';
         return date.toLocaleDateString('id-ID', {
             day: '2-digit',
             month: 'long',
@@ -52,15 +58,15 @@ export default function InvoicePage({ type, data }: Props) {
             items.push({
                 name: `Jasa Service (${data.tipe_service})`,
                 qty: 1,
-                price: Number(data.harga_service) || (Number(data.total_service) - data.spareparts.reduce((acc: number, curr: any) => acc + (curr.pivot.jumlah * curr.pivot.harga_satuan), 0)),
+                price: Number(data.harga_service) || (Number(data.total_service) - (data.spareparts || []).reduce((acc: number, curr: any) => acc + ((curr.pivot?.jumlah || 0) * (curr.pivot?.harga_satuan || 0)), 0)),
             });
         }
 
         data.spareparts?.forEach((sp: any) => {
             items.push({
                 name: sp.nama_sparepart,
-                qty: sp.pivot.jumlah,
-                price: sp.pivot.harga_satuan,
+                qty: sp.pivot?.jumlah || 0,
+                price: sp.pivot?.harga_satuan || 0,
             });
         });
 
@@ -104,8 +110,6 @@ export default function InvoicePage({ type, data }: Props) {
 
     return (
         <div>
-            <Head title="DIVA AC – Invoice" />
-            
             <style>{`
                 /* ── Reset & Base ───────────────────────────────────────────── */
                 body {
@@ -143,7 +147,7 @@ export default function InvoicePage({ type, data }: Props) {
                 .header-left { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
 
                 .logo-combined {
-                  height: 135px;
+                  height: 115px;
                   width: auto;
                   display: block;
                   margin: 0;
@@ -381,11 +385,11 @@ export default function InvoicePage({ type, data }: Props) {
 
                 {/* LEFT */}
                 <div className="header-left">
-                  <img className="logo-combined" src="/logostruct.svg" alt="DIVA AC logo" />
+                  <img className="logo-combined" src="/img/logo-diva-ac.jpg" alt="DIVA AC logo" />
                   <div className="biz-details">
                     <p className="biz-bold">Isi freon, Pasang Baru, Alarm, Central Lock</p>
                     <p className="biz-bold">Perempatan bedeng 20, Jl.Brigjen Katamso, Metro</p>
-                    <p>Rek. BCA - 117 107 8321 / Mandiri - 1140 0077 24571 an.SUHENDRO</p>
+                    <p>Rek. BCA - 117 107 8321 / Mandiri - 1140 0077 24571 an.SUHENDRO / BRI - 0130 0111 4041 501</p>
                   </div>
                 </div>
 
@@ -487,6 +491,15 @@ export default function InvoicePage({ type, data }: Props) {
 
             </div>
         </div>
+    );
+}
+
+export default function InvoicePage({ type, data }: Props) {
+    return (
+        <>
+            <Head title="DIVA AC – Invoice" />
+            <InvoiceTemplate type={type} data={data} autoPrint={true} />
+        </>
     );
 }
 

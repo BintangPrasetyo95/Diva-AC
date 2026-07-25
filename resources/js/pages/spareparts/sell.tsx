@@ -7,8 +7,9 @@ import {
     LazyMotion,
     domAnimation,
 } from 'framer-motion';
-import { CheckCircle2, XCircle, Clock, Eye, Edit, Printer } from 'lucide-react';
+import { CheckCircle2, XCircle, Clock, Eye, Edit, Printer, Download, Share2 } from 'lucide-react';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { useLanguage } from '@/hooks/use-language';
 import {
     DataTable,
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/DataTable';
 import { OrderViewModal } from '@/components/admin/spareparts/OrderViewModal';
 import { OrderEditModal } from '@/components/admin/spareparts/OrderEditModal';
+import { downloadInvoicePdf } from '@/lib/downloadInvoice';
 
 interface OrderItem {
     id_sparepart: number;
@@ -275,6 +277,38 @@ export default function SparepartSellPage({ orders = [], spareparts = [] }: Prop
                                                     >
                                                         <Printer className="size-4" />
                                                     </a>
+                                                    <button
+                                                        onClick={async () => {
+                                                            toast.loading('Generating PDF...', { id: `pdf-${order.id}` });
+                                                            try {
+                                                                await downloadInvoicePdf('sparepart', order);
+                                                                toast.success('Invoice downloaded successfully!', { id: `pdf-${order.id}` });
+                                                            } catch (err) {
+                                                                toast.error('Failed to generate PDF', { id: `pdf-${order.id}` });
+                                                            }
+                                                        }}
+                                                        className="flex items-center gap-1 rounded-xl border border-gray-500/20 px-2 py-1.5 text-xs font-bold text-gray-500 transition-colors hover:bg-gray-500/10"
+                                                        title="Download Invoice"
+                                                    >
+                                                        <Download className="size-4" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            toast.loading('Preparing PDF for sharing...', { id: `share-${order.id}` });
+                                                            import('@/lib/downloadInvoice').then(({ shareInvoicePdf }) => {
+                                                                shareInvoicePdf('sparepart', order).then(() => {
+                                                                    toast.success('Ready to share!', { id: `share-${order.id}` });
+                                                                }).catch((err) => {
+                                                                    console.error("Share Error:", err);
+                                                                    toast.error(err.message || 'Failed to share PDF', { id: `share-${order.id}` });
+                                                                });
+                                                            });
+                                                        }}
+                                                        className="flex items-center gap-1 rounded-xl border border-gray-500/20 px-2 py-1.5 text-xs font-bold text-gray-500 transition-colors hover:bg-gray-500/10"
+                                                        title="Share Invoice"
+                                                    >
+                                                        <Share2 className="size-4" />
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>

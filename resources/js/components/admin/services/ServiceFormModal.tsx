@@ -498,7 +498,7 @@ export function ServiceFormModal({
                             </div>
                             
                             <div className="overflow-x-auto">
-                                <table className="w-full text-left text-sm text-[#1b1b18] dark:text-white border-collapse min-w-[500px]">
+                                <table className="w-full text-left text-sm text-[#1b1b18] dark:text-white border-collapse min-w-125">
                                     <thead>
                                         <tr className="border-b border-[#1b1b18]/10 dark:border-white/10 text-[10px] font-black uppercase tracking-wider text-[#1b1b18]/50 dark:text-white/50">
                                             <th className="pb-3 w-5/12 pl-2">Item</th>
