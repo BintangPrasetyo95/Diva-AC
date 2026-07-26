@@ -14,6 +14,50 @@ export const translations: Translations = {
         id: 'Anda memiliki perubahan yang belum disimpan. Yakin ingin menutup?',
         en: 'You have unsaved changes. Are you sure you want to close?',
     },
+    msg_sparepart_updated: {
+        id: 'Suku cadang berhasil diperbarui',
+        en: 'Sparepart updated successfully',
+    },
+    msg_sparepart_update_failed: {
+        id: 'Gagal memperbarui suku cadang',
+        en: 'Failed to update sparepart',
+    },
+    msg_sparepart_added: {
+        id: 'Suku cadang berhasil ditambahkan',
+        en: 'Sparepart added successfully',
+    },
+    msg_sparepart_add_failed: {
+        id: 'Gagal menambahkan suku cadang',
+        en: 'Failed to add sparepart',
+    },
+    dash_notes: {
+        id: 'Catatan',
+        en: 'Notes',
+    },
+    dash_form_item_image: {
+        id: 'Gambar Barang (Opsional)',
+        en: 'Item Image (Optional)',
+    },
+    dash_click_to_change: {
+        id: 'Klik untuk mengubah',
+        en: 'Click to change',
+    },
+    dash_click_to_upload: {
+        id: 'Klik untuk mengunggah gambar',
+        en: 'Click to upload image',
+    },
+    dash_make_public: {
+        id: 'Buat Publik',
+        en: 'Make Public',
+    },
+    dash_make_public_desc: {
+        id: 'Izinkan pelanggan melihat barang ini di katalog publik.',
+        en: 'Allow customers to view this item on the public catalog.',
+    },
+    booking_success: {
+        id: 'Booking berhasil dikirim! Kami akan segera menghubungi Anda.',
+        en: 'Booking submitted successfully! We will contact you soon.',
+    },
     // Hero
     hero_tagline: {
         id: 'Layanan AC Mobil Premium & Suku Cadang Berkualitas Tinggi. Perawatan ahli untuk kenyamanan kendaraan Anda.',

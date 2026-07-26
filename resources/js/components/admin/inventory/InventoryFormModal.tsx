@@ -83,11 +83,11 @@ export function InventoryFormModal({
                 preserveScroll: true,
                 onSuccess: () => {
                     onClose();
-                    toast.success('Sparepart updated successfully');
+                    toast.success(t('msg_sparepart_updated') || 'Sparepart updated successfully');
                     reset();
                 },
                 onError: () => {
-                    toast.error('Failed to update sparepart');
+                    toast.error(t('msg_sparepart_update_failed') || 'Failed to update sparepart');
                 },
             });
         } else {
@@ -95,11 +95,11 @@ export function InventoryFormModal({
                 preserveScroll: true,
                 onSuccess: () => {
                     onClose();
-                    toast.success('Sparepart added successfully');
+                    toast.success(t('msg_sparepart_added') || 'Sparepart added successfully');
                     reset();
                 },
                 onError: () => {
-                    toast.error('Failed to add sparepart');
+                    toast.error(t('msg_sparepart_add_failed') || 'Failed to add sparepart');
                 },
             });
         }
@@ -125,7 +125,7 @@ export function InventoryFormModal({
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                            Item Name *
+                            {t('dash_col_item_name') || 'Item Name'} *
                         </label>
                         <Input
                             value={data.nama_sparepart}
@@ -144,7 +144,7 @@ export function InventoryFormModal({
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                            Category/Type *
+                            {t('dash_part_type') || 'Category/Type'} *
                         </label>
                         <Input
                             value={data.tipe_sparepart}
@@ -164,7 +164,7 @@ export function InventoryFormModal({
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                Price *
+                                {t('dash_col_price') || 'Price'} *
                             </label>
                             <Input
                                 type="number"
@@ -184,7 +184,7 @@ export function InventoryFormModal({
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                Stock *
+                                {t('dash_col_stock_status') || 'Stock'} *
                             </label>
                             <Input
                                 type="number"
@@ -205,7 +205,7 @@ export function InventoryFormModal({
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                            Notes
+                            {t('dash_notes') || 'Notes'}
                         </label>
                         <textarea
                             value={data.keterangan}
@@ -219,7 +219,7 @@ export function InventoryFormModal({
 
                     <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                            Item Image (Optional)
+                            {t('dash_form_item_image') || 'Item Image (Optional)'}
                         </label>
                         <div className="flex flex-col gap-2">
                             <div
@@ -232,14 +232,14 @@ export function InventoryFormModal({
                                             {data.image_file.name}
                                         </span>
                                         <span className="text-xs opacity-50">
-                                            Click to change
+                                            {t('dash_click_to_change') || 'Click to change'}
                                         </span>
                                     </div>
                                 ) : (
                                     <>
                                         <Upload className="size-8 text-[#1b1b18]/40 dark:text-white/40" />
                                         <span className="text-sm font-bold text-[#1b1b18]/60 dark:text-white/60">
-                                            Click to upload image
+                                            {t('dash_click_to_upload') || 'Click to upload image'}
                                         </span>
                                     </>
                                 )}
@@ -277,10 +277,10 @@ export function InventoryFormModal({
                                 htmlFor="is_public"
                                 className="font-bold text-[#1b1b18] dark:text-white"
                             >
-                                Make Public
+                                {t('dash_make_public') || 'Make Public'}
                             </Label>
                             <p className="text-xs text-[#1b1b18]/60 dark:text-white/60">
-                                Allow customers to view this item on the public catalog.
+                                {t('dash_make_public_desc') || 'Allow customers to view this item on the public catalog.'}
                             </p>
                         </div>
                     </div>
