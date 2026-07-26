@@ -85,6 +85,7 @@ interface Service {
 
 import { ServiceFormModal } from '@/components/admin/services/ServiceFormModal';
 import { ServiceDeleteModal } from '@/components/admin/services/ServiceDeleteModal';
+import { ServicePaymentModal } from '@/components/admin/services/ServicePaymentModal';
 
 interface User {
     id: number;
@@ -166,6 +167,14 @@ export default function ServicesPage({
     const openDeleteModal = (service: Service) => {
         setDeletingService(service);
         setIsDeleteModalOpen(true);
+    };
+
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = React.useState(false);
+    const [payingService, setPayingService] = React.useState<Service | null>(null);
+
+    const openPayModal = (service: Service) => {
+        setPayingService(service);
+        setIsPaymentModalOpen(true);
     };
 
     const getStatusBadge = (status: string) => {
@@ -764,6 +773,16 @@ export default function ServicesPage({
                                                                     'dash_edit_order',
                                                                 )}
                                                             </DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                onClick={() =>
+                                                                    openPayModal(
+                                                                        service,
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer rounded-xl px-4 py-3 text-xs font-bold tracking-widest uppercase focus:bg-green-600 focus:text-white text-green-600"
+                                                            >
+                                                                Bayar
+                                                            </DropdownMenuItem>
                                                             <DropdownMenuSeparator />
                                                             <DropdownMenuItem
                                                                 onClick={() =>
@@ -865,6 +884,14 @@ export default function ServicesPage({
                     setDeletingService(null);
                 }}
                 deletingService={deletingService}
+            />
+            <ServicePaymentModal
+                isOpen={isPaymentModalOpen}
+                onClose={() => {
+                    setIsPaymentModalOpen(false);
+                    setPayingService(null);
+                }}
+                payingService={payingService}
             />
         </LazyMotion>
     );

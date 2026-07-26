@@ -54,8 +54,7 @@ export function ServiceFormModal({
         tanggal_service: new Date().toISOString().split('T')[0],
         tipe_service: '',
         harga_service: '',
-        bayar_service: '',
-        status_service: '',
+        status_service: 'antri',
         catatan: '',
         spareparts: [] as any[],
         jasas: [] as any[],
@@ -131,7 +130,6 @@ export function ServiceFormModal({
                     tanggal_service: editingService.tanggal_service.split('T')[0],
                     tipe_service: editingService.tipe_service,
                     harga_service: editingService.harga_service.toString(),
-                    bayar_service: editingService.bayar_service ? editingService.bayar_service.toString() : '0',
                     status_service: editingService.status_service,
                     catatan: editingService.catatan || '',
                     spareparts: [],
@@ -459,19 +457,7 @@ export function ServiceFormModal({
                                 {errors.status_service && <span className="text-xs text-red-600">{errors.status_service}</span>}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                    Payment Amount (Rp)
-                                </label>
-                                <Input
-                                    type="number"
-                                    value={data.bayar_service}
-                                    onChange={(e) => setData('bayar_service', e.target.value)}
-                                    className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                    placeholder="0"
-                                />
-                                {errors.bayar_service && <span className="text-xs text-red-600">{errors.bayar_service}</span>}
-                            </div>
+
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">

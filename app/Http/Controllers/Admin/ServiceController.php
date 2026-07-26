@@ -194,6 +194,19 @@ class ServiceController extends Controller
         });
     }
 
+    public function pay(Request $request, Service $service): RedirectResponse
+    {
+        $validated = $request->validate([
+            'is_paid' => 'required|boolean',
+        ]);
+
+        $service->update([
+            'bayar_service' => $validated['is_paid'] ? $service->total_service : 0,
+        ]);
+
+        return redirect()->back()->with('success', 'Status pembayaran berhasil diubah');
+    }
+
     public function destroy(Service $service): RedirectResponse
     {
 

@@ -66,6 +66,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('services', [ServiceController::class, 'store'])->name('services.store');
     Route::post('services/with-car', [ServiceController::class, 'storeWithNewCar'])->name('services.store-with-car');
     Route::put('services/{service}', [ServiceController::class, 'update'])->name('services.update');
+    Route::patch('services/{service}/pay', [ServiceController::class, 'pay'])->name('services.pay');
     Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
 
     // Invoices
