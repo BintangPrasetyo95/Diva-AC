@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import type {
     Variants} from 'framer-motion';
 import {
@@ -106,14 +106,18 @@ export default function Dashboard({
     };
 
     const stats = [
-        {
-            name: t('dash_stat_revenue'),
-            value: formatRp(monthlyRevenue),
-            delta: revenueDelta,
-            icon: TrendingUp,
-            color: 'text-green-600',
-            bg: 'bg-green-500/10',
-        },
+        ...(usePage().props.auth.user.role === 'admin'
+            ? [
+                  {
+                      name: t('dash_stat_revenue'),
+                      value: formatRp(monthlyRevenue),
+                      delta: revenueDelta,
+                      icon: TrendingUp,
+                      color: 'text-green-600',
+                      bg: 'bg-green-500/10',
+                  },
+              ]
+            : []),
         {
             name: t('dash_stat_total_services') || 'Total Services',
             value: String(totalServices),
@@ -130,14 +134,18 @@ export default function Dashboard({
             color: 'text-amber-600',
             bg: 'bg-amber-500/10',
         },
-        {
-            name: t('dash_stat_customers'),
-            value: String(newCustomers),
-            delta: customerDelta,
-            icon: Users,
-            color: 'text-blue-600',
-            bg: 'bg-blue-500/10',
-        },
+        ...(usePage().props.auth.user.role === 'admin'
+            ? [
+                  {
+                      name: t('dash_stat_customers'),
+                      value: String(newCustomers),
+                      delta: customerDelta,
+                      icon: Users,
+                      color: 'text-blue-600',
+                      bg: 'bg-blue-500/10',
+                  },
+              ]
+            : []),
     ];
 
     const statusColor = (s: string) => {
@@ -217,29 +225,30 @@ return t('dash_status_in_progress');
 
                     <div className="flex flex-wrap items-center gap-3">
                         {/* Store Status */}
-                        <div className="relative">
-                            <AnimatePresence mode="wait">
-                                {!showConfirm ? (
-                                    <m.button
-                                        key="status-btn"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.9 }}
-                                        onClick={() => setShowConfirm(true)}
-                                        className={`flex h-10 items-center gap-2 rounded-full px-5 text-xs font-black tracking-widest uppercase shadow-lg transition-all ${
-                                            isStoreOpen
-                                                ? 'bg-green-500 text-white shadow-green-500/20 hover:bg-green-600'
-                                                : 'bg-[#1b1b18] text-white shadow-[#1b1b18]/20 hover:bg-[#2b2b28] dark:bg-white dark:text-black'
-                                        }`}
-                                    >
-                                        <div
-                                            className={`size-2 rounded-full ${isStoreOpen ? 'animate-pulse bg-white' : 'bg-red-500'}`}
-                                        />
-                                        {isStoreOpen
-                                            ? t('dash_store_open')
-                                            : t('dash_store_closed')}
-                                    </m.button>
-                                ) : (
+                        {usePage().props.auth.user.role === 'admin' && (
+                            <div className="relative">
+                                <AnimatePresence mode="wait">
+                                    {!showConfirm ? (
+                                        <m.button
+                                            key="status-btn"
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            onClick={() => setShowConfirm(true)}
+                                            className={`flex h-10 items-center gap-2 rounded-full px-5 text-xs font-black tracking-widest uppercase shadow-lg transition-all ${
+                                                isStoreOpen
+                                                    ? 'bg-green-500 text-white shadow-green-500/20 hover:bg-green-600'
+                                                    : 'bg-[#1b1b18] text-white shadow-[#1b1b18]/20 hover:bg-[#2b2b28] dark:bg-white dark:text-black'
+                                            }`}
+                                        >
+                                            <div
+                                                className={`size-2 rounded-full ${isStoreOpen ? 'animate-pulse bg-white' : 'bg-red-500'}`}
+                                            />
+                                            {isStoreOpen
+                                                ? t('dash_store_open')
+                                                : t('dash_store_closed')}
+                                        </m.button>
+                                    ) : (
                                     <m.div
                                         key="confirm-box"
                                         initial={{ opacity: 0, x: 20 }}
@@ -268,6 +277,7 @@ return t('dash_status_in_progress');
                                 )}
                             </AnimatePresence>
                         </div>
+                        )}
 
                         <Link
                             href="/admin/services"

@@ -13,8 +13,12 @@ use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index(): Response
+    public function index(): Response|\Illuminate\Http\RedirectResponse
     {
+        if (auth()->user() && auth()->user()->role === 'customer') {
+            return redirect()->route('admin.my-account');
+        }
+
         $now = now();
 
         // ── Monthly Revenue (service + sparepart sales) ──────────────────
