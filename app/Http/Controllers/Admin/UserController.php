@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index(): Response
     {
         return Inertia::render('admin/users', [
-            'users' => User::orderBy('created_at', 'desc')->get(),
+            'users' => User::whereIn('role', ['admin', 'mekanik'])->orderBy('created_at', 'desc')->get(),
         ]);
     }
 

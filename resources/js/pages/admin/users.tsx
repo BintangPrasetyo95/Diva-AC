@@ -23,7 +23,7 @@ interface User {
     name: string;
     email: string;
     username: string;
-    role: 'admin' | 'staff' | 'kasir';
+    role: 'admin' | 'mekanik';
     created_at: string;
 }
 
@@ -69,7 +69,7 @@ export default function UserManagement({ users }: Props) {
         username: '',
         password: '',
         password_confirmation: '',
-        role: 'staff' as 'admin' | 'staff' | 'kasir',
+        role: 'admin' as 'admin' | 'mekanik',
     });
 
     const openCreateModal = () => {
@@ -379,12 +379,11 @@ export default function UserManagement({ users }: Props) {
                                         <label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
                                             {t('dash_system_role')}
                                         </label>
-                                        <div className="grid grid-cols-3 gap-3">
+                                        <div className="grid grid-cols-2 gap-3">
                                             {(
                                                 [
                                                     'admin',
-                                                    'staff',
-                                                    'kasir',
+                                                    'mekanik',
                                                 ] as const
                                             ).map((role) => (
                                                 <button

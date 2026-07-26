@@ -31,6 +31,9 @@ export function CustomerFormModal({
         clearErrors, isDirty
     } = useForm({
         nama_pelanggan: '',
+        username: '',
+        password: '',
+        password_confirmation: '',
         no_telp: '',
         email: '',
         jenis_kelamin: 'L' as 'L' | 'P',
@@ -43,6 +46,9 @@ export function CustomerFormModal({
             if (editingCustomer) {
                 setData({
                     nama_pelanggan: editingCustomer.nama_pelanggan,
+                    username: (editingCustomer as any).username || '',
+                    password: '',
+                    password_confirmation: '',
                     no_telp: editingCustomer.no_telp,
                     email: editingCustomer.email,
                     jenis_kelamin: editingCustomer.jenis_kelamin,
@@ -123,6 +129,57 @@ export function CustomerFormModal({
                                 {errors.nama_pelanggan}
                             </span>
                         )}
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                            Username
+                        </label>
+                        <Input
+                            value={data.username}
+                            onChange={(e) =>
+                                setData('username', e.target.value)
+                            }
+                            className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                            placeholder="johndoe"
+                        />
+                        {errors.username && (
+                            <span className="text-xs text-red-600">
+                                {errors.username as string}
+                            </span>
+                        )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                {editingCustomer ? 'Password (Optional)' : 'Password'}
+                            </label>
+                            <Input
+                                type="password"
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
+                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                            />
+                            {errors.password && (
+                                <span className="text-xs text-red-600">
+                                    {errors.password as string}
+                                </span>
+                            )}
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
+                                Confirm Password
+                            </label>
+                            <Input
+                                type="password"
+                                value={data.password_confirmation}
+                                onChange={(e) =>
+                                    setData('password_confirmation', e.target.value)
+                                }
+                                className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
+                            />
+                        </div>
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
