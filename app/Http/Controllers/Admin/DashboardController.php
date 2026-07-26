@@ -45,8 +45,8 @@ class DashboardController extends Controller
             ? round((($monthlyRevenue - $prevMonthRevenue) / $prevMonthRevenue) * 100, 1)
             : null;
 
-        // ── Active Services ───────────────────────────────────────────────
-        $activeServices = Service::whereIn('status_service', ['antri', 'proses'])->count();
+        // ── Total Services ───────────────────────────────────────────────
+        $totalServices = Service::count();
         $urgentServices = Service::where('status_service', 'antri')->count();
 
         // ── Low Stock Parts ───────────────────────────────────────────────
@@ -96,7 +96,7 @@ class DashboardController extends Controller
         return Inertia::render('dashboard', [
             'monthlyRevenue' => (float) $monthlyRevenue,
             'revenueDelta' => $revenueDelta,
-            'activeServices' => $activeServices,
+            'totalServices' => $totalServices,
             'urgentServices' => $urgentServices,
             'lowStockParts' => $lowStockParts,
             'outOfStockParts' => $outOfStockParts,

@@ -40,7 +40,7 @@ interface StockAlert {
 interface Props {
     monthlyRevenue: number;
     revenueDelta: number | null;
-    activeServices: number;
+    totalServices: number;
     urgentServices: number;
     lowStockParts: number;
     outOfStockParts: number;
@@ -81,7 +81,7 @@ const itemVariants: Variants = {
 export default function Dashboard({
     monthlyRevenue,
     revenueDelta,
-    activeServices,
+    totalServices,
     urgentServices,
     lowStockParts,
     outOfStockParts,
@@ -115,9 +115,9 @@ export default function Dashboard({
             bg: 'bg-green-500/10',
         },
         {
-            name: t('dash_stat_active'),
-            value: String(activeServices),
-            subtitle: urgentServices > 0 ? `${urgentServices} antri` : null,
+            name: t('dash_stat_total_services') || 'Total Services',
+            value: String(totalServices),
+            subtitle: null,
             icon: Wrench,
             color: 'text-red-600',
             bg: 'bg-red-500/10',

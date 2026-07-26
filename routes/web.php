@@ -80,9 +80,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::put('users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
-    Route::get('services/{id}', function ($id) {
-        return Inertia::render('services/details', ['id' => $id]);
-    })->name('services.details');
 
     // Income
     Route::get('income', [IncomeController::class, 'index'])->name('admin.income');

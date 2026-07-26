@@ -74,6 +74,7 @@ interface Service {
     tanggal_service: string;
     tipe_service: string;
     harga_service: string | number;
+    bayar_service?: string | number;
     total_service: string | number;
     status_service: 'antri' | 'proses' | 'selesai' | 'batal';
     catatan: string | null;
@@ -709,12 +710,22 @@ export default function ServicesPage({
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-5">
-                                                    <span className="text-sm font-black text-[#1b1b18] dark:text-white">
-                                                        {formatCurrency(
-                                                            service.total_service ||
-                                                            0,
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="text-sm font-black text-[#1b1b18] dark:text-white">
+                                                            {formatCurrency(
+                                                                service.total_service || 0,
+                                                            )}
+                                                        </span>
+                                                        {Number(service.bayar_service) > 0 ? (
+                                                            <span className="text-[10px] font-bold tracking-widest uppercase text-green-600 bg-green-500/10 px-2 py-0.5 rounded-full w-fit">
+                                                                PAID
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-[10px] font-bold tracking-widest uppercase text-red-600 bg-red-500/10 px-2 py-0.5 rounded-full w-fit">
+                                                                UNPAID
+                                                            </span>
                                                         )}
-                                                    </span>
+                                                    </div>
                                                 </td>
                                                 <td className="px-6 py-5 text-right">
                                                     <DropdownMenu>

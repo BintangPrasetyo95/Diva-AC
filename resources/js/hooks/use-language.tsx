@@ -796,8 +796,12 @@ export const translations: Translations = {
         en: 'Monthly Revenue',
     },
     dash_stat_active: {
-        id: 'Service',
-        en: 'Services',
+        id: 'Servis Aktif',
+        en: 'Active Services',
+    },
+    dash_stat_total_services: {
+        id: 'Total Servis',
+        en: 'Total Services',
     },
     dash_stat_stock: {
         id: 'Spare part',

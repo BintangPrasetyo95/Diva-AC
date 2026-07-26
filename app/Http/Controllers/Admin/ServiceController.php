@@ -41,6 +41,7 @@ class ServiceController extends Controller
             'tipe_service' => 'required|string|max:255',
             'harga_service' => 'required|numeric|min:0',
             'status_service' => 'required|in:antri,proses,selesai,batal',
+            'bayar_service' => 'nullable|numeric|min:0',
             'catatan' => 'nullable|string',
             'spareparts' => 'nullable|array',
             'spareparts.*.id' => 'required|exists:sparepart,id',
@@ -82,6 +83,7 @@ class ServiceController extends Controller
             'tipe_service' => 'required|string|max:255',
             'harga_service' => 'required|numeric|min:0',
             'status_service' => 'required|in:antri,proses,selesai,batal',
+            'bayar_service' => 'nullable|numeric|min:0',
             'catatan' => 'nullable|string',
             'spareparts' => 'nullable|array',
             'spareparts.*.id' => 'required|exists:sparepart,id',
@@ -157,6 +159,7 @@ class ServiceController extends Controller
             'tipe_service' => 'required|string|max:255',
             'harga_service' => 'required|numeric|min:0',
             'status_service' => 'required|in:antri,proses,selesai,batal',
+            'bayar_service' => 'nullable|numeric|min:0',
             'catatan' => 'nullable|string',
             'spareparts' => 'nullable|array',
             'spareparts.*.id' => 'required|exists:sparepart,id',
@@ -175,6 +178,7 @@ class ServiceController extends Controller
                 'tipe_service' => $validated['tipe_service'],
                 'harga_service' => $validated['harga_service'],
                 'status_service' => $validated['status_service'],
+                'bayar_service' => $validated['bayar_service'] ?? 0,
                 'catatan' => $validated['catatan'] ?? null,
             ]);
 
