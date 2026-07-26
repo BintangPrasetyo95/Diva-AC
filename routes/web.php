@@ -39,6 +39,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('store-status', [StoreStatusController::class, 'toggle'])->name('store-status.toggle');
     Route::get('my-account', [MyAccountController::class, 'index'])->name('admin.my-account');
+    Route::get('services/{id}', [ServiceController::class, 'show'])->name('services.details');
+    Route::get('invoice', [InvoiceController::class, 'show'])->name('invoice.show');
 
     // Admin & Mekanik routes
     Route::middleware(['role:admin,mekanik'])->group(function () {
@@ -55,12 +57,23 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
         Route::put('services/{service}', [ServiceController::class, 'update'])->name('services.update');
         Route::patch('services/{service}/pay', [ServiceController::class, 'pay'])->name('services.pay');
         Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
-        Route::get('services/{id}', [ServiceController::class, 'show'])->name('services.details');
 
         // Booking Queue
         Route::get('booking-queue', [BookingQueueController::class, 'index'])->name('admin.booking-queue');
         Route::patch('booking-queue/{booking}/status', [BookingQueueController::class, 'updateStatus'])->name('admin.booking-queue.status');
         Route::patch('booking-queue/{booking}/reschedule', [BookingQueueController::class, 'reschedule'])->name('admin.booking-queue.reschedule');
+        // Customers
+        Route::get('customers', [CustomerController::class, 'index'])->name('customers');
+        Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
+        Route::put('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
+        Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+        Route::post('customers/{customer}/mobils', [CustomerController::class, 'storeMobil'])->name('customers.mobils.store');
+        
+        // Cars
+        Route::get('cars', [CarController::class, 'index'])->name('cars');
+        Route::post('cars', [CarController::class, 'store'])->name('cars.store');
+        Route::post('cars/with-user', [CarController::class, 'storeWithNewUser'])->name('cars.store-with-user');
+
     });
 
     // Admin only routes
@@ -71,22 +84,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
         Route::patch('spareparts/sell/{id}/verify', [PenjualanSparepartController::class, 'verify'])->name('spareparts.sell.verify');
         Route::patch('spareparts/sell/{id}/cancel', [PenjualanSparepartController::class, 'cancel'])->name('spareparts.sell.cancel');
 
-        // Customers
-        Route::get('customers', [CustomerController::class, 'index'])->name('customers');
-        Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
-        Route::put('customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
-        Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-        Route::post('customers/{customer}/mobils', [CustomerController::class, 'storeMobil'])->name('customers.mobils.store');
-        Route::get('cars', [CarController::class, 'index'])->name('cars');
-        Route::post('cars', [CarController::class, 'store'])->name('cars.store');
-        Route::post('cars/with-user', [CarController::class, 'storeWithNewUser'])->name('cars.store-with-user');
 
-        // Invoices
-        Route::get('invoice', [InvoiceController::class, 'show'])->name('invoice.show');
+        // Gallery
         Route::get('gallery', [GalleryController::class, 'index'])->name('admin.gallery');
         Route::post('gallery', [GalleryController::class, 'store'])->name('admin.gallery.store');
         Route::patch('gallery/{id}', [GalleryController::class, 'update'])->name('admin.gallery.update');
         Route::delete('gallery/{id}', [GalleryController::class, 'destroy'])->name('admin.gallery.destroy');
+
+        // Users
         Route::get('users', [UserController::class, 'index'])->name('admin.users');
         Route::post('users', [UserController::class, 'store'])->name('admin.users.store');
         Route::put('users/{user}', [UserController::class, 'update'])->name('admin.users.update');

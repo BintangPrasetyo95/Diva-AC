@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import type { Variants } from 'framer-motion';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
@@ -17,6 +17,8 @@ import {
     Star,
     Package,
     Hash,
+    Eye,
+    Printer,
 } from 'lucide-react';
 import React from 'react';
 
@@ -441,6 +443,7 @@ export default function MyAccount({
                                                 'Tanggal',
                                                 'Total',
                                                 'Status',
+                                                'Aksi',
                                             ].map((h) => (
                                                 <th
                                                     key={h}
@@ -491,6 +494,28 @@ export default function MyAccount({
                                                         )}
                                                         {svc.status_service}
                                                     </span>
+                                                </td>
+                                                <td className="px-5 py-4">
+                                                    <div className="flex gap-2">
+                                                        <Link
+                                                            href={`/admin/services/${svc.id}`}
+                                                            className="flex h-8 items-center justify-center gap-1.5 rounded-lg bg-[#1b1b18]/5 px-3 text-xs font-bold text-[#1b1b18] transition-colors hover:bg-[#1b1b18]/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+                                                            title="Lihat Detail"
+                                                        >
+                                                            <Eye className="size-3.5" />
+                                                            <span className="hidden sm:inline">Detail</span>
+                                                        </Link>
+                                                        <a
+                                                            href={`/admin/invoice?type=service&id=${svc.id}`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="flex h-8 items-center justify-center gap-1.5 rounded-lg bg-blue-500/10 px-3 text-xs font-bold text-blue-600 transition-colors hover:bg-blue-500/20"
+                                                            title="Cetak Invoice"
+                                                        >
+                                                            <Printer className="size-3.5" />
+                                                            <span className="hidden sm:inline">Invoice</span>
+                                                        </a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -599,13 +624,27 @@ export default function MyAccount({
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="text-right">
-                                            <p className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                Total
-                                            </p>
-                                            <p className="text-xl font-black text-red-600">
-                                                {formatRp(order.total_harga)}
-                                            </p>
+                                        <div className="flex items-center gap-6 text-right">
+                                            <a
+                                                href={`/admin/invoice?type=sparepart&id=${order.id}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex h-8 items-center justify-center gap-1.5 rounded-lg bg-blue-500/10 px-3 text-xs font-bold text-blue-600 transition-colors hover:bg-blue-500/20"
+                                                title="Cetak Invoice"
+                                            >
+                                                <Printer className="size-3.5" />
+                                                <span className="hidden sm:inline">Invoice</span>
+                                            </a>
+                                            <div>
+                                                <p className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
+                                                    Total
+                                                </p>
+                                                <p className="text-xl font-black text-red-600">
+                                                    {formatRp(
+                                                        order.total_harga,
+                                                    )}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </m.div>

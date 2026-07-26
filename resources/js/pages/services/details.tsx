@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import type { Variants} from 'framer-motion';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import {
@@ -48,6 +48,8 @@ const itemVariants: Variants = {
 
 export default function ServiceDetails({ id, service }: { id: string, service: any }) {
     const { t } = useLanguage();
+    const { auth } = usePage().props as any;
+    const backUrl = auth.user.role === 'customer' ? '/admin/my-account' : '/admin/services';
 
     const formatCurrency = (amount: number | string) => {
         return new Intl.NumberFormat('id-ID', {
@@ -146,8 +148,8 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
                 >
                     <div className="flex flex-col gap-4">
                         <Link
-                            href="/admin/services"
-                            className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:text-red-600"
+                            href={backUrl}
+                            className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:text-red-600 dark:text-white/40 dark:hover:text-red-600"
                         >
                             <ArrowLeft className="size-3" />
                             {t('dash_back_to_services')}
@@ -162,7 +164,7 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
 
                     <div className="flex items-center gap-3">
                         <a
-                            href={`/admin/invoice/service/${service.id}`}
+                            href={`/admin/invoice?type=service&id=${service.id}`}
                             target="_blank"
                             className="flex h-12 items-center gap-2 rounded-2xl border border-[#1b1b18]/10 px-6 text-[10px] font-bold tracking-widest uppercase hover:bg-[#1b1b18]/5 transition-colors dark:border-white/10 dark:hover:bg-white/5"
                         >
@@ -436,19 +438,25 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
     );
 }
 
-ServiceDetails.layout = {
-    breadcrumbs: [
-        {
-            title: 'Dashboard',
-            href: '/admin/dashboard',
-        },
-        {
-            title: 'Services',
-            href: '/admin/services',
-        },
-        {
-            title: 'Details',
-            href: '',
-        },
-    ],
+import AppLayout from '@/layouts/app-layout';
+
+const DetailsLayout = (page: any) => {
+    // If page is a React element, we can extract its props
+    const props = page?.props || {};
+    const role = props.auth?.user?.role;
+    
+    const breadcrumbs = role === 'customer'
+        ? [
+              { title: 'My Account', href: '/admin/my-account' },
+              { title: 'Details', href: '' },
+          ]
+        : [
+              { title: 'Dashboard', href: '/admin/dashboard' },
+              { title: 'Services', href: '/admin/services' },
+              { title: 'Details', href: '' },
+          ];
+
+    return <AppLayout breadcrumbs={breadcrumbs}>{page}</AppLayout>;
 };
+
+ServiceDetails.layout = DetailsLayout;

@@ -17,8 +17,16 @@ class InvoiceController extends Controller
 
         if ($type === 'service') {
             $data = Service::with(['mobil.pelanggan', 'mekanik', 'spareparts', 'jasas'])->findOrFail($id);
+            
+            if ($request->user()->role === 'customer' && $data->mobil->id_pelanggan !== $request->user()->id) {
+                abort(403, 'Unauthorized');
+            }
         } elseif ($type === 'sparepart') {
             $data = PenjualanSparepart::with(['spareparts'])->findOrFail($id);
+            
+            if ($request->user()->role === 'customer' && $data->id_pelanggan !== $request->user()->id) {
+                abort(403, 'Unauthorized');
+            }
         } else {
             abort(404);
         }

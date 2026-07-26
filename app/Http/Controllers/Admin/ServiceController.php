@@ -142,11 +142,17 @@ class ServiceController extends Controller
         });
     }
 
-    public function show($id): Response
+    public function show($id, Request $request): Response
     {
+        $service = Service::with(['mobil.pelanggan', 'mekanik', 'spareparts', 'jasas'])->findOrFail($id);
+        
+        if ($request->user()->role === 'customer' && $service->mobil->id_pelanggan !== $request->user()->id) {
+            abort(403, 'Unauthorized');
+        }
+
         return Inertia::render('services/details', [
             'id' => $id,
-            'service' => Service::with(['mobil.pelanggan', 'mekanik', 'spareparts', 'jasas'])->findOrFail($id),
+            'service' => $service,
         ]);
     }
 

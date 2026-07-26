@@ -64,7 +64,7 @@ export function AppSidebar() {
                           ? { items: [{ title: t('dash_sparepart_sell'), href: '/admin/spareparts/sell' }] }
                           : {}),
                   },
-                  ...(role === 'admin'
+                  ...(role === 'admin' || role === 'mekanik'
                       ? [
                             {
                                 title: t('dash_stat_customers'),
@@ -97,7 +97,6 @@ export function AppSidebar() {
                   },
               ]
             : [];
-
     const secondaryNavItems: NavItem[] = [
         ...(role === 'admin'
             ? [
@@ -106,6 +105,10 @@ export function AppSidebar() {
                       href: '/admin/users',
                       icon: ShieldCheck,
                   },
+              ]
+            : []),
+        ...(role === 'admin'
+            ? [
                   {
                       title: t('dash_workshop_identity'),
                       href: '/admin/workshop-settings',
