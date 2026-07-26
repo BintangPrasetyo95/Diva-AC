@@ -24,6 +24,28 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        \Illuminate\Support\Facades\Storage::extend('google', function($app, $config) {
+            $options = [];
+            $client = new \Google\Client();
+            
+            // Force IPv4 to prevent hanging on Windows/certain networks
+            $httpClient = new \GuzzleHttp\Client([
+                'curl' => [CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4],
+                'verify' => false, // Sometimes SSL can cause hanging if certs are missing locally
+            ]);
+            $client->setHttpClient($httpClient);
+
+            $client->setClientId($config['clientId']);
+            $client->setClientSecret($config['clientSecret']);
+            $client->refreshToken($config['refreshToken']);
+            
+            $service = new \Google\Service\Drive($client);
+            $adapter = new \Masbug\Flysystem\GoogleDriveAdapter($service, $config['folder'] ?? '/', $options);
+            $driver = new \League\Flysystem\Filesystem($adapter);
+
+            return new \Illuminate\Filesystem\FilesystemAdapter($driver, $adapter);
+        });
     }
 
     /**
