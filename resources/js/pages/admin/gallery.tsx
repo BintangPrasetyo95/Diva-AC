@@ -285,7 +285,7 @@ return;
                                             setData('title', e.target.value)
                                         }
                                         className="w-full rounded-2xl border border-[#1b1b18]/10 bg-[#1b1b18]/5 px-4 py-3 text-sm font-bold focus:border-red-600 focus:ring-0 dark:border-white/10 dark:bg-white/5"
-                                        placeholder="e.g. Workshop Front View"
+                                        placeholder={t('placeholder_gallery') || 'e.g. Workshop Front View'}
                                     />
                                 </div>
 
@@ -340,9 +340,7 @@ return;
 
                             <form onSubmit={handleUpdate} className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
-                                        Preview
-                                    </label>
+                                    <label>{t('label_preview') || 'Preview'}</label>
                                     <div className="aspect-video overflow-hidden rounded-3xl bg-[#1b1b18]/5 dark:bg-white/5">
                                         <img
                                             src={`/storage/${editingImage.image_path}`}
@@ -363,7 +361,7 @@ return;
                                             setData('title', e.target.value)
                                         }
                                         className="w-full rounded-2xl border border-[#1b1b18]/10 bg-[#1b1b18]/5 px-4 py-3 text-sm font-bold focus:border-red-600 focus:ring-0 dark:border-white/10 dark:bg-white/5"
-                                        placeholder="e.g. Workshop Front View"
+                                        placeholder={t('placeholder_gallery') || 'e.g. Workshop Front View'}
                                     />
                                 </div>
 

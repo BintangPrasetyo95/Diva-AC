@@ -1,3 +1,4 @@
+import { useLanguage } from '@/hooks/use-language';
 import { Head, Link } from '@inertiajs/react';
 import type { Variants } from 'framer-motion';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
@@ -151,12 +152,6 @@ return 'bg-red-500/10 text-red-600';
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 type Tab = 'profile' | 'cars' | 'services' | 'spareparts';
-const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
-    { id: 'profile', label: 'Profil Saya', icon: User },
-    { id: 'cars', label: 'Kendaraan', icon: Car },
-    { id: 'services', label: 'Riwayat Servis', icon: Wrench },
-    { id: 'spareparts', label: 'Pembelian', icon: ShoppingBag },
-];
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 export default function MyAccount({
@@ -165,6 +160,14 @@ export default function MyAccount({
     services,
     sparepartOrders,
 }: Props) {
+    const { t } = useLanguage();
+
+    const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
+        { id: 'profile', label: t('acct_profile') || 'Profil Saya', icon: User },
+        { id: 'cars', label: t('acct_cars') || 'Kendaraan', icon: Car },
+        { id: 'services', label: t('acct_history') || 'Riwayat Servis', icon: Wrench },
+        { id: 'spareparts', label: t('acct_purchases') || 'Pembelian', icon: ShoppingBag },
+    ];
     const [activeTab, setActiveTab] = React.useState<Tab>('profile');
 
     const initials = (profile.name || '?')
@@ -176,7 +179,7 @@ export default function MyAccount({
 
     return (
         <LazyMotion features={domAnimation}>
-            <Head title="Akun Saya" />
+            <Head title={t("acct_title") || "Akun Saya"} />
 
             <m.div
                 initial="hidden"
@@ -225,17 +228,17 @@ export default function MyAccount({
                         <div className="flex gap-4">
                             {[
                                 {
-                                    label: 'Kendaraan',
+                                    label: t('acct_cars') || t('acct_cars') || 'Kendaraan',
                                     value: cars.length,
                                     icon: Car,
                                 },
                                 {
-                                    label: 'Servis',
+                                    label: t('acct_history') || 'Servis',
                                     value: services.length,
                                     icon: Wrench,
                                 },
                                 {
-                                    label: 'Pembelian',
+                                    label: t('acct_purchases') || t('acct_purchases') || 'Pembelian',
                                     value: sparepartOrders.length,
                                     icon: ShoppingBag,
                                 },
@@ -291,42 +294,42 @@ export default function MyAccount({
                         {[
                             {
                                 icon: User,
-                                label: 'Nama Lengkap',
+                                label: t('dash_full_name') || 'Nama Lengkap',
                                 value: profile.name,
                             },
                             {
                                 icon: Hash,
-                                label: 'Username',
+                                label: t('auth_username') || 'Username',
                                 value: profile.username || '-',
                             },
                             {
                                 icon: Mail,
-                                label: 'Email',
+                                label: t('auth_email') || 'Email',
                                 value: profile.email || '-',
                             },
                             {
                                 icon: Phone,
-                                label: 'No. Telepon',
+                                label: t('phone') || 'No. Telepon',
                                 value: profile.no_telp || '-',
                             },
                             {
                                 icon: MapPin,
-                                label: 'Alamat',
+                                label: t('dash_workshop_address') || 'Alamat',
                                 value: profile.alamat || '-',
                             },
                             {
                                 icon: User,
-                                label: 'Jenis Kelamin',
+                                label: t('acct_gender') || 'Jenis Kelamin',
                                 value:
                                     profile.jenis_kelamin === 'L'
-                                        ? 'Laki-laki'
+                                        ? t('acct_male') || 'Laki-laki'
                                         : profile.jenis_kelamin === 'P'
-                                          ? 'Perempuan'
+                                          ? t('acct_female') || 'Perempuan'
                                           : '-',
                             },
                             {
                                 icon: Calendar,
-                                label: 'Tanggal Daftar',
+                                label: t('acct_register_date') || 'Tanggal Daftar',
                                 value: fmt(profile.tanggal_daftar),
                             },
                         ].map((f) => (
@@ -359,7 +362,7 @@ export default function MyAccount({
                         {cars.length === 0 ? (
                             <EmptyState
                                 icon={Car}
-                                label="Belum ada kendaraan terdaftar"
+                                label={t('acct_no_cars') || 'Belum ada kendaraan terdaftar'}
                             />
                         ) : (
                             cars.map((car) => (
@@ -396,7 +399,7 @@ export default function MyAccount({
                                     <div className="mt-4 flex items-center justify-between border-t border-[#1b1b18]/5 pt-4 dark:border-white/5">
                                         <div>
                                             <p className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                No. Polisi
+                                                {t('acct_plate') || 'No. Polisi'}
                                             </p>
                                             <p className="font-black tracking-widest text-[#1b1b18] dark:text-white">
                                                 {car.no_polisi}
@@ -404,7 +407,7 @@ export default function MyAccount({
                                         </div>
                                         <div className="flex items-center gap-1 rounded-full bg-blue-500/10 px-3 py-1 text-xs font-bold text-blue-600">
                                             <Wrench className="size-3" />
-                                            {car.service_count}x servis
+                                            {car.service_count}{t('acct_times_service') || 'x servis'}
                                         </div>
                                     </div>
 
@@ -428,7 +431,7 @@ export default function MyAccount({
                         {services.length === 0 ? (
                             <EmptyState
                                 icon={Wrench}
-                                label="Belum ada riwayat servis"
+                                label={t('acct_no_services') || 'Belum ada riwayat servis'}
                             />
                         ) : (
                             <div className="overflow-x-auto">
@@ -437,7 +440,7 @@ export default function MyAccount({
                                         <tr>
                                             {[
                                                 '#',
-                                                'Kendaraan',
+                                                t('acct_cars') || 'Kendaraan',
                                                 'Mekanik',
                                                 'Tipe',
                                                 'Tanggal',
@@ -503,7 +506,7 @@ export default function MyAccount({
                                                             title="Lihat Detail"
                                                         >
                                                             <Eye className="size-3.5" />
-                                                            <span className="hidden sm:inline">Detail</span>
+                                                            <span className="hidden sm:inline">{t('dash_user_details') || 'Detail'}</span>
                                                         </Link>
                                                         <a
                                                             href={`/admin/invoice?type=service&id=${svc.id}`}
@@ -513,7 +516,7 @@ export default function MyAccount({
                                                             title="Cetak Invoice"
                                                         >
                                                             <Printer className="size-3.5" />
-                                                            <span className="hidden sm:inline">Invoice</span>
+                                                            <span className="hidden sm:inline">{t('dash_print_invoice') || 'Invoice'}</span>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -535,7 +538,7 @@ export default function MyAccount({
                         {sparepartOrders.length === 0 ? (
                             <EmptyState
                                 icon={ShoppingBag}
-                                label="Belum ada pembelian sparepart"
+                                label={t('acct_no_purchases') || 'Belum ada pembelian sparepart'}
                             />
                         ) : (
                             sparepartOrders.map((order) => (
@@ -633,7 +636,7 @@ export default function MyAccount({
                                                 title="Cetak Invoice"
                                             >
                                                 <Printer className="size-3.5" />
-                                                <span className="hidden sm:inline">Invoice</span>
+                                                <span className="hidden sm:inline">{t('dash_print_invoice') || 'Invoice'}</span>
                                             </a>
                                             <div>
                                                 <p className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
@@ -677,7 +680,7 @@ function EmptyState({
 
 MyAccount.layout = {
     breadcrumbs: [
-        { title: 'Dashboard', href: '/admin/dashboard' },
-        { title: 'Akun Saya', href: '/admin/my-account' },
+        { title: 'dash_title', href: '/admin/dashboard' },
+        { title: 'acct_title', href: '/admin/my-account' },
     ],
 };

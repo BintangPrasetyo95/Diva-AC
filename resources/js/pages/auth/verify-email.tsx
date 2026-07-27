@@ -1,3 +1,4 @@
+import { useLanguage } from '@/hooks/use-language';
 // Components
 import { Form, Head } from '@inertiajs/react';
 import TextLink from '@/components/text-link';
@@ -7,6 +8,7 @@ import { logout } from '@/routes';
 import { send } from '@/routes/verification';
 
 export default function VerifyEmail({ status }: { status?: string }) {
+    const { t } = useLanguage();
     return (
         <>
             <Head title="Email verification" />
@@ -30,7 +32,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             href={logout()}
                             className="mx-auto block text-sm"
                         >
-                            Log out
+                            {t('auth_logout') || 'Log out'}
                         </TextLink>
                     </>
                 )}

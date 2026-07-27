@@ -117,7 +117,7 @@ export function AppSidebar() {
               ]
             : []),
         {
-            title: 'Akun Saya',
+            title: t('dash_my_account') || 'My Account',
             href: '/admin/my-account',
             icon: CircleUserRound,
         },

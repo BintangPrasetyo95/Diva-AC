@@ -1,6 +1,6 @@
 import { Head, router, useForm } from '@inertiajs/react';
 import { format, addDays, startOfDay } from 'date-fns';
-import { id } from 'date-fns/locale';
+import { id, enUS } from 'date-fns/locale';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import {
     Calendar,
@@ -49,7 +49,7 @@ interface Props {
 }
 
 export default function BookingQueue({ bookings }: Props) {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const [startDate, setStartDate] = useState(startOfDay(new Date()));
     const [confirmCancelId, setConfirmCancelId] = useState<number | null>(null);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -131,7 +131,7 @@ export default function BookingQueue({ bookings }: Props) {
                             {t('dash_booking_queue')}
                         </h1>
                         <p className="text-sm text-[#1b1b18]/60 dark:text-white/60">
-                            Monitor antrean booking dan atur jadwal pelanggan secara visual.
+                            {t('dash_booking_desc') || 'Monitor antrean booking dan atur jadwal pelanggan secara visual.'}
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -180,17 +180,17 @@ export default function BookingQueue({ bookings }: Props) {
                             return (
                                 <div 
                                     key={dateStr}
-                                    className={`flex-1 min-w-[280px] max-w-[320px] rounded-3xl p-4 flex flex-col overflow-hidden bg-[#1b1b18]/2 border border-[#1b1b18]/5 dark:bg-white/2 dark:border-white/5 shrink-0 ${
+                                    className={`flex-1 m-1 min-w-[280px] max-w-[320px] rounded-3xl p-4 flex flex-col overflow-hidden bg-[#1b1b18]/2 border border-[#1b1b18]/5 dark:bg-white/2 dark:border-white/5 shrink-0 ${
                                         isToday ? 'ring-2 ring-red-600 ring-offset-2 ring-offset-white dark:ring-offset-black' : ''
                                     }`}
                                 >
                                     <div className="flex items-center justify-between border-b border-[#1b1b18]/5 pb-3 mb-4 dark:border-white/5">
                                         <div className="flex flex-col">
                                             <span className="text-[10px] font-black uppercase tracking-widest text-[#1b1b18]/40 dark:text-white/40">
-                                                {format(date, 'EEEE', { locale: id })}
+                                                {format(date, 'EEEE', { locale: language === 'id' ? id : enUS })}
                                             </span>
                                             <span className="text-sm font-black text-[#1b1b18] dark:text-white mt-0.5">
-                                                {format(date, 'dd MMM yyyy')}
+                                                {format(date, 'dd MMM yyyy', { locale: language === 'id' ? id : enUS })}
                                             </span>
                                         </div>
                                         <Badge className="bg-red-500 text-white border-transparent text-[10px] font-black rounded-full px-2 py-0.5">
@@ -202,7 +202,7 @@ export default function BookingQueue({ bookings }: Props) {
                                         {dayBookings.length === 0 ? (
                                             <div className="flex flex-col items-center justify-center py-20 text-[#1b1b18]/20 dark:text-white/20">
                                                 <Calendar className="size-8" />
-                                                <span className="text-[10px] font-black uppercase tracking-wider mt-2">No Bookings</span>
+                                                <span className="text-[10px] font-black uppercase tracking-wider mt-2">{t('dash_no_bookings') || 'No Bookings'}</span>
                                             </div>
                                         ) : (
                                             dayBookings.map((booking) => (
@@ -314,7 +314,7 @@ export default function BookingQueue({ bookings }: Props) {
                             {t('dash_create_booking')}
                         </DialogTitle>
                         <DialogDescription className="text-xs text-[#1b1b18]/50 dark:text-white/50">
-                            Isi formulir di bawah untuk menambahkan pesanan booking ke antrean.
+                            {t('dash_create_booking_desc') || 'Isi formulir di bawah untuk menambahkan pesanan booking ke antrean.'}
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleCreateBooking} className="mt-4 space-y-4">
@@ -352,7 +352,7 @@ export default function BookingQueue({ bookings }: Props) {
                                 value={data.car_model}
                                 onChange={(e) => setData('car_model', e.target.value)}
                                 className="h-11 rounded-xl bg-[#1b1b18]/5 dark:bg-white/5"
-                                placeholder="Contoh: Daihatsu Ayla 2022"
+                                placeholder={t('booking_placeholder_car_model') || 'Contoh: Daihatsu Ayla 2022'}
                                 required
                             />
                             {errors.car_model && <span className="text-xs text-red-600">{errors.car_model}</span>}
@@ -413,7 +413,7 @@ export default function BookingQueue({ bookings }: Props) {
                                 value={data.notes}
                                 onChange={(e) => setData('notes', e.target.value)}
                                 className="flex min-h-[60px] w-full rounded-xl border border-transparent bg-[#1b1b18]/5 px-3 py-2 text-sm text-[#1b1b18] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b1b18] dark:bg-white/5 dark:text-white"
-                                placeholder="Opsional"
+                                placeholder={t('booking_placeholder_notes') || 'Opsional'}
                             />
                             {errors.notes && <span className="text-xs text-red-600">{errors.notes}</span>}
                         </div>
@@ -451,10 +451,10 @@ export default function BookingQueue({ bookings }: Props) {
                         </div>
                         <div className="space-y-2 text-center">
                             <DialogTitle className="text-2xl font-black uppercase tracking-tight">
-                                Batalkan Booking?
+                                {t('dash_cancel_booking') || 'Batalkan Booking?'}
                             </DialogTitle>
                             <DialogDescription className="text-sm font-medium text-[#1b1b18]/50 dark:text-white/50">
-                                Apakah Anda yakin ingin membatalkan booking ini? Tindakan ini tidak dapat dibatalkan.
+                                {t('dash_cancel_booking_desc') || 'Apakah Anda yakin ingin membatalkan booking ini? Tindakan ini tidak dapat dibatalkan.'}
                             </DialogDescription>
                         </div>
                     </DialogHeader>

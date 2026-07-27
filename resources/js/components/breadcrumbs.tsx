@@ -11,11 +11,14 @@ import {
 } from '@/components/ui/breadcrumb';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types/navigation';
 
+import { useLanguage } from '@/hooks/use-language';
+
 type Props = {
     breadcrumbs?: BreadcrumbItemType[];
 };
 
 export function Breadcrumbs({ breadcrumbs = [] }: Props) {
+    const { t } = useLanguage();
     if (!breadcrumbs.length) {
         return null;
     }
@@ -30,10 +33,10 @@ export function Breadcrumbs({ breadcrumbs = [] }: Props) {
                         <React.Fragment key={`${item.title}-${index}`}>
                             <BreadcrumbItem>
                                 {isLast ? (
-                                    <BreadcrumbPage>{item.title}</BreadcrumbPage>
+                                    <BreadcrumbPage>{t(item.title)}</BreadcrumbPage>
                                 ) : (
                                     <BreadcrumbLink asChild>
-                                        <Link href={item.href}>{item.title}</Link>
+                                        <Link href={item.href}>{t(item.title)}</Link>
                                     </BreadcrumbLink>
                                 )}
                             </BreadcrumbItem>

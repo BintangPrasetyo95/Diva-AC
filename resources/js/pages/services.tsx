@@ -727,11 +727,11 @@ export default function ServicesPage({
                                                         </span>
                                                         {Number(service.bayar_service) > 0 ? (
                                                             <span className="text-[10px] font-bold tracking-widest uppercase text-green-600 bg-green-500/10 px-2 py-0.5 rounded-full w-fit">
-                                                                PAID
+                                                                {t('dash_paid') || 'PAID'}
                                                             </span>
                                                         ) : (
                                                             <span className="text-[10px] font-bold tracking-widest uppercase text-red-600 bg-red-500/10 px-2 py-0.5 rounded-full w-fit">
-                                                                UNPAID
+                                                                {t('dash_unpaid') || 'UNPAID'}
                                                             </span>
                                                         )}
                                                     </div>

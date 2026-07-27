@@ -248,7 +248,7 @@ export default function CarsPage({
                         </div>
                         <div>
                             <p className="text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                Serviced Vehicles
+                                {t('dash_serviced_vehicles') || 'Serviced Vehicles'}
                             </p>
                             <p className="text-2xl font-black text-[#1b1b18] dark:text-white">
                                 {carsWithService}

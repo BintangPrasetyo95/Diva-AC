@@ -311,7 +311,7 @@ export default function UserManagement({ users }: Props) {
                                                     )
                                                 }
                                                 className="h-14 w-full rounded-2xl border-none bg-[#1b1b18]/5 pr-4 pl-12 text-sm font-bold focus:ring-2 focus:ring-red-600/20 dark:bg-white/5"
-                                                placeholder="e.g. John Doe"
+                                                placeholder={t('placeholder_name') || 'e.g. John Doe'}
                                             />
                                         </div>
                                         {errors.name && (
@@ -338,7 +338,7 @@ export default function UserManagement({ users }: Props) {
                                                         )
                                                     }
                                                     className="h-14 w-full rounded-2xl border-none bg-[#1b1b18]/5 pr-4 pl-12 text-sm font-bold focus:ring-2 focus:ring-red-600/20 dark:bg-white/5"
-                                                    placeholder="john@example.com"
+                                                    placeholder={t('placeholder_email') || 'john@example.com'}
                                                 />
                                             </div>
                                             {errors.email && (
@@ -364,7 +364,7 @@ export default function UserManagement({ users }: Props) {
                                                         )
                                                     }
                                                     className="h-14 w-full rounded-2xl border-none bg-[#1b1b18]/5 pr-4 pl-10 text-sm font-bold focus:ring-2 focus:ring-red-600/20 dark:bg-white/5"
-                                                    placeholder="johndoe"
+                                                    placeholder={t('placeholder_username') || 'johndoe'}
                                                 />
                                             </div>
                                             {errors.username && (

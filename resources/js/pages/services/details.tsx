@@ -161,7 +161,6 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
                             {getStatusBadge(service.status_service)}
                         </div>
                     </div>
-
                     <div className="flex items-center gap-3">
                         <a
                             href={`/admin/invoice?type=service&id=${service.id}`}
@@ -171,10 +170,6 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
                             <Printer className="size-4" />
                             {t('dash_print_invoice')}
                         </a>
-                        <Button className="h-12 gap-2 rounded-2xl bg-red-600 px-8 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg shadow-red-600/20 transition-all hover:scale-105 hover:bg-red-700 active:scale-95">
-                            <CheckCircle2 className="size-4" />
-                            {t('dash_complete_service')}
-                        </Button>
                     </div>
                 </m.div>
 

@@ -219,7 +219,7 @@ export default function WorkshopSettings({ settings }: Props) {
                                                             e.target.value,
                                                         )
                                                     }
-                                                    placeholder="https://goo.gl/maps/..."
+                                                    placeholder={t('placeholder_map') || 'https://goo.gl/maps/...'}
                                                     className="h-14 rounded-2xl border-none bg-[#1b1b18]/5 pl-12 font-bold transition-all focus:ring-2 focus:ring-red-600/20 dark:bg-white/5"
                                                 />
                                             </div>
@@ -274,7 +274,7 @@ export default function WorkshopSettings({ settings }: Props) {
                                                         phone: e.target.value,
                                                     }));
                                                 }}
-                                                placeholder="628123456789"
+                                                placeholder={t('placeholder_phone') || '628123456789'}
                                                 className="h-14 rounded-2xl border-none bg-[#1b1b18]/5 pl-12 font-bold transition-all focus:ring-2 focus:ring-red-600/20 dark:bg-white/5"
                                             />
                                         </div>
@@ -282,9 +282,7 @@ export default function WorkshopSettings({ settings }: Props) {
 
                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                                         <div className="space-y-2">
-                                            <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                Instagram
-                                            </Label>
+                                            <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">{t('label_instagram') || 'Instagram'}</Label>
                                             <div className="relative">
                                                 <Instagram className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-[#1b1b18]/20" />
                                                 <Input
@@ -303,9 +301,7 @@ export default function WorkshopSettings({ settings }: Props) {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                Facebook
-                                            </Label>
+                                            <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">{t('label_facebook') || 'Facebook'}</Label>
                                             <div className="relative">
                                                 <Facebook className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-[#1b1b18]/20" />
                                                 <Input
@@ -323,9 +319,7 @@ export default function WorkshopSettings({ settings }: Props) {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                                TikTok
-                                            </Label>
+                                            <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">{t('label_tiktok') || 'TikTok'}</Label>
                                             <div className="relative">
                                                 <Globe className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-[#1b1b18]/20" />
                                                 <Input

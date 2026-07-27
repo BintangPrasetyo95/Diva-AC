@@ -1,3 +1,4 @@
+import { useLanguage } from '@/hooks/use-language';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/heading';
@@ -15,6 +16,7 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }) {
+    const { t } = useLanguage();
     const { auth } = usePage().props;
 
     return (
@@ -40,7 +42,7 @@ export default function Profile({
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">{t('label_name') || 'Name'}</Label>
 
                                 <Input
                                     id="name"
@@ -49,7 +51,7 @@ export default function Profile({
                                     name="name"
                                     required
                                     autoComplete="name"
-                                    placeholder="Full name"
+                                    placeholder={t('placeholder_full_name') || 'Full name'}
                                 />
 
                                 <InputError
@@ -59,7 +61,7 @@ export default function Profile({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">{t('label_email') || 'Email address'}</Label>
 
                                 <Input
                                     id="email"
@@ -69,7 +71,7 @@ export default function Profile({
                                     name="email"
                                     required
                                     autoComplete="username"
-                                    placeholder="Email address"
+                                    placeholder={t('placeholder_email') || 'Email address'}
                                 />
 
                                 <InputError
