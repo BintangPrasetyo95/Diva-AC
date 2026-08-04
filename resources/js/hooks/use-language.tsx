@@ -1555,12 +1555,65 @@ export const translations: Translations = {
     'My Account': { id: 'Akun Saya', en: 'My Account' },
     'Details': { id: 'Detail', en: 'Details' },
     'Sparepart Orders': { id: 'Pesanan Sparepart', en: 'Sparepart Orders' },
+
+    // Service Form Modal Translations
+    msg_service_req: { id: 'Tipe Service wajib diisi (Minimal 1 Jasa)', en: 'Service Type is required (Min. 1 Service)' },
+    dash_service_updated: { id: 'Service updated successfully', en: 'Service updated successfully' },
+    dash_service_created: { id: 'Service created successfully', en: 'Service created successfully' },
+    dash_select_car: { id: 'Pilih Mobil', en: 'Select Car' },
+    dash_new_car: { id: 'Mobil Baru', en: 'New Car' },
+    dash_customer: { id: 'Pelanggan', en: 'Customer' },
+    dash_new_customer: { id: '+ Pelanggan Baru', en: '+ New Customer' },
+    dash_customer_name: { id: 'Nama Pelanggan', en: 'Customer Name' },
+    dash_email: { id: 'Email', en: 'Email' },
+    dash_phone_optional: { id: 'No. Telepon (Opsional)', en: 'Phone No. (Optional)' },
+    dash_license_plate: { id: 'Nomor Polisi', en: 'License Plate' },
+    dash_brand: { id: 'Merk', en: 'Brand' },
+    dash_car_type: { id: 'Tipe Mobil', en: 'Car Type' },
+    dash_color_optional: { id: 'Warna (Opsional)', en: 'Color (Optional)' },
+    dash_car: { id: 'Mobil', en: 'Car' },
+    dash_mechanic: { id: 'Mekanik', en: 'Mechanic' },
+    dash_select_mechanic: { id: 'Pilih Mekanik', en: 'Select Mechanic' },
+    dash_service_date: { id: 'Tanggal Service', en: 'Service Date' },
+    dash_status: { id: 'Status', en: 'Status' },
+    dash_additional_notes: { id: 'Catatan Tambahan', en: 'Additional Notes' },
+    dash_optional: { id: 'Opsional', en: 'Optional' },
+    dash_invoice_items: { id: 'Invoice & Item Service', en: 'Invoice & Service Items' },
+    dash_jasa: { id: 'Jasa', en: 'Service' },
+    dash_sparepart: { id: 'Sparepart', en: 'Sparepart' },
+    dash_item: { id: 'Item', en: 'Item' },
+    dash_unit_price: { id: 'Harga Satuan', en: 'Unit Price' },
+    dash_total: { id: 'Total', en: 'Total' },
+    dash_jasa_name: { id: 'Nama Jasa...', en: 'Service Name...' },
+    dash_choose_sparepart: { id: '- Pilih Sparepart -', en: '- Choose Sparepart -' },
+    dash_part: { id: 'Part', en: 'Part' },
+    dash_qty: { id: 'Qty:', en: 'Qty:' },
+    dash_no_items: { id: 'Belum ada item yang ditambahkan.', en: 'No items added yet.' },
+    dash_click: { id: 'Klik', en: 'Click' },
+    dash_add_jasa: { id: '+ Jasa', en: '+ Service' },
+    dash_or: { id: 'atau', en: 'or' },
+    dash_add_sparepart: { id: '+ Sparepart', en: '+ Sparepart' },
+    dash_to_start: { id: 'untuk memulai.', en: 'to start.' },
+
+    // Inventory Form Modal Translations
+    dash_edit_item: { id: 'Edit Item', en: 'Edit Item' },
+    dash_add_new_item: { id: 'Tambah Item Baru', en: 'Add New Item' },
+    dash_col_item_name: { id: 'Nama Item', en: 'Item Name' },
+    dash_part_type: { id: 'Kategori / Tipe', en: 'Category / Type' },
+    dash_col_price: { id: 'Harga', en: 'Price' },
+    dash_col_stock_status: { id: 'Stok', en: 'Stock' },
+    dash_notes: { id: 'Catatan', en: 'Notes' },
+    dash_form_item_image: { id: 'Gambar Item (Opsional)', en: 'Item Image (Optional)' },
+    dash_click_to_change: { id: 'Klik untuk mengubah', en: 'Click to change' },
+    dash_click_to_upload: { id: 'Klik untuk mengunggah gambar', en: 'Click to upload image' },
+    dash_make_public: { id: 'Jadikan Publik', en: 'Make Public' },
+    dash_make_public_desc: { id: 'Izinkan pelanggan untuk melihat item ini di katalog publik.', en: 'Allow customers to view this item on the public catalog.' },
 };
 
 interface LanguageContextType {
     language: Language;
     setLanguage: (lang: Language) => void;
-    t: (key: string) => string;
+    t: (key: string, fallback?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
@@ -1591,8 +1644,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         }
     }, [language, isHydrated]);
 
-    const t = (key: string) => {
-        return translations[key]?.[language] || key;
+    const t = (key: string, fallback?: string) => {
+        return translations[key]?.[language] || fallback || key;
     };
 
     return (

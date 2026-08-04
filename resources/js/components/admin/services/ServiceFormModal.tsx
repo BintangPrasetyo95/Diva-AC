@@ -20,10 +20,10 @@ interface ServiceFormModalProps {
 
 type LineItem = {
     type: 'jasa' | 'sparepart';
-    id?: number;
+    id?: number | string;
     name: string;
-    qty: number;
-    price: number;
+    qty: number | string;
+    price: number | string;
 };
 
 export function ServiceFormModal({
@@ -182,18 +182,16 @@ export function ServiceFormModal({
     }, [lineItems]);
 
     const addJasa = () => {
-        setLineItems([...lineItems, { type: 'jasa', name: '', qty: 1, price: 0 }]);
+        setLineItems([...lineItems, { type: 'jasa', name: '', qty: 1, price: '' }]);
     };
 
     const addSparepart = () => {
-        if (spareparts.length === 0) return;
-        const sp = spareparts[0];
         setLineItems([...lineItems, {
             type: 'sparepart',
-            id: sp.id,
-            name: sp.nama_sparepart,
+            id: '',
+            name: '',
             qty: 1,
-            price: Number(sp.harga_sparepart)
+            price: ''
         }]);
     };
 
@@ -224,7 +222,7 @@ export function ServiceFormModal({
         e.preventDefault();
         
         if (!data.tipe_service) {
-            toast.error('Tipe Service wajib diisi (Minimal 1 Jasa)');
+            toast.error(t('msg_service_req', 'Tipe Service wajib diisi (Minimal 1 Jasa)'));
             return;
         }
 
@@ -233,7 +231,7 @@ export function ServiceFormModal({
                 preserveScroll: true,
                 onSuccess: () => {
                     onClose();
-                    toast.success('Service updated successfully');
+                    toast.success(t('dash_service_updated', 'Service updated successfully'));
                     reset();
                 },
             });
@@ -243,7 +241,7 @@ export function ServiceFormModal({
                 preserveScroll: true,
                 onSuccess: () => {
                     onClose();
-                    toast.success('Service created successfully');
+                    toast.success(t('dash_service_created', 'Service created successfully'));
                     reset();
                 },
             });
@@ -272,7 +270,7 @@ export function ServiceFormModal({
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     {/* Left Column: Basic Info */}
                     <div className="lg:col-span-1 space-y-6">
@@ -287,7 +285,7 @@ export function ServiceFormModal({
                                             : 'text-[#1b1b18]/50 hover:text-[#1b1b18] dark:text-white/50 dark:hover:text-white'
                                     }`}
                                 >
-                                    Pilih Mobil
+                                    {t('dash_select_car', 'Pilih Mobil')}
                                 </button>
                                 <button
                                     type="button"
@@ -298,7 +296,7 @@ export function ServiceFormModal({
                                             : 'text-[#1b1b18]/50 hover:text-[#1b1b18] dark:text-white/50 dark:hover:text-white'
                                     }`}
                                 >
-                                    Mobil Baru
+                                    {t('dash_new_car', 'Mobil Baru')}
                                 </button>
                             </div>
                         )}
@@ -307,13 +305,13 @@ export function ServiceFormModal({
                             <div className="space-y-4">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                        Pelanggan
+                                        {t('dash_customer', 'Pelanggan')}
                                     </label>
                                     <SearchableSelect
                                         value={data.id_pelanggan}
                                         onChange={(val) => setData('id_pelanggan', val)}
                                         options={[
-                                            { value: 'new', label: '+ Pelanggan Baru' },
+                                            { value: 'new', label: t('dash_new_customer', '+ Pelanggan Baru') },
                                             ...users.map((u) => ({
                                                 value: u.id.toString(),
                                                 label: `${u.nama_pelanggan} (${u.email})`,
@@ -326,9 +324,10 @@ export function ServiceFormModal({
                                     <>
                                         <div className="space-y-2">
                                             <Input
-                                                placeholder="Nama Pelanggan"
+                                                placeholder={t('dash_customer_name', 'Nama Pelanggan')}
                                                 value={data.customer_name}
                                                 onChange={(e) => setData('customer_name', e.target.value)}
+                                                autoComplete="off"
                                                 className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
                                                 required
                                             />
@@ -336,18 +335,20 @@ export function ServiceFormModal({
                                         <div className="space-y-2">
                                             <Input
                                                 type="email"
-                                                placeholder="Email"
+                                                placeholder={t('dash_email', 'Email')}
                                                 value={data.customer_email}
                                                 onChange={(e) => setData('customer_email', e.target.value)}
+                                                autoComplete="off"
                                                 className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
                                                 required
                                             />
                                         </div>
                                         <div className="space-y-2">
                                             <Input
-                                                placeholder="No. Telepon (Opsional)"
+                                                placeholder={t('dash_phone_optional', 'No. Telepon (Opsional)')}
                                                 value={data.customer_phone}
                                                 onChange={(e) => setData('customer_phone', e.target.value)}
+                                                autoComplete="off"
                                                 className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
                                             />
                                         </div>
@@ -356,9 +357,10 @@ export function ServiceFormModal({
 
                                 <div className="space-y-2">
                                     <Input
-                                        placeholder="Nomor Polisi"
+                                        placeholder={t('dash_license_plate', 'Nomor Polisi')}
                                         value={data.no_polisi}
                                         onChange={(e) => setData('no_polisi', e.target.value.toUpperCase())}
+                                        autoComplete="off"
                                         className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5 uppercase"
                                         required
                                     />
@@ -366,22 +368,24 @@ export function ServiceFormModal({
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <Input
-                                        placeholder="Merk"
+                                        placeholder={t('dash_brand', 'Merk')}
                                         value={data.merk}
                                         onChange={(e) => setData('merk', e.target.value)}
+                                        autoComplete="off"
                                         className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
                                         required
                                     />
                                     <Input
-                                        placeholder="Tipe Mobil"
+                                        placeholder={t('dash_car_type', 'Tipe Mobil')}
                                         value={data.tipe}
                                         onChange={(e) => setData('tipe', e.target.value)}
+                                        autoComplete="off"
                                         className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
                                         required
                                     />
                                 </div>
                                 <Input
-                                    placeholder="Warna (Opsional)"
+                                    placeholder={t('dash_color_optional', 'Warna (Opsional)')}
                                     value={data.warna}
                                     onChange={(e) => setData('warna', e.target.value)}
                                     className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
@@ -392,12 +396,12 @@ export function ServiceFormModal({
                                 {activeTab === 'existing' || editingService ? (
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                            Mobil
+                                            {t('dash_car', 'Mobil')}
                                         </label>
                                         <SearchableSelect
                                             value={data.id_mobil}
                                             onChange={(val) => setData('id_mobil', val)}
-                                            placeholder="Pilih Mobil"
+                                            placeholder={t('dash_select_car', 'Pilih Mobil')}
                                             options={mobils.map((m) => ({
                                                 value: m.id.toString(),
                                                 label: `${m.pelanggan?.nama_pelanggan} - ${m.merk} (${m.no_polisi})`,
@@ -412,12 +416,12 @@ export function ServiceFormModal({
                         <div className="space-y-4 mt-4">
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                    Mekanik
+                                    {t('dash_mechanic', 'Mekanik')}
                                 </label>
                                 <SearchableSelect
                                     value={data.id_mekanik}
                                     onChange={(val) => setData('id_mekanik', val)}
-                                    placeholder="Pilih Mekanik"
+                                    placeholder={t('dash_select_mechanic', 'Pilih Mekanik')}
                                     options={mekaniks.map((m) => ({
                                         value: m.id.toString(),
                                         label: m.nama_mekanik,
@@ -428,7 +432,7 @@ export function ServiceFormModal({
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                    Tanggal Service
+                                    {t('dash_service_date', 'Tanggal Service')}
                                 </label>
                                 <Input
                                     type="date"
@@ -442,7 +446,7 @@ export function ServiceFormModal({
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                    Status
+                                    {t('dash_status', 'Status')}
                                 </label>
                                 <SearchableSelect
                                     value={data.status_service}
@@ -461,13 +465,13 @@ export function ServiceFormModal({
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 dark:text-white/60 uppercase">
-                                    Catatan Tambahan
+                                    {t('dash_additional_notes', 'Catatan Tambahan')}
                                 </label>
                                 <Input
                                     value={data.catatan}
                                     onChange={(e) => setData('catatan', e.target.value)}
                                     className="h-12 rounded-2xl border-transparent bg-[#1b1b18]/5 dark:bg-white/5"
-                                    placeholder="Opsional"
+                                    placeholder={t('dash_optional', 'Opsional')}
                                 />
                                 {errors.catatan && <span className="text-xs text-red-600">{errors.catatan}</span>}
                             </div>
@@ -479,7 +483,7 @@ export function ServiceFormModal({
                         <div className="rounded-3xl bg-[#1b1b18]/5 p-6 dark:bg-white/5 border border-[#1b1b18]/10 dark:border-white/10">
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-black tracking-widest uppercase text-[#1b1b18] dark:text-white">
-                                    Invoice & Item Service
+                                    {t('dash_invoice_items', 'Invoice & Item Service')}
                                 </h3>
                                 <div className="flex gap-2">
                                     <button
@@ -487,14 +491,14 @@ export function ServiceFormModal({
                                         onClick={addJasa}
                                         className="flex items-center gap-1 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 px-3 py-2 text-xs font-bold hover:bg-blue-500/20 transition-colors"
                                     >
-                                        <PlusCircle className="size-4" /> Jasa
+                                        <PlusCircle className="size-4" /> {t('dash_jasa', 'Jasa')}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={addSparepart}
                                         className="flex items-center gap-1 rounded-xl bg-green-500/10 text-green-600 dark:text-green-400 px-3 py-2 text-xs font-bold hover:bg-green-500/20 transition-colors"
                                     >
-                                        <PlusCircle className="size-4" /> Sparepart
+                                        <PlusCircle className="size-4" /> {t('dash_sparepart', 'Sparepart')}
                                     </button>
                                 </div>
                             </div>
@@ -503,9 +507,9 @@ export function ServiceFormModal({
                                 <table className="w-full text-left text-sm text-[#1b1b18] dark:text-white border-collapse min-w-125">
                                     <thead>
                                         <tr className="border-b border-[#1b1b18]/10 dark:border-white/10 text-[10px] font-black uppercase tracking-wider text-[#1b1b18]/50 dark:text-white/50">
-                                            <th className="pb-3 w-5/12 pl-2">Item</th>
-                                            <th className="pb-3 text-right w-1/3">Harga Satuan</th>
-                                            <th className="pb-3 text-right w-1/4">Total</th>
+                                            <th className="pb-3 w-5/12 pl-2">{t('dash_item', 'Item')}</th>
+                                            <th className="pb-3 text-right w-1/3">{t('dash_unit_price', 'Harga Satuan')}</th>
+                                            <th className="pb-3 text-right w-1/4">{t('dash_total', 'Total')}</th>
                                             <th className="pb-3 text-center w-10"></th>
                                         </tr>
                                     </thead>
@@ -516,28 +520,29 @@ export function ServiceFormModal({
                                                     {item.type === 'jasa' ? (
                                                         <div className="flex flex-col gap-1">
                                                             <Input 
-                                                                placeholder="Nama Jasa..."
+                                                                placeholder={t('dash_jasa_name', 'Nama Jasa...')}
                                                                 value={item.name}
                                                                 onChange={(e) => updateLineItem(idx, 'name', e.target.value)}
+                                                                autoComplete="off"
                                                                 className="h-9 text-sm rounded-xl border-transparent bg-white dark:bg-[#121212] shadow-sm"
                                                             />
-                                                            <div className="text-[10px] font-bold text-blue-500 uppercase tracking-widest ml-1">Jasa</div>
+                                                            <div className="text-[10px] font-bold text-blue-500 uppercase tracking-widest ml-1">{t('dash_jasa', 'Jasa')}</div>
                                                         </div>
                                                     ) : (
                                                         <div className="flex flex-col gap-1">
                                                             <SearchableSelect
                                                                 value={item.id?.toString() || ''}
                                                                 onChange={(val) => updateLineItem(idx, 'id', val)}
-                                                                placeholder="Pilih Sparepart"
+                                                                placeholder={t('dash_choose_sparepart', '- Pilih Sparepart -')}
                                                                 options={spareparts.map((part) => ({
                                                                     value: part.id.toString(),
                                                                     label: part.nama_sparepart,
                                                                 }))}
                                                             />
                                                             <div className="flex items-center gap-2 ml-1 mt-1">
-                                                                <span className="text-[10px] font-bold text-green-500 uppercase tracking-widest">Part</span>
+                                                                <span className="text-[10px] font-bold text-green-500 uppercase tracking-widest">{t('dash_part', 'Part')}</span>
                                                                 <div className="flex items-center gap-1">
-                                                                    <span className="text-xs text-[#1b1b18]/50 dark:text-white/50">Qty:</span>
+                                                                    <span className="text-xs text-[#1b1b18]/50 dark:text-white/50">{t('dash_qty', 'Qty:')}</span>
                                                                     <Input
                                                                         type="number"
                                                                         min="1"
@@ -556,6 +561,7 @@ export function ServiceFormModal({
                                                         <Input 
                                                             type="number"
                                                             min="0"
+                                                            placeholder="0"
                                                             value={item.price}
                                                             onChange={(e) => updateLineItem(idx, 'price', e.target.value)}
                                                             className="h-9 w-full text-right text-sm font-medium rounded-xl border-transparent bg-white dark:bg-[#121212] shadow-sm pl-8"
@@ -579,8 +585,8 @@ export function ServiceFormModal({
                                         {lineItems.length === 0 && (
                                             <tr>
                                                 <td colSpan={4} className="py-8 text-center text-sm text-[#1b1b18]/40 dark:text-white/40">
-                                                    Belum ada item yang ditambahkan.<br/>
-                                                    Klik <strong>+ Jasa</strong> atau <strong>+ Sparepart</strong> untuk memulai.
+                                                    {t('dash_no_items', 'Belum ada item yang ditambahkan.')}<br/>
+                                                    {t('dash_click', 'Klik')} <strong>{t('dash_add_jasa', '+ Jasa')}</strong> {t('dash_or', 'atau')} <strong>{t('dash_add_sparepart', '+ Sparepart')}</strong> {t('dash_to_start', 'untuk memulai.')}
                                                 </td>
                                             </tr>
                                         )}
@@ -588,7 +594,7 @@ export function ServiceFormModal({
                                     <tfoot>
                                         <tr className="border-t-2 border-dashed border-[#1b1b18]/20 dark:border-white/20">
                                             <td colSpan={2} className="pt-6 pb-2 text-xs font-black tracking-widest uppercase text-[#1b1b18]/70 dark:text-white/70">
-                                                Total
+                                                {t('dash_total', 'Total')}
                                             </td>
                                             <td colSpan={2} className="pt-6 pb-2 pr-10 text-right text-xl font-black text-red-600 dark:text-red-400 whitespace-nowrap">
                                                 Rp {totalHarga.toLocaleString('id-ID')}
