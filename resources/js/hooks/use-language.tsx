@@ -1641,6 +1641,10 @@ export const translations: Translations = {
     dash_col_owner: { id: 'Pemilik', en: 'Owner' },
     dash_col_service_history: { id: 'Riwayat Service', en: 'Service History' },
     dash_col_actions: { id: 'Aksi', en: 'Actions' },
+    dash_image_requirements: { id: 'PNG, JPG maksimal 5MB', en: 'PNG, JPG up to 5MB' },
+    dash_no_image_selected: { id: 'Tidak ada gambar dipilih', en: 'No image selected' },
+    dash_upload_new_image: { id: 'Unggah Gambar Baru', en: 'Upload New Image' },
+    dash_current_preview: { id: 'Pratinjau Saat Ini', en: 'Current Preview' },
 };
 
 interface LanguageContextType {

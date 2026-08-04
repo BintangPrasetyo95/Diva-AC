@@ -249,7 +249,7 @@ export default function ServiceInfo({ service }: { service: ServiceItem }) {
                                     {t('service_comp_solutions')}
                                 </h3>
                                 {detailedDesc && (
-                                    <p className="mb-8 text-lg leading-relaxed text-[#1b1b18]/60 dark:text-white/60">
+                                    <p className="mb-8 text-lg leading-relaxed text-[#1b1b18]/60 dark:text-white/90">
                                         {detailedDesc}
                                     </p>
                                 )}
@@ -294,7 +294,7 @@ export default function ServiceInfo({ service }: { service: ServiceItem }) {
                                         <div className="mt-1 flex size-5 items-center justify-center rounded-full bg-blue-600/10 text-blue-600">
                                             <Star className="size-3 fill-current" />
                                         </div>
-                                        <span className="text-lg font-medium text-[#1b1b18]/60 dark:text-white/60">
+                                        <span className="text-lg font-medium text-[#1b1b18]/60 dark:text-white/90">
                                             {benefit}
                                         </span>
                                     </div>

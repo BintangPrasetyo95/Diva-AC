@@ -65,7 +65,7 @@ export default function Services({ services = [] }: Props) {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="mt-4 text-lg text-[#1b1b18]/60 dark:text-white/60"
+                        className="mt-4 text-lg text-[#1b1b18]/60 dark:text-white/90"
                     >
                         {t('services_subtitle')}
                     </m.p>
@@ -145,11 +145,11 @@ export default function Services({ services = [] }: Props) {
                                                     {title}
                                                 </h3>
 
-                                                <p className="relative line-clamp-3 text-lg leading-relaxed text-[#1b1b18]/70 dark:text-white/70">
+                                                <p className="relative line-clamp-3 text-lg leading-relaxed text-[#1b1b18]/70 dark:text-white/90">
                                                     {description}
                                                 </p>
 
-                                                <div className="mt-8 flex items-center gap-2 text-sm font-bold tracking-wider text-[#1b1b18]/40 uppercase transition-colors group-hover:text-red-600 dark:text-white/40 dark:group-hover:text-red-500">
+                                                <div className="mt-8 flex items-center gap-2 text-sm font-bold tracking-wider text-[#1b1b18]/40 uppercase transition-colors group-hover:text-red-600 dark:text-white/80 dark:group-hover:text-red-500">
                                                     <span>
                                                         {t('learn_more')}
                                                     </span>
@@ -191,7 +191,7 @@ export default function Services({ services = [] }: Props) {
                         whileInView={{ opacity: 1 }}
                         className="inline-flex items-center gap-4 rounded-full border border-white/20 bg-white/5 px-8 py-3 backdrop-blur-md"
                     >
-                        <span className="text-sm font-medium text-[#1b1b18]/60 dark:text-white/60">
+                        <span className="text-sm font-medium text-[#1b1b18]/60 dark:text-white/90">
                             {t('need_else')}
                         </span>
                         <a

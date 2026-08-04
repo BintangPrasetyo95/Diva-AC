@@ -130,7 +130,7 @@ const ServiceCard = ({
                             {service.title_en}
                         </h3>
                         <div className="mt-0.5 flex items-center gap-2">
-                            <span className="rounded-full bg-[#1b1b18]/5 px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:bg-white/10 dark:text-white/40">
+                            <span className="rounded-full bg-[#1b1b18]/5 px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:bg-white/10 dark:text-white/70">
                                 {service.slug || 'NEW'}
                             </span>
                             <span className="text-[10px] font-bold tracking-widest text-[#1b1b18]/20 uppercase">
@@ -163,7 +163,7 @@ const ServiceCard = ({
                     <div
                         className={`flex size-10 items-center justify-center rounded-full border border-[#1b1b18]/10 transition-transform duration-300 dark:border-white/10 ${isExpanded ? 'rotate-180 bg-white dark:bg-[#1b1b18]' : ''}`}
                     >
-                        <ChevronDown className="size-5 text-[#1b1b18]/40 dark:text-white/40" />
+                        <ChevronDown className="size-5 text-[#1b1b18]/40 dark:text-white/70" />
                     </div>
                 </div>
             </div>
@@ -175,14 +175,14 @@ const ServiceCard = ({
                             <div className="rounded-xl bg-red-600/10 p-2 text-red-600">
                                 <Layout className="size-4" />
                             </div>
-                            <h4 className="text-xs font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase">
+                            <h4 className="text-xs font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase dark:text-white/60">
                                 {t('dash_general_config')}
                             </h4>
                         </div>
 
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                             <div className="space-y-2">
-                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                     {t('dash_display_icon')}
                                 </Label>
                                 <SearchableSelect
@@ -195,7 +195,7 @@ const ServiceCard = ({
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                     {t('dash_sort_order')}
                                 </Label>
                                 <Input
@@ -250,7 +250,7 @@ const ServiceCard = ({
                             <div className="rounded-xl bg-red-600/10 p-2 text-red-600">
                                 <Globe className="size-4" />
                             </div>
-                            <h4 className="text-xs font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase">
+                            <h4 className="text-xs font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase dark:text-white/60">
                                 {t('dash_multilingual_content')}
                             </h4>
                         </div>
@@ -262,7 +262,7 @@ const ServiceCard = ({
                                         <div className="flex size-4 items-center justify-center rounded-full bg-[#1b1b18]/10 text-[8px] font-bold dark:bg-white/10">
                                             ID
                                         </div>
-                                        <Label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                        <Label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                             {t('dash_col_car')}
                                         </Label>
                                     </div>
@@ -285,7 +285,7 @@ const ServiceCard = ({
                                         <div className="flex size-4 items-center justify-center rounded-full bg-[#1b1b18]/10 text-[8px] font-bold dark:bg-white/10">
                                             EN
                                         </div>
-                                        <Label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                        <Label className="text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                             {t('dash_col_car')}
                                         </Label>
                                     </div>
@@ -307,7 +307,7 @@ const ServiceCard = ({
 
                             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                 <div className="space-y-3">
-                                    <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                    <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                         {t('dash_card_summary_id')}
                                     </Label>
                                     <Textarea
@@ -325,7 +325,7 @@ const ServiceCard = ({
                                     />
                                 </div>
                                 <div className="space-y-3">
-                                    <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                    <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                         {t('dash_card_summary_en')}
                                     </Label>
                                     <Textarea
@@ -351,14 +351,14 @@ const ServiceCard = ({
                             <div className="rounded-xl bg-red-600/10 p-2 text-red-600">
                                 <ImageIcon className="size-4" />
                             </div>
-                            <h4 className="text-xs font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase">
+                            <h4 className="text-xs font-black tracking-[0.2em] text-[#1b1b18]/30 uppercase dark:text-white/60">
                                 {t('dash_visual_assets')}
                             </h4>
                         </div>
 
                         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
                             <div className="space-y-4">
-                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                     {t('dash_upload_new_image')}
                                 </Label>
                                 <div
@@ -395,15 +395,15 @@ onChange(
                                         <p className="text-xs font-black tracking-widest text-[#1b1b18] uppercase dark:text-white">
                                             {t('dash_click_to_upload')}
                                         </p>
-                                        <p className="mt-1 text-[10px] tracking-widest text-[#1b1b18]/40 uppercase">
-                                            PNG, JPG up to 5MB
+                                        <p className="mt-1 text-[10px] tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
+                                            {t('dash_image_requirements', 'PNG, JPG up to 5MB')}
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="space-y-4">
-                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase">
+                                <Label className="ml-1 text-[10px] font-black tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/70">
                                     {t('dash_current_preview')}
                                 </Label>
                                 <div className="flex h-64 items-center justify-center overflow-hidden rounded-4xl border border-[#1b1b18]/5 bg-[#1b1b18]/5 dark:border-white/5 dark:bg-white/5">
@@ -422,10 +422,10 @@ onChange(
                                             className="h-full w-full object-cover"
                                         />
                                     ) : (
-                                        <div className="flex h-full flex-col items-center justify-center text-[#1b1b18]/20">
+                                        <div className="flex h-full flex-col items-center justify-center text-[#1b1b18]/40 dark:text-white/60">
                                             <ImageIcon className="mb-2 size-10" />
                                             <span className="text-[10px] font-black tracking-widest uppercase">
-                                                No image selected
+                                                {t('dash_no_image_selected', 'No image selected')}
                                             </span>
                                         </div>
                                     )}
