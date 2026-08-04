@@ -37,6 +37,7 @@ import {
     DataTableInner,
 } from '@/components/ui/DataTable';
 import { CarCreateModal } from '@/components/admin/cars/CarCreateModal';
+import { CarEditModal } from '@/components/admin/cars/CarEditModal';
 import { useLanguage } from '@/hooks/use-language';
 
 interface Sparepart {
@@ -114,6 +115,8 @@ export default function CarsPage({
         direction: 'asc' | 'desc';
     }>({ key: 'date', direction: 'desc' });
     const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+    const [editingCar, setEditingCar] = React.useState<Mobil | null>(null);
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('id-ID', {
@@ -358,6 +361,9 @@ export default function CarsPage({
                                         <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
                                             Service History
                                         </th>
+                                        <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40 text-right">
+                                            Actions
+                                        </th>
                                     </tr>
                                 </DataTableHead>
                                 <DataTableBody>
@@ -481,12 +487,24 @@ export default function CarsPage({
                                                         </span>
                                                     )}
                                                 </td>
+                                                <td className="px-6 py-5 text-right">
+                                                    <Button
+                                                        variant="ghost"
+                                                        onClick={() => {
+                                                            setEditingCar(car);
+                                                            setIsEditModalOpen(true);
+                                                        }}
+                                                        className="text-xs font-bold text-blue-600 hover:text-blue-700"
+                                                    >
+                                                        Edit Car
+                                                    </Button>
+                                                </td>
                                             </tr>
                                         ))
                                     ) : (
                                         <tr>
                                             <td
-                                                colSpan={3}
+                                                colSpan={4}
                                                 className="px-6 py-20 text-center"
                                             >
                                                 <div className="flex flex-col items-center gap-2 opacity-20">
@@ -507,6 +525,15 @@ export default function CarsPage({
                     isOpen={isDialogOpen}
                     onClose={() => setIsDialogOpen(false)}
                     customers={customers}
+                />
+                <CarEditModal
+                    isOpen={isEditModalOpen}
+                    onClose={() => {
+                        setIsEditModalOpen(false);
+                        setEditingCar(null);
+                    }}
+                    customers={customers}
+                    editingCar={editingCar}
                 />
             </m.div>
         </LazyMotion>

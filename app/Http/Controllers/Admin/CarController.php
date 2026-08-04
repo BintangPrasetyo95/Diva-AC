@@ -72,4 +72,24 @@ class CarController extends Controller
 
         return back()->with('success', 'Pelanggan dan kendaraan berhasil ditambahkan.');
     }
+
+    /**
+     * Update an existing car and/or its owner.
+     */
+    public function update(Request $request, Mobil $car): RedirectResponse
+    {
+        $validated = $request->validate([
+            'id_pelanggan' => 'required|exists:users,id',
+            'merk' => 'required|string|max:50',
+            'model' => 'nullable|string|max:50',
+            'tahun' => 'nullable|integer|min:1900|max:'.(date('Y') + 1),
+            'no_polisi' => 'required|string|max:20|unique:mobil,no_polisi,'.$car->id,
+            'warna' => 'nullable|string|max:30',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        $car->update($validated);
+
+        return back()->with('success', 'Kendaraan berhasil diupdate.');
+    }
 }

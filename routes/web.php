@@ -84,6 +84,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
         // Cars
         Route::get('cars', [CarController::class, 'index'])->name('cars');
         Route::post('cars', [CarController::class, 'store'])->name('cars.store');
+        Route::put('cars/{car}', [CarController::class, 'update'])->name('cars.update');
         Route::post('cars/with-user', [CarController::class, 'storeWithNewUser'])->name('cars.store-with-user');
 
     });
