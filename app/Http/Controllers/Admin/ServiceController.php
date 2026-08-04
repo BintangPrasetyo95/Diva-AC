@@ -153,6 +153,10 @@ class ServiceController extends Controller
         return Inertia::render('services/details', [
             'id' => $id,
             'service' => $service,
+            'mobils' => Mobil::with('pelanggan')->get(),
+            'mekaniks' => Mekanik::with('user')->where('aktif', true)->get(),
+            'spareparts' => Sparepart::where('stock_sparepart', '>', 0)->orderBy('nama_sparepart')->get(),
+            'users' => User::where('role', 'customer')->get(),
         ]);
     }
 

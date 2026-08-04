@@ -22,6 +22,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/hooks/use-language';
+import { ServiceFormModal } from '@/components/admin/services/ServiceFormModal';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -46,9 +47,10 @@ const itemVariants: Variants = {
     },
 };
 
-export default function ServiceDetails({ id, service }: { id: string, service: any }) {
+export default function ServiceDetails({ id, service, mobils, mekaniks, spareparts, users }: { id: string, service: any, mobils: any[], mekaniks: any[], spareparts: any[], users: any[] }) {
     const { t } = useLanguage();
     const { auth } = usePage().props as any;
+    const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
     const backUrl = auth.user.role === 'customer' ? '/admin/my-account' : '/admin/services';
 
     const formatCurrency = (amount: number | string) => {
@@ -162,6 +164,15 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
+                        {auth.user?.role === 'admin' && (
+                            <button
+                                onClick={() => setIsEditModalOpen(true)}
+                                className="flex h-12 items-center gap-2 rounded-2xl bg-[#1b1b18] px-6 text-[10px] font-bold tracking-widest text-white shadow-xl hover:bg-black transition-all dark:bg-white dark:text-[#1b1b18] uppercase"
+                            >
+                                <Wrench className="size-4" />
+                                {t('dash_edit_order') || 'Edit Order'}
+                            </button>
+                        )}
                         <a
                             href={`/admin/invoice?type=service&id=${service.id}`}
                             target="_blank"
@@ -347,13 +358,16 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
                                         {t('dash_items_summary')}
                                     </h2>
                                 </div>
-                                <Button
-                                    variant="ghost"
-                                    className="text-[10px] font-bold tracking-widest text-red-600 uppercase"
-                                >
-                                    {t('dash_edit_order')}
-                                    <ChevronRight className="ml-1 size-3" />
-                                </Button>
+                                {auth.user?.role === 'admin' && (
+                                    <Button
+                                        variant="ghost"
+                                        onClick={() => setIsEditModalOpen(true)}
+                                        className="text-[10px] font-bold tracking-widest text-red-600 uppercase"
+                                    >
+                                        {t('dash_edit_order')}
+                                        <ChevronRight className="ml-1 size-3" />
+                                    </Button>
+                                )}
                             </div>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left">
@@ -429,6 +443,17 @@ export default function ServiceDetails({ id, service }: { id: string, service: a
                     </div>
                 </div>
             </m.div>
+
+            {/* Edit Modal */}
+            <ServiceFormModal
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+                editingService={service}
+                mobils={mobils}
+                mekaniks={mekaniks}
+                spareparts={spareparts}
+                users={users}
+            />
         </LazyMotion>
     );
 }
