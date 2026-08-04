@@ -56,7 +56,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
             onSuccess: () => {
                 onClose();
                 reset();
-                toast.success('Car successfully created');
+                toast.success(t('dash_car_created', 'Car successfully created'));
             },
         });
     };
@@ -65,8 +65,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
         <Modal isDirty={isDirty}
             isOpen={isOpen}
             onClose={onClose}
-            title="Create New Car"
-            subtitle="Add a new car to the database. You can assign it to an existing customer or create a new one."
+            title={t('dash_create_new_car', 'Create New Car')}
             maxWidthClassName="max-w-[600px]"
         >
             <div className="mt-2 mb-4 flex items-center gap-4">
@@ -76,7 +75,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                     onClick={() => setIsNewUser(false)}
                     className={`flex-1 rounded-xl text-xs font-bold tracking-widest uppercase ${!isNewUser ? 'bg-[#1b1b18] text-white dark:bg-white dark:text-[#1b1b18]' : ''}`}
                 >
-                    Existing Customer
+                    {t('dash_existing_customer', 'Existing Customer')}
                 </Button>
                 <Button
                     type="button"
@@ -84,18 +83,18 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                     onClick={() => setIsNewUser(true)}
                     className={`flex-1 rounded-xl text-xs font-bold tracking-widest uppercase ${isNewUser ? 'bg-[#1b1b18] text-white dark:bg-white dark:text-[#1b1b18]' : ''}`}
                 >
-                    New Customer
+                    {t('dash_new_customer', 'New Customer')}
                 </Button>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {!isNewUser ? (
                     <div className="space-y-2">
-                        <Label>Select Customer</Label>
+                        <Label>{t('dash_select_customer', 'Select Customer')}</Label>
                         <SearchableSelect
                             value={data.id_pelanggan}
                             onChange={(val) => setData('id_pelanggan', val)}
-                            placeholder="Select an existing customer"
+                            placeholder={t('dash_select_existing_customer', 'Select an existing customer')}
                             options={customers?.map((c) => ({
                                 value: c.id.toString(),
                                 label: `${c.name} (${c.telp})`,
@@ -110,7 +109,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                 ) : (
                     <div className="grid grid-cols-2 gap-4">
                         <div className="col-span-2 space-y-2 md:col-span-1">
-                            <Label>Customer Name</Label>
+                            <Label>{t('dash_customer_name', 'Customer Name')}</Label>
                             <Input
                                 value={data.nama_pelanggan}
                                 onChange={(e) =>
@@ -125,7 +124,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="col-span-2 space-y-2 md:col-span-1">
-                            <Label>Phone Number</Label>
+                            <Label>{t('dash_phone_number', 'Phone Number')}</Label>
                             <Input
                                 value={data.no_telp}
                                 onChange={(e) =>
@@ -140,7 +139,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="col-span-2 space-y-2 md:col-span-1">
-                            <Label>Email</Label>
+                            <Label>{t('dash_email', 'Email')}</Label>
                             <Input
                                 type="email"
                                 value={data.email}
@@ -156,13 +155,13 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="col-span-2 space-y-2 md:col-span-1">
-                            <Label>Gender</Label>
+                            <Label>{t('dash_gender', 'Gender')}</Label>
                             <SearchableSelect
                                 value={data.jenis_kelamin}
                                 onChange={(val) => setData('jenis_kelamin', val)}
                                 options={[
-                                    { value: 'L', label: 'Male (Laki-laki)' },
-                                    { value: 'P', label: 'Female (Perempuan)' },
+                                    { value: 'L', label: t('dash_male', 'Male (Laki-laki)') },
+                                    { value: 'P', label: t('dash_female', 'Female (Perempuan)') },
                                 ]}
                             />
                             {errors.jenis_kelamin && (
@@ -172,7 +171,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="col-span-2 space-y-2">
-                            <Label>Address</Label>
+                            <Label>{t('dash_address', 'Address')}</Label>
                             <Input
                                 value={data.alamat}
                                 onChange={(e) =>
@@ -191,11 +190,11 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
 
                 <div className="mt-4 border-t border-[#1b1b18]/10 pt-4 dark:border-white/10">
                     <h3 className="mb-4 text-sm font-bold uppercase">
-                        Car Details
+                        {t('dash_car_details', 'Car Details')}
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label>Brand (Merk)</Label>
+                            <Label>{t('dash_brand', 'Brand (Merk)')}</Label>
                             <Input
                                 value={data.merk}
                                 onChange={(e) =>
@@ -211,7 +210,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="space-y-2">
-                            <Label>Model</Label>
+                            <Label>{t('dash_model', 'Model')}</Label>
                             <Input
                                 value={data.model}
                                 onChange={(e) =>
@@ -227,7 +226,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="space-y-2">
-                            <Label>License Plate (No Polisi)</Label>
+                            <Label>{t('dash_license_plate', 'License Plate (No Polisi)')}</Label>
                             <Input
                                 value={data.no_polisi}
                                 onChange={(e) =>
@@ -243,7 +242,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="space-y-2">
-                            <Label>Year (Tahun)</Label>
+                            <Label>{t('dash_year', 'Year (Tahun)')}</Label>
                             <Input
                                 type="number"
                                 value={data.tahun}
@@ -260,7 +259,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="space-y-2">
-                            <Label>Color (Warna)</Label>
+                            <Label>{t('dash_color', 'Color (Warna)')}</Label>
                             <Input
                                 value={data.warna}
                                 onChange={(e) =>
@@ -276,7 +275,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                             )}
                         </div>
                         <div className="space-y-2">
-                            <Label>Notes (Keterangan)</Label>
+                            <Label>{t('dash_notes', 'Notes (Keterangan)')}</Label>
                             <Input
                                 value={data.keterangan}
                                 onChange={(e) =>
@@ -299,7 +298,7 @@ export function CarCreateModal({ isOpen, onClose, customers }: CarCreateModalPro
                         disabled={processing}
                         className="h-12 rounded-xl bg-[#1b1b18] px-8 font-bold tracking-widest text-white uppercase hover:bg-[#1b1b18]/80 dark:bg-white dark:text-[#1b1b18] dark:hover:bg-white/80"
                     >
-                        {processing ? 'Saving...' : 'Save Car'}
+                        {processing ? t('dash_saving', 'Saving...') : t('dash_save_car', 'Save Car')}
                     </Button>
                 </div>
             </form>

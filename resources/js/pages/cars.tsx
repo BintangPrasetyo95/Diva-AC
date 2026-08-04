@@ -10,6 +10,8 @@ import {
     ArrowUpDown,
     Filter,
     Plus,
+    MoreHorizontal,
+    Pencil,
 } from 'lucide-react';
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
@@ -225,6 +227,16 @@ export default function CarsPage({
                             history.
                         </p>
                     </div>
+
+                    <div className="flex gap-3">
+                        <Button
+                            onClick={() => setIsDialogOpen(true)}
+                            className="h-12 rounded-2xl bg-red-600 px-6 text-xs font-bold tracking-widest text-white uppercase shadow-lg shadow-red-600/20 transition-all hover:scale-105 hover:bg-red-700 active:scale-95"
+                        >
+                            <Plus className="mr-2 size-4" />
+                            {t('dash_create_new_car', 'Create Car')}
+                        </Button>
+                    </div>
                 </m.div>
 
                 {/* Stats Summary */}
@@ -275,13 +287,6 @@ export default function CarsPage({
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button
-                            onClick={() => setIsDialogOpen(true)}
-                            className="h-12 rounded-2xl bg-red-600 px-5 text-[10px] font-bold tracking-widest text-white uppercase hover:bg-red-700"
-                        >
-                            <Plus className="mr-2 size-4" />
-                            Create Mobil
-                        </Button>
 
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -347,7 +352,7 @@ export default function CarsPage({
                                             className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
                                         >
                                             <div className="flex items-center gap-2">
-                                                Vehicle Info {getSortIcon('plate')}
+                                                {t('dash_col_vehicle_info', 'Vehicle Info')} {getSortIcon('plate')}
                                             </div>
                                         </th>
                                         <th
@@ -355,14 +360,14 @@ export default function CarsPage({
                                             className="group cursor-pointer px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase transition-colors hover:bg-[#1b1b18]/5 dark:text-white/40"
                                         >
                                             <div className="flex items-center gap-2">
-                                                Owner {getSortIcon('customer')}
+                                                {t('dash_col_owner', 'Owner')} {getSortIcon('customer')}
                                             </div>
                                         </th>
                                         <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40">
-                                            Service History
+                                            {t('dash_col_service_history', 'Service History')}
                                         </th>
                                         <th className="px-6 py-5 text-xs font-bold tracking-widest text-[#1b1b18]/40 uppercase dark:text-white/40 text-right">
-                                            Actions
+                                            {t('dash_col_actions', 'Actions')}
                                         </th>
                                     </tr>
                                 </DataTableHead>
@@ -488,16 +493,30 @@ export default function CarsPage({
                                                     )}
                                                 </td>
                                                 <td className="px-6 py-5 text-right">
-                                                    <Button
-                                                        variant="ghost"
-                                                        onClick={() => {
-                                                            setEditingCar(car);
-                                                            setIsEditModalOpen(true);
-                                                        }}
-                                                        className="text-xs font-bold text-blue-600 hover:text-blue-700"
-                                                    >
-                                                        Edit Car
-                                                    </Button>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger
+                                                            asChild
+                                                        >
+                                                            <button className="rounded-lg p-2 text-[#1b1b18]/20 transition-all hover:bg-[#1b1b18]/5 hover:text-[#1b1b18] dark:text-white/20 dark:hover:bg-white/5 dark:hover:text-white">
+                                                                <MoreHorizontal className="size-4" />
+                                                            </button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent
+                                                            align="end"
+                                                            className="w-48 rounded-2xl border-[#1b1b18]/5 shadow-xl dark:border-white/5"
+                                                        >
+                                                            <DropdownMenuItem
+                                                                onClick={() => {
+                                                                    setEditingCar(car);
+                                                                    setIsEditModalOpen(true);
+                                                                }}
+                                                                className="cursor-pointer gap-2 p-3 text-xs font-medium"
+                                                            >
+                                                                <Pencil className="size-3.5" />
+                                                                {t('dash_edit_car', 'Edit Car')}
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
                                                 </td>
                                             </tr>
                                         ))
