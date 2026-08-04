@@ -34,6 +34,9 @@ class GalleryItem extends Model
         if (str_starts_with($this->image_path, '/img/')) {
             return asset($this->image_path);
         }
+        if (str_starts_with($this->image_path, 'google:')) {
+            return route('drive.image', ['path' => substr($this->image_path, 7)]);
+        }
 
         return asset('storage/'.$this->image_path);
     }

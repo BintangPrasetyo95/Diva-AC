@@ -343,7 +343,7 @@ return;
                                     <label>{t('label_preview') || 'Preview'}</label>
                                     <div className="aspect-video overflow-hidden rounded-3xl bg-[#1b1b18]/5 dark:bg-white/5">
                                         <img
-                                            src={`/storage/${editingImage.image_path}`}
+                                            src={editingImage.image_url}
                                             alt={editingImage.title || ''}
                                             className="h-full w-full object-cover"
                                         />

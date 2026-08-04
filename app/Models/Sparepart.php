@@ -41,6 +41,9 @@ class Sparepart extends Model
         if (str_starts_with($this->image, '/img/')) {
             return asset($this->image);
         }
+        if (str_starts_with($this->image, 'google:')) {
+            return route('drive.image', ['path' => substr($this->image, 7)]);
+        }
 
         return asset('storage/'.$this->image);
     }

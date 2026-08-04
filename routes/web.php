@@ -34,6 +34,18 @@ Route::get('services/info/{slug}', function ($slug) {
     ]);
 })->name('services.info');
 
+Route::get('drive-image/{path}', function ($path) {
+    $disk = \Illuminate\Support\Facades\Storage::disk('google');
+    
+    if (!$disk->exists($path)) {
+        abort(404);
+    }
+    
+    return response($disk->get($path), 200)
+        ->header('Content-Type', $disk->mimeType($path))
+        ->header('Cache-Control', 'public, max-age=86400'); // Cache for 1 day
+})->where('path', '.*')->name('drive.image');
+
 // Admin Pages
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

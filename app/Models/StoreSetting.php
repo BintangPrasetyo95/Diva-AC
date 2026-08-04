@@ -30,6 +30,22 @@ class StoreSetting extends Model
         'opening_hours' => 'array',
     ];
 
+    protected $appends = ['logo_url', 'favicon_url'];
+
+    public function getLogoUrlAttribute()
+    {
+        if (! $this->logo_path) return null;
+        if (str_starts_with($this->logo_path, 'google:')) return route('drive.image', ['path' => substr($this->logo_path, 7)]);
+        return asset('storage/'.$this->logo_path);
+    }
+
+    public function getFaviconUrlAttribute()
+    {
+        if (! $this->favicon_path) return null;
+        if (str_starts_with($this->favicon_path, 'google:')) return route('drive.image', ['path' => substr($this->favicon_path, 7)]);
+        return asset('storage/'.$this->favicon_path);
+    }
+
     public function isOpenNow()
     {
         $override = Cache::get('store_status_override');

@@ -18,12 +18,17 @@ class UploadImageAction
     public function execute(UploadedFile $file, string $folder, ?string $oldPath = null): string
     {
         if ($oldPath) {
-            // Only delete if it's not an external URL and is stored locally
-            if (!str_starts_with($oldPath, 'http') && Storage::disk('public')->exists($oldPath)) {
+            if (str_starts_with($oldPath, 'google:')) {
+                $actualPath = substr($oldPath, 7);
+                if (Storage::disk('google')->exists($actualPath)) {
+                    Storage::disk('google')->delete($actualPath);
+                }
+            } else if (!str_starts_with($oldPath, 'http') && Storage::disk('public')->exists($oldPath)) {
                 Storage::disk('public')->delete($oldPath);
             }
         }
 
-        return $file->store($folder, 'public');
+        $path = $file->store($folder, 'google');
+        return 'google:' . $path;
     }
 }
