@@ -266,7 +266,7 @@ export default function Welcome({
 
     return (
         <LazyMotion features={domAnimation}>
-            <Head title="Welcome" />
+            <Head title="Diva Ac - Car AC Service" />
             <Preloader onLoadingComplete={() => setIsLoaded(true)} />
 
             <m.div
