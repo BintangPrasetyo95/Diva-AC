@@ -32,6 +32,7 @@ import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { ImageLightbox } from '@/components/ui/image-lightbox';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -578,13 +579,15 @@ export default function InventoryPage({
                                                 <td className="px-6 py-5">
                                                     <div className="flex items-center gap-3">
                                                         {item.image_url ? (
-                                                            <img
-                                                                src={item.image_url}
-                                                                alt={
-                                                                    item.nama_sparepart
-                                                                }
-                                                                className="h-10 w-10 rounded-lg object-cover"
-                                                            />
+                                                            <ImageLightbox src={item.image_url} alt={item.nama_sparepart}>
+                                                                <img
+                                                                    src={item.image_url}
+                                                                    alt={
+                                                                        item.nama_sparepart
+                                                                    }
+                                                                    className="h-10 w-10 rounded-lg object-cover"
+                                                                />
+                                                            </ImageLightbox>
                                                         ) : (
                                                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1b1b18]/5 dark:bg-white/5">
                                                                 <Package className="size-5 text-[#1b1b18]/30 dark:text-white/30" />
