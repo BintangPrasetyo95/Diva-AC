@@ -41,6 +41,7 @@ import {
 import { CarCreateModal } from '@/components/admin/cars/CarCreateModal';
 import { CarEditModal } from '@/components/admin/cars/CarEditModal';
 import { useLanguage } from '@/hooks/use-language';
+import { useDebounce } from '@/hooks/use-debounce';
 
 interface Sparepart {
     id: number;
@@ -112,6 +113,7 @@ export default function CarsPage({
 }) {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
     const [sortConfig, setSortConfig] = React.useState<{
         key: string;
         direction: 'asc' | 'desc';
@@ -130,7 +132,7 @@ export default function CarsPage({
 
     const filteredCars = cars
         .filter((c) => {
-            const searchLower = searchQuery.toLowerCase();
+            const searchLower = debouncedSearchQuery.toLowerCase();
 
             return (
                 c.no_polisi.toLowerCase().includes(searchLower) ||

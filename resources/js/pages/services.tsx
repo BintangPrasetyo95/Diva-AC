@@ -48,6 +48,7 @@ import {
     DataTableInner,
 } from '@/components/ui/DataTable';
 import { useLanguage } from '@/hooks/use-language';
+import { useDebounce } from '@/hooks/use-debounce';
 import { downloadInvoicePdf } from '@/lib/downloadInvoice';
 
 interface Customer {
@@ -139,6 +140,7 @@ export default function ServicesPage({
 }) {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
     const [statusFilter, setStatusFilter] = React.useState('All');
     const [sortConfig, setSortConfig] = React.useState<{
         key: string;
@@ -237,13 +239,13 @@ export default function ServicesPage({
             const matchesSearch =
                 (s.mobil?.pelanggan?.nama_pelanggan || '')
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
+                    .includes(debouncedSearchQuery.toLowerCase()) ||
                 (s.mobil?.no_polisi || '')
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
+                    .includes(debouncedSearchQuery.toLowerCase()) ||
                 String(s.id || '')
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase());
+                    .includes(debouncedSearchQuery.toLowerCase());
             const matchesStatus =
                 statusFilter === 'All' || s.status_service === statusFilter;
 

@@ -48,6 +48,7 @@ import {
     DataTableInner,
 } from '@/components/ui/DataTable';
 import { useLanguage } from '@/hooks/use-language';
+import { useDebounce } from '@/hooks/use-debounce';
 
 interface Mobil {
     id: number;
@@ -106,6 +107,7 @@ export default function CustomersPage({
 }) {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
     const [genderFilter, setGenderFilter] = React.useState('All');
     const [sortConfig, setSortConfig] = React.useState<{
         key: string;
@@ -148,14 +150,14 @@ export default function CustomersPage({
             const matchesSearch =
                 (c.nama_pelanggan || '')
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
-                (c.no_telp || '').includes(searchQuery) ||
+                    .includes(debouncedSearchQuery.toLowerCase()) ||
+                (c.no_telp || '').includes(debouncedSearchQuery) ||
                 (c.email || '')
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
+                    .includes(debouncedSearchQuery.toLowerCase()) ||
                 String(c.id || '')
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase());
+                    .includes(debouncedSearchQuery.toLowerCase());
             const matchesGender =
                 genderFilter === 'All' || c.jenis_kelamin === genderFilter;
 

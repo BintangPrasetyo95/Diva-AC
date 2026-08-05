@@ -1,6 +1,7 @@
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
 import { Check, ChevronDown } from 'lucide-react';
 import React, { useState } from 'react';
+import { useDebounce } from '@/hooks/use-debounce';
 
 export interface Option {
     value: string | number;
@@ -23,12 +24,13 @@ export function SearchableSelect({
     className = '',
 }: Props) {
     const [query, setQuery] = useState('');
+    const debouncedQuery = useDebounce(query, 300);
 
     const filteredOptions =
-        query === ''
+        debouncedQuery === ''
             ? options
             : options.filter((option) =>
-                  (option.label || '').toLowerCase().includes(query.toLowerCase())
+                  (option.label || '').toLowerCase().includes(debouncedQuery.toLowerCase())
               );
 
     const selectedOption = options.find(

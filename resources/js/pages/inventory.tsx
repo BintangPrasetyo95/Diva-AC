@@ -51,6 +51,7 @@ import {
 } from '@/components/ui/DataTable';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/hooks/use-language';
+import { useDebounce } from '@/hooks/use-debounce';
 
 interface Sparepart {
     id: number;
@@ -99,6 +100,7 @@ export default function InventoryPage({
 }) {
     const { t } = useLanguage();
     const [searchQuery, setSearchQuery] = React.useState('');
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
     const [statusFilter, setStatusFilter] = React.useState('All');
     const [sortConfig, setSortConfig] = React.useState<{
         key: string;
@@ -181,13 +183,13 @@ export default function InventoryPage({
             const matchesSearch =
                 item.nama_sparepart
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
+                    .includes(debouncedSearchQuery.toLowerCase()) ||
                 item.tipe_sparepart
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
+                    .includes(debouncedSearchQuery.toLowerCase()) ||
                 String(item.id)
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase());
+                    .includes(debouncedSearchQuery.toLowerCase());
             const status = getStockStatus(item.stock_sparepart);
             const matchesStatus =
                 statusFilter === 'All' || status === statusFilter;
