@@ -9,6 +9,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { useLanguage } from '@/hooks/use-language';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Register() {
     const { t } = useLanguage();
@@ -125,6 +126,11 @@ export default function Register() {
                                 <InputError
                                     message={errors.password_confirmation}
                                 />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} />
+                                <InputError message={errors['cf-turnstile-response'] as string} />
                             </div>
 
                             <Button

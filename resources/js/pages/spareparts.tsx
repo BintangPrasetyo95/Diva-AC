@@ -23,6 +23,7 @@ import {
 import { SearchableSelect } from '@/components/ui/searchable-select';
 import { useLanguage } from '@/hooks/use-language';
 import { login, register } from '@/routes';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 interface Sparepart {
     id: number;
@@ -47,6 +48,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
     const [address, setAddress] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successUrl, setSuccessUrl] = useState<string | null>(null);
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
     const [rows, setRows] = useState(() => [
         { id: '1', partId: '', jumlah: 1 },
     ]);
@@ -80,6 +82,7 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                     customer_name: customerName,
                     customer_phone: customerPhone,
                     address: address,
+                    'cf-turnstile-response': turnstileToken,
                     items: validRows.map((r) => ({
                         partId: r.partId,
                         jumlah: Number(r.jumlah) || 1,
@@ -556,6 +559,10 @@ export default function Spareparts({ auth, spareparts = [] }: Props) {
                                             setAddress(e.target.value)
                                         }
                                     ></textarea>
+                                </div>
+
+                                <div className="space-y-2 pt-4">
+                                    <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} onSuccess={setTurnstileToken} />
                                 </div>
 
                                 <m.button

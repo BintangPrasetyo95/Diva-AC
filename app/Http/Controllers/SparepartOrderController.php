@@ -20,6 +20,7 @@ class SparepartOrderController extends Controller
             'items' => 'required|array|min:1',
             'items.*.partId' => 'required|exists:sparepart,id',
             'items.*.jumlah' => 'nullable|integer|min:1',
+            'cf-turnstile-response' => ['required', 'string', new \App\Rules\Turnstile],
         ]);
 
         return DB::transaction(function () use ($validated) {

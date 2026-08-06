@@ -24,7 +24,7 @@ class InvoiceController extends Controller
         } elseif ($type === 'sparepart') {
             $data = PenjualanSparepart::with(['spareparts'])->findOrFail($id);
             
-            if ($request->user()->role === 'customer' && $data->id_pelanggan !== $request->user()->id) {
+            if ($request->user()->role === 'customer' && $data->id_user !== $request->user()->id) {
                 abort(403, 'Unauthorized');
             }
         } else {

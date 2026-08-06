@@ -23,6 +23,7 @@ class BookingController extends Controller
             'booking_time' => 'required',
             'service_type' => 'required|string',
             'notes' => 'nullable|string',
+            'cf-turnstile-response' => ['required', 'string', new \App\Rules\Turnstile],
         ]);
 
         // Get current max queue order for that date

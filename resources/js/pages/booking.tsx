@@ -19,6 +19,7 @@ import AppearanceToggleTab from '@/components/appearance-tabs';
 import { SearchableSelect } from '@/components/ui/searchable-select';
 import { useLanguage } from '@/hooks/use-language';
 import { dashboard, login, register } from '@/routes';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Booking() {
     const { t, language, setLanguage } = useLanguage();
@@ -400,6 +401,11 @@ export default function Booking() {
                                     }
                                 ></textarea>
                                 {errors.notes && <p className="text-xs text-red-600">{errors.notes}</p>}
+                            </div>
+
+                            <div className="space-y-2">
+                                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} />
+                                {errors['cf-turnstile-response'] && <p className="text-xs text-red-600">{errors['cf-turnstile-response']}</p>}
                             </div>
 
                             <m.button

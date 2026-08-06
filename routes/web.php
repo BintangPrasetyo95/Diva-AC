@@ -49,7 +49,6 @@ Route::get('drive-image/{path}', function ($path) {
 // Admin Pages
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::post('store-status', [StoreStatusController::class, 'toggle'])->name('store-status.toggle');
     Route::get('my-account', [MyAccountController::class, 'index'])->name('admin.my-account');
     Route::get('services/{id}', [ServiceController::class, 'show'])->name('services.details');
     Route::get('invoice', [InvoiceController::class, 'show'])->name('invoice.show');
@@ -97,7 +96,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
         Route::patch('spareparts/sell/{id}/verify', [PenjualanSparepartController::class, 'verify'])->name('spareparts.sell.verify');
         Route::patch('spareparts/sell/{id}/cancel', [PenjualanSparepartController::class, 'cancel'])->name('spareparts.sell.cancel');
 
-
+        Route::post('store-status', [StoreStatusController::class, 'toggle'])->name('store-status.toggle');
         // Gallery
         Route::get('gallery', [GalleryController::class, 'index'])->name('admin.gallery');
         Route::post('gallery', [GalleryController::class, 'store'])->name('admin.gallery.store');

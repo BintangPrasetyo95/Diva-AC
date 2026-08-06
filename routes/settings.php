@@ -25,8 +25,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('settings/appearance', 'settings/appearance')->name('appearance.edit');
 });
 
-Route::get('admin/landing-services', [ServiceSettingsController::class, 'edit'])->name('services.settings.edit');
-Route::patch('admin/landing-services', [ServiceSettingsController::class, 'update'])->name('services.settings.update');
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('admin/landing-services', [ServiceSettingsController::class, 'edit'])->name('services.settings.edit');
+    Route::patch('admin/landing-services', [ServiceSettingsController::class, 'update'])->name('services.settings.update');
 
-Route::get('admin/workshop-settings', [WorkshopSettingsController::class, 'edit'])->name('workshop.settings.edit');
-Route::patch('admin/workshop-settings', [WorkshopSettingsController::class, 'update'])->name('workshop.settings.update');
+    Route::get('admin/workshop-settings', [WorkshopSettingsController::class, 'edit'])->name('workshop.settings.edit');
+    Route::patch('admin/workshop-settings', [WorkshopSettingsController::class, 'update'])->name('workshop.settings.update');
+});
