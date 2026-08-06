@@ -35,6 +35,7 @@ export default function Booking() {
         booking_time: '',
         service_type: 'inspection',
         notes: '',
+        'cf-turnstile-response': '',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -404,7 +405,7 @@ export default function Booking() {
                             </div>
 
                             <div className="space-y-2">
-                                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} />
+                                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} onSuccess={(token) => setData('cf-turnstile-response', token)} />
                                 {errors['cf-turnstile-response'] && <p className="text-xs text-red-600">{errors['cf-turnstile-response']}</p>}
                             </div>
 

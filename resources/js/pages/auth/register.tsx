@@ -10,9 +10,11 @@ import { useLanguage } from '@/hooks/use-language';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { useState } from 'react';
 
 export default function Register() {
     const { t } = useLanguage();
+    const [turnstileToken, setTurnstileToken] = useState<string>('');
 
     const tName = t('auth_name');
     const tNamePlaceholder = t('auth_name_placeholder');
@@ -129,7 +131,8 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} />
+                                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} onSuccess={setTurnstileToken} />
+                                <input type="hidden" name="cf-turnstile-response" value={turnstileToken} />
                                 <InputError message={errors['cf-turnstile-response'] as string} />
                             </div>
 
